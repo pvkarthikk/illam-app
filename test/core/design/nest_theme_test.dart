@@ -1,8 +1,11 @@
+import 'package:drift/native.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'package:nm_flat/app.dart';
+import 'package:nm_flat/core/data/db/database.dart';
+import 'package:nm_flat/core/data/prefs/device_prefs.dart';
 import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/features/today/today_screen.dart';
@@ -52,9 +55,17 @@ void main() {
     testWidgets('renders 5 tabs and honours themeModeProvider', (
       WidgetTester tester,
     ) async {
+      final prefs = await DevicePrefs.inMemory();
+      final db = NestDatabase.forTesting(NativeDatabase.memory());
+      addTearDown(db.close);
+
       await tester.pumpWidget(
         ProviderScope(
-          overrides: [themeModeProvider.overrideWithValue(ThemeMode.light)],
+          overrides: [
+            prefsProvider.overrideWithValue(prefs),
+            dbProvider.overrideWithValue(db),
+            themeModeProvider.overrideWithValue(ThemeMode.light),
+          ],
           child: const NestApp(),
         ),
       );
@@ -69,7 +80,11 @@ void main() {
 
       await tester.pumpWidget(
         ProviderScope(
-          overrides: [themeModeProvider.overrideWithValue(ThemeMode.dark)],
+          overrides: [
+            prefsProvider.overrideWithValue(prefs),
+            dbProvider.overrideWithValue(db),
+            themeModeProvider.overrideWithValue(ThemeMode.dark),
+          ],
           child: const NestApp(),
         ),
       );
