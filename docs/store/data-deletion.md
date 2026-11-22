@@ -1,6 +1,6 @@
-# Data Deletion — Nest Mojo : Flat
+# Data Deletion — Illam
 
-Nest Mojo : Flat does **not** store any copy of your household data, backups, or account information on any developer server. All data resides on your family’s phones and in any personal backup destination you chose.
+Illam does **not** store any copy of your household data, backups, or account information on any developer server. All data resides on your family’s phones and in any personal backup destination you chose.
 
 ## How to Delete Your Data
 
@@ -11,7 +11,7 @@ Nest Mojo : Flat does **not** store any copy of your household data, backups, or
 3. **Delete a home (admins):**
    Admins can delete the home from **Home & members** so synced member devices remove the household.
 4. **Delete your encrypted backups:**
-   Open the storage provider you connected (Google Drive hidden app folder via Google Account/Drive settings, OneDrive `Apps › Nest Mojo Flat`, Dropbox `Apps › Nest Mojo Flat`, pCloud `Nest Mojo Flat`, your own WebDAV/Nextcloud/S3/SFTP server, or your chosen phone/USB folder) and delete the `.nmbak` backup files.
+   Open the storage provider you connected (Google Drive hidden app folder via Google Account/Drive settings, OneDrive `Apps › Illam`, Dropbox `Apps › Illam`, your pCloud app folder, your own WebDAV/Nextcloud/S3/SFTP server, or your chosen phone/USB folder) and delete the `.nmbak` backup files.
 
 ## Contact
 

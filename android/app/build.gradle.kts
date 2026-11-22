@@ -14,7 +14,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "app.nestmojo"
+    namespace = "io.github.pvkarthikk.illam"
     compileSdk = 37
     ndkVersion = flutter.ndkVersion
 
@@ -26,7 +26,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "app.nestmojo"
+        applicationId = "io.github.pvkarthikk.illam"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = 26
@@ -47,14 +47,14 @@ android {
     productFlavors {
         create("dev") {
             dimension = "copy"
-            resValue("string", "app_name", "Nest Mojo : Flat")
-            manifestPlaceholders["appAuthRedirectScheme"] = "app.nestmojo"
+            resValue("string", "app_name", "Illam")
+            manifestPlaceholders["appAuthRedirectScheme"] = "io.github.pvkarthikk.illam"
         }
         create("peer2") {
             dimension = "copy"
             applicationIdSuffix = ".peer2"
-            resValue("string", "app_name", "Nest Mojo : Flat · P2")
-            manifestPlaceholders["appAuthRedirectScheme"] = "app.nestmojo.peer2"
+            resValue("string", "app_name", "Illam · P2")
+            manifestPlaceholders["appAuthRedirectScheme"] = "io.github.pvkarthikk.illam.peer2"
         }
     }
 

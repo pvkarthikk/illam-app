@@ -1,11 +1,11 @@
-# Privacy Policy — Nest Mojo : Flat
+# Privacy Policy — Illam
 
-Nest Mojo : Flat is a household management app built to run completely offline on your family’s phones.
+Illam is a household management app built to run completely offline on your family’s phones.
 
 ## No Accounts & No App Servers
 
 - There are **no user accounts**.
-- **No Nest Mojo : Flat server** stores your household data.
+- **No Illam server** stores your household data.
 - Your household data (lists, chores, meals, expenses, staff records, and settings) lives only in an encrypted database on the phones of your family members.
 
 ## Local Wi-Fi Sync

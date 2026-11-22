@@ -51,12 +51,13 @@ class WelcomeScreen extends ConsumerWidget {
                                   ),
                                 ],
                               ),
-                              child: Text(
-                                l10n.appName[0],
-                                style: const TextStyle(
-                                  fontFamily: NestText.serif,
-                                  fontSize: 28,
-                                  color: Color(0xFF1B140A),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(15),
+                                child: Image.asset(
+                                  'assets/icon/icon.png',
+                                  width: 48,
+                                  height: 48,
+                                  fit: BoxFit.cover,
                                 ),
                               ),
                             ),

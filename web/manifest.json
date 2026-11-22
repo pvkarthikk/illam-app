@@ -1,11 +1,11 @@
 {
-    "name": "Nest Mojo - Flat",
-    "short_name": "Nest Mojo - Flat",
+    "name": "Illam",
+    "short_name": "Illam",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#12201A",
     "theme_color": "#23503A",
-    "description": "A new Flutter project.",
+    "description": "Local-first household management for everyday peace of mind.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

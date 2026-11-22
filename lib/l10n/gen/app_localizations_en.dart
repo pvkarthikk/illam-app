@@ -10,7 +10,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appName => 'Nest Mojo : Flat';
+  String get appName => 'Illam';
 
   @override
   String get tabToday => 'Today';
@@ -168,8 +168,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonCancel => 'Cancel';
 
   @override
-  String get errCantSecure =>
-      'Nest Mojo : Flat can’t secure data on this phone';
+  String get errCantSecure => 'Illam can’t secure data on this phone';
 
   @override
   String welcomeHeadline(Object em) {
@@ -198,7 +197,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get welcomeJoinBody =>
-      'Someone at home already uses Nest Mojo : Flat. Scan their QR code or type their phrase.';
+      'Someone at home already uses Illam. Scan their QR code or type their phrase.';
 
   @override
   String get welcomeHint =>
@@ -1545,7 +1544,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String storeBackLead(Object store) {
-    return 'We copied the list and opened $store. Shown when you return to Nest Mojo : Flat, so the list stays honest.';
+    return 'We copied the list and opened $store. Shown when you return to Illam, so the list stays honest.';
   }
 
   @override
@@ -3141,7 +3140,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homeSyncFootnote =>
-      'ⓘ Phones sync directly on the same Wi-Fi, or over the internet when Nest Mojo : Flat is open on both.';
+      'ⓘ Phones sync directly on the same Wi-Fi, or over the internet when Illam is open on both.';
 
   @override
   String get homeBackupNone => 'No backups yet';
@@ -3554,7 +3553,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notifChannelHome => 'Home & members';
 
   @override
-  String get notifAppName => 'Nest Mojo : Flat';
+  String get notifAppName => 'Illam';
 
   @override
   String notifArrivalBody(String name, String time) {
@@ -3613,7 +3612,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notifContinue => 'Continue';
 
   @override
-  String get notifOffBanner => 'Notifications are off for Nest Mojo : Flat';
+  String get notifOffBanner => 'Notifications are off for Illam';
 
   @override
   String get notifTurnOn => 'Turn on';
@@ -3694,7 +3693,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get syncLabReplace => 'Replace this phone’s home';
 
   @override
-  String get syncLabBadBundle => 'That isn’t a Nest Mojo : Flat bundle.';
+  String get syncLabBadBundle => 'That isn’t an Illam bundle.';
 
   @override
   String get syncLabTamper => 'Tamper test';
@@ -3759,7 +3758,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String inviteWhatsAppText(String home, String phrase) {
-    return 'Join \"$home\" on Nest Mojo : Flat. Open the app → Join a home → type: $phrase\n(works for 10 minutes)';
+    return 'Join \"$home\" on Illam. Open the app → Join a home → type: $phrase\n(works for 10 minutes)';
   }
 
   @override
@@ -4099,7 +4098,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String errVersion(String inviter) {
-    return '$inviter’s Nest Mojo : Flat is a different version. Update both apps from the Play Store, then try again.';
+    return '$inviter’s Illam is a different version. Update both apps from the Play Store, then try again.';
   }
 
   @override
@@ -4107,7 +4106,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String setupBanner(int pct) {
-    return 'Finishing setup… $pct% — keep Nest Mojo : Flat open on a family phone';
+    return 'Finishing setup… $pct% — keep Illam open on a family phone';
   }
 
   @override
@@ -4234,7 +4233,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String syncUpdateNeeded(String name) {
-    return 'Update Nest Mojo : Flat to keep syncing with $name';
+    return 'Update Illam to keep syncing with $name';
   }
 
   @override
@@ -4252,7 +4251,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notifOutOfSync =>
-      'Nest Mojo : Flat hasn’t synced with your family for 3 days. Open it on the same Wi-Fi to catch up.';
+      'Illam hasn’t synced with your family for 3 days. Open it on the same Wi-Fi to catch up.';
 
   @override
   String get notifTodoAssignedTitle => 'To-do assigned to you';
@@ -4423,7 +4422,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get backupHeroLead =>
-      'Nest Mojo : Flat has no cloud of its own. If every phone in the home is lost, a backup is the only way back.';
+      'Illam has no cloud of its own. If every phone in the home is lost, a backup is the only way back.';
 
   @override
   String get backupPromise1Title => 'Locked before it leaves this phone';
@@ -4493,13 +4492,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get backupProvOnedrive => 'OneDrive';
 
   @override
-  String get backupProvOnedriveSub => 'Sign in · Apps › Nest Mojo Flat';
+  String get backupProvOnedriveSub => 'Sign in · Apps › Illam';
 
   @override
   String get backupProvDropbox => 'Dropbox';
 
   @override
-  String get backupProvDropboxSub => 'Sign in · Apps › Nest Mojo Flat';
+  String get backupProvDropboxSub => 'Sign in · Apps › Illam';
 
   @override
   String get backupProvPcloud => 'pCloud';
@@ -4774,7 +4773,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get restoreNote =>
-      '🔒 Your backup is opened on this phone. Nothing is sent to Nest Mojo : Flat.';
+      '🔒 Your backup is opened on this phone. Nothing is sent to Illam.';
 
   @override
   String get restorePickTitle => 'Pick a backup';
@@ -4807,7 +4806,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get restoreEmpty =>
-      'No Nest Mojo : Flat backups here — check you picked the right account or folder.';
+      'No Illam backups here — check you picked the right account or folder.';
 
   @override
   String get restoreChooseAnother => 'Choose another place';
@@ -4965,7 +4964,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get bkSrvNextcloudHint =>
-      'We’ll open your Nextcloud login in the browser. Approve Nest Mojo : Flat there — it gets its own app password you can revoke any time.';
+      'We’ll open your Nextcloud login in the browser. Approve Illam there — it gets its own app password you can revoke any time.';
 
   @override
   String get bkSrvNextcloudAccessNote =>
@@ -4982,7 +4981,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String bkSrvApproveLead(Object host) {
-    return 'Log in to $host and tap Grant access for Nest Mojo : Flat. Then come back here.';
+    return 'Log in to $host and tap Grant access for Illam. Then come back here.';
   }
 
   @override
@@ -5118,18 +5117,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get bkCloudDropboxAccess =>
-      'Read and write files in Apps › Nest Mojo Flat only. It can’t see your other files.';
+      'Read and write files in Apps › Illam only. It can’t see your other files.';
 
   @override
   String get bkCloudOnedriveAccess =>
-      'Read and write files in its own folder, Apps › Nest Mojo Flat. It can’t see your other files.';
+      'Read and write files in its own folder, Apps › Illam. It can’t see your other files.';
 
   @override
-  String get bkCloudAppsFolder => 'Apps › Nest Mojo Flat';
+  String get bkCloudAppsFolder => 'Apps › Illam';
 
   @override
   String get bkCloudOrgApproval =>
-      'Your organisation must approve Nest Mojo : Flat before it can use this OneDrive. Ask your IT admin, or choose another place.';
+      'Your organisation must approve Illam before it can use this OneDrive. Ask your IT admin, or choose another place.';
 
   @override
   String get bkCloudPcloudAccess =>

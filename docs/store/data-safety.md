@@ -1,10 +1,10 @@
-# Google Play Data Safety Notes — Nest Mojo : Flat
+# Google Play Data Safety Notes — Illam
 
 Use these notes when completing the **Data safety** form in Google Play Console.
 
 ## Summary of Data Flow
 
-Nest Mojo : Flat operates with **no developer backend server** and **no analytics or advertising SDKs**.
+Illam operates with **no developer backend server** and **no analytics or advertising SDKs**.
 
 ### Data That May Leave the Phone
 

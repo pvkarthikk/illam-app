@@ -97,7 +97,7 @@ abstract class AppLocalizations {
   /// No description provided for @appName.
   ///
   /// In en, this message translates to:
-  /// **'Nest Mojo : Flat'**
+  /// **'Illam'**
   String get appName;
 
   /// No description provided for @tabToday.
@@ -385,7 +385,7 @@ abstract class AppLocalizations {
   /// No description provided for @errCantSecure.
   ///
   /// In en, this message translates to:
-  /// **'Nest Mojo : Flat can’t secure data on this phone'**
+  /// **'Illam can’t secure data on this phone'**
   String get errCantSecure;
 
   /// No description provided for @welcomeHeadline.
@@ -433,7 +433,7 @@ abstract class AppLocalizations {
   /// No description provided for @welcomeJoinBody.
   ///
   /// In en, this message translates to:
-  /// **'Someone at home already uses Nest Mojo : Flat. Scan their QR code or type their phrase.'**
+  /// **'Someone at home already uses Illam. Scan their QR code or type their phrase.'**
   String get welcomeJoinBody;
 
   /// No description provided for @welcomeHint.
@@ -2601,7 +2601,7 @@ abstract class AppLocalizations {
   /// No description provided for @storeBackLead.
   ///
   /// In en, this message translates to:
-  /// **'We copied the list and opened {store}. Shown when you return to Nest Mojo : Flat, so the list stays honest.'**
+  /// **'We copied the list and opened {store}. Shown when you return to Illam, so the list stays honest.'**
   String storeBackLead(Object store);
 
   /// No description provided for @storeUnitChanged.
@@ -5132,7 +5132,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeSyncFootnote.
   ///
   /// In en, this message translates to:
-  /// **'ⓘ Phones sync directly on the same Wi-Fi, or over the internet when Nest Mojo : Flat is open on both.'**
+  /// **'ⓘ Phones sync directly on the same Wi-Fi, or over the internet when Illam is open on both.'**
   String get homeSyncFootnote;
 
   /// No description provided for @homeBackupNone.
@@ -5732,7 +5732,7 @@ abstract class AppLocalizations {
   /// No description provided for @notifAppName.
   ///
   /// In en, this message translates to:
-  /// **'Nest Mojo : Flat'**
+  /// **'Illam'**
   String get notifAppName;
 
   /// No description provided for @notifArrivalBody.
@@ -5816,7 +5816,7 @@ abstract class AppLocalizations {
   /// No description provided for @notifOffBanner.
   ///
   /// In en, this message translates to:
-  /// **'Notifications are off for Nest Mojo : Flat'**
+  /// **'Notifications are off for Illam'**
   String get notifOffBanner;
 
   /// No description provided for @notifTurnOn.
@@ -5953,7 +5953,7 @@ abstract class AppLocalizations {
   /// No description provided for @syncLabBadBundle.
   ///
   /// In en, this message translates to:
-  /// **'That isn’t a Nest Mojo : Flat bundle.'**
+  /// **'That isn’t an Illam bundle.'**
   String get syncLabBadBundle;
 
   /// No description provided for @syncLabTamper.
@@ -6054,7 +6054,7 @@ abstract class AppLocalizations {
   /// No description provided for @inviteWhatsAppText.
   ///
   /// In en, this message translates to:
-  /// **'Join \"{home}\" on Nest Mojo : Flat. Open the app → Join a home → type: {phrase}\n(works for 10 minutes)'**
+  /// **'Join \"{home}\" on Illam. Open the app → Join a home → type: {phrase}\n(works for 10 minutes)'**
   String inviteWhatsAppText(String home, String phrase);
 
   /// No description provided for @inviteCopyPhrase.
@@ -6570,7 +6570,7 @@ abstract class AppLocalizations {
   /// No description provided for @errVersion.
   ///
   /// In en, this message translates to:
-  /// **'{inviter}’s Nest Mojo : Flat is a different version. Update both apps from the Play Store, then try again.'**
+  /// **'{inviter}’s Illam is a different version. Update both apps from the Play Store, then try again.'**
   String errVersion(String inviter);
 
   /// No description provided for @errCopy.
@@ -6582,7 +6582,7 @@ abstract class AppLocalizations {
   /// No description provided for @setupBanner.
   ///
   /// In en, this message translates to:
-  /// **'Finishing setup… {pct}% — keep Nest Mojo : Flat open on a family phone'**
+  /// **'Finishing setup… {pct}% — keep Illam open on a family phone'**
   String setupBanner(int pct);
 
   /// No description provided for @agoNow.
@@ -6732,7 +6732,7 @@ abstract class AppLocalizations {
   /// No description provided for @syncUpdateNeeded.
   ///
   /// In en, this message translates to:
-  /// **'Update Nest Mojo : Flat to keep syncing with {name}'**
+  /// **'Update Illam to keep syncing with {name}'**
   String syncUpdateNeeded(String name);
 
   /// No description provided for @profileInSync.
@@ -6756,7 +6756,7 @@ abstract class AppLocalizations {
   /// No description provided for @notifOutOfSync.
   ///
   /// In en, this message translates to:
-  /// **'Nest Mojo : Flat hasn’t synced with your family for 3 days. Open it on the same Wi-Fi to catch up.'**
+  /// **'Illam hasn’t synced with your family for 3 days. Open it on the same Wi-Fi to catch up.'**
   String get notifOutOfSync;
 
   /// No description provided for @notifTodoAssignedTitle.
@@ -7014,7 +7014,7 @@ abstract class AppLocalizations {
   /// No description provided for @backupHeroLead.
   ///
   /// In en, this message translates to:
-  /// **'Nest Mojo : Flat has no cloud of its own. If every phone in the home is lost, a backup is the only way back.'**
+  /// **'Illam has no cloud of its own. If every phone in the home is lost, a backup is the only way back.'**
   String get backupHeroLead;
 
   /// No description provided for @backupPromise1Title.
@@ -7140,7 +7140,7 @@ abstract class AppLocalizations {
   /// No description provided for @backupProvOnedriveSub.
   ///
   /// In en, this message translates to:
-  /// **'Sign in · Apps › Nest Mojo Flat'**
+  /// **'Sign in · Apps › Illam'**
   String get backupProvOnedriveSub;
 
   /// No description provided for @backupProvDropbox.
@@ -7152,7 +7152,7 @@ abstract class AppLocalizations {
   /// No description provided for @backupProvDropboxSub.
   ///
   /// In en, this message translates to:
-  /// **'Sign in · Apps › Nest Mojo Flat'**
+  /// **'Sign in · Apps › Illam'**
   String get backupProvDropboxSub;
 
   /// No description provided for @backupProvPcloud.
@@ -7608,7 +7608,7 @@ abstract class AppLocalizations {
   /// No description provided for @restoreNote.
   ///
   /// In en, this message translates to:
-  /// **'🔒 Your backup is opened on this phone. Nothing is sent to Nest Mojo : Flat.'**
+  /// **'🔒 Your backup is opened on this phone. Nothing is sent to Illam.'**
   String get restoreNote;
 
   /// No description provided for @restorePickTitle.
@@ -7656,7 +7656,7 @@ abstract class AppLocalizations {
   /// No description provided for @restoreEmpty.
   ///
   /// In en, this message translates to:
-  /// **'No Nest Mojo : Flat backups here — check you picked the right account or folder.'**
+  /// **'No Illam backups here — check you picked the right account or folder.'**
   String get restoreEmpty;
 
   /// No description provided for @restoreChooseAnother.
@@ -7908,7 +7908,7 @@ abstract class AppLocalizations {
   /// No description provided for @bkSrvNextcloudHint.
   ///
   /// In en, this message translates to:
-  /// **'We’ll open your Nextcloud login in the browser. Approve Nest Mojo : Flat there — it gets its own app password you can revoke any time.'**
+  /// **'We’ll open your Nextcloud login in the browser. Approve Illam there — it gets its own app password you can revoke any time.'**
   String get bkSrvNextcloudHint;
 
   /// No description provided for @bkSrvNextcloudAccessNote.
@@ -7938,7 +7938,7 @@ abstract class AppLocalizations {
   /// No description provided for @bkSrvApproveLead.
   ///
   /// In en, this message translates to:
-  /// **'Log in to {host} and tap Grant access for Nest Mojo : Flat. Then come back here.'**
+  /// **'Log in to {host} and tap Grant access for Illam. Then come back here.'**
   String bkSrvApproveLead(Object host);
 
   /// No description provided for @bkSrvWaitingApproval.
@@ -8172,25 +8172,25 @@ abstract class AppLocalizations {
   /// No description provided for @bkCloudDropboxAccess.
   ///
   /// In en, this message translates to:
-  /// **'Read and write files in Apps › Nest Mojo Flat only. It can’t see your other files.'**
+  /// **'Read and write files in Apps › Illam only. It can’t see your other files.'**
   String get bkCloudDropboxAccess;
 
   /// No description provided for @bkCloudOnedriveAccess.
   ///
   /// In en, this message translates to:
-  /// **'Read and write files in its own folder, Apps › Nest Mojo Flat. It can’t see your other files.'**
+  /// **'Read and write files in its own folder, Apps › Illam. It can’t see your other files.'**
   String get bkCloudOnedriveAccess;
 
   /// No description provided for @bkCloudAppsFolder.
   ///
   /// In en, this message translates to:
-  /// **'Apps › Nest Mojo Flat'**
+  /// **'Apps › Illam'**
   String get bkCloudAppsFolder;
 
   /// No description provided for @bkCloudOrgApproval.
   ///
   /// In en, this message translates to:
-  /// **'Your organisation must approve Nest Mojo : Flat before it can use this OneDrive. Ask your IT admin, or choose another place.'**
+  /// **'Your organisation must approve Illam before it can use this OneDrive. Ask your IT admin, or choose another place.'**
   String get bkCloudOrgApproval;
 
   /// No description provided for @bkCloudPcloudAccess.

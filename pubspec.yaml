@@ -1,5 +1,5 @@
 name: nm_flat
-description: "Nest Mojo : Flat — run your home, together."
+description: "Illam — local-first household management for everyday peace of mind."
 publish_to: 'none'
 
 version: 1.0.0+1
@@ -72,6 +72,7 @@ flutter:
   assets:
     - assets/data/
     - assets/data/eff_short_wordlist.txt
+    - assets/icon/
   fonts:
     - family: YoungSerif
       fonts:
@@ -85,6 +86,6 @@ flutter_launcher_icons:
   ios: false
   image_path: "assets/icon/icon.png"
   min_sdk_android: 26
-  adaptive_icon_background: "#D98F1C"
+  adaptive_icon_background: "assets/icon/icon_bg.png"
   adaptive_icon_foreground: "assets/icon/icon_fg.png"
   adaptive_icon_monochrome: "assets/icon/icon_mono.png"

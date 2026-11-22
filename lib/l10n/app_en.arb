@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "appName": "Nest Mojo : Flat",
+  "appName": "Illam",
   "tabToday": "Today",
   "tabLists": "Lists",
   "tabTasks": "Tasks",
@@ -72,7 +72,7 @@
   "debugWipeConfirm": "Wipe",
   "debugWiped": "This phone was wiped",
   "commonCancel": "Cancel",
-  "errCantSecure": "Nest Mojo : Flat can’t secure data on this phone",
+  "errCantSecure": "Illam can’t secure data on this phone",
   "welcomeHeadline": "Run your home,\n{em}",
   "@welcomeHeadline": {
     "placeholders": {
@@ -85,7 +85,7 @@
   "welcomeCreateTitle": "Create a home",
   "welcomeCreateBody": "Set it up for your family. You’ll be the admin and invite the others.",
   "welcomeJoinTitle": "Join a home",
-  "welcomeJoinBody": "Someone at home already uses Nest Mojo : Flat. Scan their QR code or type their phrase.",
+  "welcomeJoinBody": "Someone at home already uses Illam. Scan their QR code or type their phrase.",
   "welcomeHint": "Only one person creates the home — everyone else joins it.",
   "welcomeRestore": "Restore from a backup",
   "welcomeFine": "No account, no cloud. Your home’s data stays on your family’s phones and syncs directly between them.",
@@ -1066,7 +1066,7 @@
       "store": {}
     }
   },
-  "storeBackLead": "We copied the list and opened {store}. Shown when you return to Nest Mojo : Flat, so the list stays honest.",
+  "storeBackLead": "We copied the list and opened {store}. Shown when you return to Illam, so the list stays honest.",
   "@storeBackLead": {
     "placeholders": {
       "store": {}
@@ -2187,7 +2187,7 @@
     }
   },
   "homeThisPhone": "This phone",
-  "homeSyncFootnote": "ⓘ Phones sync directly on the same Wi-Fi, or over the internet when Nest Mojo : Flat is open on both.",
+  "homeSyncFootnote": "ⓘ Phones sync directly on the same Wi-Fi, or over the internet when Illam is open on both.",
   "homeBackupNone": "No backups yet",
   "homeBackupNotThisPhone": "Not backing up from this phone — add your own copy",
   "homeInvite": "+ Invite someone",
@@ -2560,7 +2560,7 @@
   "notifChannelMoney": "Bills & spends",
   "notifChannelBackup": "Backup",
   "notifChannelHome": "Home & members",
-  "notifAppName": "Nest Mojo : Flat",
+  "notifAppName": "Illam",
   "notifArrivalBody": "{name} usually comes by {time} — mark in?",
   "@notifArrivalBody": {
     "placeholders": {
@@ -2618,7 +2618,7 @@
   "notifYourHelp": "your house help",
   "notifNotNow": "Not now",
   "notifContinue": "Continue",
-  "notifOffBanner": "Notifications are off for Nest Mojo : Flat",
+  "notifOffBanner": "Notifications are off for Illam",
   "notifTurnOn": "Turn on",
   "debugRunJobs": "Run background jobs now",
   "debugPlanReminders": "Plan reminders",
@@ -2696,7 +2696,7 @@
   },
   "syncLabOtherHome": "This bundle is for another home.",
   "syncLabReplace": "Replace this phone’s home",
-  "syncLabBadBundle": "That isn’t a Nest Mojo : Flat bundle.",
+  "syncLabBadBundle": "That isn’t an Illam bundle.",
   "syncLabTamper": "Tamper test",
   "syncLabAsArjunTick": "As Arjun: tick a grocery item",
   "syncLabAsArjunRename": "As Arjun: rename the home",
@@ -2756,7 +2756,7 @@
   },
   "inviteOrTypePhrase": "OR TYPE THIS PHRASE",
   "inviteSendWhatsApp": "Send phrase on WhatsApp",
-  "inviteWhatsAppText": "Join \"{home}\" on Nest Mojo : Flat. Open the app → Join a home → type: {phrase}\n(works for 10 minutes)",
+  "inviteWhatsAppText": "Join \"{home}\" on Illam. Open the app → Join a home → type: {phrase}\n(works for 10 minutes)",
   "@inviteWhatsAppText": {
     "placeholders": {
       "home": {
@@ -3057,7 +3057,7 @@
       }
     }
   },
-  "errVersion": "{inviter}’s Nest Mojo : Flat is a different version. Update both apps from the Play Store, then try again.",
+  "errVersion": "{inviter}’s Illam is a different version. Update both apps from the Play Store, then try again.",
   "@errVersion": {
     "placeholders": {
       "inviter": {
@@ -3066,7 +3066,7 @@
     }
   },
   "errCopy": "Copy interrupted",
-  "setupBanner": "Finishing setup… {pct}% — keep Nest Mojo : Flat open on a family phone",
+  "setupBanner": "Finishing setup… {pct}% — keep Illam open on a family phone",
   "@setupBanner": {
     "placeholders": {
       "pct": {
@@ -3185,7 +3185,7 @@
   },
   "syncClockWrong": "Your phone’s clock looks wrong — sync may be off",
   "syncWifiBlocked": "Your Wi-Fi may block phones from seeing each other — syncing over the internet instead.",
-  "syncUpdateNeeded": "Update Nest Mojo : Flat to keep syncing with {name}",
+  "syncUpdateNeeded": "Update Illam to keep syncing with {name}",
   "@syncUpdateNeeded": {
     "placeholders": {
       "name": {
@@ -3210,7 +3210,7 @@
       }
     }
   },
-  "notifOutOfSync": "Nest Mojo : Flat hasn’t synced with your family for 3 days. Open it on the same Wi-Fi to catch up.",
+  "notifOutOfSync": "Illam hasn’t synced with your family for 3 days. Open it on the same Wi-Fi to catch up.",
   "notifTodoAssignedTitle": "To-do assigned to you",
   "notifTodoAssignedBody": "{title} · from {name}",
   "@notifTodoAssignedBody": {
@@ -3385,7 +3385,7 @@
       "home": {}
     }
   },
-  "backupHeroLead": "Nest Mojo : Flat has no cloud of its own. If every phone in the home is lost, a backup is the only way back.",
+  "backupHeroLead": "Illam has no cloud of its own. If every phone in the home is lost, a backup is the only way back.",
   "backupPromise1Title": "Locked before it leaves this phone",
   "backupPromise1": "Encrypted with a password only you know. Your cloud sees just a locked file.",
   "backupPromise2Title": "Runs by itself",
@@ -3414,9 +3414,9 @@
   "backupProvGdrive": "Google Drive",
   "backupProvGdriveSub": "Sign in · Hidden app folder in your Drive",
   "backupProvOnedrive": "OneDrive",
-  "backupProvOnedriveSub": "Sign in · Apps › Nest Mojo Flat",
+  "backupProvOnedriveSub": "Sign in · Apps › Illam",
   "backupProvDropbox": "Dropbox",
-  "backupProvDropboxSub": "Sign in · Apps › Nest Mojo Flat",
+  "backupProvDropboxSub": "Sign in · Apps › Illam",
   "backupProvPcloud": "pCloud",
   "backupProvPcloudSub": "Sign in · App folder · EU or US region",
   "backupProvNextcloud": "Nextcloud",
@@ -3596,7 +3596,7 @@
   "debugFolderOffPhone": "Count folders as off-phone",
   "restoreTitle": "Restore from a backup",
   "restoreSub": "Choose where your backup is.",
-  "restoreNote": "🔒 Your backup is opened on this phone. Nothing is sent to Nest Mojo : Flat.",
+  "restoreNote": "🔒 Your backup is opened on this phone. Nothing is sent to Illam.",
   "restorePickTitle": "Pick a backup",
   "restoreFoundIn": "Found in {provider} · {account}",
   "@restoreFoundIn": {
@@ -3628,7 +3628,7 @@
       }
     }
   },
-  "restoreEmpty": "No Nest Mojo : Flat backups here — check you picked the right account or folder.",
+  "restoreEmpty": "No Illam backups here — check you picked the right account or folder.",
   "restoreChooseAnother": "Choose another place",
   "restoreUnlockTitle": "Unlock this backup",
   "restoreUnlocking": "Unlocking…",
@@ -3738,12 +3738,12 @@
     }
   },
   "bkSrvNextcloudTitle": "Nextcloud",
-  "bkSrvNextcloudHint": "We’ll open your Nextcloud login in the browser. Approve Nest Mojo : Flat there — it gets its own app password you can revoke any time.",
+  "bkSrvNextcloudHint": "We’ll open your Nextcloud login in the browser. Approve Illam there — it gets its own app password you can revoke any time.",
   "bkSrvNextcloudAccessNote": "This app password can reach your whole Nextcloud account. A separate Nextcloud user just for backups is safer.",
   "bkSrvContinueInBrowser": "Continue in browser",
   "bkSrvOpeningLogin": "Opening your Nextcloud login…",
   "bkSrvApproveTitle": "Approve in your browser",
-  "bkSrvApproveLead": "Log in to {host} and tap Grant access for Nest Mojo : Flat. Then come back here.",
+  "bkSrvApproveLead": "Log in to {host} and tap Grant access for Illam. Then come back here.",
   "@bkSrvApproveLead": {
     "placeholders": {
       "host": {}
@@ -3820,10 +3820,10 @@
       "provider": {}
     }
   },
-  "bkCloudDropboxAccess": "Read and write files in Apps › Nest Mojo Flat only. It can’t see your other files.",
-  "bkCloudOnedriveAccess": "Read and write files in its own folder, Apps › Nest Mojo Flat. It can’t see your other files.",
-  "bkCloudAppsFolder": "Apps › Nest Mojo Flat",
-  "bkCloudOrgApproval": "Your organisation must approve Nest Mojo : Flat before it can use this OneDrive. Ask your IT admin, or choose another place.",
+  "bkCloudDropboxAccess": "Read and write files in Apps › Illam only. It can’t see your other files.",
+  "bkCloudOnedriveAccess": "Read and write files in its own folder, Apps › Illam. It can’t see your other files.",
+  "bkCloudAppsFolder": "Apps › Illam",
+  "bkCloudOrgApproval": "Your organisation must approve Illam before it can use this OneDrive. Ask your IT admin, or choose another place.",
   "bkCloudPcloudAccess": "Read and write files in its own app folder only.",
   "bkCloudPcloudWhere": "App folder · EU or US region",
   "bkCloudPcloudAccount": "{email} · {region}",

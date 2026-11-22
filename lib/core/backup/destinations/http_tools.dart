@@ -32,7 +32,7 @@ Dio buildServerDio({String? tlsPin}) {
       sendTimeout: const Duration(minutes: 5),
       receiveTimeout: const Duration(minutes: 2),
       validateStatus: (_) => true,
-      headers: const {'User-Agent': 'Nest Mojo : Flat (Android)'},
+      headers: const {'User-Agent': 'Illam (Android)'},
     ),
   );
   if (tlsPin != null) {
