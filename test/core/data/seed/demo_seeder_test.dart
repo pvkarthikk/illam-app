@@ -52,6 +52,10 @@ void main() {
     expect(items.where((i) => i.list == 'shopping' && !i.done).length, 5);
     final history = await db.select(db.itemHistory).get();
     expect(history.length, 11);
+    final routines = await db.select(db.routines).get();
+    expect(routines.length, 8);
+    final todos = await db.select(db.todos).get();
+    expect(todos.length, 7);
     expect(
       notes.map((n) => n.title).toSet(),
       {'Milk 2L', 'Call plumber', 'Pay rent'},

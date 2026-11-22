@@ -36,6 +36,8 @@ class CollectionRegistry {
       db.expenses,
       db.items,
       db.itemHistory,
+      db.routines,
+      db.todos,
       // … one line per synced table
     ])
       t.actualTableName: _specOf(t),

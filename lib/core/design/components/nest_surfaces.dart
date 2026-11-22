@@ -10,11 +10,15 @@ class NestCard extends StatelessWidget {
     required this.child,
     this.padding = EdgeInsets.zero,
     this.onTap,
+    this.fill,
+    this.borderColor,
   });
 
   final Widget child;
   final EdgeInsetsGeometry padding;
   final VoidCallback? onTap;
+  final Color? fill;
+  final Color? borderColor;
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +29,9 @@ class NestCard extends StatelessWidget {
     return Container(
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        color: c.card,
+        color: fill ?? c.card,
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: c.line),
+        border: Border.all(color: borderColor ?? c.line),
         boxShadow: [
           BoxShadow(
             color: isDark

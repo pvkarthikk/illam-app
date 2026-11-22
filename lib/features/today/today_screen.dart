@@ -3,6 +3,7 @@ import 'package:material_ui/material_ui.dart';
 
 import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/providers.dart';
+import 'package:nm_flat/features/today/sections/due_today_section.dart';
 import 'package:nm_flat/features/today/sections/help_at_home_section.dart';
 import 'package:nm_flat/features/today/sections/hero_section.dart';
 import 'package:nm_flat/features/today/sections/ready_to_order_section.dart';
@@ -20,7 +21,7 @@ class TodayScreen extends ConsumerWidget {
           padding: const EdgeInsets.only(bottom: 96),
           children: const [
             HeroSection(),
-            // DueTodaySection — P08
+            DueTodaySection(),
             // MenuSection — P09
             ReadyToOrderSection(),
             HelpAtHomeSection(),

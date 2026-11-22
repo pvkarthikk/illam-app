@@ -12,16 +12,35 @@ import 'package:nm_flat/core/data/repo/home_repo.dart';
 import 'package:nm_flat/core/data/repo/lists_repo.dart';
 import 'package:nm_flat/core/data/repo/salary_repo.dart';
 import 'package:nm_flat/core/data/repo/staff_repo.dart';
+import 'package:nm_flat/core/data/repo/tasks_repo.dart';
 import 'package:nm_flat/core/data/secure/secure_store.dart';
 import 'package:nm_flat/core/data/seed/demo_seeder.dart';
+import 'package:nm_flat/core/design/nest_colors.dart';
+import 'package:nm_flat/core/domain/names.dart';
+import 'package:nm_flat/core/domain/routine_state.dart';
 import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/time/clock.dart';
 import 'package:nm_flat/core/time/hlc.dart';
 import 'package:nm_flat/core/ui/snackbar.dart';
+import 'package:nm_flat/features/staff/staff_providers.dart';
 
 final snackbarProvider = Provider((ref) => SnackbarService());
 final themeModeProvider = Provider<ThemeMode>((ref) => ThemeMode.system);
-final tasksBadgeProvider = Provider<int>((ref) => 0);
+final tasksBadgeProvider = Provider<int>((ref) {
+  final routines = ref.watch(routinesProvider).value ?? const <RoutineRow>[];
+  final todos = ref.watch(todosProvider).value ?? const <TodoRow>[];
+  final today = ref.watch(todayDateProvider);
+  return tasksDueCount(
+    routines: [
+      for (final r in routines)
+        (lastDone: r.lastDone, everyDays: r.everyDays),
+    ],
+    todos: [
+      for (final t in todos) (due: t.due, done: t.done),
+    ],
+    today: today,
+  );
+});
 final moneyBadgeProvider = Provider<int>((ref) => 0);
 final tabScrollControllersProvider = Provider<List<ScrollController>>((ref) {
   final list = List.generate(NestTab.values.length, (_) => ScrollController());
@@ -184,4 +203,63 @@ final usualMapProvider = Provider.family<Map<String, String>, String>((
     for (final h in rows)
       if (h.usualChannel != null) h.nameKey: h.usualChannel!,
   };
+});
+final tasksRepoProvider = Provider(
+  (ref) => TasksRepo(
+    ref.watch(dbProvider),
+    ref.watch(changesProvider),
+    ref.watch(prefsProvider),
+  ),
+);
+final routinesProvider = StreamProvider<List<RoutineRow>>((ref) {
+  final home = ref.watch(currentHomeIdProvider).value;
+  if (home == null) return Stream.value(const <RoutineRow>[]);
+  return ref.watch(tasksRepoProvider).watchRoutines(home);
+});
+final todosProvider = StreamProvider<List<TodoRow>>((ref) {
+  final home = ref.watch(currentHomeIdProvider).value;
+  if (home == null) return Stream.value(const <TodoRow>[]);
+  return ref.watch(tasksRepoProvider).watchTodos(home);
+});
+final taskPeopleProvider = Provider<AsyncValue<List<TaskPerson>>>((ref) {
+  final mAsync = ref.watch(membersProvider);
+  final sAsync = ref.watch(activeStaffProvider);
+  if (mAsync case AsyncError(:final error, :final stackTrace)) {
+    return AsyncError(error, stackTrace);
+  }
+  if (sAsync case AsyncError(:final error, :final stackTrace)) {
+    return AsyncError(error, stackTrace);
+  }
+  if (mAsync is! AsyncData<List<Member>> ||
+      sAsync is! AsyncData<List<StaffData>>) {
+    return const AsyncLoading();
+  }
+  final me = ref.watch(myMemberIdProvider);
+  final activeMembers = [
+    for (final m in mAsync.value)
+      if (m.status == 'active') m,
+  ];
+  Color colorOf(String? hex) => NestPalette.fromHex(
+    (hex == null || hex.isEmpty) ? '#4F8A8B' : hex,
+  );
+  TaskPerson memberPerson(Member m) => TaskPerson(
+    id: m.id,
+    type: 'member',
+    firstName: m.firstName ?? '',
+    color: colorOf(m.color),
+    isMe: m.id == me,
+  );
+  return AsyncData([
+    for (final m in activeMembers)
+      if (m.id == me) memberPerson(m),
+    for (final m in activeMembers)
+      if (m.id != me) memberPerson(m),
+    for (final s in sAsync.value)
+      TaskPerson(
+        id: s.id,
+        type: 'staff',
+        firstName: Names.firstName(s.name ?? ''),
+        color: colorOf(s.color),
+      ),
+  ]);
 });

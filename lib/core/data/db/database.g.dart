@@ -11567,6 +11567,1572 @@ class ItemHistoryCompanion extends UpdateCompanion<ItemHistoryRow> {
   }
 }
 
+class $RoutinesTable extends Routines
+    with TableInfo<$RoutinesTable, RoutineRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $RoutinesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _homeIdMeta = const VerificationMeta('homeId');
+  @override
+  late final GeneratedColumn<String> homeId = GeneratedColumn<String>(
+    'home_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _deletedMeta = const VerificationMeta(
+    'deleted',
+  );
+  @override
+  late final GeneratedColumn<bool> deleted = GeneratedColumn<bool>(
+    'deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _createdByMeta = const VerificationMeta(
+    'createdBy',
+  );
+  @override
+  late final GeneratedColumn<String> createdBy = GeneratedColumn<String>(
+    'created_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _updatedByMeta = const VerificationMeta(
+    'updatedBy',
+  );
+  @override
+  late final GeneratedColumn<String> updatedBy = GeneratedColumn<String>(
+    'updated_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _roomMeta = const VerificationMeta('room');
+  @override
+  late final GeneratedColumn<String> room = GeneratedColumn<String>(
+    'room',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('Kitchen'),
+  );
+  static const VerificationMeta _everyDaysMeta = const VerificationMeta(
+    'everyDays',
+  );
+  @override
+  late final GeneratedColumn<int> everyDays = GeneratedColumn<int>(
+    'every_days',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(7),
+  );
+  static const VerificationMeta _assigneeTypeMeta = const VerificationMeta(
+    'assigneeType',
+  );
+  @override
+  late final GeneratedColumn<String> assigneeType = GeneratedColumn<String>(
+    'assignee_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('member'),
+  );
+  static const VerificationMeta _assigneeMeta = const VerificationMeta(
+    'assignee',
+  );
+  @override
+  late final GeneratedColumn<String> assignee = GeneratedColumn<String>(
+    'assignee',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _lastDoneMeta = const VerificationMeta(
+    'lastDone',
+  );
+  @override
+  late final GeneratedColumn<String> lastDone = GeneratedColumn<String>(
+    'last_done',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _lastDoneByMeta = const VerificationMeta(
+    'lastDoneBy',
+  );
+  @override
+  late final GeneratedColumn<String> lastDoneBy = GeneratedColumn<String>(
+    'last_done_by',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    homeId,
+    deleted,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    name,
+    room,
+    everyDays,
+    assigneeType,
+    assignee,
+    lastDone,
+    lastDoneBy,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'routines';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<RoutineRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('home_id')) {
+      context.handle(
+        _homeIdMeta,
+        homeId.isAcceptableOrUnknown(data['home_id']!, _homeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_homeIdMeta);
+    }
+    if (data.containsKey('deleted')) {
+      context.handle(
+        _deletedMeta,
+        deleted.isAcceptableOrUnknown(data['deleted']!, _deletedMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('created_by')) {
+      context.handle(
+        _createdByMeta,
+        createdBy.isAcceptableOrUnknown(data['created_by']!, _createdByMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('updated_by')) {
+      context.handle(
+        _updatedByMeta,
+        updatedBy.isAcceptableOrUnknown(data['updated_by']!, _updatedByMeta),
+      );
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    }
+    if (data.containsKey('room')) {
+      context.handle(
+        _roomMeta,
+        room.isAcceptableOrUnknown(data['room']!, _roomMeta),
+      );
+    }
+    if (data.containsKey('every_days')) {
+      context.handle(
+        _everyDaysMeta,
+        everyDays.isAcceptableOrUnknown(data['every_days']!, _everyDaysMeta),
+      );
+    }
+    if (data.containsKey('assignee_type')) {
+      context.handle(
+        _assigneeTypeMeta,
+        assigneeType.isAcceptableOrUnknown(
+          data['assignee_type']!,
+          _assigneeTypeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('assignee')) {
+      context.handle(
+        _assigneeMeta,
+        assignee.isAcceptableOrUnknown(data['assignee']!, _assigneeMeta),
+      );
+    }
+    if (data.containsKey('last_done')) {
+      context.handle(
+        _lastDoneMeta,
+        lastDone.isAcceptableOrUnknown(data['last_done']!, _lastDoneMeta),
+      );
+    }
+    if (data.containsKey('last_done_by')) {
+      context.handle(
+        _lastDoneByMeta,
+        lastDoneBy.isAcceptableOrUnknown(
+          data['last_done_by']!,
+          _lastDoneByMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  RoutineRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return RoutineRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      homeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}home_id'],
+      )!,
+      deleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}deleted'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}created_at'],
+      )!,
+      createdBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_by'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      updatedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      room: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}room'],
+      )!,
+      everyDays: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}every_days'],
+      )!,
+      assigneeType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}assignee_type'],
+      )!,
+      assignee: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}assignee'],
+      )!,
+      lastDone: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}last_done'],
+      )!,
+      lastDoneBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}last_done_by'],
+      ),
+    );
+  }
+
+  @override
+  $RoutinesTable createAlias(String alias) {
+    return $RoutinesTable(attachedDatabase, alias);
+  }
+}
+
+class RoutineRow extends DataClass implements Insertable<RoutineRow> {
+  final String id;
+  final String homeId;
+  final bool deleted;
+  final int createdAt;
+  final String createdBy;
+  final int updatedAt;
+  final String updatedBy;
+  final String name;
+  final String room;
+  final int everyDays;
+  final String assigneeType;
+  final String assignee;
+  final String lastDone;
+  final String? lastDoneBy;
+  const RoutineRow({
+    required this.id,
+    required this.homeId,
+    required this.deleted,
+    required this.createdAt,
+    required this.createdBy,
+    required this.updatedAt,
+    required this.updatedBy,
+    required this.name,
+    required this.room,
+    required this.everyDays,
+    required this.assigneeType,
+    required this.assignee,
+    required this.lastDone,
+    this.lastDoneBy,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['home_id'] = Variable<String>(homeId);
+    map['deleted'] = Variable<bool>(deleted);
+    map['created_at'] = Variable<int>(createdAt);
+    map['created_by'] = Variable<String>(createdBy);
+    map['updated_at'] = Variable<int>(updatedAt);
+    map['updated_by'] = Variable<String>(updatedBy);
+    map['name'] = Variable<String>(name);
+    map['room'] = Variable<String>(room);
+    map['every_days'] = Variable<int>(everyDays);
+    map['assignee_type'] = Variable<String>(assigneeType);
+    map['assignee'] = Variable<String>(assignee);
+    map['last_done'] = Variable<String>(lastDone);
+    if (!nullToAbsent || lastDoneBy != null) {
+      map['last_done_by'] = Variable<String>(lastDoneBy);
+    }
+    return map;
+  }
+
+  RoutinesCompanion toCompanion(bool nullToAbsent) {
+    return RoutinesCompanion(
+      id: Value(id),
+      homeId: Value(homeId),
+      deleted: Value(deleted),
+      createdAt: Value(createdAt),
+      createdBy: Value(createdBy),
+      updatedAt: Value(updatedAt),
+      updatedBy: Value(updatedBy),
+      name: Value(name),
+      room: Value(room),
+      everyDays: Value(everyDays),
+      assigneeType: Value(assigneeType),
+      assignee: Value(assignee),
+      lastDone: Value(lastDone),
+      lastDoneBy: lastDoneBy == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastDoneBy),
+    );
+  }
+
+  factory RoutineRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return RoutineRow(
+      id: serializer.fromJson<String>(json['id']),
+      homeId: serializer.fromJson<String>(json['homeId']),
+      deleted: serializer.fromJson<bool>(json['deleted']),
+      createdAt: serializer.fromJson<int>(json['createdAt']),
+      createdBy: serializer.fromJson<String>(json['createdBy']),
+      updatedAt: serializer.fromJson<int>(json['updatedAt']),
+      updatedBy: serializer.fromJson<String>(json['updatedBy']),
+      name: serializer.fromJson<String>(json['name']),
+      room: serializer.fromJson<String>(json['room']),
+      everyDays: serializer.fromJson<int>(json['everyDays']),
+      assigneeType: serializer.fromJson<String>(json['assigneeType']),
+      assignee: serializer.fromJson<String>(json['assignee']),
+      lastDone: serializer.fromJson<String>(json['lastDone']),
+      lastDoneBy: serializer.fromJson<String?>(json['lastDoneBy']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'homeId': serializer.toJson<String>(homeId),
+      'deleted': serializer.toJson<bool>(deleted),
+      'createdAt': serializer.toJson<int>(createdAt),
+      'createdBy': serializer.toJson<String>(createdBy),
+      'updatedAt': serializer.toJson<int>(updatedAt),
+      'updatedBy': serializer.toJson<String>(updatedBy),
+      'name': serializer.toJson<String>(name),
+      'room': serializer.toJson<String>(room),
+      'everyDays': serializer.toJson<int>(everyDays),
+      'assigneeType': serializer.toJson<String>(assigneeType),
+      'assignee': serializer.toJson<String>(assignee),
+      'lastDone': serializer.toJson<String>(lastDone),
+      'lastDoneBy': serializer.toJson<String?>(lastDoneBy),
+    };
+  }
+
+  RoutineRow copyWith({
+    String? id,
+    String? homeId,
+    bool? deleted,
+    int? createdAt,
+    String? createdBy,
+    int? updatedAt,
+    String? updatedBy,
+    String? name,
+    String? room,
+    int? everyDays,
+    String? assigneeType,
+    String? assignee,
+    String? lastDone,
+    Value<String?> lastDoneBy = const Value.absent(),
+  }) => RoutineRow(
+    id: id ?? this.id,
+    homeId: homeId ?? this.homeId,
+    deleted: deleted ?? this.deleted,
+    createdAt: createdAt ?? this.createdAt,
+    createdBy: createdBy ?? this.createdBy,
+    updatedAt: updatedAt ?? this.updatedAt,
+    updatedBy: updatedBy ?? this.updatedBy,
+    name: name ?? this.name,
+    room: room ?? this.room,
+    everyDays: everyDays ?? this.everyDays,
+    assigneeType: assigneeType ?? this.assigneeType,
+    assignee: assignee ?? this.assignee,
+    lastDone: lastDone ?? this.lastDone,
+    lastDoneBy: lastDoneBy.present ? lastDoneBy.value : this.lastDoneBy,
+  );
+  RoutineRow copyWithCompanion(RoutinesCompanion data) {
+    return RoutineRow(
+      id: data.id.present ? data.id.value : this.id,
+      homeId: data.homeId.present ? data.homeId.value : this.homeId,
+      deleted: data.deleted.present ? data.deleted.value : this.deleted,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      createdBy: data.createdBy.present ? data.createdBy.value : this.createdBy,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      updatedBy: data.updatedBy.present ? data.updatedBy.value : this.updatedBy,
+      name: data.name.present ? data.name.value : this.name,
+      room: data.room.present ? data.room.value : this.room,
+      everyDays: data.everyDays.present ? data.everyDays.value : this.everyDays,
+      assigneeType: data.assigneeType.present
+          ? data.assigneeType.value
+          : this.assigneeType,
+      assignee: data.assignee.present ? data.assignee.value : this.assignee,
+      lastDone: data.lastDone.present ? data.lastDone.value : this.lastDone,
+      lastDoneBy: data.lastDoneBy.present
+          ? data.lastDoneBy.value
+          : this.lastDoneBy,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RoutineRow(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('deleted: $deleted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('name: $name, ')
+          ..write('room: $room, ')
+          ..write('everyDays: $everyDays, ')
+          ..write('assigneeType: $assigneeType, ')
+          ..write('assignee: $assignee, ')
+          ..write('lastDone: $lastDone, ')
+          ..write('lastDoneBy: $lastDoneBy')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    homeId,
+    deleted,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    name,
+    room,
+    everyDays,
+    assigneeType,
+    assignee,
+    lastDone,
+    lastDoneBy,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is RoutineRow &&
+          other.id == this.id &&
+          other.homeId == this.homeId &&
+          other.deleted == this.deleted &&
+          other.createdAt == this.createdAt &&
+          other.createdBy == this.createdBy &&
+          other.updatedAt == this.updatedAt &&
+          other.updatedBy == this.updatedBy &&
+          other.name == this.name &&
+          other.room == this.room &&
+          other.everyDays == this.everyDays &&
+          other.assigneeType == this.assigneeType &&
+          other.assignee == this.assignee &&
+          other.lastDone == this.lastDone &&
+          other.lastDoneBy == this.lastDoneBy);
+}
+
+class RoutinesCompanion extends UpdateCompanion<RoutineRow> {
+  final Value<String> id;
+  final Value<String> homeId;
+  final Value<bool> deleted;
+  final Value<int> createdAt;
+  final Value<String> createdBy;
+  final Value<int> updatedAt;
+  final Value<String> updatedBy;
+  final Value<String> name;
+  final Value<String> room;
+  final Value<int> everyDays;
+  final Value<String> assigneeType;
+  final Value<String> assignee;
+  final Value<String> lastDone;
+  final Value<String?> lastDoneBy;
+  final Value<int> rowid;
+  const RoutinesCompanion({
+    this.id = const Value.absent(),
+    this.homeId = const Value.absent(),
+    this.deleted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.name = const Value.absent(),
+    this.room = const Value.absent(),
+    this.everyDays = const Value.absent(),
+    this.assigneeType = const Value.absent(),
+    this.assignee = const Value.absent(),
+    this.lastDone = const Value.absent(),
+    this.lastDoneBy = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  RoutinesCompanion.insert({
+    required String id,
+    required String homeId,
+    this.deleted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.name = const Value.absent(),
+    this.room = const Value.absent(),
+    this.everyDays = const Value.absent(),
+    this.assigneeType = const Value.absent(),
+    this.assignee = const Value.absent(),
+    this.lastDone = const Value.absent(),
+    this.lastDoneBy = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       homeId = Value(homeId);
+  static Insertable<RoutineRow> custom({
+    Expression<String>? id,
+    Expression<String>? homeId,
+    Expression<bool>? deleted,
+    Expression<int>? createdAt,
+    Expression<String>? createdBy,
+    Expression<int>? updatedAt,
+    Expression<String>? updatedBy,
+    Expression<String>? name,
+    Expression<String>? room,
+    Expression<int>? everyDays,
+    Expression<String>? assigneeType,
+    Expression<String>? assignee,
+    Expression<String>? lastDone,
+    Expression<String>? lastDoneBy,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (homeId != null) 'home_id': homeId,
+      if (deleted != null) 'deleted': deleted,
+      if (createdAt != null) 'created_at': createdAt,
+      if (createdBy != null) 'created_by': createdBy,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (updatedBy != null) 'updated_by': updatedBy,
+      if (name != null) 'name': name,
+      if (room != null) 'room': room,
+      if (everyDays != null) 'every_days': everyDays,
+      if (assigneeType != null) 'assignee_type': assigneeType,
+      if (assignee != null) 'assignee': assignee,
+      if (lastDone != null) 'last_done': lastDone,
+      if (lastDoneBy != null) 'last_done_by': lastDoneBy,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  RoutinesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? homeId,
+    Value<bool>? deleted,
+    Value<int>? createdAt,
+    Value<String>? createdBy,
+    Value<int>? updatedAt,
+    Value<String>? updatedBy,
+    Value<String>? name,
+    Value<String>? room,
+    Value<int>? everyDays,
+    Value<String>? assigneeType,
+    Value<String>? assignee,
+    Value<String>? lastDone,
+    Value<String?>? lastDoneBy,
+    Value<int>? rowid,
+  }) {
+    return RoutinesCompanion(
+      id: id ?? this.id,
+      homeId: homeId ?? this.homeId,
+      deleted: deleted ?? this.deleted,
+      createdAt: createdAt ?? this.createdAt,
+      createdBy: createdBy ?? this.createdBy,
+      updatedAt: updatedAt ?? this.updatedAt,
+      updatedBy: updatedBy ?? this.updatedBy,
+      name: name ?? this.name,
+      room: room ?? this.room,
+      everyDays: everyDays ?? this.everyDays,
+      assigneeType: assigneeType ?? this.assigneeType,
+      assignee: assignee ?? this.assignee,
+      lastDone: lastDone ?? this.lastDone,
+      lastDoneBy: lastDoneBy ?? this.lastDoneBy,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (homeId.present) {
+      map['home_id'] = Variable<String>(homeId.value);
+    }
+    if (deleted.present) {
+      map['deleted'] = Variable<bool>(deleted.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (createdBy.present) {
+      map['created_by'] = Variable<String>(createdBy.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (updatedBy.present) {
+      map['updated_by'] = Variable<String>(updatedBy.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (room.present) {
+      map['room'] = Variable<String>(room.value);
+    }
+    if (everyDays.present) {
+      map['every_days'] = Variable<int>(everyDays.value);
+    }
+    if (assigneeType.present) {
+      map['assignee_type'] = Variable<String>(assigneeType.value);
+    }
+    if (assignee.present) {
+      map['assignee'] = Variable<String>(assignee.value);
+    }
+    if (lastDone.present) {
+      map['last_done'] = Variable<String>(lastDone.value);
+    }
+    if (lastDoneBy.present) {
+      map['last_done_by'] = Variable<String>(lastDoneBy.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RoutinesCompanion(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('deleted: $deleted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('name: $name, ')
+          ..write('room: $room, ')
+          ..write('everyDays: $everyDays, ')
+          ..write('assigneeType: $assigneeType, ')
+          ..write('assignee: $assignee, ')
+          ..write('lastDone: $lastDone, ')
+          ..write('lastDoneBy: $lastDoneBy, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TodosTable extends Todos with TableInfo<$TodosTable, TodoRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TodosTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _homeIdMeta = const VerificationMeta('homeId');
+  @override
+  late final GeneratedColumn<String> homeId = GeneratedColumn<String>(
+    'home_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _deletedMeta = const VerificationMeta(
+    'deleted',
+  );
+  @override
+  late final GeneratedColumn<bool> deleted = GeneratedColumn<bool>(
+    'deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _createdByMeta = const VerificationMeta(
+    'createdBy',
+  );
+  @override
+  late final GeneratedColumn<String> createdBy = GeneratedColumn<String>(
+    'created_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _updatedByMeta = const VerificationMeta(
+    'updatedBy',
+  );
+  @override
+  late final GeneratedColumn<String> updatedBy = GeneratedColumn<String>(
+    'updated_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+    'title',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _dueMeta = const VerificationMeta('due');
+  @override
+  late final GeneratedColumn<String> due = GeneratedColumn<String>(
+    'due',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _assigneeTypeMeta = const VerificationMeta(
+    'assigneeType',
+  );
+  @override
+  late final GeneratedColumn<String> assigneeType = GeneratedColumn<String>(
+    'assignee_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('member'),
+  );
+  static const VerificationMeta _assigneeMeta = const VerificationMeta(
+    'assignee',
+  );
+  @override
+  late final GeneratedColumn<String> assignee = GeneratedColumn<String>(
+    'assignee',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _doneMeta = const VerificationMeta('done');
+  @override
+  late final GeneratedColumn<bool> done = GeneratedColumn<bool>(
+    'done',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("done" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _doneAtMeta = const VerificationMeta('doneAt');
+  @override
+  late final GeneratedColumn<int> doneAt = GeneratedColumn<int>(
+    'done_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _doneByMeta = const VerificationMeta('doneBy');
+  @override
+  late final GeneratedColumn<String> doneBy = GeneratedColumn<String>(
+    'done_by',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    homeId,
+    deleted,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    title,
+    due,
+    assigneeType,
+    assignee,
+    done,
+    doneAt,
+    doneBy,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'todos';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TodoRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('home_id')) {
+      context.handle(
+        _homeIdMeta,
+        homeId.isAcceptableOrUnknown(data['home_id']!, _homeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_homeIdMeta);
+    }
+    if (data.containsKey('deleted')) {
+      context.handle(
+        _deletedMeta,
+        deleted.isAcceptableOrUnknown(data['deleted']!, _deletedMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('created_by')) {
+      context.handle(
+        _createdByMeta,
+        createdBy.isAcceptableOrUnknown(data['created_by']!, _createdByMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('updated_by')) {
+      context.handle(
+        _updatedByMeta,
+        updatedBy.isAcceptableOrUnknown(data['updated_by']!, _updatedByMeta),
+      );
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
+    }
+    if (data.containsKey('due')) {
+      context.handle(
+        _dueMeta,
+        due.isAcceptableOrUnknown(data['due']!, _dueMeta),
+      );
+    }
+    if (data.containsKey('assignee_type')) {
+      context.handle(
+        _assigneeTypeMeta,
+        assigneeType.isAcceptableOrUnknown(
+          data['assignee_type']!,
+          _assigneeTypeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('assignee')) {
+      context.handle(
+        _assigneeMeta,
+        assignee.isAcceptableOrUnknown(data['assignee']!, _assigneeMeta),
+      );
+    }
+    if (data.containsKey('done')) {
+      context.handle(
+        _doneMeta,
+        done.isAcceptableOrUnknown(data['done']!, _doneMeta),
+      );
+    }
+    if (data.containsKey('done_at')) {
+      context.handle(
+        _doneAtMeta,
+        doneAt.isAcceptableOrUnknown(data['done_at']!, _doneAtMeta),
+      );
+    }
+    if (data.containsKey('done_by')) {
+      context.handle(
+        _doneByMeta,
+        doneBy.isAcceptableOrUnknown(data['done_by']!, _doneByMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TodoRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TodoRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      homeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}home_id'],
+      )!,
+      deleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}deleted'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}created_at'],
+      )!,
+      createdBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_by'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      updatedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by'],
+      )!,
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      )!,
+      due: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}due'],
+      )!,
+      assigneeType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}assignee_type'],
+      )!,
+      assignee: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}assignee'],
+      )!,
+      done: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}done'],
+      )!,
+      doneAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}done_at'],
+      ),
+      doneBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}done_by'],
+      ),
+    );
+  }
+
+  @override
+  $TodosTable createAlias(String alias) {
+    return $TodosTable(attachedDatabase, alias);
+  }
+}
+
+class TodoRow extends DataClass implements Insertable<TodoRow> {
+  final String id;
+  final String homeId;
+  final bool deleted;
+  final int createdAt;
+  final String createdBy;
+  final int updatedAt;
+  final String updatedBy;
+  final String title;
+  final String due;
+  final String assigneeType;
+  final String assignee;
+  final bool done;
+  final int? doneAt;
+  final String? doneBy;
+  const TodoRow({
+    required this.id,
+    required this.homeId,
+    required this.deleted,
+    required this.createdAt,
+    required this.createdBy,
+    required this.updatedAt,
+    required this.updatedBy,
+    required this.title,
+    required this.due,
+    required this.assigneeType,
+    required this.assignee,
+    required this.done,
+    this.doneAt,
+    this.doneBy,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['home_id'] = Variable<String>(homeId);
+    map['deleted'] = Variable<bool>(deleted);
+    map['created_at'] = Variable<int>(createdAt);
+    map['created_by'] = Variable<String>(createdBy);
+    map['updated_at'] = Variable<int>(updatedAt);
+    map['updated_by'] = Variable<String>(updatedBy);
+    map['title'] = Variable<String>(title);
+    map['due'] = Variable<String>(due);
+    map['assignee_type'] = Variable<String>(assigneeType);
+    map['assignee'] = Variable<String>(assignee);
+    map['done'] = Variable<bool>(done);
+    if (!nullToAbsent || doneAt != null) {
+      map['done_at'] = Variable<int>(doneAt);
+    }
+    if (!nullToAbsent || doneBy != null) {
+      map['done_by'] = Variable<String>(doneBy);
+    }
+    return map;
+  }
+
+  TodosCompanion toCompanion(bool nullToAbsent) {
+    return TodosCompanion(
+      id: Value(id),
+      homeId: Value(homeId),
+      deleted: Value(deleted),
+      createdAt: Value(createdAt),
+      createdBy: Value(createdBy),
+      updatedAt: Value(updatedAt),
+      updatedBy: Value(updatedBy),
+      title: Value(title),
+      due: Value(due),
+      assigneeType: Value(assigneeType),
+      assignee: Value(assignee),
+      done: Value(done),
+      doneAt: doneAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(doneAt),
+      doneBy: doneBy == null && nullToAbsent
+          ? const Value.absent()
+          : Value(doneBy),
+    );
+  }
+
+  factory TodoRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TodoRow(
+      id: serializer.fromJson<String>(json['id']),
+      homeId: serializer.fromJson<String>(json['homeId']),
+      deleted: serializer.fromJson<bool>(json['deleted']),
+      createdAt: serializer.fromJson<int>(json['createdAt']),
+      createdBy: serializer.fromJson<String>(json['createdBy']),
+      updatedAt: serializer.fromJson<int>(json['updatedAt']),
+      updatedBy: serializer.fromJson<String>(json['updatedBy']),
+      title: serializer.fromJson<String>(json['title']),
+      due: serializer.fromJson<String>(json['due']),
+      assigneeType: serializer.fromJson<String>(json['assigneeType']),
+      assignee: serializer.fromJson<String>(json['assignee']),
+      done: serializer.fromJson<bool>(json['done']),
+      doneAt: serializer.fromJson<int?>(json['doneAt']),
+      doneBy: serializer.fromJson<String?>(json['doneBy']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'homeId': serializer.toJson<String>(homeId),
+      'deleted': serializer.toJson<bool>(deleted),
+      'createdAt': serializer.toJson<int>(createdAt),
+      'createdBy': serializer.toJson<String>(createdBy),
+      'updatedAt': serializer.toJson<int>(updatedAt),
+      'updatedBy': serializer.toJson<String>(updatedBy),
+      'title': serializer.toJson<String>(title),
+      'due': serializer.toJson<String>(due),
+      'assigneeType': serializer.toJson<String>(assigneeType),
+      'assignee': serializer.toJson<String>(assignee),
+      'done': serializer.toJson<bool>(done),
+      'doneAt': serializer.toJson<int?>(doneAt),
+      'doneBy': serializer.toJson<String?>(doneBy),
+    };
+  }
+
+  TodoRow copyWith({
+    String? id,
+    String? homeId,
+    bool? deleted,
+    int? createdAt,
+    String? createdBy,
+    int? updatedAt,
+    String? updatedBy,
+    String? title,
+    String? due,
+    String? assigneeType,
+    String? assignee,
+    bool? done,
+    Value<int?> doneAt = const Value.absent(),
+    Value<String?> doneBy = const Value.absent(),
+  }) => TodoRow(
+    id: id ?? this.id,
+    homeId: homeId ?? this.homeId,
+    deleted: deleted ?? this.deleted,
+    createdAt: createdAt ?? this.createdAt,
+    createdBy: createdBy ?? this.createdBy,
+    updatedAt: updatedAt ?? this.updatedAt,
+    updatedBy: updatedBy ?? this.updatedBy,
+    title: title ?? this.title,
+    due: due ?? this.due,
+    assigneeType: assigneeType ?? this.assigneeType,
+    assignee: assignee ?? this.assignee,
+    done: done ?? this.done,
+    doneAt: doneAt.present ? doneAt.value : this.doneAt,
+    doneBy: doneBy.present ? doneBy.value : this.doneBy,
+  );
+  TodoRow copyWithCompanion(TodosCompanion data) {
+    return TodoRow(
+      id: data.id.present ? data.id.value : this.id,
+      homeId: data.homeId.present ? data.homeId.value : this.homeId,
+      deleted: data.deleted.present ? data.deleted.value : this.deleted,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      createdBy: data.createdBy.present ? data.createdBy.value : this.createdBy,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      updatedBy: data.updatedBy.present ? data.updatedBy.value : this.updatedBy,
+      title: data.title.present ? data.title.value : this.title,
+      due: data.due.present ? data.due.value : this.due,
+      assigneeType: data.assigneeType.present
+          ? data.assigneeType.value
+          : this.assigneeType,
+      assignee: data.assignee.present ? data.assignee.value : this.assignee,
+      done: data.done.present ? data.done.value : this.done,
+      doneAt: data.doneAt.present ? data.doneAt.value : this.doneAt,
+      doneBy: data.doneBy.present ? data.doneBy.value : this.doneBy,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TodoRow(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('deleted: $deleted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('title: $title, ')
+          ..write('due: $due, ')
+          ..write('assigneeType: $assigneeType, ')
+          ..write('assignee: $assignee, ')
+          ..write('done: $done, ')
+          ..write('doneAt: $doneAt, ')
+          ..write('doneBy: $doneBy')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    homeId,
+    deleted,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    title,
+    due,
+    assigneeType,
+    assignee,
+    done,
+    doneAt,
+    doneBy,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TodoRow &&
+          other.id == this.id &&
+          other.homeId == this.homeId &&
+          other.deleted == this.deleted &&
+          other.createdAt == this.createdAt &&
+          other.createdBy == this.createdBy &&
+          other.updatedAt == this.updatedAt &&
+          other.updatedBy == this.updatedBy &&
+          other.title == this.title &&
+          other.due == this.due &&
+          other.assigneeType == this.assigneeType &&
+          other.assignee == this.assignee &&
+          other.done == this.done &&
+          other.doneAt == this.doneAt &&
+          other.doneBy == this.doneBy);
+}
+
+class TodosCompanion extends UpdateCompanion<TodoRow> {
+  final Value<String> id;
+  final Value<String> homeId;
+  final Value<bool> deleted;
+  final Value<int> createdAt;
+  final Value<String> createdBy;
+  final Value<int> updatedAt;
+  final Value<String> updatedBy;
+  final Value<String> title;
+  final Value<String> due;
+  final Value<String> assigneeType;
+  final Value<String> assignee;
+  final Value<bool> done;
+  final Value<int?> doneAt;
+  final Value<String?> doneBy;
+  final Value<int> rowid;
+  const TodosCompanion({
+    this.id = const Value.absent(),
+    this.homeId = const Value.absent(),
+    this.deleted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.title = const Value.absent(),
+    this.due = const Value.absent(),
+    this.assigneeType = const Value.absent(),
+    this.assignee = const Value.absent(),
+    this.done = const Value.absent(),
+    this.doneAt = const Value.absent(),
+    this.doneBy = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TodosCompanion.insert({
+    required String id,
+    required String homeId,
+    this.deleted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.title = const Value.absent(),
+    this.due = const Value.absent(),
+    this.assigneeType = const Value.absent(),
+    this.assignee = const Value.absent(),
+    this.done = const Value.absent(),
+    this.doneAt = const Value.absent(),
+    this.doneBy = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       homeId = Value(homeId);
+  static Insertable<TodoRow> custom({
+    Expression<String>? id,
+    Expression<String>? homeId,
+    Expression<bool>? deleted,
+    Expression<int>? createdAt,
+    Expression<String>? createdBy,
+    Expression<int>? updatedAt,
+    Expression<String>? updatedBy,
+    Expression<String>? title,
+    Expression<String>? due,
+    Expression<String>? assigneeType,
+    Expression<String>? assignee,
+    Expression<bool>? done,
+    Expression<int>? doneAt,
+    Expression<String>? doneBy,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (homeId != null) 'home_id': homeId,
+      if (deleted != null) 'deleted': deleted,
+      if (createdAt != null) 'created_at': createdAt,
+      if (createdBy != null) 'created_by': createdBy,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (updatedBy != null) 'updated_by': updatedBy,
+      if (title != null) 'title': title,
+      if (due != null) 'due': due,
+      if (assigneeType != null) 'assignee_type': assigneeType,
+      if (assignee != null) 'assignee': assignee,
+      if (done != null) 'done': done,
+      if (doneAt != null) 'done_at': doneAt,
+      if (doneBy != null) 'done_by': doneBy,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  TodosCompanion copyWith({
+    Value<String>? id,
+    Value<String>? homeId,
+    Value<bool>? deleted,
+    Value<int>? createdAt,
+    Value<String>? createdBy,
+    Value<int>? updatedAt,
+    Value<String>? updatedBy,
+    Value<String>? title,
+    Value<String>? due,
+    Value<String>? assigneeType,
+    Value<String>? assignee,
+    Value<bool>? done,
+    Value<int?>? doneAt,
+    Value<String?>? doneBy,
+    Value<int>? rowid,
+  }) {
+    return TodosCompanion(
+      id: id ?? this.id,
+      homeId: homeId ?? this.homeId,
+      deleted: deleted ?? this.deleted,
+      createdAt: createdAt ?? this.createdAt,
+      createdBy: createdBy ?? this.createdBy,
+      updatedAt: updatedAt ?? this.updatedAt,
+      updatedBy: updatedBy ?? this.updatedBy,
+      title: title ?? this.title,
+      due: due ?? this.due,
+      assigneeType: assigneeType ?? this.assigneeType,
+      assignee: assignee ?? this.assignee,
+      done: done ?? this.done,
+      doneAt: doneAt ?? this.doneAt,
+      doneBy: doneBy ?? this.doneBy,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (homeId.present) {
+      map['home_id'] = Variable<String>(homeId.value);
+    }
+    if (deleted.present) {
+      map['deleted'] = Variable<bool>(deleted.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (createdBy.present) {
+      map['created_by'] = Variable<String>(createdBy.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (updatedBy.present) {
+      map['updated_by'] = Variable<String>(updatedBy.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (due.present) {
+      map['due'] = Variable<String>(due.value);
+    }
+    if (assigneeType.present) {
+      map['assignee_type'] = Variable<String>(assigneeType.value);
+    }
+    if (assignee.present) {
+      map['assignee'] = Variable<String>(assignee.value);
+    }
+    if (done.present) {
+      map['done'] = Variable<bool>(done.value);
+    }
+    if (doneAt.present) {
+      map['done_at'] = Variable<int>(doneAt.value);
+    }
+    if (doneBy.present) {
+      map['done_by'] = Variable<String>(doneBy.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TodosCompanion(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('deleted: $deleted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('title: $title, ')
+          ..write('due: $due, ')
+          ..write('assigneeType: $assigneeType, ')
+          ..write('assignee: $assignee, ')
+          ..write('done: $done, ')
+          ..write('doneAt: $doneAt, ')
+          ..write('doneBy: $doneBy, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$NestDatabase extends GeneratedDatabase {
   _$NestDatabase(QueryExecutor e) : super(e);
   $NestDatabaseManager get managers => $NestDatabaseManager(this);
@@ -11585,6 +13151,8 @@ abstract class _$NestDatabase extends GeneratedDatabase {
   late final $ExpensesTable expenses = $ExpensesTable(this);
   late final $ItemsTable items = $ItemsTable(this);
   late final $ItemHistoryTable itemHistory = $ItemHistoryTable(this);
+  late final $RoutinesTable routines = $RoutinesTable(this);
+  late final $TodosTable todos = $TodosTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -11604,6 +13172,8 @@ abstract class _$NestDatabase extends GeneratedDatabase {
     expenses,
     items,
     itemHistory,
+    routines,
+    todos,
   ];
 }
 
@@ -17116,6 +18686,758 @@ typedef $$ItemHistoryTableProcessedTableManager =
       ItemHistoryRow,
       PrefetchHooks Function()
     >;
+typedef $$RoutinesTableCreateCompanionBuilder = RoutinesCompanion Function({
+  required String id,
+  required String homeId,
+  Value<bool> deleted,
+  Value<int> createdAt,
+  Value<String> createdBy,
+  Value<int> updatedAt,
+  Value<String> updatedBy,
+  Value<String> name,
+  Value<String> room,
+  Value<int> everyDays,
+  Value<String> assigneeType,
+  Value<String> assignee,
+  Value<String> lastDone,
+  Value<String?> lastDoneBy,
+  Value<int> rowid,
+});
+typedef $$RoutinesTableUpdateCompanionBuilder = RoutinesCompanion Function({
+  Value<String> id,
+  Value<String> homeId,
+  Value<bool> deleted,
+  Value<int> createdAt,
+  Value<String> createdBy,
+  Value<int> updatedAt,
+  Value<String> updatedBy,
+  Value<String> name,
+  Value<String> room,
+  Value<int> everyDays,
+  Value<String> assigneeType,
+  Value<String> assignee,
+  Value<String> lastDone,
+  Value<String?> lastDoneBy,
+  Value<int> rowid,
+});
+
+class $$RoutinesTableFilterComposer
+    extends Composer<_$NestDatabase, $RoutinesTable> {
+  $$RoutinesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get room => $composableBuilder(
+    column: $table.room,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get everyDays => $composableBuilder(
+    column: $table.everyDays,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get assigneeType => $composableBuilder(
+    column: $table.assigneeType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get assignee => $composableBuilder(
+    column: $table.assignee,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get lastDone => $composableBuilder(
+    column: $table.lastDone,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get lastDoneBy => $composableBuilder(
+    column: $table.lastDoneBy,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$RoutinesTableOrderingComposer
+    extends Composer<_$NestDatabase, $RoutinesTable> {
+  $$RoutinesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get room => $composableBuilder(
+    column: $table.room,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get everyDays => $composableBuilder(
+    column: $table.everyDays,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get assigneeType => $composableBuilder(
+    column: $table.assigneeType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get assignee => $composableBuilder(
+    column: $table.assignee,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get lastDone => $composableBuilder(
+    column: $table.lastDone,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get lastDoneBy => $composableBuilder(
+    column: $table.lastDoneBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$RoutinesTableAnnotationComposer
+    extends Composer<_$NestDatabase, $RoutinesTable> {
+  $$RoutinesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get homeId =>
+      $composableBuilder(column: $table.homeId, builder: (column) => column);
+
+  GeneratedColumn<bool> get deleted =>
+      $composableBuilder(column: $table.deleted, builder: (column) => column);
+
+  GeneratedColumn<int> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<String> get createdBy =>
+      $composableBuilder(column: $table.createdBy, builder: (column) => column);
+
+  GeneratedColumn<int> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get updatedBy =>
+      $composableBuilder(column: $table.updatedBy, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get room =>
+      $composableBuilder(column: $table.room, builder: (column) => column);
+
+  GeneratedColumn<int> get everyDays =>
+      $composableBuilder(column: $table.everyDays, builder: (column) => column);
+
+  GeneratedColumn<String> get assigneeType => $composableBuilder(
+    column: $table.assigneeType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get assignee =>
+      $composableBuilder(column: $table.assignee, builder: (column) => column);
+
+  GeneratedColumn<String> get lastDone =>
+      $composableBuilder(column: $table.lastDone, builder: (column) => column);
+
+  GeneratedColumn<String> get lastDoneBy => $composableBuilder(
+    column: $table.lastDoneBy,
+    builder: (column) => column,
+  );
+}
+
+class $$RoutinesTableTableManager
+    extends
+        RootTableManager<
+          _$NestDatabase,
+          $RoutinesTable,
+          RoutineRow,
+          $$RoutinesTableFilterComposer,
+          $$RoutinesTableOrderingComposer,
+          $$RoutinesTableAnnotationComposer,
+          $$RoutinesTableCreateCompanionBuilder,
+          $$RoutinesTableUpdateCompanionBuilder,
+          (
+            RoutineRow,
+            BaseReferences<_$NestDatabase, $RoutinesTable, RoutineRow>,
+          ),
+          RoutineRow,
+          PrefetchHooks Function()
+        > {
+  $$RoutinesTableTableManager(_$NestDatabase db, $RoutinesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$RoutinesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$RoutinesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$RoutinesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> homeId = const Value.absent(),
+                Value<bool> deleted = const Value.absent(),
+                Value<int> createdAt = const Value.absent(),
+                Value<String> createdBy = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> updatedBy = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> room = const Value.absent(),
+                Value<int> everyDays = const Value.absent(),
+                Value<String> assigneeType = const Value.absent(),
+                Value<String> assignee = const Value.absent(),
+                Value<String> lastDone = const Value.absent(),
+                Value<String?> lastDoneBy = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => RoutinesCompanion(
+                id: id,
+                homeId: homeId,
+                deleted: deleted,
+                createdAt: createdAt,
+                createdBy: createdBy,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy,
+                name: name,
+                room: room,
+                everyDays: everyDays,
+                assigneeType: assigneeType,
+                assignee: assignee,
+                lastDone: lastDone,
+                lastDoneBy: lastDoneBy,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String homeId,
+                Value<bool> deleted = const Value.absent(),
+                Value<int> createdAt = const Value.absent(),
+                Value<String> createdBy = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> updatedBy = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> room = const Value.absent(),
+                Value<int> everyDays = const Value.absent(),
+                Value<String> assigneeType = const Value.absent(),
+                Value<String> assignee = const Value.absent(),
+                Value<String> lastDone = const Value.absent(),
+                Value<String?> lastDoneBy = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => RoutinesCompanion.insert(
+                id: id,
+                homeId: homeId,
+                deleted: deleted,
+                createdAt: createdAt,
+                createdBy: createdBy,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy,
+                name: name,
+                room: room,
+                everyDays: everyDays,
+                assigneeType: assigneeType,
+                assignee: assignee,
+                lastDone: lastDone,
+                lastDoneBy: lastDoneBy,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$RoutinesTable, RoutineRow>(table),
+                  BaseReferences<_$NestDatabase, $RoutinesTable, RoutineRow>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$RoutinesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$NestDatabase,
+      $RoutinesTable,
+      RoutineRow,
+      $$RoutinesTableFilterComposer,
+      $$RoutinesTableOrderingComposer,
+      $$RoutinesTableAnnotationComposer,
+      $$RoutinesTableCreateCompanionBuilder,
+      $$RoutinesTableUpdateCompanionBuilder,
+      (RoutineRow, BaseReferences<_$NestDatabase, $RoutinesTable, RoutineRow>),
+      RoutineRow,
+      PrefetchHooks Function()
+    >;
+typedef $$TodosTableCreateCompanionBuilder = TodosCompanion Function({
+  required String id,
+  required String homeId,
+  Value<bool> deleted,
+  Value<int> createdAt,
+  Value<String> createdBy,
+  Value<int> updatedAt,
+  Value<String> updatedBy,
+  Value<String> title,
+  Value<String> due,
+  Value<String> assigneeType,
+  Value<String> assignee,
+  Value<bool> done,
+  Value<int?> doneAt,
+  Value<String?> doneBy,
+  Value<int> rowid,
+});
+typedef $$TodosTableUpdateCompanionBuilder = TodosCompanion Function({
+  Value<String> id,
+  Value<String> homeId,
+  Value<bool> deleted,
+  Value<int> createdAt,
+  Value<String> createdBy,
+  Value<int> updatedAt,
+  Value<String> updatedBy,
+  Value<String> title,
+  Value<String> due,
+  Value<String> assigneeType,
+  Value<String> assignee,
+  Value<bool> done,
+  Value<int?> doneAt,
+  Value<String?> doneBy,
+  Value<int> rowid,
+});
+
+class $$TodosTableFilterComposer extends Composer<_$NestDatabase, $TodosTable> {
+  $$TodosTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get due => $composableBuilder(
+    column: $table.due,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get assigneeType => $composableBuilder(
+    column: $table.assigneeType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get assignee => $composableBuilder(
+    column: $table.assignee,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get done => $composableBuilder(
+    column: $table.done,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get doneAt => $composableBuilder(
+    column: $table.doneAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get doneBy => $composableBuilder(
+    column: $table.doneBy,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$TodosTableOrderingComposer
+    extends Composer<_$NestDatabase, $TodosTable> {
+  $$TodosTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get due => $composableBuilder(
+    column: $table.due,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get assigneeType => $composableBuilder(
+    column: $table.assigneeType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get assignee => $composableBuilder(
+    column: $table.assignee,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get done => $composableBuilder(
+    column: $table.done,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get doneAt => $composableBuilder(
+    column: $table.doneAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get doneBy => $composableBuilder(
+    column: $table.doneBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$TodosTableAnnotationComposer
+    extends Composer<_$NestDatabase, $TodosTable> {
+  $$TodosTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get homeId =>
+      $composableBuilder(column: $table.homeId, builder: (column) => column);
+
+  GeneratedColumn<bool> get deleted =>
+      $composableBuilder(column: $table.deleted, builder: (column) => column);
+
+  GeneratedColumn<int> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<String> get createdBy =>
+      $composableBuilder(column: $table.createdBy, builder: (column) => column);
+
+  GeneratedColumn<int> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get updatedBy =>
+      $composableBuilder(column: $table.updatedBy, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<String> get due =>
+      $composableBuilder(column: $table.due, builder: (column) => column);
+
+  GeneratedColumn<String> get assigneeType => $composableBuilder(
+    column: $table.assigneeType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get assignee =>
+      $composableBuilder(column: $table.assignee, builder: (column) => column);
+
+  GeneratedColumn<bool> get done =>
+      $composableBuilder(column: $table.done, builder: (column) => column);
+
+  GeneratedColumn<int> get doneAt =>
+      $composableBuilder(column: $table.doneAt, builder: (column) => column);
+
+  GeneratedColumn<String> get doneBy =>
+      $composableBuilder(column: $table.doneBy, builder: (column) => column);
+}
+
+class $$TodosTableTableManager
+    extends
+        RootTableManager<
+          _$NestDatabase,
+          $TodosTable,
+          TodoRow,
+          $$TodosTableFilterComposer,
+          $$TodosTableOrderingComposer,
+          $$TodosTableAnnotationComposer,
+          $$TodosTableCreateCompanionBuilder,
+          $$TodosTableUpdateCompanionBuilder,
+          (TodoRow, BaseReferences<_$NestDatabase, $TodosTable, TodoRow>),
+          TodoRow,
+          PrefetchHooks Function()
+        > {
+  $$TodosTableTableManager(_$NestDatabase db, $TodosTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TodosTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TodosTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TodosTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> homeId = const Value.absent(),
+                Value<bool> deleted = const Value.absent(),
+                Value<int> createdAt = const Value.absent(),
+                Value<String> createdBy = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> updatedBy = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<String> due = const Value.absent(),
+                Value<String> assigneeType = const Value.absent(),
+                Value<String> assignee = const Value.absent(),
+                Value<bool> done = const Value.absent(),
+                Value<int?> doneAt = const Value.absent(),
+                Value<String?> doneBy = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TodosCompanion(
+                id: id,
+                homeId: homeId,
+                deleted: deleted,
+                createdAt: createdAt,
+                createdBy: createdBy,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy,
+                title: title,
+                due: due,
+                assigneeType: assigneeType,
+                assignee: assignee,
+                done: done,
+                doneAt: doneAt,
+                doneBy: doneBy,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String homeId,
+                Value<bool> deleted = const Value.absent(),
+                Value<int> createdAt = const Value.absent(),
+                Value<String> createdBy = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> updatedBy = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<String> due = const Value.absent(),
+                Value<String> assigneeType = const Value.absent(),
+                Value<String> assignee = const Value.absent(),
+                Value<bool> done = const Value.absent(),
+                Value<int?> doneAt = const Value.absent(),
+                Value<String?> doneBy = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TodosCompanion.insert(
+                id: id,
+                homeId: homeId,
+                deleted: deleted,
+                createdAt: createdAt,
+                createdBy: createdBy,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy,
+                title: title,
+                due: due,
+                assigneeType: assigneeType,
+                assignee: assignee,
+                done: done,
+                doneAt: doneAt,
+                doneBy: doneBy,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$TodosTable, TodoRow>(table),
+                  BaseReferences<_$NestDatabase, $TodosTable, TodoRow>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$TodosTableProcessedTableManager =
+    ProcessedTableManager<
+      _$NestDatabase,
+      $TodosTable,
+      TodoRow,
+      $$TodosTableFilterComposer,
+      $$TodosTableOrderingComposer,
+      $$TodosTableAnnotationComposer,
+      $$TodosTableCreateCompanionBuilder,
+      $$TodosTableUpdateCompanionBuilder,
+      (TodoRow, BaseReferences<_$NestDatabase, $TodosTable, TodoRow>),
+      TodoRow,
+      PrefetchHooks Function()
+    >;
 
 class $NestDatabaseManager {
   final _$NestDatabase _db;
@@ -17147,4 +19469,8 @@ class $NestDatabaseManager {
       $$ItemsTableTableManager(_db, _db.items);
   $$ItemHistoryTableTableManager get itemHistory =>
       $$ItemHistoryTableTableManager(_db, _db.itemHistory);
+  $$RoutinesTableTableManager get routines =>
+      $$RoutinesTableTableManager(_db, _db.routines);
+  $$TodosTableTableManager get todos =>
+      $$TodosTableTableManager(_db, _db.todos);
 }

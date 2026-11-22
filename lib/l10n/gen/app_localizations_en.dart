@@ -1594,4 +1594,359 @@ class AppLocalizationsEn extends AppLocalizations {
   String storeOrderAdded(Object amount, Object store) {
     return '$amount $store order added';
   }
+
+  @override
+  String get tasksYou => 'You';
+
+  @override
+  String get tasksEyebrow => 'KEEP THE HOUSE';
+
+  @override
+  String get tasksTitle => 'Tasks';
+
+  @override
+  String get tasksCleaningTab => 'Cleaning';
+
+  @override
+  String get tasksTodosTab => 'To-dos';
+
+  @override
+  String get tasksEveryone => 'Everyone';
+
+  @override
+  String tasksOverdue(int n) {
+    return 'Overdue ${n}d';
+  }
+
+  @override
+  String get tasksDueToday => 'Due today';
+
+  @override
+  String get tasksDueTomorrow => 'Due tomorrow';
+
+  @override
+  String tasksInDays(int n) {
+    return 'In $n days';
+  }
+
+  @override
+  String get tasksFreqDaily => 'Daily';
+
+  @override
+  String get tasksFreqWeekly => 'Weekly';
+
+  @override
+  String get tasksFreqFortnightly => 'Fortnightly';
+
+  @override
+  String get tasksFreqMonthly => 'Monthly';
+
+  @override
+  String get tasksFreqEvery3Months => 'Every 3 months';
+
+  @override
+  String tasksFreqEveryN(int n) {
+    return 'Every $n days';
+  }
+
+  @override
+  String tasksRoutineMeta(Object who, Object room, Object freq) {
+    return '$who · $room · $freq';
+  }
+
+  @override
+  String get tasksFreshness => 'Freshness';
+
+  @override
+  String get tasksDone => 'Done';
+
+  @override
+  String tasksMarkDone(Object name) {
+    return 'Mark $name done';
+  }
+
+  @override
+  String tasksRoutineDone(Object name, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'in $n days',
+      one: 'tomorrow',
+    );
+    return '$name done · next $_temp0';
+  }
+
+  @override
+  String get tasksNoRoutines => 'No routines here';
+
+  @override
+  String tasksNoRoutinesBody(Object who) {
+    return 'Assign one to $who.';
+  }
+
+  @override
+  String get tasksAnyone => 'anyone';
+
+  @override
+  String get tasksNewRoutine => 'New cleaning routine';
+
+  @override
+  String get tasksNewRoutineTitle => 'New cleaning routine';
+
+  @override
+  String get tasksRoutineLead =>
+      'It comes back on its own — no need to re-add it.';
+
+  @override
+  String get tasksWhatNeedsDoing => 'What needs doing?';
+
+  @override
+  String get tasksRoutinePlaceholder => 'e.g. Clean kitchen chimney';
+
+  @override
+  String get tasksNameRequired => 'Add what needs doing.';
+
+  @override
+  String get tasksWhere => 'Where';
+
+  @override
+  String get tasksRoomKitchen => 'Kitchen';
+
+  @override
+  String get tasksRoomLiving => 'Living room';
+
+  @override
+  String get tasksRoomBedrooms => 'Bedrooms';
+
+  @override
+  String get tasksRoomBathrooms => 'Bathrooms';
+
+  @override
+  String get tasksRoomBalcony => 'Balcony';
+
+  @override
+  String get tasksRoomWhole => 'Whole house';
+
+  @override
+  String get tasksOther => 'Other…';
+
+  @override
+  String get tasksRoomName => 'Room';
+
+  @override
+  String get tasksHowOften => 'How often';
+
+  @override
+  String get tasksEvery2 => 'Every 2 days';
+
+  @override
+  String get tasksEvery3 => 'Every 3 days';
+
+  @override
+  String get tasksCustom => 'Custom…';
+
+  @override
+  String get tasksEveryHowMany => 'Every how many days?';
+
+  @override
+  String get tasksDaysRange => 'Enter 1 to 365 days.';
+
+  @override
+  String get tasksWhoDoesIt => 'Who does it';
+
+  @override
+  String get tasksAddRoutine => 'Add routine';
+
+  @override
+  String get tasksRoutineAdded => 'Routine added · first one is due today';
+
+  @override
+  String get tasksEditRoutineTitle => 'Edit routine';
+
+  @override
+  String get tasksSaveChanges => 'Save changes';
+
+  @override
+  String get tasksRoutineUpdated => 'Routine updated';
+
+  @override
+  String get tasksDeleteRoutine => 'Delete routine';
+
+  @override
+  String get tasksRoutineDeleted => 'Routine deleted';
+
+  @override
+  String get tasksGroupOverdue => 'Overdue';
+
+  @override
+  String get tasksGroupToday => 'Today';
+
+  @override
+  String get tasksGroupTomorrow => 'Tomorrow';
+
+  @override
+  String get tasksGroupLater => 'Later';
+
+  @override
+  String tasksTodoMeta(Object day, Object who) {
+    return '$day · $who';
+  }
+
+  @override
+  String tasksCompleteTodo(Object title) {
+    return 'Complete “$title”';
+  }
+
+  @override
+  String tasksTodoDone(Object title) {
+    return 'Done: $title';
+  }
+
+  @override
+  String get tasksAllDone => 'All done';
+
+  @override
+  String get tasksNothingPending => 'Nothing pending.';
+
+  @override
+  String tasksNothingPendingFor(Object name) {
+    return 'Nothing pending for $name.';
+  }
+
+  @override
+  String tasksCompleted(int n) {
+    return 'Completed ($n)';
+  }
+
+  @override
+  String tasksReopenTodo(Object title) {
+    return 'Reopen “$title”';
+  }
+
+  @override
+  String get tasksMovedBack => 'Moved back to open';
+
+  @override
+  String get tasksNewTodo => 'New to-do';
+
+  @override
+  String get tasksEditTodo => 'Edit to-do';
+
+  @override
+  String get tasksWhat => 'What';
+
+  @override
+  String get tasksTodoPlaceholder => 'e.g. Book AC service';
+
+  @override
+  String get tasksTodoRequired => 'Add what needs doing.';
+
+  @override
+  String get tasksWhen => 'When';
+
+  @override
+  String get tasksToday => 'Today';
+
+  @override
+  String get tasksTomorrow => 'Tomorrow';
+
+  @override
+  String get tasksWeekend => 'Weekend';
+
+  @override
+  String get tasksNextWeek => 'Next week';
+
+  @override
+  String get tasksPickDate => 'Pick date…';
+
+  @override
+  String get tasksWho => 'Who';
+
+  @override
+  String get tasksAddTodo => 'Add to-do';
+
+  @override
+  String get tasksTodoAdded => 'To-do added';
+
+  @override
+  String get tasksTodoUpdated => 'To-do updated';
+
+  @override
+  String get tasksDeleteTodo => 'Delete to-do';
+
+  @override
+  String get tasksTodoDeleted => 'To-do deleted';
+
+  @override
+  String tasksSendList(Object name) {
+    return 'Send $name today’s list';
+  }
+
+  @override
+  String tasksJobs(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n jobs',
+      one: '1 job',
+    );
+    return '$_temp0 · they don’t need the app';
+  }
+
+  @override
+  String get tasksPreview => 'Preview';
+
+  @override
+  String tasksListFor(Object name) {
+    return '$name’s list for today';
+  }
+
+  @override
+  String get tasksShareLead =>
+      'Sent as a WhatsApp message in their language. They don’t need the app.';
+
+  @override
+  String get tasksLanguage => 'Language';
+
+  @override
+  String get tasksLangEnglish => 'English';
+
+  @override
+  String get tasksLangHindi => 'हिंदी';
+
+  @override
+  String get tasksLangTamil => 'தமிழ்';
+
+  @override
+  String get tasksCopy => 'Copy';
+
+  @override
+  String get tasksCopied => 'Copied — paste it in any chat';
+
+  @override
+  String get tasksWhatsApp => 'WhatsApp';
+
+  @override
+  String get todayDueToday => 'Due today';
+
+  @override
+  String get todayAllTasks => 'All tasks';
+
+  @override
+  String get todayTodoKind => 'To-do';
+
+  @override
+  String todayMoreDue(int n) {
+    return '+ $n more due';
+  }
+
+  @override
+  String get todayNothingDue => 'Nothing due';
+
+  @override
+  String get todayEnjoyQuiet => 'Enjoy the quiet.';
+
+  @override
+  String get tasksRemoveStaffMoves =>
+      'Their routines and open to-dos will move to you.';
 }

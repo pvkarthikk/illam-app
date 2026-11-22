@@ -2675,6 +2675,618 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{amount} {store} order added'**
   String storeOrderAdded(Object amount, Object store);
+
+  /// No description provided for @tasksYou.
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get tasksYou;
+
+  /// No description provided for @tasksEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'KEEP THE HOUSE'**
+  String get tasksEyebrow;
+
+  /// No description provided for @tasksTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tasks'**
+  String get tasksTitle;
+
+  /// No description provided for @tasksCleaningTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Cleaning'**
+  String get tasksCleaningTab;
+
+  /// No description provided for @tasksTodosTab.
+  ///
+  /// In en, this message translates to:
+  /// **'To-dos'**
+  String get tasksTodosTab;
+
+  /// No description provided for @tasksEveryone.
+  ///
+  /// In en, this message translates to:
+  /// **'Everyone'**
+  String get tasksEveryone;
+
+  /// No description provided for @tasksOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue {n}d'**
+  String tasksOverdue(int n);
+
+  /// No description provided for @tasksDueToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Due today'**
+  String get tasksDueToday;
+
+  /// No description provided for @tasksDueTomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Due tomorrow'**
+  String get tasksDueTomorrow;
+
+  /// No description provided for @tasksInDays.
+  ///
+  /// In en, this message translates to:
+  /// **'In {n} days'**
+  String tasksInDays(int n);
+
+  /// No description provided for @tasksFreqDaily.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily'**
+  String get tasksFreqDaily;
+
+  /// No description provided for @tasksFreqWeekly.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly'**
+  String get tasksFreqWeekly;
+
+  /// No description provided for @tasksFreqFortnightly.
+  ///
+  /// In en, this message translates to:
+  /// **'Fortnightly'**
+  String get tasksFreqFortnightly;
+
+  /// No description provided for @tasksFreqMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get tasksFreqMonthly;
+
+  /// No description provided for @tasksFreqEvery3Months.
+  ///
+  /// In en, this message translates to:
+  /// **'Every 3 months'**
+  String get tasksFreqEvery3Months;
+
+  /// No description provided for @tasksFreqEveryN.
+  ///
+  /// In en, this message translates to:
+  /// **'Every {n} days'**
+  String tasksFreqEveryN(int n);
+
+  /// No description provided for @tasksRoutineMeta.
+  ///
+  /// In en, this message translates to:
+  /// **'{who} · {room} · {freq}'**
+  String tasksRoutineMeta(Object who, Object room, Object freq);
+
+  /// No description provided for @tasksFreshness.
+  ///
+  /// In en, this message translates to:
+  /// **'Freshness'**
+  String get tasksFreshness;
+
+  /// No description provided for @tasksDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get tasksDone;
+
+  /// No description provided for @tasksMarkDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark {name} done'**
+  String tasksMarkDone(Object name);
+
+  /// No description provided for @tasksRoutineDone.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} done · next {n, plural, =1{tomorrow} other{in {n} days}}'**
+  String tasksRoutineDone(Object name, int n);
+
+  /// No description provided for @tasksNoRoutines.
+  ///
+  /// In en, this message translates to:
+  /// **'No routines here'**
+  String get tasksNoRoutines;
+
+  /// No description provided for @tasksNoRoutinesBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Assign one to {who}.'**
+  String tasksNoRoutinesBody(Object who);
+
+  /// No description provided for @tasksAnyone.
+  ///
+  /// In en, this message translates to:
+  /// **'anyone'**
+  String get tasksAnyone;
+
+  /// No description provided for @tasksNewRoutine.
+  ///
+  /// In en, this message translates to:
+  /// **'New cleaning routine'**
+  String get tasksNewRoutine;
+
+  /// No description provided for @tasksNewRoutineTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New cleaning routine'**
+  String get tasksNewRoutineTitle;
+
+  /// No description provided for @tasksRoutineLead.
+  ///
+  /// In en, this message translates to:
+  /// **'It comes back on its own — no need to re-add it.'**
+  String get tasksRoutineLead;
+
+  /// No description provided for @tasksWhatNeedsDoing.
+  ///
+  /// In en, this message translates to:
+  /// **'What needs doing?'**
+  String get tasksWhatNeedsDoing;
+
+  /// No description provided for @tasksRoutinePlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Clean kitchen chimney'**
+  String get tasksRoutinePlaceholder;
+
+  /// No description provided for @tasksNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Add what needs doing.'**
+  String get tasksNameRequired;
+
+  /// No description provided for @tasksWhere.
+  ///
+  /// In en, this message translates to:
+  /// **'Where'**
+  String get tasksWhere;
+
+  /// No description provided for @tasksRoomKitchen.
+  ///
+  /// In en, this message translates to:
+  /// **'Kitchen'**
+  String get tasksRoomKitchen;
+
+  /// No description provided for @tasksRoomLiving.
+  ///
+  /// In en, this message translates to:
+  /// **'Living room'**
+  String get tasksRoomLiving;
+
+  /// No description provided for @tasksRoomBedrooms.
+  ///
+  /// In en, this message translates to:
+  /// **'Bedrooms'**
+  String get tasksRoomBedrooms;
+
+  /// No description provided for @tasksRoomBathrooms.
+  ///
+  /// In en, this message translates to:
+  /// **'Bathrooms'**
+  String get tasksRoomBathrooms;
+
+  /// No description provided for @tasksRoomBalcony.
+  ///
+  /// In en, this message translates to:
+  /// **'Balcony'**
+  String get tasksRoomBalcony;
+
+  /// No description provided for @tasksRoomWhole.
+  ///
+  /// In en, this message translates to:
+  /// **'Whole house'**
+  String get tasksRoomWhole;
+
+  /// No description provided for @tasksOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other…'**
+  String get tasksOther;
+
+  /// No description provided for @tasksRoomName.
+  ///
+  /// In en, this message translates to:
+  /// **'Room'**
+  String get tasksRoomName;
+
+  /// No description provided for @tasksHowOften.
+  ///
+  /// In en, this message translates to:
+  /// **'How often'**
+  String get tasksHowOften;
+
+  /// No description provided for @tasksEvery2.
+  ///
+  /// In en, this message translates to:
+  /// **'Every 2 days'**
+  String get tasksEvery2;
+
+  /// No description provided for @tasksEvery3.
+  ///
+  /// In en, this message translates to:
+  /// **'Every 3 days'**
+  String get tasksEvery3;
+
+  /// No description provided for @tasksCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom…'**
+  String get tasksCustom;
+
+  /// No description provided for @tasksEveryHowMany.
+  ///
+  /// In en, this message translates to:
+  /// **'Every how many days?'**
+  String get tasksEveryHowMany;
+
+  /// No description provided for @tasksDaysRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter 1 to 365 days.'**
+  String get tasksDaysRange;
+
+  /// No description provided for @tasksWhoDoesIt.
+  ///
+  /// In en, this message translates to:
+  /// **'Who does it'**
+  String get tasksWhoDoesIt;
+
+  /// No description provided for @tasksAddRoutine.
+  ///
+  /// In en, this message translates to:
+  /// **'Add routine'**
+  String get tasksAddRoutine;
+
+  /// No description provided for @tasksRoutineAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Routine added · first one is due today'**
+  String get tasksRoutineAdded;
+
+  /// No description provided for @tasksEditRoutineTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit routine'**
+  String get tasksEditRoutineTitle;
+
+  /// No description provided for @tasksSaveChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Save changes'**
+  String get tasksSaveChanges;
+
+  /// No description provided for @tasksRoutineUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Routine updated'**
+  String get tasksRoutineUpdated;
+
+  /// No description provided for @tasksDeleteRoutine.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete routine'**
+  String get tasksDeleteRoutine;
+
+  /// No description provided for @tasksRoutineDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Routine deleted'**
+  String get tasksRoutineDeleted;
+
+  /// No description provided for @tasksGroupOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue'**
+  String get tasksGroupOverdue;
+
+  /// No description provided for @tasksGroupToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get tasksGroupToday;
+
+  /// No description provided for @tasksGroupTomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow'**
+  String get tasksGroupTomorrow;
+
+  /// No description provided for @tasksGroupLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get tasksGroupLater;
+
+  /// No description provided for @tasksTodoMeta.
+  ///
+  /// In en, this message translates to:
+  /// **'{day} · {who}'**
+  String tasksTodoMeta(Object day, Object who);
+
+  /// No description provided for @tasksCompleteTodo.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete “{title}”'**
+  String tasksCompleteTodo(Object title);
+
+  /// No description provided for @tasksTodoDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done: {title}'**
+  String tasksTodoDone(Object title);
+
+  /// No description provided for @tasksAllDone.
+  ///
+  /// In en, this message translates to:
+  /// **'All done'**
+  String get tasksAllDone;
+
+  /// No description provided for @tasksNothingPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing pending.'**
+  String get tasksNothingPending;
+
+  /// No description provided for @tasksNothingPendingFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing pending for {name}.'**
+  String tasksNothingPendingFor(Object name);
+
+  /// No description provided for @tasksCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed ({n})'**
+  String tasksCompleted(int n);
+
+  /// No description provided for @tasksReopenTodo.
+  ///
+  /// In en, this message translates to:
+  /// **'Reopen “{title}”'**
+  String tasksReopenTodo(Object title);
+
+  /// No description provided for @tasksMovedBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Moved back to open'**
+  String get tasksMovedBack;
+
+  /// No description provided for @tasksNewTodo.
+  ///
+  /// In en, this message translates to:
+  /// **'New to-do'**
+  String get tasksNewTodo;
+
+  /// No description provided for @tasksEditTodo.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit to-do'**
+  String get tasksEditTodo;
+
+  /// No description provided for @tasksWhat.
+  ///
+  /// In en, this message translates to:
+  /// **'What'**
+  String get tasksWhat;
+
+  /// No description provided for @tasksTodoPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Book AC service'**
+  String get tasksTodoPlaceholder;
+
+  /// No description provided for @tasksTodoRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Add what needs doing.'**
+  String get tasksTodoRequired;
+
+  /// No description provided for @tasksWhen.
+  ///
+  /// In en, this message translates to:
+  /// **'When'**
+  String get tasksWhen;
+
+  /// No description provided for @tasksToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get tasksToday;
+
+  /// No description provided for @tasksTomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow'**
+  String get tasksTomorrow;
+
+  /// No description provided for @tasksWeekend.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekend'**
+  String get tasksWeekend;
+
+  /// No description provided for @tasksNextWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Next week'**
+  String get tasksNextWeek;
+
+  /// No description provided for @tasksPickDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick date…'**
+  String get tasksPickDate;
+
+  /// No description provided for @tasksWho.
+  ///
+  /// In en, this message translates to:
+  /// **'Who'**
+  String get tasksWho;
+
+  /// No description provided for @tasksAddTodo.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to-do'**
+  String get tasksAddTodo;
+
+  /// No description provided for @tasksTodoAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'To-do added'**
+  String get tasksTodoAdded;
+
+  /// No description provided for @tasksTodoUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'To-do updated'**
+  String get tasksTodoUpdated;
+
+  /// No description provided for @tasksDeleteTodo.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete to-do'**
+  String get tasksDeleteTodo;
+
+  /// No description provided for @tasksTodoDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'To-do deleted'**
+  String get tasksTodoDeleted;
+
+  /// No description provided for @tasksSendList.
+  ///
+  /// In en, this message translates to:
+  /// **'Send {name} today’s list'**
+  String tasksSendList(Object name);
+
+  /// No description provided for @tasksJobs.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 job} other{{n} jobs}} · they don’t need the app'**
+  String tasksJobs(int n);
+
+  /// No description provided for @tasksPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get tasksPreview;
+
+  /// No description provided for @tasksListFor.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}’s list for today'**
+  String tasksListFor(Object name);
+
+  /// No description provided for @tasksShareLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent as a WhatsApp message in their language. They don’t need the app.'**
+  String get tasksShareLead;
+
+  /// No description provided for @tasksLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get tasksLanguage;
+
+  /// No description provided for @tasksLangEnglish.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get tasksLangEnglish;
+
+  /// No description provided for @tasksLangHindi.
+  ///
+  /// In en, this message translates to:
+  /// **'हिंदी'**
+  String get tasksLangHindi;
+
+  /// No description provided for @tasksLangTamil.
+  ///
+  /// In en, this message translates to:
+  /// **'தமிழ்'**
+  String get tasksLangTamil;
+
+  /// No description provided for @tasksCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get tasksCopy;
+
+  /// No description provided for @tasksCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied — paste it in any chat'**
+  String get tasksCopied;
+
+  /// No description provided for @tasksWhatsApp.
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp'**
+  String get tasksWhatsApp;
+
+  /// No description provided for @todayDueToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Due today'**
+  String get todayDueToday;
+
+  /// No description provided for @todayAllTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'All tasks'**
+  String get todayAllTasks;
+
+  /// No description provided for @todayTodoKind.
+  ///
+  /// In en, this message translates to:
+  /// **'To-do'**
+  String get todayTodoKind;
+
+  /// No description provided for @todayMoreDue.
+  ///
+  /// In en, this message translates to:
+  /// **'+ {n} more due'**
+  String todayMoreDue(int n);
+
+  /// No description provided for @todayNothingDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing due'**
+  String get todayNothingDue;
+
+  /// No description provided for @todayEnjoyQuiet.
+  ///
+  /// In en, this message translates to:
+  /// **'Enjoy the quiet.'**
+  String get todayEnjoyQuiet;
+
+  /// No description provided for @tasksRemoveStaffMoves.
+  ///
+  /// In en, this message translates to:
+  /// **'Their routines and open to-dos will move to you.'**
+  String get tasksRemoveStaffMoves;
 }
 
 class _AppLocalizationsDelegate

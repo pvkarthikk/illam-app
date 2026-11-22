@@ -1112,5 +1112,210 @@
       "amount": {},
       "store": {}
     }
-  }
+  },
+  "tasksYou": "You",
+  "tasksEyebrow": "KEEP THE HOUSE",
+  "tasksTitle": "Tasks",
+  "tasksCleaningTab": "Cleaning",
+  "tasksTodosTab": "To-dos",
+  "tasksEveryone": "Everyone",
+  "tasksOverdue": "Overdue {n}d",
+  "@tasksOverdue": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "tasksDueToday": "Due today",
+  "tasksDueTomorrow": "Due tomorrow",
+  "tasksInDays": "In {n} days",
+  "@tasksInDays": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "tasksFreqDaily": "Daily",
+  "tasksFreqWeekly": "Weekly",
+  "tasksFreqFortnightly": "Fortnightly",
+  "tasksFreqMonthly": "Monthly",
+  "tasksFreqEvery3Months": "Every 3 months",
+  "tasksFreqEveryN": "Every {n} days",
+  "@tasksFreqEveryN": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "tasksRoutineMeta": "{who} · {room} · {freq}",
+  "@tasksRoutineMeta": {
+    "placeholders": {
+      "who": {},
+      "room": {},
+      "freq": {}
+    }
+  },
+  "tasksFreshness": "Freshness",
+  "tasksDone": "Done",
+  "tasksMarkDone": "Mark {name} done",
+  "@tasksMarkDone": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "tasksRoutineDone": "{name} done · next {n, plural, =1{tomorrow} other{in {n} days}}",
+  "@tasksRoutineDone": {
+    "placeholders": {
+      "name": {},
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "tasksNoRoutines": "No routines here",
+  "tasksNoRoutinesBody": "Assign one to {who}.",
+  "@tasksNoRoutinesBody": {
+    "placeholders": {
+      "who": {}
+    }
+  },
+  "tasksAnyone": "anyone",
+  "tasksNewRoutine": "New cleaning routine",
+  "tasksNewRoutineTitle": "New cleaning routine",
+  "tasksRoutineLead": "It comes back on its own — no need to re-add it.",
+  "tasksWhatNeedsDoing": "What needs doing?",
+  "tasksRoutinePlaceholder": "e.g. Clean kitchen chimney",
+  "tasksNameRequired": "Add what needs doing.",
+  "tasksWhere": "Where",
+  "tasksRoomKitchen": "Kitchen",
+  "tasksRoomLiving": "Living room",
+  "tasksRoomBedrooms": "Bedrooms",
+  "tasksRoomBathrooms": "Bathrooms",
+  "tasksRoomBalcony": "Balcony",
+  "tasksRoomWhole": "Whole house",
+  "tasksOther": "Other…",
+  "tasksRoomName": "Room",
+  "tasksHowOften": "How often",
+  "tasksEvery2": "Every 2 days",
+  "tasksEvery3": "Every 3 days",
+  "tasksCustom": "Custom…",
+  "tasksEveryHowMany": "Every how many days?",
+  "tasksDaysRange": "Enter 1 to 365 days.",
+  "tasksWhoDoesIt": "Who does it",
+  "tasksAddRoutine": "Add routine",
+  "tasksRoutineAdded": "Routine added · first one is due today",
+  "tasksEditRoutineTitle": "Edit routine",
+  "tasksSaveChanges": "Save changes",
+  "tasksRoutineUpdated": "Routine updated",
+  "tasksDeleteRoutine": "Delete routine",
+  "tasksRoutineDeleted": "Routine deleted",
+  "tasksGroupOverdue": "Overdue",
+  "tasksGroupToday": "Today",
+  "tasksGroupTomorrow": "Tomorrow",
+  "tasksGroupLater": "Later",
+  "tasksTodoMeta": "{day} · {who}",
+  "@tasksTodoMeta": {
+    "placeholders": {
+      "day": {},
+      "who": {}
+    }
+  },
+  "tasksCompleteTodo": "Complete “{title}”",
+  "@tasksCompleteTodo": {
+    "placeholders": {
+      "title": {}
+    }
+  },
+  "tasksTodoDone": "Done: {title}",
+  "@tasksTodoDone": {
+    "placeholders": {
+      "title": {}
+    }
+  },
+  "tasksAllDone": "All done",
+  "tasksNothingPending": "Nothing pending.",
+  "tasksNothingPendingFor": "Nothing pending for {name}.",
+  "@tasksNothingPendingFor": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "tasksCompleted": "Completed ({n})",
+  "@tasksCompleted": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "tasksReopenTodo": "Reopen “{title}”",
+  "@tasksReopenTodo": {
+    "placeholders": {
+      "title": {}
+    }
+  },
+  "tasksMovedBack": "Moved back to open",
+  "tasksNewTodo": "New to-do",
+  "tasksEditTodo": "Edit to-do",
+  "tasksWhat": "What",
+  "tasksTodoPlaceholder": "e.g. Book AC service",
+  "tasksTodoRequired": "Add what needs doing.",
+  "tasksWhen": "When",
+  "tasksToday": "Today",
+  "tasksTomorrow": "Tomorrow",
+  "tasksWeekend": "Weekend",
+  "tasksNextWeek": "Next week",
+  "tasksPickDate": "Pick date…",
+  "tasksWho": "Who",
+  "tasksAddTodo": "Add to-do",
+  "tasksTodoAdded": "To-do added",
+  "tasksTodoUpdated": "To-do updated",
+  "tasksDeleteTodo": "Delete to-do",
+  "tasksTodoDeleted": "To-do deleted",
+  "tasksSendList": "Send {name} today’s list",
+  "@tasksSendList": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "tasksJobs": "{n, plural, =1{1 job} other{{n} jobs}} · they don’t need the app",
+  "@tasksJobs": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "tasksPreview": "Preview",
+  "tasksListFor": "{name}’s list for today",
+  "@tasksListFor": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "tasksShareLead": "Sent as a WhatsApp message in their language. They don’t need the app.",
+  "tasksLanguage": "Language",
+  "tasksLangEnglish": "English",
+  "tasksLangHindi": "हिंदी",
+  "tasksLangTamil": "தமிழ்",
+  "tasksCopy": "Copy",
+  "tasksCopied": "Copied — paste it in any chat",
+  "tasksWhatsApp": "WhatsApp",
+  "todayDueToday": "Due today",
+  "todayAllTasks": "All tasks",
+  "todayTodoKind": "To-do",
+  "todayMoreDue": "+ {n} more due",
+  "@todayMoreDue": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "todayNothingDue": "Nothing due",
+  "todayEnjoyQuiet": "Enjoy the quiet.",
+  "tasksRemoveStaffMoves": "Their routines and open to-dos will move to you."
 }

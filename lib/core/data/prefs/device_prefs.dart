@@ -95,6 +95,12 @@ class DevicePrefs {
   Future<void> setPendingHandoffJson(String? json) =>
       setText('pendingOrderHandoff', json);
 
+  String staffMsgLang(String staffId) =>
+      getText('staffMsgLang.$staffId') ?? 'en';
+
+  Future<void> setStaffMsgLang(String staffId, String lang) =>
+      setText('staffMsgLang.$staffId', lang);
+
   /// Forgets home, member and sync counters (identity switch). Keeps flags.
   Future<void> resetIdentity() async {
     await _s.remove('currentHomeId');

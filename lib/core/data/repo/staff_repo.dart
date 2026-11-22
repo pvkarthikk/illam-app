@@ -220,10 +220,14 @@ class StaffRepo {
   Future<ChangeResult> updateDetails(String id, Map<String, Object?> fields) =>
       changes.write('Staff details', (c) => c.setAll('staff', id, fields));
 
-  Future<ChangeResult> removeStaff(String id, String today) => changes.write(
-    'Removed house help',
-    (c) => c.setAll('staff', id, {'active': false, 'end_date': today}),
-  );
+  Future<ChangeResult> removeStaff(
+    String id,
+    String today, {
+    void Function(ChangeBuilder c)? extra,
+  }) => changes.write('Removed house help', (c) {
+    c.setAll('staff', id, {'active': false, 'end_date': today});
+    extra?.call(c);
+  });
 
   Future<ChangeResult> restoreStaff(String id) => changes.write(
     'Staff details',

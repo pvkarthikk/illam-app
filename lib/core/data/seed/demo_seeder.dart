@@ -26,7 +26,7 @@ class DemoSeeder {
     await _seedStaff();
     await _seedPay();
     await _seedItems();
-    // P08: await _seedTasks();
+    await _seedTasks();
     // P09: await _seedMeals();
     // P10: await _seedMoney();
     await _seedDevNotes();
@@ -500,6 +500,101 @@ class DemoSeeder {
           'last_bought_at': now - i * hour,
         });
         c.inc('item_history', histId, 'times_bought', 1);
+      }
+    }, homeId: homeId);
+  }
+
+  Future<void> _seedTasks() async {
+    final prefs = ref.read(prefsProvider);
+    final homeId = prefs.currentHomeId;
+    if (homeId == null) return;
+
+    final db = ref.read(dbProvider);
+    final existing =
+        await (db.select(db.routines)
+              ..where(
+                (r) =>
+                    r.homeId.equals(homeId) &
+                    r.name.equals('Clean bathrooms') &
+                    r.deleted.equals(false),
+              )
+              ..limit(1))
+            .getSingleOrNull();
+    if (existing != null) return;
+
+    final clock = ref.read(clockProvider);
+    final today = Dates.today(clock);
+    final now = clock.nowMs;
+    final me = ref.read(myMemberIdProvider);
+
+    final memberRows = await (db.select(
+      db.members,
+    )..where((m) => m.homeId.equals(homeId) & m.deleted.equals(false))).get();
+    final staffRows = await (db.select(
+      db.staff,
+    )..where((s) => s.homeId.equals(homeId) & s.deleted.equals(false))).get();
+
+    String? memberIdFor(String first) {
+      for (final m in memberRows) {
+        if (m.firstName == first) return m.id;
+      }
+      return null;
+    }
+
+    String? staffIdFor(String name) {
+      for (final s in staffRows) {
+        if (s.name == name) return s.id;
+      }
+      return null;
+    }
+
+    final priyaId = memberIdFor('Priya');
+    final arjunId = memberIdFor('Arjun');
+    final lakshmiId = staffIdFor('Lakshmi');
+
+    final routines = <(String, String, int, String, String?, int)>[
+      ('Sweep & mop floors', 'Whole house', 1, 'staff', lakshmiId, -1),
+      ('Wash utensils', 'Kitchen', 1, 'staff', lakshmiId, -1),
+      ('Clean bathrooms', 'Bathrooms', 3, 'staff', lakshmiId, -4),
+      ('Change bedsheets', 'Bedrooms', 7, 'member', priyaId, -5),
+      ('Fridge clean-out', 'Kitchen', 14, 'member', me, -16),
+      ('Dust fans & windows', 'Living room', 15, 'staff', lakshmiId, -6),
+      ('Water the plants', 'Balcony', 2, 'member', arjunId, -1),
+      ('Change RO filter', 'Kitchen', 90, 'member', me, -71),
+    ];
+
+    final todos = <(String, int, String?, bool)>[
+      ('Book cooking gas cylinder', -1, me, false),
+      ('Pay electricity bill', 0, me, false),
+      ('Return library books', 0, arjunId, false),
+      ('Call plumber — kitchen tap leak', 1, me, false),
+      ('Book AC service', 2, priyaId, false),
+      ('Parent–teacher meeting', 4, priyaId, false),
+      ('Renew home insurance', -2, me, true),
+    ];
+
+    await ref.read(changesProvider).write('Demo data', (c) {
+      for (final (name, room, everyDays, type, who, offset) in routines) {
+        if (who == null || who.isEmpty) continue;
+        c.create('routines', {
+          'name': name,
+          'room': room,
+          'every_days': everyDays,
+          'assignee_type': type,
+          'assignee': who,
+          'last_done': Dates.addDays(today, offset),
+        });
+      }
+      for (final (title, offset, who, done) in todos) {
+        if (who == null || who.isEmpty) continue;
+        c.create('todos', {
+          'title': title,
+          'due': Dates.addDays(today, offset),
+          'assignee_type': 'member',
+          'assignee': who,
+          'done': done,
+          if (done) ...{'done_at': now, 'done_by': me},
+        });
       }
     }, homeId: homeId);
   }
