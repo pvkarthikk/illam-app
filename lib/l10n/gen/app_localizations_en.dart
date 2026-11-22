@@ -166,4 +166,149 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commonCancel => 'Cancel';
+
+  @override
+  String get errCantSecure =>
+      'Nest Mojo : Flat can’t secure data on this phone';
+
+  @override
+  String welcomeHeadline(Object em) {
+    return 'Run your home,\n$em';
+  }
+
+  @override
+  String get welcomeHeadlineEm => 'together.';
+
+  @override
+  String get welcomeSub =>
+      'House help, groceries, chores, meals and spends — shared between the phones in your home.';
+
+  @override
+  String get welcomeStartLabel => 'How do you want to start?';
+
+  @override
+  String get welcomeCreateTitle => 'Create a home';
+
+  @override
+  String get welcomeCreateBody =>
+      'Set it up for your family. You’ll be the admin and invite the others.';
+
+  @override
+  String get welcomeJoinTitle => 'Join a home';
+
+  @override
+  String get welcomeJoinBody =>
+      'Someone at home already uses Nest Mojo : Flat. Scan their QR code or type their phrase.';
+
+  @override
+  String get welcomeHint =>
+      'Only one person creates the home — everyone else joins it.';
+
+  @override
+  String get welcomeRestore => 'Restore from a backup';
+
+  @override
+  String get welcomeFine =>
+      'No account, no cloud. Your home’s data stays on your family’s phones and syncs directly between them.';
+
+  @override
+  String get welcomeCreditLine1 => 'Made at home, for homes.';
+
+  @override
+  String welcomeCreditLine2(Object heart) {
+    return 'with $heart by Nandini Srinivasan & Karthik Venkatesh';
+  }
+
+  @override
+  String get welcomeCreditA11y =>
+      'Made at home, for homes, with love by Nandini Srinivasan and Karthik Venkatesh';
+
+  @override
+  String get createTitle => 'Create your home';
+
+  @override
+  String get createSub =>
+      'You’ll be its admin. Others join from their phones with a QR code or a short phrase.';
+
+  @override
+  String get createYourName => 'Your name';
+
+  @override
+  String get createYourNameHint => 'e.g. Anand Kumar';
+
+  @override
+  String get createHomeName => 'Home name';
+
+  @override
+  String createHomeNameHint(Object surname) {
+    return 'e.g. $surname Home';
+  }
+
+  @override
+  String createSuggestHome(Object surname) {
+    return '$surname Home';
+  }
+
+  @override
+  String get createSuggestFlat => 'Our flat';
+
+  @override
+  String get createSuggestAmma => 'Amma’s house';
+
+  @override
+  String get createSurnameFallback => 'Our';
+
+  @override
+  String get createSuggestionsLabel => 'Suggestions';
+
+  @override
+  String get createHomeIdLabel => 'Home ID';
+
+  @override
+  String get createHomeIdNote => 'Made on this phone · unique to your home';
+
+  @override
+  String get createButton => 'Create home';
+
+  @override
+  String get createErrName => 'Add your name.';
+
+  @override
+  String get createErrHome => 'Give your home a name.';
+
+  @override
+  String get todayGreetingLate => 'Still up';
+
+  @override
+  String get todayGreetingMorning => 'Good morning';
+
+  @override
+  String get todayGreetingAfternoon => 'Good afternoon';
+
+  @override
+  String get todayGreetingEvening => 'Good evening';
+
+  @override
+  String todayEyebrow(Object home, Object date) {
+    return '$home · $date';
+  }
+
+  @override
+  String todayHeadlineAllSet(Object em) {
+    return 'The house is $em today.';
+  }
+
+  @override
+  String get todayAllSetEm => 'all set';
+
+  @override
+  String get debugViewAsMember => 'Viewing as member';
+
+  @override
+  String get debugViewAsMemberSub => 'Hide admin-only controls (UI test only)';
+
+  @override
+  String debugIsAdmin(Object value) {
+    return 'Admin on this phone: $value';
+  }
 }

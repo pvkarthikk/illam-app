@@ -12,7 +12,11 @@
   "commonDecrease": "Decrease",
   "commonIncrease": "Increase",
   "commonArrivesIn": "Arrives in {phase}",
-  "@commonArrivesIn": {"placeholders": {"phase": {}}},
+  "@commonArrivesIn": {
+    "placeholders": {
+      "phase": {}
+    }
+  },
   "debugTitle": "Developer tools",
   "debugGallery": "Component gallery",
   "debugGallerySub": "Every shared component, light and dark",
@@ -21,7 +25,11 @@
   "dayTomorrow": "Tomorrow",
   "dayYesterday": "Yesterday",
   "undoConflict": "Couldn’t undo — {name} changed it.",
-  "@undoConflict": {"placeholders": {"name": {}}},
+  "@undoConflict": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "undoConflictYou": "Couldn’t undo — you changed it.",
   "undoConflictSomeone": "Couldn’t undo — someone else changed it.",
   "debugDataLab": "Data lab",
@@ -34,11 +42,23 @@
   "labPinned": "Pinned",
   "labUnpinned": "Unpinned",
   "labTaps": "{count, plural, =1{1 tap} other{{count} taps}}",
-  "@labTaps": {"placeholders": {"count": {"type": "int"}}},
+  "@labTaps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "labRecent": "Recent changes",
   "labOpLog": "Op log",
   "labOpsTotal": "{count} ops",
-  "@labOpsTotal": {"placeholders": {"count": {"type": "int"}}},
+  "@labOpsTotal": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "labPin": "Pin",
   "labEdit": "Edit",
   "labDelete": "Delete",
@@ -51,5 +71,82 @@
   "debugWipeTitle": "Erase everything on this phone?",
   "debugWipeConfirm": "Wipe",
   "debugWiped": "This phone was wiped",
-  "commonCancel": "Cancel"
+  "commonCancel": "Cancel",
+  "errCantSecure": "Nest Mojo : Flat can’t secure data on this phone",
+  "welcomeHeadline": "Run your home,\n{em}",
+  "@welcomeHeadline": {
+    "placeholders": {
+      "em": {}
+    }
+  },
+  "welcomeHeadlineEm": "together.",
+  "welcomeSub": "House help, groceries, chores, meals and spends — shared between the phones in your home.",
+  "welcomeStartLabel": "How do you want to start?",
+  "welcomeCreateTitle": "Create a home",
+  "welcomeCreateBody": "Set it up for your family. You’ll be the admin and invite the others.",
+  "welcomeJoinTitle": "Join a home",
+  "welcomeJoinBody": "Someone at home already uses Nest Mojo : Flat. Scan their QR code or type their phrase.",
+  "welcomeHint": "Only one person creates the home — everyone else joins it.",
+  "welcomeRestore": "Restore from a backup",
+  "welcomeFine": "No account, no cloud. Your home’s data stays on your family’s phones and syncs directly between them.",
+  "welcomeCreditLine1": "Made at home, for homes.",
+  "welcomeCreditLine2": "with {heart} by Nandini Srinivasan & Karthik Venkatesh",
+  "@welcomeCreditLine2": {
+    "placeholders": {
+      "heart": {}
+    }
+  },
+  "welcomeCreditA11y": "Made at home, for homes, with love by Nandini Srinivasan and Karthik Venkatesh",
+  "createTitle": "Create your home",
+  "createSub": "You’ll be its admin. Others join from their phones with a QR code or a short phrase.",
+  "createYourName": "Your name",
+  "createYourNameHint": "e.g. Anand Kumar",
+  "createHomeName": "Home name",
+  "createHomeNameHint": "e.g. {surname} Home",
+  "@createHomeNameHint": {
+    "placeholders": {
+      "surname": {}
+    }
+  },
+  "createSuggestHome": "{surname} Home",
+  "@createSuggestHome": {
+    "placeholders": {
+      "surname": {}
+    }
+  },
+  "createSuggestFlat": "Our flat",
+  "createSuggestAmma": "Amma’s house",
+  "createSurnameFallback": "Our",
+  "createSuggestionsLabel": "Suggestions",
+  "createHomeIdLabel": "Home ID",
+  "createHomeIdNote": "Made on this phone · unique to your home",
+  "createButton": "Create home",
+  "createErrName": "Add your name.",
+  "createErrHome": "Give your home a name.",
+  "todayGreetingLate": "Still up",
+  "todayGreetingMorning": "Good morning",
+  "todayGreetingAfternoon": "Good afternoon",
+  "todayGreetingEvening": "Good evening",
+  "todayEyebrow": "{home} · {date}",
+  "@todayEyebrow": {
+    "placeholders": {
+      "home": {},
+      "date": {}
+    }
+  },
+  "todayHeadlineAllSet": "The house is {em} today.",
+  "@todayHeadlineAllSet": {
+    "placeholders": {
+      "em": {}
+    }
+  },
+  "todayAllSetEm": "all set",
+  "debugViewAsMember": "Viewing as member",
+  "debugViewAsMemberSub": "Hide admin-only controls (UI test only)",
+  "debugIsAdmin": "Admin on this phone: {value}",
+  "@debugIsAdmin": {
+    "placeholders": {
+      "value": {}
+    }
+  }
 }

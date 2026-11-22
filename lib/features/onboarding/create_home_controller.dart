@@ -1,0 +1,39 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:nm_flat/core/providers.dart';
+import 'package:nm_flat/core/util/device_model.dart';
+
+class CreateHomeController extends Notifier<bool> {
+  @override
+  bool build() => false;
+
+  /// No navigation here: the router redirect opens Today once the current
+  /// home is set.
+  Future<void> create({
+    required String name,
+    required String homeName,
+    required int createdAt,
+    required String nonceB64,
+  }) async {
+    state = true;
+    try {
+      final keys = await ref.read(deviceKeysProvider.future);
+      final model = await deviceModel();
+      await ref
+          .read(homeRepoProvider)
+          .createHome(
+            creatorName: name,
+            homeName: homeName,
+            keys: keys,
+            createdAt: createdAt,
+            nonceB64: nonceB64,
+            model: model,
+          );
+    } finally {
+      state = false;
+    }
+  }
+}
+
+final createHomeControllerProvider =
+    NotifierProvider<CreateHomeController, bool>(CreateHomeController.new);

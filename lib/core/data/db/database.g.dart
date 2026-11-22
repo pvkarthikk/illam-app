@@ -1784,12 +1784,1609 @@ class DevNotesCompanion extends UpdateCompanion<DevNote> {
   }
 }
 
+class $HomesTable extends Homes with TableInfo<$HomesTable, Home> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $HomesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _homeIdMeta = const VerificationMeta('homeId');
+  @override
+  late final GeneratedColumn<String> homeId = GeneratedColumn<String>(
+    'home_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _deletedMeta = const VerificationMeta(
+    'deleted',
+  );
+  @override
+  late final GeneratedColumn<bool> deleted = GeneratedColumn<bool>(
+    'deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _createdByMeta = const VerificationMeta(
+    'createdBy',
+  );
+  @override
+  late final GeneratedColumn<String> createdBy = GeneratedColumn<String>(
+    'created_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _updatedByMeta = const VerificationMeta(
+    'updatedBy',
+  );
+  @override
+  late final GeneratedColumn<String> updatedBy = GeneratedColumn<String>(
+    'updated_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _budgetMonthlyPaiseMeta =
+      const VerificationMeta('budgetMonthlyPaise');
+  @override
+  late final GeneratedColumn<int> budgetMonthlyPaise = GeneratedColumn<int>(
+    'budget_monthly_paise',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _vaultIdMeta = const VerificationMeta(
+    'vaultId',
+  );
+  @override
+  late final GeneratedColumn<String> vaultId = GeneratedColumn<String>(
+    'vault_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _genesisJsonMeta = const VerificationMeta(
+    'genesisJson',
+  );
+  @override
+  late final GeneratedColumn<String> genesisJson = GeneratedColumn<String>(
+    'genesis_json',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _homeKeyIdMeta = const VerificationMeta(
+    'homeKeyId',
+  );
+  @override
+  late final GeneratedColumn<String> homeKeyId = GeneratedColumn<String>(
+    'home_key_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    homeId,
+    deleted,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    name,
+    budgetMonthlyPaise,
+    vaultId,
+    genesisJson,
+    homeKeyId,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'homes';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<Home> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('home_id')) {
+      context.handle(
+        _homeIdMeta,
+        homeId.isAcceptableOrUnknown(data['home_id']!, _homeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_homeIdMeta);
+    }
+    if (data.containsKey('deleted')) {
+      context.handle(
+        _deletedMeta,
+        deleted.isAcceptableOrUnknown(data['deleted']!, _deletedMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('created_by')) {
+      context.handle(
+        _createdByMeta,
+        createdBy.isAcceptableOrUnknown(data['created_by']!, _createdByMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('updated_by')) {
+      context.handle(
+        _updatedByMeta,
+        updatedBy.isAcceptableOrUnknown(data['updated_by']!, _updatedByMeta),
+      );
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    }
+    if (data.containsKey('budget_monthly_paise')) {
+      context.handle(
+        _budgetMonthlyPaiseMeta,
+        budgetMonthlyPaise.isAcceptableOrUnknown(
+          data['budget_monthly_paise']!,
+          _budgetMonthlyPaiseMeta,
+        ),
+      );
+    }
+    if (data.containsKey('vault_id')) {
+      context.handle(
+        _vaultIdMeta,
+        vaultId.isAcceptableOrUnknown(data['vault_id']!, _vaultIdMeta),
+      );
+    }
+    if (data.containsKey('genesis_json')) {
+      context.handle(
+        _genesisJsonMeta,
+        genesisJson.isAcceptableOrUnknown(
+          data['genesis_json']!,
+          _genesisJsonMeta,
+        ),
+      );
+    }
+    if (data.containsKey('home_key_id')) {
+      context.handle(
+        _homeKeyIdMeta,
+        homeKeyId.isAcceptableOrUnknown(data['home_key_id']!, _homeKeyIdMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Home map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Home(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      homeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}home_id'],
+      )!,
+      deleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}deleted'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}created_at'],
+      )!,
+      createdBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_by'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      updatedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      ),
+      budgetMonthlyPaise: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}budget_monthly_paise'],
+      ),
+      vaultId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}vault_id'],
+      ),
+      genesisJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}genesis_json'],
+      ),
+      homeKeyId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}home_key_id'],
+      ),
+    );
+  }
+
+  @override
+  $HomesTable createAlias(String alias) {
+    return $HomesTable(attachedDatabase, alias);
+  }
+}
+
+class Home extends DataClass implements Insertable<Home> {
+  final String id;
+  final String homeId;
+  final bool deleted;
+  final int createdAt;
+  final String createdBy;
+  final int updatedAt;
+  final String updatedBy;
+  final String? name;
+  final int? budgetMonthlyPaise;
+  final String? vaultId;
+  final String? genesisJson;
+  final String? homeKeyId;
+  const Home({
+    required this.id,
+    required this.homeId,
+    required this.deleted,
+    required this.createdAt,
+    required this.createdBy,
+    required this.updatedAt,
+    required this.updatedBy,
+    this.name,
+    this.budgetMonthlyPaise,
+    this.vaultId,
+    this.genesisJson,
+    this.homeKeyId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['home_id'] = Variable<String>(homeId);
+    map['deleted'] = Variable<bool>(deleted);
+    map['created_at'] = Variable<int>(createdAt);
+    map['created_by'] = Variable<String>(createdBy);
+    map['updated_at'] = Variable<int>(updatedAt);
+    map['updated_by'] = Variable<String>(updatedBy);
+    if (!nullToAbsent || name != null) {
+      map['name'] = Variable<String>(name);
+    }
+    if (!nullToAbsent || budgetMonthlyPaise != null) {
+      map['budget_monthly_paise'] = Variable<int>(budgetMonthlyPaise);
+    }
+    if (!nullToAbsent || vaultId != null) {
+      map['vault_id'] = Variable<String>(vaultId);
+    }
+    if (!nullToAbsent || genesisJson != null) {
+      map['genesis_json'] = Variable<String>(genesisJson);
+    }
+    if (!nullToAbsent || homeKeyId != null) {
+      map['home_key_id'] = Variable<String>(homeKeyId);
+    }
+    return map;
+  }
+
+  HomesCompanion toCompanion(bool nullToAbsent) {
+    return HomesCompanion(
+      id: Value(id),
+      homeId: Value(homeId),
+      deleted: Value(deleted),
+      createdAt: Value(createdAt),
+      createdBy: Value(createdBy),
+      updatedAt: Value(updatedAt),
+      updatedBy: Value(updatedBy),
+      name: name == null && nullToAbsent ? const Value.absent() : Value(name),
+      budgetMonthlyPaise: budgetMonthlyPaise == null && nullToAbsent
+          ? const Value.absent()
+          : Value(budgetMonthlyPaise),
+      vaultId: vaultId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(vaultId),
+      genesisJson: genesisJson == null && nullToAbsent
+          ? const Value.absent()
+          : Value(genesisJson),
+      homeKeyId: homeKeyId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(homeKeyId),
+    );
+  }
+
+  factory Home.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Home(
+      id: serializer.fromJson<String>(json['id']),
+      homeId: serializer.fromJson<String>(json['homeId']),
+      deleted: serializer.fromJson<bool>(json['deleted']),
+      createdAt: serializer.fromJson<int>(json['createdAt']),
+      createdBy: serializer.fromJson<String>(json['createdBy']),
+      updatedAt: serializer.fromJson<int>(json['updatedAt']),
+      updatedBy: serializer.fromJson<String>(json['updatedBy']),
+      name: serializer.fromJson<String?>(json['name']),
+      budgetMonthlyPaise: serializer.fromJson<int?>(json['budgetMonthlyPaise']),
+      vaultId: serializer.fromJson<String?>(json['vaultId']),
+      genesisJson: serializer.fromJson<String?>(json['genesisJson']),
+      homeKeyId: serializer.fromJson<String?>(json['homeKeyId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'homeId': serializer.toJson<String>(homeId),
+      'deleted': serializer.toJson<bool>(deleted),
+      'createdAt': serializer.toJson<int>(createdAt),
+      'createdBy': serializer.toJson<String>(createdBy),
+      'updatedAt': serializer.toJson<int>(updatedAt),
+      'updatedBy': serializer.toJson<String>(updatedBy),
+      'name': serializer.toJson<String?>(name),
+      'budgetMonthlyPaise': serializer.toJson<int?>(budgetMonthlyPaise),
+      'vaultId': serializer.toJson<String?>(vaultId),
+      'genesisJson': serializer.toJson<String?>(genesisJson),
+      'homeKeyId': serializer.toJson<String?>(homeKeyId),
+    };
+  }
+
+  Home copyWith({
+    String? id,
+    String? homeId,
+    bool? deleted,
+    int? createdAt,
+    String? createdBy,
+    int? updatedAt,
+    String? updatedBy,
+    Value<String?> name = const Value.absent(),
+    Value<int?> budgetMonthlyPaise = const Value.absent(),
+    Value<String?> vaultId = const Value.absent(),
+    Value<String?> genesisJson = const Value.absent(),
+    Value<String?> homeKeyId = const Value.absent(),
+  }) => Home(
+    id: id ?? this.id,
+    homeId: homeId ?? this.homeId,
+    deleted: deleted ?? this.deleted,
+    createdAt: createdAt ?? this.createdAt,
+    createdBy: createdBy ?? this.createdBy,
+    updatedAt: updatedAt ?? this.updatedAt,
+    updatedBy: updatedBy ?? this.updatedBy,
+    name: name.present ? name.value : this.name,
+    budgetMonthlyPaise: budgetMonthlyPaise.present
+        ? budgetMonthlyPaise.value
+        : this.budgetMonthlyPaise,
+    vaultId: vaultId.present ? vaultId.value : this.vaultId,
+    genesisJson: genesisJson.present ? genesisJson.value : this.genesisJson,
+    homeKeyId: homeKeyId.present ? homeKeyId.value : this.homeKeyId,
+  );
+  Home copyWithCompanion(HomesCompanion data) {
+    return Home(
+      id: data.id.present ? data.id.value : this.id,
+      homeId: data.homeId.present ? data.homeId.value : this.homeId,
+      deleted: data.deleted.present ? data.deleted.value : this.deleted,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      createdBy: data.createdBy.present ? data.createdBy.value : this.createdBy,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      updatedBy: data.updatedBy.present ? data.updatedBy.value : this.updatedBy,
+      name: data.name.present ? data.name.value : this.name,
+      budgetMonthlyPaise: data.budgetMonthlyPaise.present
+          ? data.budgetMonthlyPaise.value
+          : this.budgetMonthlyPaise,
+      vaultId: data.vaultId.present ? data.vaultId.value : this.vaultId,
+      genesisJson: data.genesisJson.present
+          ? data.genesisJson.value
+          : this.genesisJson,
+      homeKeyId: data.homeKeyId.present ? data.homeKeyId.value : this.homeKeyId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Home(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('deleted: $deleted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('name: $name, ')
+          ..write('budgetMonthlyPaise: $budgetMonthlyPaise, ')
+          ..write('vaultId: $vaultId, ')
+          ..write('genesisJson: $genesisJson, ')
+          ..write('homeKeyId: $homeKeyId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    homeId,
+    deleted,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    name,
+    budgetMonthlyPaise,
+    vaultId,
+    genesisJson,
+    homeKeyId,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Home &&
+          other.id == this.id &&
+          other.homeId == this.homeId &&
+          other.deleted == this.deleted &&
+          other.createdAt == this.createdAt &&
+          other.createdBy == this.createdBy &&
+          other.updatedAt == this.updatedAt &&
+          other.updatedBy == this.updatedBy &&
+          other.name == this.name &&
+          other.budgetMonthlyPaise == this.budgetMonthlyPaise &&
+          other.vaultId == this.vaultId &&
+          other.genesisJson == this.genesisJson &&
+          other.homeKeyId == this.homeKeyId);
+}
+
+class HomesCompanion extends UpdateCompanion<Home> {
+  final Value<String> id;
+  final Value<String> homeId;
+  final Value<bool> deleted;
+  final Value<int> createdAt;
+  final Value<String> createdBy;
+  final Value<int> updatedAt;
+  final Value<String> updatedBy;
+  final Value<String?> name;
+  final Value<int?> budgetMonthlyPaise;
+  final Value<String?> vaultId;
+  final Value<String?> genesisJson;
+  final Value<String?> homeKeyId;
+  final Value<int> rowid;
+  const HomesCompanion({
+    this.id = const Value.absent(),
+    this.homeId = const Value.absent(),
+    this.deleted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.name = const Value.absent(),
+    this.budgetMonthlyPaise = const Value.absent(),
+    this.vaultId = const Value.absent(),
+    this.genesisJson = const Value.absent(),
+    this.homeKeyId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  HomesCompanion.insert({
+    required String id,
+    required String homeId,
+    this.deleted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.name = const Value.absent(),
+    this.budgetMonthlyPaise = const Value.absent(),
+    this.vaultId = const Value.absent(),
+    this.genesisJson = const Value.absent(),
+    this.homeKeyId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       homeId = Value(homeId);
+  static Insertable<Home> custom({
+    Expression<String>? id,
+    Expression<String>? homeId,
+    Expression<bool>? deleted,
+    Expression<int>? createdAt,
+    Expression<String>? createdBy,
+    Expression<int>? updatedAt,
+    Expression<String>? updatedBy,
+    Expression<String>? name,
+    Expression<int>? budgetMonthlyPaise,
+    Expression<String>? vaultId,
+    Expression<String>? genesisJson,
+    Expression<String>? homeKeyId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (homeId != null) 'home_id': homeId,
+      if (deleted != null) 'deleted': deleted,
+      if (createdAt != null) 'created_at': createdAt,
+      if (createdBy != null) 'created_by': createdBy,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (updatedBy != null) 'updated_by': updatedBy,
+      if (name != null) 'name': name,
+      if (budgetMonthlyPaise != null)
+        'budget_monthly_paise': budgetMonthlyPaise,
+      if (vaultId != null) 'vault_id': vaultId,
+      if (genesisJson != null) 'genesis_json': genesisJson,
+      if (homeKeyId != null) 'home_key_id': homeKeyId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  HomesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? homeId,
+    Value<bool>? deleted,
+    Value<int>? createdAt,
+    Value<String>? createdBy,
+    Value<int>? updatedAt,
+    Value<String>? updatedBy,
+    Value<String?>? name,
+    Value<int?>? budgetMonthlyPaise,
+    Value<String?>? vaultId,
+    Value<String?>? genesisJson,
+    Value<String?>? homeKeyId,
+    Value<int>? rowid,
+  }) {
+    return HomesCompanion(
+      id: id ?? this.id,
+      homeId: homeId ?? this.homeId,
+      deleted: deleted ?? this.deleted,
+      createdAt: createdAt ?? this.createdAt,
+      createdBy: createdBy ?? this.createdBy,
+      updatedAt: updatedAt ?? this.updatedAt,
+      updatedBy: updatedBy ?? this.updatedBy,
+      name: name ?? this.name,
+      budgetMonthlyPaise: budgetMonthlyPaise ?? this.budgetMonthlyPaise,
+      vaultId: vaultId ?? this.vaultId,
+      genesisJson: genesisJson ?? this.genesisJson,
+      homeKeyId: homeKeyId ?? this.homeKeyId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (homeId.present) {
+      map['home_id'] = Variable<String>(homeId.value);
+    }
+    if (deleted.present) {
+      map['deleted'] = Variable<bool>(deleted.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (createdBy.present) {
+      map['created_by'] = Variable<String>(createdBy.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (updatedBy.present) {
+      map['updated_by'] = Variable<String>(updatedBy.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (budgetMonthlyPaise.present) {
+      map['budget_monthly_paise'] = Variable<int>(budgetMonthlyPaise.value);
+    }
+    if (vaultId.present) {
+      map['vault_id'] = Variable<String>(vaultId.value);
+    }
+    if (genesisJson.present) {
+      map['genesis_json'] = Variable<String>(genesisJson.value);
+    }
+    if (homeKeyId.present) {
+      map['home_key_id'] = Variable<String>(homeKeyId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('HomesCompanion(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('deleted: $deleted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('name: $name, ')
+          ..write('budgetMonthlyPaise: $budgetMonthlyPaise, ')
+          ..write('vaultId: $vaultId, ')
+          ..write('genesisJson: $genesisJson, ')
+          ..write('homeKeyId: $homeKeyId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $MembersTable extends Members with TableInfo<$MembersTable, Member> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MembersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _homeIdMeta = const VerificationMeta('homeId');
+  @override
+  late final GeneratedColumn<String> homeId = GeneratedColumn<String>(
+    'home_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _deletedMeta = const VerificationMeta(
+    'deleted',
+  );
+  @override
+  late final GeneratedColumn<bool> deleted = GeneratedColumn<bool>(
+    'deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _createdByMeta = const VerificationMeta(
+    'createdBy',
+  );
+  @override
+  late final GeneratedColumn<String> createdBy = GeneratedColumn<String>(
+    'created_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _updatedByMeta = const VerificationMeta(
+    'updatedBy',
+  );
+  @override
+  late final GeneratedColumn<String> updatedBy = GeneratedColumn<String>(
+    'updated_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _fullNameMeta = const VerificationMeta(
+    'fullName',
+  );
+  @override
+  late final GeneratedColumn<String> fullName = GeneratedColumn<String>(
+    'full_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _firstNameMeta = const VerificationMeta(
+    'firstName',
+  );
+  @override
+  late final GeneratedColumn<String> firstName = GeneratedColumn<String>(
+    'first_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _roleMeta = const VerificationMeta('role');
+  @override
+  late final GeneratedColumn<String> role = GeneratedColumn<String>(
+    'role',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('member'),
+  );
+  static const VerificationMeta _statusMeta = const VerificationMeta('status');
+  @override
+  late final GeneratedColumn<String> status = GeneratedColumn<String>(
+    'status',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('active'),
+  );
+  static const VerificationMeta _colorMeta = const VerificationMeta('color');
+  @override
+  late final GeneratedColumn<String> color = GeneratedColumn<String>(
+    'color',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _deviceModelMeta = const VerificationMeta(
+    'deviceModel',
+  );
+  @override
+  late final GeneratedColumn<String> deviceModel = GeneratedColumn<String>(
+    'device_model',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _joinedAtMeta = const VerificationMeta(
+    'joinedAt',
+  );
+  @override
+  late final GeneratedColumn<int> joinedAt = GeneratedColumn<int>(
+    'joined_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _joinedViaMeta = const VerificationMeta(
+    'joinedVia',
+  );
+  @override
+  late final GeneratedColumn<String> joinedVia = GeneratedColumn<String>(
+    'joined_via',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _invitedByMeta = const VerificationMeta(
+    'invitedBy',
+  );
+  @override
+  late final GeneratedColumn<String> invitedBy = GeneratedColumn<String>(
+    'invited_by',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    homeId,
+    deleted,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    fullName,
+    firstName,
+    role,
+    status,
+    color,
+    deviceModel,
+    joinedAt,
+    joinedVia,
+    invitedBy,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'members';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<Member> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('home_id')) {
+      context.handle(
+        _homeIdMeta,
+        homeId.isAcceptableOrUnknown(data['home_id']!, _homeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_homeIdMeta);
+    }
+    if (data.containsKey('deleted')) {
+      context.handle(
+        _deletedMeta,
+        deleted.isAcceptableOrUnknown(data['deleted']!, _deletedMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('created_by')) {
+      context.handle(
+        _createdByMeta,
+        createdBy.isAcceptableOrUnknown(data['created_by']!, _createdByMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('updated_by')) {
+      context.handle(
+        _updatedByMeta,
+        updatedBy.isAcceptableOrUnknown(data['updated_by']!, _updatedByMeta),
+      );
+    }
+    if (data.containsKey('full_name')) {
+      context.handle(
+        _fullNameMeta,
+        fullName.isAcceptableOrUnknown(data['full_name']!, _fullNameMeta),
+      );
+    }
+    if (data.containsKey('first_name')) {
+      context.handle(
+        _firstNameMeta,
+        firstName.isAcceptableOrUnknown(data['first_name']!, _firstNameMeta),
+      );
+    }
+    if (data.containsKey('role')) {
+      context.handle(
+        _roleMeta,
+        role.isAcceptableOrUnknown(data['role']!, _roleMeta),
+      );
+    }
+    if (data.containsKey('status')) {
+      context.handle(
+        _statusMeta,
+        status.isAcceptableOrUnknown(data['status']!, _statusMeta),
+      );
+    }
+    if (data.containsKey('color')) {
+      context.handle(
+        _colorMeta,
+        color.isAcceptableOrUnknown(data['color']!, _colorMeta),
+      );
+    }
+    if (data.containsKey('device_model')) {
+      context.handle(
+        _deviceModelMeta,
+        deviceModel.isAcceptableOrUnknown(
+          data['device_model']!,
+          _deviceModelMeta,
+        ),
+      );
+    }
+    if (data.containsKey('joined_at')) {
+      context.handle(
+        _joinedAtMeta,
+        joinedAt.isAcceptableOrUnknown(data['joined_at']!, _joinedAtMeta),
+      );
+    }
+    if (data.containsKey('joined_via')) {
+      context.handle(
+        _joinedViaMeta,
+        joinedVia.isAcceptableOrUnknown(data['joined_via']!, _joinedViaMeta),
+      );
+    }
+    if (data.containsKey('invited_by')) {
+      context.handle(
+        _invitedByMeta,
+        invitedBy.isAcceptableOrUnknown(data['invited_by']!, _invitedByMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Member map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Member(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      homeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}home_id'],
+      )!,
+      deleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}deleted'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}created_at'],
+      )!,
+      createdBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_by'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      updatedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by'],
+      )!,
+      fullName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}full_name'],
+      ),
+      firstName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}first_name'],
+      ),
+      role: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}role'],
+      )!,
+      status: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}status'],
+      )!,
+      color: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}color'],
+      ),
+      deviceModel: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}device_model'],
+      ),
+      joinedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}joined_at'],
+      ),
+      joinedVia: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}joined_via'],
+      ),
+      invitedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}invited_by'],
+      ),
+    );
+  }
+
+  @override
+  $MembersTable createAlias(String alias) {
+    return $MembersTable(attachedDatabase, alias);
+  }
+}
+
+class Member extends DataClass implements Insertable<Member> {
+  final String id;
+  final String homeId;
+  final bool deleted;
+  final int createdAt;
+  final String createdBy;
+  final int updatedAt;
+  final String updatedBy;
+  final String? fullName;
+  final String? firstName;
+  final String role;
+  final String status;
+  final String? color;
+  final String? deviceModel;
+  final int? joinedAt;
+  final String? joinedVia;
+  final String? invitedBy;
+  const Member({
+    required this.id,
+    required this.homeId,
+    required this.deleted,
+    required this.createdAt,
+    required this.createdBy,
+    required this.updatedAt,
+    required this.updatedBy,
+    this.fullName,
+    this.firstName,
+    required this.role,
+    required this.status,
+    this.color,
+    this.deviceModel,
+    this.joinedAt,
+    this.joinedVia,
+    this.invitedBy,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['home_id'] = Variable<String>(homeId);
+    map['deleted'] = Variable<bool>(deleted);
+    map['created_at'] = Variable<int>(createdAt);
+    map['created_by'] = Variable<String>(createdBy);
+    map['updated_at'] = Variable<int>(updatedAt);
+    map['updated_by'] = Variable<String>(updatedBy);
+    if (!nullToAbsent || fullName != null) {
+      map['full_name'] = Variable<String>(fullName);
+    }
+    if (!nullToAbsent || firstName != null) {
+      map['first_name'] = Variable<String>(firstName);
+    }
+    map['role'] = Variable<String>(role);
+    map['status'] = Variable<String>(status);
+    if (!nullToAbsent || color != null) {
+      map['color'] = Variable<String>(color);
+    }
+    if (!nullToAbsent || deviceModel != null) {
+      map['device_model'] = Variable<String>(deviceModel);
+    }
+    if (!nullToAbsent || joinedAt != null) {
+      map['joined_at'] = Variable<int>(joinedAt);
+    }
+    if (!nullToAbsent || joinedVia != null) {
+      map['joined_via'] = Variable<String>(joinedVia);
+    }
+    if (!nullToAbsent || invitedBy != null) {
+      map['invited_by'] = Variable<String>(invitedBy);
+    }
+    return map;
+  }
+
+  MembersCompanion toCompanion(bool nullToAbsent) {
+    return MembersCompanion(
+      id: Value(id),
+      homeId: Value(homeId),
+      deleted: Value(deleted),
+      createdAt: Value(createdAt),
+      createdBy: Value(createdBy),
+      updatedAt: Value(updatedAt),
+      updatedBy: Value(updatedBy),
+      fullName: fullName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fullName),
+      firstName: firstName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(firstName),
+      role: Value(role),
+      status: Value(status),
+      color: color == null && nullToAbsent
+          ? const Value.absent()
+          : Value(color),
+      deviceModel: deviceModel == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deviceModel),
+      joinedAt: joinedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(joinedAt),
+      joinedVia: joinedVia == null && nullToAbsent
+          ? const Value.absent()
+          : Value(joinedVia),
+      invitedBy: invitedBy == null && nullToAbsent
+          ? const Value.absent()
+          : Value(invitedBy),
+    );
+  }
+
+  factory Member.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Member(
+      id: serializer.fromJson<String>(json['id']),
+      homeId: serializer.fromJson<String>(json['homeId']),
+      deleted: serializer.fromJson<bool>(json['deleted']),
+      createdAt: serializer.fromJson<int>(json['createdAt']),
+      createdBy: serializer.fromJson<String>(json['createdBy']),
+      updatedAt: serializer.fromJson<int>(json['updatedAt']),
+      updatedBy: serializer.fromJson<String>(json['updatedBy']),
+      fullName: serializer.fromJson<String?>(json['fullName']),
+      firstName: serializer.fromJson<String?>(json['firstName']),
+      role: serializer.fromJson<String>(json['role']),
+      status: serializer.fromJson<String>(json['status']),
+      color: serializer.fromJson<String?>(json['color']),
+      deviceModel: serializer.fromJson<String?>(json['deviceModel']),
+      joinedAt: serializer.fromJson<int?>(json['joinedAt']),
+      joinedVia: serializer.fromJson<String?>(json['joinedVia']),
+      invitedBy: serializer.fromJson<String?>(json['invitedBy']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'homeId': serializer.toJson<String>(homeId),
+      'deleted': serializer.toJson<bool>(deleted),
+      'createdAt': serializer.toJson<int>(createdAt),
+      'createdBy': serializer.toJson<String>(createdBy),
+      'updatedAt': serializer.toJson<int>(updatedAt),
+      'updatedBy': serializer.toJson<String>(updatedBy),
+      'fullName': serializer.toJson<String?>(fullName),
+      'firstName': serializer.toJson<String?>(firstName),
+      'role': serializer.toJson<String>(role),
+      'status': serializer.toJson<String>(status),
+      'color': serializer.toJson<String?>(color),
+      'deviceModel': serializer.toJson<String?>(deviceModel),
+      'joinedAt': serializer.toJson<int?>(joinedAt),
+      'joinedVia': serializer.toJson<String?>(joinedVia),
+      'invitedBy': serializer.toJson<String?>(invitedBy),
+    };
+  }
+
+  Member copyWith({
+    String? id,
+    String? homeId,
+    bool? deleted,
+    int? createdAt,
+    String? createdBy,
+    int? updatedAt,
+    String? updatedBy,
+    Value<String?> fullName = const Value.absent(),
+    Value<String?> firstName = const Value.absent(),
+    String? role,
+    String? status,
+    Value<String?> color = const Value.absent(),
+    Value<String?> deviceModel = const Value.absent(),
+    Value<int?> joinedAt = const Value.absent(),
+    Value<String?> joinedVia = const Value.absent(),
+    Value<String?> invitedBy = const Value.absent(),
+  }) => Member(
+    id: id ?? this.id,
+    homeId: homeId ?? this.homeId,
+    deleted: deleted ?? this.deleted,
+    createdAt: createdAt ?? this.createdAt,
+    createdBy: createdBy ?? this.createdBy,
+    updatedAt: updatedAt ?? this.updatedAt,
+    updatedBy: updatedBy ?? this.updatedBy,
+    fullName: fullName.present ? fullName.value : this.fullName,
+    firstName: firstName.present ? firstName.value : this.firstName,
+    role: role ?? this.role,
+    status: status ?? this.status,
+    color: color.present ? color.value : this.color,
+    deviceModel: deviceModel.present ? deviceModel.value : this.deviceModel,
+    joinedAt: joinedAt.present ? joinedAt.value : this.joinedAt,
+    joinedVia: joinedVia.present ? joinedVia.value : this.joinedVia,
+    invitedBy: invitedBy.present ? invitedBy.value : this.invitedBy,
+  );
+  Member copyWithCompanion(MembersCompanion data) {
+    return Member(
+      id: data.id.present ? data.id.value : this.id,
+      homeId: data.homeId.present ? data.homeId.value : this.homeId,
+      deleted: data.deleted.present ? data.deleted.value : this.deleted,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      createdBy: data.createdBy.present ? data.createdBy.value : this.createdBy,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      updatedBy: data.updatedBy.present ? data.updatedBy.value : this.updatedBy,
+      fullName: data.fullName.present ? data.fullName.value : this.fullName,
+      firstName: data.firstName.present ? data.firstName.value : this.firstName,
+      role: data.role.present ? data.role.value : this.role,
+      status: data.status.present ? data.status.value : this.status,
+      color: data.color.present ? data.color.value : this.color,
+      deviceModel: data.deviceModel.present
+          ? data.deviceModel.value
+          : this.deviceModel,
+      joinedAt: data.joinedAt.present ? data.joinedAt.value : this.joinedAt,
+      joinedVia: data.joinedVia.present ? data.joinedVia.value : this.joinedVia,
+      invitedBy: data.invitedBy.present ? data.invitedBy.value : this.invitedBy,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Member(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('deleted: $deleted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('fullName: $fullName, ')
+          ..write('firstName: $firstName, ')
+          ..write('role: $role, ')
+          ..write('status: $status, ')
+          ..write('color: $color, ')
+          ..write('deviceModel: $deviceModel, ')
+          ..write('joinedAt: $joinedAt, ')
+          ..write('joinedVia: $joinedVia, ')
+          ..write('invitedBy: $invitedBy')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    homeId,
+    deleted,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    fullName,
+    firstName,
+    role,
+    status,
+    color,
+    deviceModel,
+    joinedAt,
+    joinedVia,
+    invitedBy,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Member &&
+          other.id == this.id &&
+          other.homeId == this.homeId &&
+          other.deleted == this.deleted &&
+          other.createdAt == this.createdAt &&
+          other.createdBy == this.createdBy &&
+          other.updatedAt == this.updatedAt &&
+          other.updatedBy == this.updatedBy &&
+          other.fullName == this.fullName &&
+          other.firstName == this.firstName &&
+          other.role == this.role &&
+          other.status == this.status &&
+          other.color == this.color &&
+          other.deviceModel == this.deviceModel &&
+          other.joinedAt == this.joinedAt &&
+          other.joinedVia == this.joinedVia &&
+          other.invitedBy == this.invitedBy);
+}
+
+class MembersCompanion extends UpdateCompanion<Member> {
+  final Value<String> id;
+  final Value<String> homeId;
+  final Value<bool> deleted;
+  final Value<int> createdAt;
+  final Value<String> createdBy;
+  final Value<int> updatedAt;
+  final Value<String> updatedBy;
+  final Value<String?> fullName;
+  final Value<String?> firstName;
+  final Value<String> role;
+  final Value<String> status;
+  final Value<String?> color;
+  final Value<String?> deviceModel;
+  final Value<int?> joinedAt;
+  final Value<String?> joinedVia;
+  final Value<String?> invitedBy;
+  final Value<int> rowid;
+  const MembersCompanion({
+    this.id = const Value.absent(),
+    this.homeId = const Value.absent(),
+    this.deleted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.fullName = const Value.absent(),
+    this.firstName = const Value.absent(),
+    this.role = const Value.absent(),
+    this.status = const Value.absent(),
+    this.color = const Value.absent(),
+    this.deviceModel = const Value.absent(),
+    this.joinedAt = const Value.absent(),
+    this.joinedVia = const Value.absent(),
+    this.invitedBy = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  MembersCompanion.insert({
+    required String id,
+    required String homeId,
+    this.deleted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.fullName = const Value.absent(),
+    this.firstName = const Value.absent(),
+    this.role = const Value.absent(),
+    this.status = const Value.absent(),
+    this.color = const Value.absent(),
+    this.deviceModel = const Value.absent(),
+    this.joinedAt = const Value.absent(),
+    this.joinedVia = const Value.absent(),
+    this.invitedBy = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       homeId = Value(homeId);
+  static Insertable<Member> custom({
+    Expression<String>? id,
+    Expression<String>? homeId,
+    Expression<bool>? deleted,
+    Expression<int>? createdAt,
+    Expression<String>? createdBy,
+    Expression<int>? updatedAt,
+    Expression<String>? updatedBy,
+    Expression<String>? fullName,
+    Expression<String>? firstName,
+    Expression<String>? role,
+    Expression<String>? status,
+    Expression<String>? color,
+    Expression<String>? deviceModel,
+    Expression<int>? joinedAt,
+    Expression<String>? joinedVia,
+    Expression<String>? invitedBy,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (homeId != null) 'home_id': homeId,
+      if (deleted != null) 'deleted': deleted,
+      if (createdAt != null) 'created_at': createdAt,
+      if (createdBy != null) 'created_by': createdBy,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (updatedBy != null) 'updated_by': updatedBy,
+      if (fullName != null) 'full_name': fullName,
+      if (firstName != null) 'first_name': firstName,
+      if (role != null) 'role': role,
+      if (status != null) 'status': status,
+      if (color != null) 'color': color,
+      if (deviceModel != null) 'device_model': deviceModel,
+      if (joinedAt != null) 'joined_at': joinedAt,
+      if (joinedVia != null) 'joined_via': joinedVia,
+      if (invitedBy != null) 'invited_by': invitedBy,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  MembersCompanion copyWith({
+    Value<String>? id,
+    Value<String>? homeId,
+    Value<bool>? deleted,
+    Value<int>? createdAt,
+    Value<String>? createdBy,
+    Value<int>? updatedAt,
+    Value<String>? updatedBy,
+    Value<String?>? fullName,
+    Value<String?>? firstName,
+    Value<String>? role,
+    Value<String>? status,
+    Value<String?>? color,
+    Value<String?>? deviceModel,
+    Value<int?>? joinedAt,
+    Value<String?>? joinedVia,
+    Value<String?>? invitedBy,
+    Value<int>? rowid,
+  }) {
+    return MembersCompanion(
+      id: id ?? this.id,
+      homeId: homeId ?? this.homeId,
+      deleted: deleted ?? this.deleted,
+      createdAt: createdAt ?? this.createdAt,
+      createdBy: createdBy ?? this.createdBy,
+      updatedAt: updatedAt ?? this.updatedAt,
+      updatedBy: updatedBy ?? this.updatedBy,
+      fullName: fullName ?? this.fullName,
+      firstName: firstName ?? this.firstName,
+      role: role ?? this.role,
+      status: status ?? this.status,
+      color: color ?? this.color,
+      deviceModel: deviceModel ?? this.deviceModel,
+      joinedAt: joinedAt ?? this.joinedAt,
+      joinedVia: joinedVia ?? this.joinedVia,
+      invitedBy: invitedBy ?? this.invitedBy,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (homeId.present) {
+      map['home_id'] = Variable<String>(homeId.value);
+    }
+    if (deleted.present) {
+      map['deleted'] = Variable<bool>(deleted.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (createdBy.present) {
+      map['created_by'] = Variable<String>(createdBy.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (updatedBy.present) {
+      map['updated_by'] = Variable<String>(updatedBy.value);
+    }
+    if (fullName.present) {
+      map['full_name'] = Variable<String>(fullName.value);
+    }
+    if (firstName.present) {
+      map['first_name'] = Variable<String>(firstName.value);
+    }
+    if (role.present) {
+      map['role'] = Variable<String>(role.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(status.value);
+    }
+    if (color.present) {
+      map['color'] = Variable<String>(color.value);
+    }
+    if (deviceModel.present) {
+      map['device_model'] = Variable<String>(deviceModel.value);
+    }
+    if (joinedAt.present) {
+      map['joined_at'] = Variable<int>(joinedAt.value);
+    }
+    if (joinedVia.present) {
+      map['joined_via'] = Variable<String>(joinedVia.value);
+    }
+    if (invitedBy.present) {
+      map['invited_by'] = Variable<String>(invitedBy.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MembersCompanion(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('deleted: $deleted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('fullName: $fullName, ')
+          ..write('firstName: $firstName, ')
+          ..write('role: $role, ')
+          ..write('status: $status, ')
+          ..write('color: $color, ')
+          ..write('deviceModel: $deviceModel, ')
+          ..write('joinedAt: $joinedAt, ')
+          ..write('joinedVia: $joinedVia, ')
+          ..write('invitedBy: $invitedBy, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$NestDatabase extends GeneratedDatabase {
   _$NestDatabase(QueryExecutor e) : super(e);
   $NestDatabaseManager get managers => $NestDatabaseManager(this);
   late final $OpsTable ops = $OpsTable(this);
   late final $FieldClocksTable fieldClocks = $FieldClocksTable(this);
   late final $DevNotesTable devNotes = $DevNotesTable(this);
+  late final $HomesTable homes = $HomesTable(this);
+  late final $MembersTable members = $MembersTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -1798,6 +3395,8 @@ abstract class _$NestDatabase extends GeneratedDatabase {
     ops,
     fieldClocks,
     devNotes,
+    homes,
+    members,
   ];
 }
 
@@ -2696,6 +4295,755 @@ typedef $$DevNotesTableProcessedTableManager =
       DevNote,
       PrefetchHooks Function()
     >;
+typedef $$HomesTableCreateCompanionBuilder = HomesCompanion Function({
+  required String id,
+  required String homeId,
+  Value<bool> deleted,
+  Value<int> createdAt,
+  Value<String> createdBy,
+  Value<int> updatedAt,
+  Value<String> updatedBy,
+  Value<String?> name,
+  Value<int?> budgetMonthlyPaise,
+  Value<String?> vaultId,
+  Value<String?> genesisJson,
+  Value<String?> homeKeyId,
+  Value<int> rowid,
+});
+typedef $$HomesTableUpdateCompanionBuilder = HomesCompanion Function({
+  Value<String> id,
+  Value<String> homeId,
+  Value<bool> deleted,
+  Value<int> createdAt,
+  Value<String> createdBy,
+  Value<int> updatedAt,
+  Value<String> updatedBy,
+  Value<String?> name,
+  Value<int?> budgetMonthlyPaise,
+  Value<String?> vaultId,
+  Value<String?> genesisJson,
+  Value<String?> homeKeyId,
+  Value<int> rowid,
+});
+
+class $$HomesTableFilterComposer extends Composer<_$NestDatabase, $HomesTable> {
+  $$HomesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get budgetMonthlyPaise => $composableBuilder(
+    column: $table.budgetMonthlyPaise,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get vaultId => $composableBuilder(
+    column: $table.vaultId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get genesisJson => $composableBuilder(
+    column: $table.genesisJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get homeKeyId => $composableBuilder(
+    column: $table.homeKeyId,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$HomesTableOrderingComposer
+    extends Composer<_$NestDatabase, $HomesTable> {
+  $$HomesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get budgetMonthlyPaise => $composableBuilder(
+    column: $table.budgetMonthlyPaise,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get vaultId => $composableBuilder(
+    column: $table.vaultId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get genesisJson => $composableBuilder(
+    column: $table.genesisJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get homeKeyId => $composableBuilder(
+    column: $table.homeKeyId,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$HomesTableAnnotationComposer
+    extends Composer<_$NestDatabase, $HomesTable> {
+  $$HomesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get homeId =>
+      $composableBuilder(column: $table.homeId, builder: (column) => column);
+
+  GeneratedColumn<bool> get deleted =>
+      $composableBuilder(column: $table.deleted, builder: (column) => column);
+
+  GeneratedColumn<int> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<String> get createdBy =>
+      $composableBuilder(column: $table.createdBy, builder: (column) => column);
+
+  GeneratedColumn<int> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get updatedBy =>
+      $composableBuilder(column: $table.updatedBy, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<int> get budgetMonthlyPaise => $composableBuilder(
+    column: $table.budgetMonthlyPaise,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get vaultId =>
+      $composableBuilder(column: $table.vaultId, builder: (column) => column);
+
+  GeneratedColumn<String> get genesisJson => $composableBuilder(
+    column: $table.genesisJson,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get homeKeyId =>
+      $composableBuilder(column: $table.homeKeyId, builder: (column) => column);
+}
+
+class $$HomesTableTableManager
+    extends
+        RootTableManager<
+          _$NestDatabase,
+          $HomesTable,
+          Home,
+          $$HomesTableFilterComposer,
+          $$HomesTableOrderingComposer,
+          $$HomesTableAnnotationComposer,
+          $$HomesTableCreateCompanionBuilder,
+          $$HomesTableUpdateCompanionBuilder,
+          (Home, BaseReferences<_$NestDatabase, $HomesTable, Home>),
+          Home,
+          PrefetchHooks Function()
+        > {
+  $$HomesTableTableManager(_$NestDatabase db, $HomesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$HomesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$HomesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$HomesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> homeId = const Value.absent(),
+                Value<bool> deleted = const Value.absent(),
+                Value<int> createdAt = const Value.absent(),
+                Value<String> createdBy = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> updatedBy = const Value.absent(),
+                Value<String?> name = const Value.absent(),
+                Value<int?> budgetMonthlyPaise = const Value.absent(),
+                Value<String?> vaultId = const Value.absent(),
+                Value<String?> genesisJson = const Value.absent(),
+                Value<String?> homeKeyId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => HomesCompanion(
+                id: id,
+                homeId: homeId,
+                deleted: deleted,
+                createdAt: createdAt,
+                createdBy: createdBy,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy,
+                name: name,
+                budgetMonthlyPaise: budgetMonthlyPaise,
+                vaultId: vaultId,
+                genesisJson: genesisJson,
+                homeKeyId: homeKeyId,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String homeId,
+                Value<bool> deleted = const Value.absent(),
+                Value<int> createdAt = const Value.absent(),
+                Value<String> createdBy = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> updatedBy = const Value.absent(),
+                Value<String?> name = const Value.absent(),
+                Value<int?> budgetMonthlyPaise = const Value.absent(),
+                Value<String?> vaultId = const Value.absent(),
+                Value<String?> genesisJson = const Value.absent(),
+                Value<String?> homeKeyId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => HomesCompanion.insert(
+                id: id,
+                homeId: homeId,
+                deleted: deleted,
+                createdAt: createdAt,
+                createdBy: createdBy,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy,
+                name: name,
+                budgetMonthlyPaise: budgetMonthlyPaise,
+                vaultId: vaultId,
+                genesisJson: genesisJson,
+                homeKeyId: homeKeyId,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$HomesTable, Home>(table),
+                  BaseReferences<_$NestDatabase, $HomesTable, Home>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$HomesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$NestDatabase,
+      $HomesTable,
+      Home,
+      $$HomesTableFilterComposer,
+      $$HomesTableOrderingComposer,
+      $$HomesTableAnnotationComposer,
+      $$HomesTableCreateCompanionBuilder,
+      $$HomesTableUpdateCompanionBuilder,
+      (Home, BaseReferences<_$NestDatabase, $HomesTable, Home>),
+      Home,
+      PrefetchHooks Function()
+    >;
+typedef $$MembersTableCreateCompanionBuilder = MembersCompanion Function({
+  required String id,
+  required String homeId,
+  Value<bool> deleted,
+  Value<int> createdAt,
+  Value<String> createdBy,
+  Value<int> updatedAt,
+  Value<String> updatedBy,
+  Value<String?> fullName,
+  Value<String?> firstName,
+  Value<String> role,
+  Value<String> status,
+  Value<String?> color,
+  Value<String?> deviceModel,
+  Value<int?> joinedAt,
+  Value<String?> joinedVia,
+  Value<String?> invitedBy,
+  Value<int> rowid,
+});
+typedef $$MembersTableUpdateCompanionBuilder = MembersCompanion Function({
+  Value<String> id,
+  Value<String> homeId,
+  Value<bool> deleted,
+  Value<int> createdAt,
+  Value<String> createdBy,
+  Value<int> updatedAt,
+  Value<String> updatedBy,
+  Value<String?> fullName,
+  Value<String?> firstName,
+  Value<String> role,
+  Value<String> status,
+  Value<String?> color,
+  Value<String?> deviceModel,
+  Value<int?> joinedAt,
+  Value<String?> joinedVia,
+  Value<String?> invitedBy,
+  Value<int> rowid,
+});
+
+class $$MembersTableFilterComposer
+    extends Composer<_$NestDatabase, $MembersTable> {
+  $$MembersTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get fullName => $composableBuilder(
+    column: $table.fullName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get firstName => $composableBuilder(
+    column: $table.firstName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get role => $composableBuilder(
+    column: $table.role,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get color => $composableBuilder(
+    column: $table.color,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get deviceModel => $composableBuilder(
+    column: $table.deviceModel,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get joinedAt => $composableBuilder(
+    column: $table.joinedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get joinedVia => $composableBuilder(
+    column: $table.joinedVia,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get invitedBy => $composableBuilder(
+    column: $table.invitedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$MembersTableOrderingComposer
+    extends Composer<_$NestDatabase, $MembersTable> {
+  $$MembersTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get fullName => $composableBuilder(
+    column: $table.fullName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get firstName => $composableBuilder(
+    column: $table.firstName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get role => $composableBuilder(
+    column: $table.role,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get color => $composableBuilder(
+    column: $table.color,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get deviceModel => $composableBuilder(
+    column: $table.deviceModel,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get joinedAt => $composableBuilder(
+    column: $table.joinedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get joinedVia => $composableBuilder(
+    column: $table.joinedVia,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get invitedBy => $composableBuilder(
+    column: $table.invitedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$MembersTableAnnotationComposer
+    extends Composer<_$NestDatabase, $MembersTable> {
+  $$MembersTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get homeId =>
+      $composableBuilder(column: $table.homeId, builder: (column) => column);
+
+  GeneratedColumn<bool> get deleted =>
+      $composableBuilder(column: $table.deleted, builder: (column) => column);
+
+  GeneratedColumn<int> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<String> get createdBy =>
+      $composableBuilder(column: $table.createdBy, builder: (column) => column);
+
+  GeneratedColumn<int> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get updatedBy =>
+      $composableBuilder(column: $table.updatedBy, builder: (column) => column);
+
+  GeneratedColumn<String> get fullName =>
+      $composableBuilder(column: $table.fullName, builder: (column) => column);
+
+  GeneratedColumn<String> get firstName =>
+      $composableBuilder(column: $table.firstName, builder: (column) => column);
+
+  GeneratedColumn<String> get role =>
+      $composableBuilder(column: $table.role, builder: (column) => column);
+
+  GeneratedColumn<String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+
+  GeneratedColumn<String> get color =>
+      $composableBuilder(column: $table.color, builder: (column) => column);
+
+  GeneratedColumn<String> get deviceModel => $composableBuilder(
+    column: $table.deviceModel,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get joinedAt =>
+      $composableBuilder(column: $table.joinedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get joinedVia =>
+      $composableBuilder(column: $table.joinedVia, builder: (column) => column);
+
+  GeneratedColumn<String> get invitedBy =>
+      $composableBuilder(column: $table.invitedBy, builder: (column) => column);
+}
+
+class $$MembersTableTableManager
+    extends
+        RootTableManager<
+          _$NestDatabase,
+          $MembersTable,
+          Member,
+          $$MembersTableFilterComposer,
+          $$MembersTableOrderingComposer,
+          $$MembersTableAnnotationComposer,
+          $$MembersTableCreateCompanionBuilder,
+          $$MembersTableUpdateCompanionBuilder,
+          (Member, BaseReferences<_$NestDatabase, $MembersTable, Member>),
+          Member,
+          PrefetchHooks Function()
+        > {
+  $$MembersTableTableManager(_$NestDatabase db, $MembersTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MembersTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MembersTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$MembersTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> homeId = const Value.absent(),
+                Value<bool> deleted = const Value.absent(),
+                Value<int> createdAt = const Value.absent(),
+                Value<String> createdBy = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> updatedBy = const Value.absent(),
+                Value<String?> fullName = const Value.absent(),
+                Value<String?> firstName = const Value.absent(),
+                Value<String> role = const Value.absent(),
+                Value<String> status = const Value.absent(),
+                Value<String?> color = const Value.absent(),
+                Value<String?> deviceModel = const Value.absent(),
+                Value<int?> joinedAt = const Value.absent(),
+                Value<String?> joinedVia = const Value.absent(),
+                Value<String?> invitedBy = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MembersCompanion(
+                id: id,
+                homeId: homeId,
+                deleted: deleted,
+                createdAt: createdAt,
+                createdBy: createdBy,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy,
+                fullName: fullName,
+                firstName: firstName,
+                role: role,
+                status: status,
+                color: color,
+                deviceModel: deviceModel,
+                joinedAt: joinedAt,
+                joinedVia: joinedVia,
+                invitedBy: invitedBy,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String homeId,
+                Value<bool> deleted = const Value.absent(),
+                Value<int> createdAt = const Value.absent(),
+                Value<String> createdBy = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> updatedBy = const Value.absent(),
+                Value<String?> fullName = const Value.absent(),
+                Value<String?> firstName = const Value.absent(),
+                Value<String> role = const Value.absent(),
+                Value<String> status = const Value.absent(),
+                Value<String?> color = const Value.absent(),
+                Value<String?> deviceModel = const Value.absent(),
+                Value<int?> joinedAt = const Value.absent(),
+                Value<String?> joinedVia = const Value.absent(),
+                Value<String?> invitedBy = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MembersCompanion.insert(
+                id: id,
+                homeId: homeId,
+                deleted: deleted,
+                createdAt: createdAt,
+                createdBy: createdBy,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy,
+                fullName: fullName,
+                firstName: firstName,
+                role: role,
+                status: status,
+                color: color,
+                deviceModel: deviceModel,
+                joinedAt: joinedAt,
+                joinedVia: joinedVia,
+                invitedBy: invitedBy,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$MembersTable, Member>(table),
+                  BaseReferences<_$NestDatabase, $MembersTable, Member>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$MembersTableProcessedTableManager =
+    ProcessedTableManager<
+      _$NestDatabase,
+      $MembersTable,
+      Member,
+      $$MembersTableFilterComposer,
+      $$MembersTableOrderingComposer,
+      $$MembersTableAnnotationComposer,
+      $$MembersTableCreateCompanionBuilder,
+      $$MembersTableUpdateCompanionBuilder,
+      (Member, BaseReferences<_$NestDatabase, $MembersTable, Member>),
+      Member,
+      PrefetchHooks Function()
+    >;
 
 class $NestDatabaseManager {
   final _$NestDatabase _db;
@@ -2705,4 +5053,8 @@ class $NestDatabaseManager {
       $$FieldClocksTableTableManager(_db, _db.fieldClocks);
   $$DevNotesTableTableManager get devNotes =>
       $$DevNotesTableTableManager(_db, _db.devNotes);
+  $$HomesTableTableManager get homes =>
+      $$HomesTableTableManager(_db, _db.homes);
+  $$MembersTableTableManager get members =>
+      $$MembersTableTableManager(_db, _db.members);
 }

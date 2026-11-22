@@ -25,6 +25,8 @@ class CollectionRegistry {
   static CollectionRegistry build(NestDatabase db) => CollectionRegistry._({
     for (final t in <TableInfo>[
       db.devNotes,
+      db.homes,
+      db.members,
       // P03: db.homes, db.members   P04: db.staff, db.visits, db.leaves   … one line per synced table
     ])
       t.actualTableName: _specOf(t),

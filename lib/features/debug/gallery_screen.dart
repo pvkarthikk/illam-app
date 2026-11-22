@@ -105,6 +105,10 @@ class _GalleryScreenState extends ConsumerState<GalleryScreen> {
                   ),
                 ),
                 const SizedBox(height: 12),
+                const SectionHeader(title: 'Dashed'),
+                const SizedBox(height: 8),
+                const DashedBox(child: Text('Dashed')),
+                const SizedBox(height: 12),
                 const SectionHeader(title: 'Chips'),
                 const SizedBox(height: 8),
                 SingleChildScrollView(

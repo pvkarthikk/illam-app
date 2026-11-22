@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'package:nm_flat/core/nav/routes.dart';
+import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/nav/shell_scaffold.dart';
 import 'package:nm_flat/features/debug/data_lab_screen.dart';
 import 'package:nm_flat/features/debug/debug_screen.dart';
@@ -11,15 +14,50 @@ import 'package:nm_flat/features/debug/gallery_screen.dart';
 import 'package:nm_flat/features/lists/lists_screen.dart';
 import 'package:nm_flat/features/meals/meals_screen.dart';
 import 'package:nm_flat/features/money/money_screen.dart';
+import 'package:nm_flat/features/onboarding/onboarding_screen.dart';
 import 'package:nm_flat/features/tasks/tasks_screen.dart';
 import 'package:nm_flat/features/today/today_screen.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 
-final routerProvider = Provider<GoRouter>(
-  (ref) => GoRouter(
+/// Start-up rule: with no home the app always starts at Welcome; with a home
+/// it goes to Today and onboarding pages are closed.
+String? startRedirect({required bool hasHome, required String location}) {
+  if (location.startsWith('/debug')) return null;
+  final onboarding = location.startsWith('/onboarding');
+  if (!hasHome) {
+    return onboarding ? null : Routes.onboardingStep('welcome');
+  }
+  if (onboarding) return Routes.today;
+  return null;
+}
+
+class StreamListenable extends ChangeNotifier {
+  StreamListenable(Stream<Object?> stream) {
+    _sub = stream.listen((_) => notifyListeners());
+  }
+
+  late final StreamSubscription<Object?> _sub;
+
+  @override
+  void dispose() {
+    _sub.cancel();
+    super.dispose();
+  }
+}
+
+final routerProvider = Provider<GoRouter>((ref) {
+  final prefs = ref.watch(prefsProvider);
+  final refresh = StreamListenable(prefs.currentHomeIdStream());
+  ref.onDispose(refresh.dispose);
+  return GoRouter(
     navigatorKey: rootNavigatorKey,
     initialLocation: Routes.today,
+    refreshListenable: refresh,
+    redirect: (context, state) => startRedirect(
+      hasHome: prefs.currentHomeId != null,
+      location: state.matchedLocation,
+    ),
     routes: [
       StatefulShellRoute.indexedStack(
         builder: (context, state, shell) => ShellScaffold(shell: shell),
@@ -81,6 +119,11 @@ final routerProvider = Provider<GoRouter>(
             ),
           ],
         ),
+      GoRoute(
+        path: '/onboarding/:step',
+        builder: (_, state) =>
+            OnboardingScreen(step: state.pathParameters['step'] ?? 'welcome'),
+      ),
     ],
-  ),
-);
+  );
+});

@@ -85,6 +85,15 @@ class DevicePrefs {
     }
   }
 
+  /// Forgets home, member and sync counters (identity switch). Keeps flags.
+  Future<void> resetIdentity() async {
+    await _s.remove('currentHomeId');
+    await _s.remove('memberId');
+    await _s.remove('lastHlc');
+    await _s.remove('nextSeq');
+    _home.add(null);
+  }
+
   /// Clears everything, then makes a fresh random deviceId (P03 replaces it with the key id).
   Future<void> clearAll() async {
     await _s.clear();

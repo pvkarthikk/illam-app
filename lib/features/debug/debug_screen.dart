@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
+import 'package:nm_flat/core/data/bootstrap.dart';
 import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/providers.dart';
@@ -38,12 +39,19 @@ class DebugScreen extends ConsumerWidget {
       ),
     );
     if (ok != true) return;
-    await ref.read(dbProvider).wipeAll();
-    await ref.read(prefsProvider).clearAll();
+    final db = ref.read(dbProvider);
+    final prefs = ref.read(prefsProvider);
+    final secure = ref.read(secureStoreProvider);
+    await db.wipeAll();
+    await prefs.clearAll();
+    await secure.deleteAll();
+    await Bootstrap.ensureIdentity(secure: secure, prefs: prefs, db: db);
     ref.read(hlcProvider).reset();
     ref.invalidate(dataLabControllerProvider);
+    ref.invalidate(deviceKeysProvider);
+    ref.invalidate(viewAsMemberProvider);
     if (!context.mounted) return;
-    context.go(Routes.today);
+    context.go(Routes.onboardingStep('welcome'));
     ref.read(snackbarProvider).show(l10n.debugWiped);
   }
 
@@ -69,6 +77,21 @@ class DebugScreen extends ConsumerWidget {
                   label: l10n.debugDataLab,
                   value: l10n.debugDataLabSub,
                   onTap: () => context.push(Routes.debugDataLab),
+                ),
+                Divider(height: 1, color: c.line),
+                SwitchRow(
+                  title: l10n.debugViewAsMember,
+                  subtitle: l10n.debugViewAsMemberSub,
+                  value: ref.watch(viewAsMemberProvider),
+                  onChanged: (v) =>
+                      ref.read(viewAsMemberProvider.notifier).set(v),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 12),
+                  child: Text(
+                    l10n.debugIsAdmin(ref.watch(isAdminProvider) ? 'yes' : 'no'),
+                    style: NestText.meta13.copyWith(color: c.ink3),
+                  ),
                 ),
                 Divider(height: 1, color: c.line),
                 SettingsRow(

@@ -381,6 +381,252 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancel'**
   String get commonCancel;
+
+  /// No description provided for @errCantSecure.
+  ///
+  /// In en, this message translates to:
+  /// **'Nest Mojo : Flat can’t secure data on this phone'**
+  String get errCantSecure;
+
+  /// No description provided for @welcomeHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Run your home,\n{em}'**
+  String welcomeHeadline(Object em);
+
+  /// No description provided for @welcomeHeadlineEm.
+  ///
+  /// In en, this message translates to:
+  /// **'together.'**
+  String get welcomeHeadlineEm;
+
+  /// No description provided for @welcomeSub.
+  ///
+  /// In en, this message translates to:
+  /// **'House help, groceries, chores, meals and spends — shared between the phones in your home.'**
+  String get welcomeSub;
+
+  /// No description provided for @welcomeStartLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'How do you want to start?'**
+  String get welcomeStartLabel;
+
+  /// No description provided for @welcomeCreateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a home'**
+  String get welcomeCreateTitle;
+
+  /// No description provided for @welcomeCreateBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Set it up for your family. You’ll be the admin and invite the others.'**
+  String get welcomeCreateBody;
+
+  /// No description provided for @welcomeJoinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Join a home'**
+  String get welcomeJoinTitle;
+
+  /// No description provided for @welcomeJoinBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Someone at home already uses Nest Mojo : Flat. Scan their QR code or type their phrase.'**
+  String get welcomeJoinBody;
+
+  /// No description provided for @welcomeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Only one person creates the home — everyone else joins it.'**
+  String get welcomeHint;
+
+  /// No description provided for @welcomeRestore.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore from a backup'**
+  String get welcomeRestore;
+
+  /// No description provided for @welcomeFine.
+  ///
+  /// In en, this message translates to:
+  /// **'No account, no cloud. Your home’s data stays on your family’s phones and syncs directly between them.'**
+  String get welcomeFine;
+
+  /// No description provided for @welcomeCreditLine1.
+  ///
+  /// In en, this message translates to:
+  /// **'Made at home, for homes.'**
+  String get welcomeCreditLine1;
+
+  /// No description provided for @welcomeCreditLine2.
+  ///
+  /// In en, this message translates to:
+  /// **'with {heart} by Nandini Srinivasan & Karthik Venkatesh'**
+  String welcomeCreditLine2(Object heart);
+
+  /// No description provided for @welcomeCreditA11y.
+  ///
+  /// In en, this message translates to:
+  /// **'Made at home, for homes, with love by Nandini Srinivasan and Karthik Venkatesh'**
+  String get welcomeCreditA11y;
+
+  /// No description provided for @createTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create your home'**
+  String get createTitle;
+
+  /// No description provided for @createSub.
+  ///
+  /// In en, this message translates to:
+  /// **'You’ll be its admin. Others join from their phones with a QR code or a short phrase.'**
+  String get createSub;
+
+  /// No description provided for @createYourName.
+  ///
+  /// In en, this message translates to:
+  /// **'Your name'**
+  String get createYourName;
+
+  /// No description provided for @createYourNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Anand Kumar'**
+  String get createYourNameHint;
+
+  /// No description provided for @createHomeName.
+  ///
+  /// In en, this message translates to:
+  /// **'Home name'**
+  String get createHomeName;
+
+  /// No description provided for @createHomeNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. {surname} Home'**
+  String createHomeNameHint(Object surname);
+
+  /// No description provided for @createSuggestHome.
+  ///
+  /// In en, this message translates to:
+  /// **'{surname} Home'**
+  String createSuggestHome(Object surname);
+
+  /// No description provided for @createSuggestFlat.
+  ///
+  /// In en, this message translates to:
+  /// **'Our flat'**
+  String get createSuggestFlat;
+
+  /// No description provided for @createSuggestAmma.
+  ///
+  /// In en, this message translates to:
+  /// **'Amma’s house'**
+  String get createSuggestAmma;
+
+  /// No description provided for @createSurnameFallback.
+  ///
+  /// In en, this message translates to:
+  /// **'Our'**
+  String get createSurnameFallback;
+
+  /// No description provided for @createSuggestionsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggestions'**
+  String get createSuggestionsLabel;
+
+  /// No description provided for @createHomeIdLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Home ID'**
+  String get createHomeIdLabel;
+
+  /// No description provided for @createHomeIdNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Made on this phone · unique to your home'**
+  String get createHomeIdNote;
+
+  /// No description provided for @createButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Create home'**
+  String get createButton;
+
+  /// No description provided for @createErrName.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your name.'**
+  String get createErrName;
+
+  /// No description provided for @createErrHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Give your home a name.'**
+  String get createErrHome;
+
+  /// No description provided for @todayGreetingLate.
+  ///
+  /// In en, this message translates to:
+  /// **'Still up'**
+  String get todayGreetingLate;
+
+  /// No description provided for @todayGreetingMorning.
+  ///
+  /// In en, this message translates to:
+  /// **'Good morning'**
+  String get todayGreetingMorning;
+
+  /// No description provided for @todayGreetingAfternoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Good afternoon'**
+  String get todayGreetingAfternoon;
+
+  /// No description provided for @todayGreetingEvening.
+  ///
+  /// In en, this message translates to:
+  /// **'Good evening'**
+  String get todayGreetingEvening;
+
+  /// No description provided for @todayEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'{home} · {date}'**
+  String todayEyebrow(Object home, Object date);
+
+  /// No description provided for @todayHeadlineAllSet.
+  ///
+  /// In en, this message translates to:
+  /// **'The house is {em} today.'**
+  String todayHeadlineAllSet(Object em);
+
+  /// No description provided for @todayAllSetEm.
+  ///
+  /// In en, this message translates to:
+  /// **'all set'**
+  String get todayAllSetEm;
+
+  /// No description provided for @debugViewAsMember.
+  ///
+  /// In en, this message translates to:
+  /// **'Viewing as member'**
+  String get debugViewAsMember;
+
+  /// No description provided for @debugViewAsMemberSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide admin-only controls (UI test only)'**
+  String get debugViewAsMemberSub;
+
+  /// No description provided for @debugIsAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin on this phone: {value}'**
+  String debugIsAdmin(Object value);
 }
 
 class _AppLocalizationsDelegate

@@ -8,6 +8,7 @@ import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/data/prefs/device_prefs.dart';
 import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/providers.dart';
+import 'package:nm_flat/features/today/sections/hero_section.dart';
 import 'package:nm_flat/features/today/today_screen.dart';
 
 void main() {
@@ -56,6 +57,7 @@ void main() {
       WidgetTester tester,
     ) async {
       final prefs = await DevicePrefs.inMemory();
+      await prefs.setCurrentHomeId('NM-TEST');
       final db = NestDatabase.forTesting(NativeDatabase.memory());
       addTearDown(db.close);
 
@@ -72,7 +74,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byType(NavigationDestination), findsNWidgets(5));
-      expect(find.text('Arrives in P03'), findsOneWidget);
+      expect(find.byType(HeroSection), findsOneWidget);
 
       var todayContext = tester.element(find.byType(TodayScreen));
       expect(Theme.of(todayContext).brightness, Brightness.light);

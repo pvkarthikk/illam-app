@@ -204,3 +204,57 @@ class NestTopBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 }
+
+/// A rounded box with a dashed 1.5 dp border.
+class DashedBox extends StatelessWidget {
+  const DashedBox({
+    super.key,
+    required this.child,
+    this.radius = 12,
+    this.color,
+    this.padding = const EdgeInsets.fromLTRB(14, 12, 14, 12),
+  });
+
+  final Widget child;
+  final double radius;
+  final Color? color;
+  final EdgeInsets padding;
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomPaint(
+      painter: _DashedRRectPainter(color ?? context.nest.line2, radius),
+      child: Padding(padding: padding, child: child),
+    );
+  }
+}
+
+class _DashedRRectPainter extends CustomPainter {
+  _DashedRRectPainter(this.color, this.radius);
+
+  final Color color;
+  final double radius;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    const stroke = 1.5;
+    final rect = (Offset.zero & size).deflate(stroke / 2);
+    final path = Path()
+      ..addRRect(RRect.fromRectAndRadius(rect, Radius.circular(radius)));
+    final paint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = stroke
+      ..color = color;
+    for (final metric in path.computeMetrics()) {
+      var d = 0.0;
+      while (d < metric.length) {
+        canvas.drawPath(metric.extractPath(d, d + 5), paint);
+        d += 9;
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(_DashedRRectPainter old) =>
+      old.color != color || old.radius != radius;
+}

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/data/prefs/device_prefs.dart';
+import 'package:nm_flat/core/data/secure/secure_store.dart';
 import 'package:nm_flat/core/providers.dart';
 
 void main() {
@@ -18,6 +19,7 @@ void main() {
       overrides: [
         prefsProvider.overrideWithValue(prefs),
         dbProvider.overrideWithValue(db),
+        secureStoreProvider.overrideWithValue(MemorySecureStore()),
       ],
     );
     addTearDown(container.dispose);
@@ -28,6 +30,8 @@ void main() {
 
     final notes = await db.select(db.devNotes).get();
     expect(notes.length, 3);
+    final members = await db.select(db.members).get();
+    expect(members.length, 3);
     expect(
       notes.map((n) => n.title).toSet(),
       {'Milk 2L', 'Call plumber', 'Pay rent'},
