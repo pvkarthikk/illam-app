@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'package:nm_flat/core/data/db/database.dart';
@@ -203,9 +204,7 @@ class _ListsScreenState extends ConsumerState<ListsScreen> {
                     icon: Icons.storefront_outlined,
                     kind: NestButtonKind.ghost,
                     size: NestButtonSize.sm,
-                    onPressed: () => ref
-                        .read(snackbarProvider)
-                        .show(l10n.listsStoreModeStub),
+                    onPressed: () => context.push(Routes.listsStore),
                   ),
               ],
             ),

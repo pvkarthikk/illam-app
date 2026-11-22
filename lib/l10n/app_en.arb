@@ -911,7 +911,6 @@
   },
   "listsPickerTitle": "Where will you buy it?",
   "listsPickerLead": "New items go here. Items you’ve bought before go to their usual store automatically.",
-  "listsStoreModeStub": "Store mode arrives in P07",
   "listsAll": "All",
   "listsToBuy": "{n} to buy · {eta}",
   "@listsToBuy": {
@@ -924,7 +923,6 @@
   },
   "listsOrder": "Order",
   "listsShop": "Shop",
-  "listsOrderStub": "Opening the store arrives in P07",
   "listsGotSemantics": "Got {name}",
   "@listsGotSemantics": {
     "placeholders": {
@@ -1013,5 +1011,106 @@
       }
     }
   },
-  "todayStoreRun": "store run"
+  "todayStoreRun": "store run",
+  "storeTitle": "Store mode",
+  "storeBack": "Back",
+  "storeProgress": "{done} of {total} picked · screen stays on",
+  "@storeProgress": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "storeEmptyTitle": "Nothing to buy offline",
+  "storeEmptyBody": "Move items here from any list.",
+  "storeDoneLogBill": "Done · log the bill",
+  "storeLogTitle": "Log this bill",
+  "storeLogLead": "Keeps offline shopping in your monthly spends.",
+  "storeBillAmount": "Bill amount (₹)",
+  "storeStore": "Store",
+  "storeDMart": "D-Mart",
+  "storeKirana": "Kirana",
+  "storeSabzi": "Sabzi market",
+  "storeReliance": "Reliance Fresh",
+  "storeOther": "Other…",
+  "storeOtherName": "Store name",
+  "storePaidWith": "Paid with",
+  "storeCash": "Cash",
+  "storeUpi": "UPI",
+  "storeCard": "Card",
+  "storeSkip": "Skip",
+  "storeSave": "Save",
+  "storeCheckAmount": "Check the amount",
+  "storeNameRequired": "Which store was it?",
+  "storeLogged": "{amount} at {store} logged",
+  "@storeLogged": {
+    "placeholders": {
+      "amount": {},
+      "store": {}
+    }
+  },
+  "storeTripDone": "Trip done · picked items cleared",
+  "storeOpenFailed": "Couldn’t open {store}. The list is copied — paste it in the app.",
+  "@storeOpenFailed": {
+    "placeholders": {
+      "store": {}
+    }
+  },
+  "storeBackFrom": "Back from {store}?",
+  "@storeBackFrom": {
+    "placeholders": {
+      "store": {}
+    }
+  },
+  "storeBackLead": "We copied the list and opened {store}. Shown when you return to Nest Mojo : Flat, so the list stays honest.",
+  "@storeBackLead": {
+    "placeholders": {
+      "store": {}
+    }
+  },
+  "storeUnitChanged": "now {qty} — tick to mark all as ordered",
+  "@storeUnitChanged": {
+    "placeholders": {
+      "qty": {}
+    }
+  },
+  "storeNotYet": "Not yet",
+  "storeOrderedAll": "Ordered all",
+  "storeOrderedN": "Ordered {n}",
+  "@storeOrderedN": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "storeOrderedNote": "{qty} ordered on {store}",
+  "@storeOrderedNote": {
+    "placeholders": {
+      "qty": {},
+      "store": {}
+    }
+  },
+  "storeMarkedOrdered": "Marked ordered",
+  "storeOrderedOn": "Ordered on {store} ✓",
+  "@storeOrderedOn": {
+    "placeholders": {
+      "store": {}
+    }
+  },
+  "storeHowMuch": "How much was it? Add it now so this month’s total stays right.",
+  "storeAmount": "Amount (₹)",
+  "storeCashOnDelivery": "Cash on delivery",
+  "storeAddLater": "Add later",
+  "storeOrderAdded": "{amount} {store} order added",
+  "@storeOrderAdded": {
+    "placeholders": {
+      "amount": {},
+      "store": {}
+    }
+  }
 }

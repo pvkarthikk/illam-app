@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'package:nm_flat/core/data/db/database.dart';
@@ -6,8 +7,11 @@ import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/domain/channels.dart';
 import 'package:nm_flat/core/domain/list_groups.dart';
 import 'package:nm_flat/core/domain/units.dart';
+import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/features/lists/lists_text.dart';
+import 'package:nm_flat/features/store/order_handoff_controller.dart';
+import 'package:nm_flat/features/store/store_launcher.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
 class ChannelGroupCard extends ConsumerWidget {
@@ -83,9 +87,32 @@ class ChannelGroupCard extends ConsumerWidget {
                   size: NestButtonSize.sm,
                   onPressed: groups.isEmpty
                       ? null
-                      : () => ref
-                            .read(snackbarProvider)
-                            .show(l10n.listsOrderStub),
+                      : () async {
+                          final orderGroups = <OrderGroupView>[
+                            for (final g in groups)
+                              if (byId[g.survivor.id] case final survivor?)
+                                OrderGroupView(
+                                  name: survivor.name,
+                                  totalMilli: g.totalMilli,
+                                  unit: survivor.unit,
+                                  items: [
+                                    for (final id in g.ids) ?byId[id],
+                                  ],
+                                ),
+                          ];
+                          final opened = await ref
+                              .read(orderHandoffControllerProvider.notifier)
+                              .start(list, channel, orderGroups);
+                          if (opened == StoreOpened.none && context.mounted) {
+                            ref
+                                .read(snackbarProvider)
+                                .show(
+                                  l10n.storeOpenFailed(
+                                    channelName(l10n, channel),
+                                  ),
+                                );
+                          }
+                        },
                 )
               else
                 NestButton(
@@ -95,9 +122,7 @@ class ChannelGroupCard extends ConsumerWidget {
                   size: NestButtonSize.sm,
                   onPressed: groups.isEmpty
                       ? null
-                      : () => ref
-                            .read(snackbarProvider)
-                            .show(l10n.listsStoreModeStub),
+                      : () => context.push(Routes.listsStore),
                 ),
             ],
           ),

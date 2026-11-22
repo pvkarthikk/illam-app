@@ -1321,9 +1321,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'New items go here. Items you’ve bought before go to their usual store automatically.';
 
   @override
-  String get listsStoreModeStub => 'Store mode arrives in P07';
-
-  @override
   String get listsAll => 'All';
 
   @override
@@ -1336,9 +1333,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get listsShop => 'Shop';
-
-  @override
-  String get listsOrderStub => 'Opening the store arrives in P07';
 
   @override
   String listsGotSemantics(Object name) {
@@ -1456,4 +1450,148 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get todayStoreRun => 'store run';
+
+  @override
+  String get storeTitle => 'Store mode';
+
+  @override
+  String get storeBack => 'Back';
+
+  @override
+  String storeProgress(int done, int total) {
+    return '$done of $total picked · screen stays on';
+  }
+
+  @override
+  String get storeEmptyTitle => 'Nothing to buy offline';
+
+  @override
+  String get storeEmptyBody => 'Move items here from any list.';
+
+  @override
+  String get storeDoneLogBill => 'Done · log the bill';
+
+  @override
+  String get storeLogTitle => 'Log this bill';
+
+  @override
+  String get storeLogLead => 'Keeps offline shopping in your monthly spends.';
+
+  @override
+  String get storeBillAmount => 'Bill amount (₹)';
+
+  @override
+  String get storeStore => 'Store';
+
+  @override
+  String get storeDMart => 'D-Mart';
+
+  @override
+  String get storeKirana => 'Kirana';
+
+  @override
+  String get storeSabzi => 'Sabzi market';
+
+  @override
+  String get storeReliance => 'Reliance Fresh';
+
+  @override
+  String get storeOther => 'Other…';
+
+  @override
+  String get storeOtherName => 'Store name';
+
+  @override
+  String get storePaidWith => 'Paid with';
+
+  @override
+  String get storeCash => 'Cash';
+
+  @override
+  String get storeUpi => 'UPI';
+
+  @override
+  String get storeCard => 'Card';
+
+  @override
+  String get storeSkip => 'Skip';
+
+  @override
+  String get storeSave => 'Save';
+
+  @override
+  String get storeCheckAmount => 'Check the amount';
+
+  @override
+  String get storeNameRequired => 'Which store was it?';
+
+  @override
+  String storeLogged(Object amount, Object store) {
+    return '$amount at $store logged';
+  }
+
+  @override
+  String get storeTripDone => 'Trip done · picked items cleared';
+
+  @override
+  String storeOpenFailed(Object store) {
+    return 'Couldn’t open $store. The list is copied — paste it in the app.';
+  }
+
+  @override
+  String storeBackFrom(Object store) {
+    return 'Back from $store?';
+  }
+
+  @override
+  String storeBackLead(Object store) {
+    return 'We copied the list and opened $store. Shown when you return to Nest Mojo : Flat, so the list stays honest.';
+  }
+
+  @override
+  String storeUnitChanged(Object qty) {
+    return 'now $qty — tick to mark all as ordered';
+  }
+
+  @override
+  String get storeNotYet => 'Not yet';
+
+  @override
+  String get storeOrderedAll => 'Ordered all';
+
+  @override
+  String storeOrderedN(int n) {
+    return 'Ordered $n';
+  }
+
+  @override
+  String storeOrderedNote(Object qty, Object store) {
+    return '$qty ordered on $store';
+  }
+
+  @override
+  String get storeMarkedOrdered => 'Marked ordered';
+
+  @override
+  String storeOrderedOn(Object store) {
+    return 'Ordered on $store ✓';
+  }
+
+  @override
+  String get storeHowMuch =>
+      'How much was it? Add it now so this month’s total stays right.';
+
+  @override
+  String get storeAmount => 'Amount (₹)';
+
+  @override
+  String get storeCashOnDelivery => 'Cash on delivery';
+
+  @override
+  String get storeAddLater => 'Add later';
+
+  @override
+  String storeOrderAdded(Object amount, Object store) {
+    return '$amount $store order added';
+  }
 }

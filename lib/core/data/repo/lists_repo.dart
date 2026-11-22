@@ -7,6 +7,7 @@ import 'package:nm_flat/core/data/prefs/device_prefs.dart';
 import 'package:nm_flat/core/domain/item_category.dart';
 import 'package:nm_flat/core/domain/item_parse.dart';
 import 'package:nm_flat/core/domain/list_groups.dart';
+import 'package:nm_flat/core/domain/order_handoff.dart';
 import 'package:nm_flat/core/domain/units.dart';
 import 'package:nm_flat/core/domain/usual_store.dart';
 import 'package:nm_flat/core/time/clock.dart';
@@ -354,6 +355,24 @@ class ListsRepo {
     }
     if (category != survivor.category) {
       _applyCategory(c, group.ids, category);
+    }
+  });
+
+  Future<ChangeResult> applyHandoff(
+    List<HandoffRow> ticked,
+    String Function(HandoffLine) noteText,
+  ) => changes.write('Marked ordered', (c) {
+    final now = _now;
+    final me = _me;
+    for (final row in ticked) {
+      final id = row.line.itemId;
+      switch (row.kind) {
+        case HandoffKind.markDone || HandoffKind.unitChanged:
+          c.setAll('items', id, {'done': true, 'done_at': now, 'done_by': me});
+        case HandoffKind.keepRemainder:
+          c.inc('items', id, 'qty_milli', -row.line.qtyMilli);
+          c.set('items', id, 'note', noteText(row.line));
+      }
     }
   });
 }

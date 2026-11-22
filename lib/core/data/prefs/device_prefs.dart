@@ -90,6 +90,11 @@ class DevicePrefs {
   Future<void> setLastStore(String list, String channel) =>
       _s.setString('lastStore.$list', channel);
 
+  String? get pendingHandoffJson => getText('pendingOrderHandoff');
+
+  Future<void> setPendingHandoffJson(String? json) =>
+      setText('pendingOrderHandoff', json);
+
   /// Forgets home, member and sync counters (identity switch). Keeps flags.
   Future<void> resetIdentity() async {
     await _s.remove('currentHomeId');

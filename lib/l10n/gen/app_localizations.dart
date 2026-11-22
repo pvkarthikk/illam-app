@@ -2232,12 +2232,6 @@ abstract class AppLocalizations {
   /// **'New items go here. Items you’ve bought before go to their usual store automatically.'**
   String get listsPickerLead;
 
-  /// No description provided for @listsStoreModeStub.
-  ///
-  /// In en, this message translates to:
-  /// **'Store mode arrives in P07'**
-  String get listsStoreModeStub;
-
   /// No description provided for @listsAll.
   ///
   /// In en, this message translates to:
@@ -2261,12 +2255,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Shop'**
   String get listsShop;
-
-  /// No description provided for @listsOrderStub.
-  ///
-  /// In en, this message translates to:
-  /// **'Opening the store arrives in P07'**
-  String get listsOrderStub;
 
   /// No description provided for @listsGotSemantics.
   ///
@@ -2441,6 +2429,252 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'store run'**
   String get todayStoreRun;
+
+  /// No description provided for @storeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Store mode'**
+  String get storeTitle;
+
+  /// No description provided for @storeBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get storeBack;
+
+  /// No description provided for @storeProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'{done} of {total} picked · screen stays on'**
+  String storeProgress(int done, int total);
+
+  /// No description provided for @storeEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to buy offline'**
+  String get storeEmptyTitle;
+
+  /// No description provided for @storeEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Move items here from any list.'**
+  String get storeEmptyBody;
+
+  /// No description provided for @storeDoneLogBill.
+  ///
+  /// In en, this message translates to:
+  /// **'Done · log the bill'**
+  String get storeDoneLogBill;
+
+  /// No description provided for @storeLogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Log this bill'**
+  String get storeLogTitle;
+
+  /// No description provided for @storeLogLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Keeps offline shopping in your monthly spends.'**
+  String get storeLogLead;
+
+  /// No description provided for @storeBillAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Bill amount (₹)'**
+  String get storeBillAmount;
+
+  /// No description provided for @storeStore.
+  ///
+  /// In en, this message translates to:
+  /// **'Store'**
+  String get storeStore;
+
+  /// No description provided for @storeDMart.
+  ///
+  /// In en, this message translates to:
+  /// **'D-Mart'**
+  String get storeDMart;
+
+  /// No description provided for @storeKirana.
+  ///
+  /// In en, this message translates to:
+  /// **'Kirana'**
+  String get storeKirana;
+
+  /// No description provided for @storeSabzi.
+  ///
+  /// In en, this message translates to:
+  /// **'Sabzi market'**
+  String get storeSabzi;
+
+  /// No description provided for @storeReliance.
+  ///
+  /// In en, this message translates to:
+  /// **'Reliance Fresh'**
+  String get storeReliance;
+
+  /// No description provided for @storeOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other…'**
+  String get storeOther;
+
+  /// No description provided for @storeOtherName.
+  ///
+  /// In en, this message translates to:
+  /// **'Store name'**
+  String get storeOtherName;
+
+  /// No description provided for @storePaidWith.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid with'**
+  String get storePaidWith;
+
+  /// No description provided for @storeCash.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get storeCash;
+
+  /// No description provided for @storeUpi.
+  ///
+  /// In en, this message translates to:
+  /// **'UPI'**
+  String get storeUpi;
+
+  /// No description provided for @storeCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Card'**
+  String get storeCard;
+
+  /// No description provided for @storeSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get storeSkip;
+
+  /// No description provided for @storeSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get storeSave;
+
+  /// No description provided for @storeCheckAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the amount'**
+  String get storeCheckAmount;
+
+  /// No description provided for @storeNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Which store was it?'**
+  String get storeNameRequired;
+
+  /// No description provided for @storeLogged.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} at {store} logged'**
+  String storeLogged(Object amount, Object store);
+
+  /// No description provided for @storeTripDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip done · picked items cleared'**
+  String get storeTripDone;
+
+  /// No description provided for @storeOpenFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn’t open {store}. The list is copied — paste it in the app.'**
+  String storeOpenFailed(Object store);
+
+  /// No description provided for @storeBackFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Back from {store}?'**
+  String storeBackFrom(Object store);
+
+  /// No description provided for @storeBackLead.
+  ///
+  /// In en, this message translates to:
+  /// **'We copied the list and opened {store}. Shown when you return to Nest Mojo : Flat, so the list stays honest.'**
+  String storeBackLead(Object store);
+
+  /// No description provided for @storeUnitChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'now {qty} — tick to mark all as ordered'**
+  String storeUnitChanged(Object qty);
+
+  /// No description provided for @storeNotYet.
+  ///
+  /// In en, this message translates to:
+  /// **'Not yet'**
+  String get storeNotYet;
+
+  /// No description provided for @storeOrderedAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Ordered all'**
+  String get storeOrderedAll;
+
+  /// No description provided for @storeOrderedN.
+  ///
+  /// In en, this message translates to:
+  /// **'Ordered {n}'**
+  String storeOrderedN(int n);
+
+  /// No description provided for @storeOrderedNote.
+  ///
+  /// In en, this message translates to:
+  /// **'{qty} ordered on {store}'**
+  String storeOrderedNote(Object qty, Object store);
+
+  /// No description provided for @storeMarkedOrdered.
+  ///
+  /// In en, this message translates to:
+  /// **'Marked ordered'**
+  String get storeMarkedOrdered;
+
+  /// No description provided for @storeOrderedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Ordered on {store} ✓'**
+  String storeOrderedOn(Object store);
+
+  /// No description provided for @storeHowMuch.
+  ///
+  /// In en, this message translates to:
+  /// **'How much was it? Add it now so this month’s total stays right.'**
+  String get storeHowMuch;
+
+  /// No description provided for @storeAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount (₹)'**
+  String get storeAmount;
+
+  /// No description provided for @storeCashOnDelivery.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash on delivery'**
+  String get storeCashOnDelivery;
+
+  /// No description provided for @storeAddLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Add later'**
+  String get storeAddLater;
+
+  /// No description provided for @storeOrderAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} {store} order added'**
+  String storeOrderAdded(Object amount, Object store);
 }
 
 class _AppLocalizationsDelegate

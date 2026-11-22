@@ -4,6 +4,7 @@ import 'package:material_ui/material_ui.dart';
 
 import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/providers.dart';
+import 'package:nm_flat/features/store/handoff_watcher.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
 class ShellScaffold extends ConsumerWidget {
@@ -33,7 +34,7 @@ class ShellScaffold extends ConsumerWidget {
         }
       },
       child: Scaffold(
-        body: shell,
+        body: HandoffWatcher(child: shell),
         bottomNavigationBar: NavigationBar(
           selectedIndex: shell.currentIndex,
           onDestinationSelected: (i) {
