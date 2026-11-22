@@ -1317,5 +1317,379 @@
   },
   "todayNothingDue": "Nothing due",
   "todayEnjoyQuiet": "Enjoy the quiet.",
-  "tasksRemoveStaffMoves": "Their routines and open to-dos will move to you."
+  "tasksRemoveStaffMoves": "Their routines and open to-dos will move to you.",
+  "moneyEyebrow": "Household spends",
+  "moneyTitle": "Money",
+  "moneySpentIn": "Spent in {month}",
+  "@moneySpentIn": {
+    "placeholders": {
+      "month": {}
+    }
+  },
+  "moneyLeftOf": "{left} left of {budget}",
+  "@moneyLeftOf": {
+    "placeholders": {
+      "left": {},
+      "budget": {}
+    }
+  },
+  "moneyDaysToGo": "{count, plural, =1{1 day to go} other{{count} days to go}}",
+  "@moneyDaysToGo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "moneyBelowPrev": "{amount} below {month}’s total",
+  "@moneyBelowPrev": {
+    "placeholders": {
+      "amount": {},
+      "month": {}
+    }
+  },
+  "moneyAbovePrev": "{amount} above {month}’s total",
+  "@moneyAbovePrev": {
+    "placeholders": {
+      "amount": {},
+      "month": {}
+    }
+  },
+  "moneyOverBudget": "{amount} over budget",
+  "@moneyOverBudget": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "moneySetBudget": "Set a monthly budget",
+  "moneyNoBudget": "No budget set",
+  "moneyBudgetTitle": "Monthly budget",
+  "moneyBudgetSaved": "Budget saved",
+  "moneySave": "Save",
+  "moneyAddSpend": "＋ Add a spend",
+  "moneyQuickAddHint": "Or type “₹450 Swiggy” in Quick add from any tab.",
+  "moneyBills": "Bills this month",
+  "moneyBillsPaid": "{k} of {n} paid",
+  "@moneyBillsPaid": {
+    "placeholders": {
+      "k": {
+        "type": "int"
+      },
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "moneyAddBill": "＋ Add bill",
+  "moneyBillDue": "Due {date} · {amount} last time",
+  "@moneyBillDue": {
+    "placeholders": {
+      "date": {},
+      "amount": {}
+    }
+  },
+  "moneyOverdue": "Overdue",
+  "moneyToday": "Today",
+  "moneyPaid": "Paid",
+  "moneyBillPaidOn": "Paid {date} · {method}",
+  "@moneyBillPaidOn": {
+    "placeholders": {
+      "date": {},
+      "method": {}
+    }
+  },
+  "moneyPaidTwice": "Marked paid twice — check",
+  "moneyFirstDue": "First due {date} · {amount}",
+  "@moneyFirstDue": {
+    "placeholders": {
+      "date": {},
+      "amount": {}
+    }
+  },
+  "moneyMarkBillPaid": "Mark {bill} paid",
+  "@moneyMarkBillPaid": {
+    "placeholders": {
+      "bill": {}
+    }
+  },
+  "moneyBillsEmpty": "Add rent, electricity, milk, internet… — we’ll remind you when they’re due.",
+  "moneyStoppedBills": "Stopped bills ({count})",
+  "@moneyStoppedBills": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "moneyStoppedRow": "{amount} · day {day}",
+  "@moneyStoppedRow": {
+    "placeholders": {
+      "amount": {},
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+  "moneyTrackAgain": "Track again",
+  "moneyTrackingAgain": "Tracking {bill} again",
+  "@moneyTrackingAgain": {
+    "placeholders": {
+      "bill": {}
+    }
+  },
+  "moneyMethodUpi": "UPI",
+  "moneyMethodCash": "Cash",
+  "moneyMethodCard": "Card",
+  "moneyMethodBank": "Bank",
+  "moneyErrAmount": "Check the amount",
+  "moneyWhereItWent": "Where it went",
+  "moneyStaffPay": "Staff pay · {month}",
+  "@moneyStaffPay": {
+    "placeholders": {
+      "month": {}
+    }
+  },
+  "moneyBilledRate": "{billed} billed · {rate}/hr",
+  "@moneyBilledRate": {
+    "placeholders": {
+      "billed": {},
+      "rate": {}
+    }
+  },
+  "moneyMonthlyLeaves": "{count, plural, =1{Monthly · 1 leave} other{Monthly · {count} leaves}}",
+  "@moneyMonthlyLeaves": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "moneyRecent": "Recent",
+  "moneySeeAll": "See all",
+  "moneyRowSub": "{day} · {category} · {source}",
+  "@moneyRowSub": {
+    "placeholders": {
+      "day": {},
+      "category": {},
+      "source": {}
+    }
+  },
+  "moneySrcManual": "Added by {name}",
+  "@moneySrcManual": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "moneySrcYou": "Added by you",
+  "moneySrcOrder": "{channel} order",
+  "@moneySrcOrder": {
+    "placeholders": {
+      "channel": {}
+    }
+  },
+  "moneySrcStore": "Store bill",
+  "moneySrcBill": "Bill",
+  "moneySrcSalary": "Salary",
+  "moneyEmptyTitle": "No spends yet this month",
+  "moneyEmptyBody": "Tap “＋ Add a spend”, or mark a bill paid.",
+  "moneyAddSpendTitle": "Add a spend",
+  "moneyEditSpendTitle": "Edit spend",
+  "moneyAmountLabel": "Amount in rupees",
+  "moneyPaidTo": "Paid to / for",
+  "moneyCategory": "Category",
+  "moneyPaidWith": "Paid with",
+  "moneyWhen": "When",
+  "moneyYesterday": "Yesterday",
+  "moneyOtherDay": "Other day",
+  "moneyMore": "More",
+  "moneyPaidBy": "Paid by",
+  "moneyYou": "You",
+  "moneyNote": "Note",
+  "moneyRepeat": "Repeat every month — makes it a bill",
+  "moneySaveChanges": "Save changes",
+  "moneyDelete": "Delete",
+  "moneyAdded": "{amount} added",
+  "@moneyAdded": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "moneyAddedBill": "{amount} added · {merchant} is now a monthly bill",
+  "@moneyAddedBill": {
+    "placeholders": {
+      "amount": {},
+      "merchant": {}
+    }
+  },
+  "moneyLearned": "Saved · {merchant} will go to {category} from now on.",
+  "@moneyLearned": {
+    "placeholders": {
+      "merchant": {},
+      "category": {}
+    }
+  },
+  "moneySpendUpdated": "Spend updated",
+  "moneySpendDeleted": "Spend deleted",
+  "moneyErrMerchant": "Who was it paid to?",
+  "moneyReadOnly": "Added by {name} · only {name} or an admin can change it.",
+  "@moneyReadOnly": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "moneySalaryManaged": "Salary spends are managed in {name}’s salary.",
+  "@moneySalaryManaged": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "moneyOpenSalary": "Open salary",
+  "moneyDuplicate": "Looks like {who} already added {amount} · {merchant} {when}.",
+  "@moneyDuplicate": {
+    "placeholders": {
+      "who": {},
+      "amount": {},
+      "merchant": {},
+      "when": {}
+    }
+  },
+  "moneyWhoYou": "you",
+  "moneyWhenToday": "today",
+  "moneyWhenYesterday": "yesterday",
+  "moneyWhenOn": "on {day}",
+  "@moneyWhenOn": {
+    "placeholders": {
+      "day": {}
+    }
+  },
+  "moneyAddAnyway": "Add anyway",
+  "moneyDontAdd": "Don’t add",
+  "moneyCashSpend": "Cash spend",
+  "moneyOrdinal": "{n, select, 1{1st} 2{2nd} 3{3rd} 21{21st} 22{22nd} 23{23rd} 31{31st} other{{n}th}}",
+  "@moneyOrdinal": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "moneyAddBillTitle": "Add a bill",
+  "moneyEditBillTitle": "Edit bill",
+  "moneyBillName": "Name",
+  "moneyUsualAmount": "Usual amount (₹)",
+  "moneyDueDay": "Due day",
+  "moneyDueHelper": "Paid around the {nth} each month",
+  "@moneyDueHelper": {
+    "placeholders": {
+      "nth": {}
+    }
+  },
+  "moneyRemind": "Remind me on the due day",
+  "moneyBillErrName": "Add the bill’s name.",
+  "moneyBillErrDay": "Pick a day from 1 to 31.",
+  "moneyBillAdded": "{bill} added",
+  "@moneyBillAdded": {
+    "placeholders": {
+      "bill": {}
+    }
+  },
+  "moneyBillSaved": "Bill saved",
+  "moneyStopTracking": "Stop tracking this bill",
+  "moneyStopped": "Stopped tracking {bill}",
+  "@moneyStopped": {
+    "placeholders": {
+      "bill": {}
+    }
+  },
+  "moneyDeleteBill": "Delete bill",
+  "moneyDeleteBillTitle": "Delete {bill}?",
+  "@moneyDeleteBillTitle": {
+    "placeholders": {
+      "bill": {}
+    }
+  },
+  "moneyDeleteBillLead": "Past spends keep their “Bill” label.",
+  "moneyKeep": "Keep",
+  "moneyBillDeleted": "{bill} deleted",
+  "@moneyBillDeleted": {
+    "placeholders": {
+      "bill": {}
+    }
+  },
+  "moneyPaidTitle": "{bill} — paid?",
+  "@moneyPaidTitle": {
+    "placeholders": {
+      "bill": {}
+    }
+  },
+  "moneyPaidLead": "Usually {amount} around the {nth}.",
+  "@moneyPaidLead": {
+    "placeholders": {
+      "amount": {},
+      "nth": {}
+    }
+  },
+  "moneyForMonth": "For {month}",
+  "@moneyForMonth": {
+    "placeholders": {
+      "month": {}
+    }
+  },
+  "moneyMarkPaid": "Mark paid",
+  "moneyBillPaidSnack": "{bill} paid · {amount} added",
+  "@moneyBillPaidSnack": {
+    "placeholders": {
+      "bill": {},
+      "amount": {}
+    }
+  },
+  "moneyAllSpends": "All spends",
+  "moneySearch": "Search spends",
+  "moneyCount": "{count, plural, =1{1 spend · {total}} other{{count} spends · {total}}}",
+  "@moneyCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "total": {}
+    }
+  },
+  "moneyNoMatch": "No spends match.",
+  "moneyClearFilter": "Remove filter {category}",
+  "@moneyClearFilter": {
+    "placeholders": {
+      "category": {}
+    }
+  },
+  "todayMonthSoFar": "{month} so far",
+  "@todayMonthSoFar": {
+    "placeholders": {
+      "month": {}
+    }
+  },
+  "todayMoneyLink": "Money",
+  "todayOfBudget": "of {budget} budget · {pct}% used",
+  "@todayOfBudget": {
+    "placeholders": {
+      "budget": {},
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "todayBillsDue": "{count, plural, =1{1 bill due} other{{count} bills due}}",
+  "@todayBillsDue": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "todaySpentSoFar": "{amount} spent so far",
+  "@todaySpentSoFar": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "todaySetBudget": "Set budget"
 }

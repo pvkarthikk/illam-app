@@ -34,6 +34,8 @@ class CollectionRegistry {
       db.payAdjustments,
       db.settlementAttempts,
       db.expenses,
+      db.bills,
+      db.merchantRules,
       db.items,
       db.itemHistory,
       db.routines,

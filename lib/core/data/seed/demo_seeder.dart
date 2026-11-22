@@ -1,12 +1,15 @@
 import 'dart:convert';
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:drift/drift.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:nm_flat/core/data/db/database.dart';
+import 'package:nm_flat/core/data/repo/expenses_repo.dart';
 import 'package:nm_flat/core/domain/item_parse.dart';
 import 'package:nm_flat/core/domain/payroll.dart';
+import 'package:nm_flat/core/domain/spend_category.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/time/dates.dart';
 import 'package:nm_flat/core/ui/formatters.dart';
@@ -28,7 +31,7 @@ class DemoSeeder {
     await _seedItems();
     await _seedTasks();
     // P09: await _seedMeals();
-    // P10: await _seedMoney();
+    await _seedMoney();
     await _seedDevNotes();
   }
 
@@ -596,6 +599,227 @@ class DemoSeeder {
           if (done) ...{'done_at': now, 'done_by': me},
         });
       }
+    }, homeId: homeId);
+  }
+
+  Future<void> _seedMoney() async {
+    final prefs = ref.read(prefsProvider);
+    final homeId = prefs.currentHomeId;
+    if (homeId == null) return;
+
+    final db = ref.read(dbProvider);
+    final existing =
+        await (db.select(db.bills)
+              ..where(
+                (b) =>
+                    b.homeId.equals(homeId) &
+                    b.name.equals('Milkman') &
+                    b.deleted.equals(false),
+              )
+              ..limit(1))
+            .getSingleOrNull();
+    if (existing != null) return;
+
+    final today = Dates.today(ref.read(clockProvider));
+    final thisMonth = Dates.month(today);
+    final lastMonth = Dates.addMonths(thisMonth, -1);
+    final firstDue = Dates.addMonths(thisMonth, -3);
+    final todayDay = Dates.parse(today).day;
+    String dayOfMonth(int n) =>
+        '$thisMonth-${min(n, todayDay).toString().padLeft(2, '0')}';
+
+    await ref.read(moneyRepoProvider).setBudget(3200000);
+
+    final expensesRepo = ref.read(expensesRepoProvider);
+    await ref.read(changesProvider).write('Demo data', (c) {
+      String addBill(
+        String name,
+        int rupees,
+        int dueDay,
+        String method,
+        String category,
+      ) => c.create('bills', {
+        'name': name,
+        'category': category,
+        'usual_amount_paise': rupees * 100,
+        'due_day': dueDay,
+        'first_due_month': firstDue,
+        'method': method,
+        'remind': true,
+        'active': true,
+      });
+
+      final milkId = addBill('Milkman', 1860, 1, 'cash', 'Groceries');
+      final elecId = addBill(
+        'Electricity (BESCOM)',
+        1980,
+        5,
+        'upi',
+        'Utilities',
+      );
+      addBill('Society maintenance', 3500, 10, 'bank', 'Home care');
+      final netId = addBill('Broadband (ACT)', 1062, 12, 'upi', 'Utilities');
+      addBill('Newspaper', 420, 28, 'cash', 'Other');
+
+      void addExp({
+        required String merchant,
+        required int rupees,
+        required String date,
+        required String method,
+        required String source,
+        String? category,
+        String? orderChannel,
+        String? billId,
+        String? forMonth,
+        String? memberId,
+      }) {
+        final id = expensesRepo.createIn(
+          c,
+          NewExpense(
+            amountPaise: rupees * 100,
+            merchant: merchant,
+            category: category ?? guessSpendCategory(merchant, const {}),
+            method: method,
+            date: date,
+            source: source,
+            paidBy: memberId,
+            forMonth: forMonth,
+            billId: billId,
+            orderChannel: orderChannel,
+          ),
+        );
+        if (memberId != null) {
+          c.set('expenses', id, 'added_by', memberId);
+        }
+      }
+
+      addExp(
+        merchant: 'Milkman',
+        rupees: 1860,
+        date: dayOfMonth(1),
+        method: 'cash',
+        source: 'bill',
+        billId: milkId,
+        forMonth: thisMonth,
+      );
+      addExp(
+        merchant: 'Zepto',
+        rupees: 842,
+        date: dayOfMonth(2),
+        method: 'upi',
+        source: 'order',
+        orderChannel: 'zepto',
+      );
+      addExp(
+        merchant: 'BigBasket',
+        rupees: 2460,
+        date: dayOfMonth(3),
+        method: 'card',
+        source: 'order',
+        orderChannel: 'bigbasket',
+        memberId: 'demo-priya',
+      );
+      addExp(
+        merchant: 'Electricity (BESCOM)',
+        rupees: 1980,
+        date: dayOfMonth(5),
+        method: 'upi',
+        source: 'bill',
+        billId: elecId,
+        forMonth: thisMonth,
+      );
+      addExp(
+        merchant: 'Amazon',
+        rupees: 3299,
+        date: dayOfMonth(6),
+        method: 'card',
+        source: 'order',
+        orderChannel: 'amazon',
+        memberId: 'demo-priya',
+      );
+      addExp(
+        merchant: 'D-Mart',
+        rupees: 1675,
+        date: dayOfMonth(9),
+        method: 'upi',
+        source: 'store',
+      );
+      addExp(
+        merchant: 'Meesho',
+        rupees: 649,
+        date: dayOfMonth(11),
+        method: 'upi',
+        source: 'order',
+        orderChannel: 'meesho',
+        memberId: 'demo-priya',
+      );
+      addExp(
+        merchant: 'Urban Company',
+        rupees: 899,
+        date: dayOfMonth(12),
+        method: 'upi',
+        source: 'manual',
+        category: 'Home care',
+        memberId: 'demo-priya',
+      );
+      addExp(
+        merchant: 'Broadband (ACT)',
+        rupees: 1062,
+        date: dayOfMonth(12),
+        method: 'upi',
+        source: 'bill',
+        billId: netId,
+        forMonth: thisMonth,
+      );
+      addExp(
+        merchant: 'Blinkit',
+        rupees: 386,
+        date: dayOfMonth(14),
+        method: 'upi',
+        source: 'order',
+        orderChannel: 'blinkit',
+      );
+      addExp(
+        merchant: 'Flipkart',
+        rupees: 1149,
+        date: dayOfMonth(15),
+        method: 'upi',
+        source: 'order',
+        orderChannel: 'flipkart',
+        memberId: 'demo-arjun',
+      );
+      addExp(
+        merchant: 'Swiggy',
+        rupees: 624,
+        date: dayOfMonth(16),
+        method: 'upi',
+        source: 'manual',
+        category: 'Eating out',
+        memberId: 'demo-arjun',
+      );
+
+      // Last month (mine, upi, manual)
+      addExp(
+        merchant: 'BigBasket',
+        rupees: 12000,
+        date: '$lastMonth-04',
+        method: 'upi',
+        source: 'manual',
+      );
+      addExp(
+        merchant: 'Amazon',
+        rupees: 10000,
+        date: '$lastMonth-12',
+        method: 'upi',
+        source: 'manual',
+      );
+      addExp(
+        merchant: 'Swiggy',
+        rupees: 7840,
+        date: '$lastMonth-20',
+        method: 'upi',
+        source: 'manual',
+      );
     }, homeId: homeId);
   }
 

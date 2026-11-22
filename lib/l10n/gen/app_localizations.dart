@@ -3287,6 +3287,725 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Their routines and open to-dos will move to you.'**
   String get tasksRemoveStaffMoves;
+
+  /// No description provided for @moneyEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Household spends'**
+  String get moneyEyebrow;
+
+  /// No description provided for @moneyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Money'**
+  String get moneyTitle;
+
+  /// No description provided for @moneySpentIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Spent in {month}'**
+  String moneySpentIn(Object month);
+
+  /// No description provided for @moneyLeftOf.
+  ///
+  /// In en, this message translates to:
+  /// **'{left} left of {budget}'**
+  String moneyLeftOf(Object left, Object budget);
+
+  /// No description provided for @moneyDaysToGo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 day to go} other{{count} days to go}}'**
+  String moneyDaysToGo(int count);
+
+  /// No description provided for @moneyBelowPrev.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} below {month}’s total'**
+  String moneyBelowPrev(Object amount, Object month);
+
+  /// No description provided for @moneyAbovePrev.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} above {month}’s total'**
+  String moneyAbovePrev(Object amount, Object month);
+
+  /// No description provided for @moneyOverBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} over budget'**
+  String moneyOverBudget(Object amount);
+
+  /// No description provided for @moneySetBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a monthly budget'**
+  String get moneySetBudget;
+
+  /// No description provided for @moneyNoBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'No budget set'**
+  String get moneyNoBudget;
+
+  /// No description provided for @moneyBudgetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly budget'**
+  String get moneyBudgetTitle;
+
+  /// No description provided for @moneyBudgetSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget saved'**
+  String get moneyBudgetSaved;
+
+  /// No description provided for @moneySave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get moneySave;
+
+  /// No description provided for @moneyAddSpend.
+  ///
+  /// In en, this message translates to:
+  /// **'＋ Add a spend'**
+  String get moneyAddSpend;
+
+  /// No description provided for @moneyQuickAddHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Or type “₹450 Swiggy” in Quick add from any tab.'**
+  String get moneyQuickAddHint;
+
+  /// No description provided for @moneyBills.
+  ///
+  /// In en, this message translates to:
+  /// **'Bills this month'**
+  String get moneyBills;
+
+  /// No description provided for @moneyBillsPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'{k} of {n} paid'**
+  String moneyBillsPaid(int k, int n);
+
+  /// No description provided for @moneyAddBill.
+  ///
+  /// In en, this message translates to:
+  /// **'＋ Add bill'**
+  String get moneyAddBill;
+
+  /// No description provided for @moneyBillDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Due {date} · {amount} last time'**
+  String moneyBillDue(Object date, Object amount);
+
+  /// No description provided for @moneyOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue'**
+  String get moneyOverdue;
+
+  /// No description provided for @moneyToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get moneyToday;
+
+  /// No description provided for @moneyPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get moneyPaid;
+
+  /// No description provided for @moneyBillPaidOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid {date} · {method}'**
+  String moneyBillPaidOn(Object date, Object method);
+
+  /// No description provided for @moneyPaidTwice.
+  ///
+  /// In en, this message translates to:
+  /// **'Marked paid twice — check'**
+  String get moneyPaidTwice;
+
+  /// No description provided for @moneyFirstDue.
+  ///
+  /// In en, this message translates to:
+  /// **'First due {date} · {amount}'**
+  String moneyFirstDue(Object date, Object amount);
+
+  /// No description provided for @moneyMarkBillPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark {bill} paid'**
+  String moneyMarkBillPaid(Object bill);
+
+  /// No description provided for @moneyBillsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Add rent, electricity, milk, internet… — we’ll remind you when they’re due.'**
+  String get moneyBillsEmpty;
+
+  /// No description provided for @moneyStoppedBills.
+  ///
+  /// In en, this message translates to:
+  /// **'Stopped bills ({count})'**
+  String moneyStoppedBills(int count);
+
+  /// No description provided for @moneyStoppedRow.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} · day {day}'**
+  String moneyStoppedRow(Object amount, int day);
+
+  /// No description provided for @moneyTrackAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Track again'**
+  String get moneyTrackAgain;
+
+  /// No description provided for @moneyTrackingAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Tracking {bill} again'**
+  String moneyTrackingAgain(Object bill);
+
+  /// No description provided for @moneyMethodUpi.
+  ///
+  /// In en, this message translates to:
+  /// **'UPI'**
+  String get moneyMethodUpi;
+
+  /// No description provided for @moneyMethodCash.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get moneyMethodCash;
+
+  /// No description provided for @moneyMethodCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Card'**
+  String get moneyMethodCard;
+
+  /// No description provided for @moneyMethodBank.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank'**
+  String get moneyMethodBank;
+
+  /// No description provided for @moneyErrAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the amount'**
+  String get moneyErrAmount;
+
+  /// No description provided for @moneyWhereItWent.
+  ///
+  /// In en, this message translates to:
+  /// **'Where it went'**
+  String get moneyWhereItWent;
+
+  /// No description provided for @moneyStaffPay.
+  ///
+  /// In en, this message translates to:
+  /// **'Staff pay · {month}'**
+  String moneyStaffPay(Object month);
+
+  /// No description provided for @moneyBilledRate.
+  ///
+  /// In en, this message translates to:
+  /// **'{billed} billed · {rate}/hr'**
+  String moneyBilledRate(Object billed, Object rate);
+
+  /// No description provided for @moneyMonthlyLeaves.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Monthly · 1 leave} other{Monthly · {count} leaves}}'**
+  String moneyMonthlyLeaves(int count);
+
+  /// No description provided for @moneyRecent.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent'**
+  String get moneyRecent;
+
+  /// No description provided for @moneySeeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'See all'**
+  String get moneySeeAll;
+
+  /// No description provided for @moneyRowSub.
+  ///
+  /// In en, this message translates to:
+  /// **'{day} · {category} · {source}'**
+  String moneyRowSub(Object day, Object category, Object source);
+
+  /// No description provided for @moneySrcManual.
+  ///
+  /// In en, this message translates to:
+  /// **'Added by {name}'**
+  String moneySrcManual(Object name);
+
+  /// No description provided for @moneySrcYou.
+  ///
+  /// In en, this message translates to:
+  /// **'Added by you'**
+  String get moneySrcYou;
+
+  /// No description provided for @moneySrcOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'{channel} order'**
+  String moneySrcOrder(Object channel);
+
+  /// No description provided for @moneySrcStore.
+  ///
+  /// In en, this message translates to:
+  /// **'Store bill'**
+  String get moneySrcStore;
+
+  /// No description provided for @moneySrcBill.
+  ///
+  /// In en, this message translates to:
+  /// **'Bill'**
+  String get moneySrcBill;
+
+  /// No description provided for @moneySrcSalary.
+  ///
+  /// In en, this message translates to:
+  /// **'Salary'**
+  String get moneySrcSalary;
+
+  /// No description provided for @moneyEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No spends yet this month'**
+  String get moneyEmptyTitle;
+
+  /// No description provided for @moneyEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap “＋ Add a spend”, or mark a bill paid.'**
+  String get moneyEmptyBody;
+
+  /// No description provided for @moneyAddSpendTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a spend'**
+  String get moneyAddSpendTitle;
+
+  /// No description provided for @moneyEditSpendTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit spend'**
+  String get moneyEditSpendTitle;
+
+  /// No description provided for @moneyAmountLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount in rupees'**
+  String get moneyAmountLabel;
+
+  /// No description provided for @moneyPaidTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid to / for'**
+  String get moneyPaidTo;
+
+  /// No description provided for @moneyCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get moneyCategory;
+
+  /// No description provided for @moneyPaidWith.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid with'**
+  String get moneyPaidWith;
+
+  /// No description provided for @moneyWhen.
+  ///
+  /// In en, this message translates to:
+  /// **'When'**
+  String get moneyWhen;
+
+  /// No description provided for @moneyYesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get moneyYesterday;
+
+  /// No description provided for @moneyOtherDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Other day'**
+  String get moneyOtherDay;
+
+  /// No description provided for @moneyMore.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get moneyMore;
+
+  /// No description provided for @moneyPaidBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid by'**
+  String get moneyPaidBy;
+
+  /// No description provided for @moneyYou.
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get moneyYou;
+
+  /// No description provided for @moneyNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get moneyNote;
+
+  /// No description provided for @moneyRepeat.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat every month — makes it a bill'**
+  String get moneyRepeat;
+
+  /// No description provided for @moneySaveChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Save changes'**
+  String get moneySaveChanges;
+
+  /// No description provided for @moneyDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get moneyDelete;
+
+  /// No description provided for @moneyAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} added'**
+  String moneyAdded(Object amount);
+
+  /// No description provided for @moneyAddedBill.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} added · {merchant} is now a monthly bill'**
+  String moneyAddedBill(Object amount, Object merchant);
+
+  /// No description provided for @moneyLearned.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved · {merchant} will go to {category} from now on.'**
+  String moneyLearned(Object merchant, Object category);
+
+  /// No description provided for @moneySpendUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Spend updated'**
+  String get moneySpendUpdated;
+
+  /// No description provided for @moneySpendDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Spend deleted'**
+  String get moneySpendDeleted;
+
+  /// No description provided for @moneyErrMerchant.
+  ///
+  /// In en, this message translates to:
+  /// **'Who was it paid to?'**
+  String get moneyErrMerchant;
+
+  /// No description provided for @moneyReadOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Added by {name} · only {name} or an admin can change it.'**
+  String moneyReadOnly(Object name);
+
+  /// No description provided for @moneySalaryManaged.
+  ///
+  /// In en, this message translates to:
+  /// **'Salary spends are managed in {name}’s salary.'**
+  String moneySalaryManaged(Object name);
+
+  /// No description provided for @moneyOpenSalary.
+  ///
+  /// In en, this message translates to:
+  /// **'Open salary'**
+  String get moneyOpenSalary;
+
+  /// No description provided for @moneyDuplicate.
+  ///
+  /// In en, this message translates to:
+  /// **'Looks like {who} already added {amount} · {merchant} {when}.'**
+  String moneyDuplicate(
+    Object who,
+    Object amount,
+    Object merchant,
+    Object when,
+  );
+
+  /// No description provided for @moneyWhoYou.
+  ///
+  /// In en, this message translates to:
+  /// **'you'**
+  String get moneyWhoYou;
+
+  /// No description provided for @moneyWhenToday.
+  ///
+  /// In en, this message translates to:
+  /// **'today'**
+  String get moneyWhenToday;
+
+  /// No description provided for @moneyWhenYesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'yesterday'**
+  String get moneyWhenYesterday;
+
+  /// No description provided for @moneyWhenOn.
+  ///
+  /// In en, this message translates to:
+  /// **'on {day}'**
+  String moneyWhenOn(Object day);
+
+  /// No description provided for @moneyAddAnyway.
+  ///
+  /// In en, this message translates to:
+  /// **'Add anyway'**
+  String get moneyAddAnyway;
+
+  /// No description provided for @moneyDontAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Don’t add'**
+  String get moneyDontAdd;
+
+  /// No description provided for @moneyCashSpend.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash spend'**
+  String get moneyCashSpend;
+
+  /// No description provided for @moneyOrdinal.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, select, 1{1st} 2{2nd} 3{3rd} 21{21st} 22{22nd} 23{23rd} 31{31st} other{{n}th}}'**
+  String moneyOrdinal(String n);
+
+  /// No description provided for @moneyAddBillTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a bill'**
+  String get moneyAddBillTitle;
+
+  /// No description provided for @moneyEditBillTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit bill'**
+  String get moneyEditBillTitle;
+
+  /// No description provided for @moneyBillName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get moneyBillName;
+
+  /// No description provided for @moneyUsualAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Usual amount (₹)'**
+  String get moneyUsualAmount;
+
+  /// No description provided for @moneyDueDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Due day'**
+  String get moneyDueDay;
+
+  /// No description provided for @moneyDueHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid around the {nth} each month'**
+  String moneyDueHelper(Object nth);
+
+  /// No description provided for @moneyRemind.
+  ///
+  /// In en, this message translates to:
+  /// **'Remind me on the due day'**
+  String get moneyRemind;
+
+  /// No description provided for @moneyBillErrName.
+  ///
+  /// In en, this message translates to:
+  /// **'Add the bill’s name.'**
+  String get moneyBillErrName;
+
+  /// No description provided for @moneyBillErrDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a day from 1 to 31.'**
+  String get moneyBillErrDay;
+
+  /// No description provided for @moneyBillAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'{bill} added'**
+  String moneyBillAdded(Object bill);
+
+  /// No description provided for @moneyBillSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Bill saved'**
+  String get moneyBillSaved;
+
+  /// No description provided for @moneyStopTracking.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop tracking this bill'**
+  String get moneyStopTracking;
+
+  /// No description provided for @moneyStopped.
+  ///
+  /// In en, this message translates to:
+  /// **'Stopped tracking {bill}'**
+  String moneyStopped(Object bill);
+
+  /// No description provided for @moneyDeleteBill.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete bill'**
+  String get moneyDeleteBill;
+
+  /// No description provided for @moneyDeleteBillTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete {bill}?'**
+  String moneyDeleteBillTitle(Object bill);
+
+  /// No description provided for @moneyDeleteBillLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Past spends keep their “Bill” label.'**
+  String get moneyDeleteBillLead;
+
+  /// No description provided for @moneyKeep.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep'**
+  String get moneyKeep;
+
+  /// No description provided for @moneyBillDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'{bill} deleted'**
+  String moneyBillDeleted(Object bill);
+
+  /// No description provided for @moneyPaidTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{bill} — paid?'**
+  String moneyPaidTitle(Object bill);
+
+  /// No description provided for @moneyPaidLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Usually {amount} around the {nth}.'**
+  String moneyPaidLead(Object amount, Object nth);
+
+  /// No description provided for @moneyForMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'For {month}'**
+  String moneyForMonth(Object month);
+
+  /// No description provided for @moneyMarkPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark paid'**
+  String get moneyMarkPaid;
+
+  /// No description provided for @moneyBillPaidSnack.
+  ///
+  /// In en, this message translates to:
+  /// **'{bill} paid · {amount} added'**
+  String moneyBillPaidSnack(Object bill, Object amount);
+
+  /// No description provided for @moneyAllSpends.
+  ///
+  /// In en, this message translates to:
+  /// **'All spends'**
+  String get moneyAllSpends;
+
+  /// No description provided for @moneySearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Search spends'**
+  String get moneySearch;
+
+  /// No description provided for @moneyCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 spend · {total}} other{{count} spends · {total}}}'**
+  String moneyCount(int count, Object total);
+
+  /// No description provided for @moneyNoMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'No spends match.'**
+  String get moneyNoMatch;
+
+  /// No description provided for @moneyClearFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove filter {category}'**
+  String moneyClearFilter(Object category);
+
+  /// No description provided for @todayMonthSoFar.
+  ///
+  /// In en, this message translates to:
+  /// **'{month} so far'**
+  String todayMonthSoFar(Object month);
+
+  /// No description provided for @todayMoneyLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Money'**
+  String get todayMoneyLink;
+
+  /// No description provided for @todayOfBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'of {budget} budget · {pct}% used'**
+  String todayOfBudget(Object budget, int pct);
+
+  /// No description provided for @todayBillsDue.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 bill due} other{{count} bills due}}'**
+  String todayBillsDue(int count);
+
+  /// No description provided for @todaySpentSoFar.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} spent so far'**
+  String todaySpentSoFar(Object amount);
+
+  /// No description provided for @todaySetBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'Set budget'**
+  String get todaySetBudget;
 }
 
 class _AppLocalizationsDelegate

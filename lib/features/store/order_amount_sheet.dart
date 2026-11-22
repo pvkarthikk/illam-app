@@ -2,11 +2,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'package:nm_flat/core/data/repo/expenses_repo.dart';
+import 'package:nm_flat/core/data/repo/money_repo.dart';
 import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/time/dates.dart';
 import 'package:nm_flat/core/util/money.dart';
 import 'package:nm_flat/features/lists/lists_text.dart';
+import 'package:nm_flat/features/money/widgets/duplicate_hint_box.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
 Future<void> showOrderAmountSheet(
@@ -34,6 +36,8 @@ class _OrderAmountSheetState extends ConsumerState<_OrderAmountSheet> {
   String _method = 'upi';
   String? _error;
   bool _saving = false;
+  bool _dupConfirmed = false;
+  DuplicateHit? _dup;
 
   @override
   void dispose() {
@@ -57,7 +61,22 @@ class _OrderAmountSheetState extends ConsumerState<_OrderAmountSheet> {
     });
     try {
       final today = Dates.today(ref.read(clockProvider));
-      // P10: ALG-21 duplicate hint here (FR-EXP-4).
+      // Duplicate spend hint check via MoneyRepo.checkDuplicate.
+      if (!_dupConfirmed) {
+        final hit = await ref
+            .read(moneyRepoProvider)
+            .checkDuplicate(
+              amountPaise: paise,
+              merchant: store,
+              orderChannel: widget.channel,
+              date: today,
+            );
+        if (!mounted) return;
+        if (hit != null) {
+          setState(() => _dup = hit);
+          return;
+        }
+      }
       final res = await ref.read(changesProvider).write('Order amount', (c) {
         ref
             .read(expensesRepoProvider)
@@ -107,7 +126,13 @@ class _OrderAmountSheetState extends ConsumerState<_OrderAmountSheet> {
           autofocus: true,
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           onChanged: (_) {
-            if (_error != null) setState(() => _error = null);
+            if (_error != null || _dup != null || _dupConfirmed) {
+              setState(() {
+                _error = null;
+                _dup = null;
+                _dupConfirmed = false;
+              });
+            }
           },
           decoration: InputDecoration(
             labelText: l10n.storeAmount,
@@ -141,6 +166,20 @@ class _OrderAmountSheetState extends ConsumerState<_OrderAmountSheet> {
             ),
           ],
         ),
+        if (_dup != null) ...[
+          const SizedBox(height: 16),
+          DuplicateHintBox(
+            hit: _dup!,
+            onDontAdd: () => Navigator.of(context).pop(),
+            onAddAnyway: () {
+              setState(() {
+                _dupConfirmed = true;
+                _dup = null;
+              });
+              _save(l10n, store);
+            },
+          ),
+        ],
         NestSheetActions(
           children: [
             NestButton(

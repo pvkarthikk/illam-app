@@ -45,7 +45,11 @@ void main() {
     final attempts = await db.select(db.settlementAttempts).get();
     expect(attempts.length, 2);
     final expenses = await db.select(db.expenses).get();
-    expect(expenses.length, 2);
+    expect(expenses.length, 17);
+    final bills = await db.select(db.bills).get();
+    expect(bills.length, 5);
+    final home = await db.select(db.homes).getSingle();
+    expect(home.budgetMonthlyPaise, 3200000);
     final items = await db.select(db.items).get();
     expect(items.length, 15);
     expect(items.where((i) => i.list == 'grocery' && !i.done).length, 9);

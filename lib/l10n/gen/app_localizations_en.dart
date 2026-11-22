@@ -1949,4 +1949,488 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get tasksRemoveStaffMoves =>
       'Their routines and open to-dos will move to you.';
+
+  @override
+  String get moneyEyebrow => 'Household spends';
+
+  @override
+  String get moneyTitle => 'Money';
+
+  @override
+  String moneySpentIn(Object month) {
+    return 'Spent in $month';
+  }
+
+  @override
+  String moneyLeftOf(Object left, Object budget) {
+    return '$left left of $budget';
+  }
+
+  @override
+  String moneyDaysToGo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days to go',
+      one: '1 day to go',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String moneyBelowPrev(Object amount, Object month) {
+    return '$amount below $month’s total';
+  }
+
+  @override
+  String moneyAbovePrev(Object amount, Object month) {
+    return '$amount above $month’s total';
+  }
+
+  @override
+  String moneyOverBudget(Object amount) {
+    return '$amount over budget';
+  }
+
+  @override
+  String get moneySetBudget => 'Set a monthly budget';
+
+  @override
+  String get moneyNoBudget => 'No budget set';
+
+  @override
+  String get moneyBudgetTitle => 'Monthly budget';
+
+  @override
+  String get moneyBudgetSaved => 'Budget saved';
+
+  @override
+  String get moneySave => 'Save';
+
+  @override
+  String get moneyAddSpend => '＋ Add a spend';
+
+  @override
+  String get moneyQuickAddHint =>
+      'Or type “₹450 Swiggy” in Quick add from any tab.';
+
+  @override
+  String get moneyBills => 'Bills this month';
+
+  @override
+  String moneyBillsPaid(int k, int n) {
+    return '$k of $n paid';
+  }
+
+  @override
+  String get moneyAddBill => '＋ Add bill';
+
+  @override
+  String moneyBillDue(Object date, Object amount) {
+    return 'Due $date · $amount last time';
+  }
+
+  @override
+  String get moneyOverdue => 'Overdue';
+
+  @override
+  String get moneyToday => 'Today';
+
+  @override
+  String get moneyPaid => 'Paid';
+
+  @override
+  String moneyBillPaidOn(Object date, Object method) {
+    return 'Paid $date · $method';
+  }
+
+  @override
+  String get moneyPaidTwice => 'Marked paid twice — check';
+
+  @override
+  String moneyFirstDue(Object date, Object amount) {
+    return 'First due $date · $amount';
+  }
+
+  @override
+  String moneyMarkBillPaid(Object bill) {
+    return 'Mark $bill paid';
+  }
+
+  @override
+  String get moneyBillsEmpty =>
+      'Add rent, electricity, milk, internet… — we’ll remind you when they’re due.';
+
+  @override
+  String moneyStoppedBills(int count) {
+    return 'Stopped bills ($count)';
+  }
+
+  @override
+  String moneyStoppedRow(Object amount, int day) {
+    return '$amount · day $day';
+  }
+
+  @override
+  String get moneyTrackAgain => 'Track again';
+
+  @override
+  String moneyTrackingAgain(Object bill) {
+    return 'Tracking $bill again';
+  }
+
+  @override
+  String get moneyMethodUpi => 'UPI';
+
+  @override
+  String get moneyMethodCash => 'Cash';
+
+  @override
+  String get moneyMethodCard => 'Card';
+
+  @override
+  String get moneyMethodBank => 'Bank';
+
+  @override
+  String get moneyErrAmount => 'Check the amount';
+
+  @override
+  String get moneyWhereItWent => 'Where it went';
+
+  @override
+  String moneyStaffPay(Object month) {
+    return 'Staff pay · $month';
+  }
+
+  @override
+  String moneyBilledRate(Object billed, Object rate) {
+    return '$billed billed · $rate/hr';
+  }
+
+  @override
+  String moneyMonthlyLeaves(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Monthly · $count leaves',
+      one: 'Monthly · 1 leave',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get moneyRecent => 'Recent';
+
+  @override
+  String get moneySeeAll => 'See all';
+
+  @override
+  String moneyRowSub(Object day, Object category, Object source) {
+    return '$day · $category · $source';
+  }
+
+  @override
+  String moneySrcManual(Object name) {
+    return 'Added by $name';
+  }
+
+  @override
+  String get moneySrcYou => 'Added by you';
+
+  @override
+  String moneySrcOrder(Object channel) {
+    return '$channel order';
+  }
+
+  @override
+  String get moneySrcStore => 'Store bill';
+
+  @override
+  String get moneySrcBill => 'Bill';
+
+  @override
+  String get moneySrcSalary => 'Salary';
+
+  @override
+  String get moneyEmptyTitle => 'No spends yet this month';
+
+  @override
+  String get moneyEmptyBody => 'Tap “＋ Add a spend”, or mark a bill paid.';
+
+  @override
+  String get moneyAddSpendTitle => 'Add a spend';
+
+  @override
+  String get moneyEditSpendTitle => 'Edit spend';
+
+  @override
+  String get moneyAmountLabel => 'Amount in rupees';
+
+  @override
+  String get moneyPaidTo => 'Paid to / for';
+
+  @override
+  String get moneyCategory => 'Category';
+
+  @override
+  String get moneyPaidWith => 'Paid with';
+
+  @override
+  String get moneyWhen => 'When';
+
+  @override
+  String get moneyYesterday => 'Yesterday';
+
+  @override
+  String get moneyOtherDay => 'Other day';
+
+  @override
+  String get moneyMore => 'More';
+
+  @override
+  String get moneyPaidBy => 'Paid by';
+
+  @override
+  String get moneyYou => 'You';
+
+  @override
+  String get moneyNote => 'Note';
+
+  @override
+  String get moneyRepeat => 'Repeat every month — makes it a bill';
+
+  @override
+  String get moneySaveChanges => 'Save changes';
+
+  @override
+  String get moneyDelete => 'Delete';
+
+  @override
+  String moneyAdded(Object amount) {
+    return '$amount added';
+  }
+
+  @override
+  String moneyAddedBill(Object amount, Object merchant) {
+    return '$amount added · $merchant is now a monthly bill';
+  }
+
+  @override
+  String moneyLearned(Object merchant, Object category) {
+    return 'Saved · $merchant will go to $category from now on.';
+  }
+
+  @override
+  String get moneySpendUpdated => 'Spend updated';
+
+  @override
+  String get moneySpendDeleted => 'Spend deleted';
+
+  @override
+  String get moneyErrMerchant => 'Who was it paid to?';
+
+  @override
+  String moneyReadOnly(Object name) {
+    return 'Added by $name · only $name or an admin can change it.';
+  }
+
+  @override
+  String moneySalaryManaged(Object name) {
+    return 'Salary spends are managed in $name’s salary.';
+  }
+
+  @override
+  String get moneyOpenSalary => 'Open salary';
+
+  @override
+  String moneyDuplicate(
+    Object who,
+    Object amount,
+    Object merchant,
+    Object when,
+  ) {
+    return 'Looks like $who already added $amount · $merchant $when.';
+  }
+
+  @override
+  String get moneyWhoYou => 'you';
+
+  @override
+  String get moneyWhenToday => 'today';
+
+  @override
+  String get moneyWhenYesterday => 'yesterday';
+
+  @override
+  String moneyWhenOn(Object day) {
+    return 'on $day';
+  }
+
+  @override
+  String get moneyAddAnyway => 'Add anyway';
+
+  @override
+  String get moneyDontAdd => 'Don’t add';
+
+  @override
+  String get moneyCashSpend => 'Cash spend';
+
+  @override
+  String moneyOrdinal(String n) {
+    String _temp0 = intl.Intl.selectLogic(n, {
+      '1': '1st',
+      '2': '2nd',
+      '3': '3rd',
+      '21': '21st',
+      '22': '22nd',
+      '23': '23rd',
+      '31': '31st',
+      'other': '${n}th',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get moneyAddBillTitle => 'Add a bill';
+
+  @override
+  String get moneyEditBillTitle => 'Edit bill';
+
+  @override
+  String get moneyBillName => 'Name';
+
+  @override
+  String get moneyUsualAmount => 'Usual amount (₹)';
+
+  @override
+  String get moneyDueDay => 'Due day';
+
+  @override
+  String moneyDueHelper(Object nth) {
+    return 'Paid around the $nth each month';
+  }
+
+  @override
+  String get moneyRemind => 'Remind me on the due day';
+
+  @override
+  String get moneyBillErrName => 'Add the bill’s name.';
+
+  @override
+  String get moneyBillErrDay => 'Pick a day from 1 to 31.';
+
+  @override
+  String moneyBillAdded(Object bill) {
+    return '$bill added';
+  }
+
+  @override
+  String get moneyBillSaved => 'Bill saved';
+
+  @override
+  String get moneyStopTracking => 'Stop tracking this bill';
+
+  @override
+  String moneyStopped(Object bill) {
+    return 'Stopped tracking $bill';
+  }
+
+  @override
+  String get moneyDeleteBill => 'Delete bill';
+
+  @override
+  String moneyDeleteBillTitle(Object bill) {
+    return 'Delete $bill?';
+  }
+
+  @override
+  String get moneyDeleteBillLead => 'Past spends keep their “Bill” label.';
+
+  @override
+  String get moneyKeep => 'Keep';
+
+  @override
+  String moneyBillDeleted(Object bill) {
+    return '$bill deleted';
+  }
+
+  @override
+  String moneyPaidTitle(Object bill) {
+    return '$bill — paid?';
+  }
+
+  @override
+  String moneyPaidLead(Object amount, Object nth) {
+    return 'Usually $amount around the $nth.';
+  }
+
+  @override
+  String moneyForMonth(Object month) {
+    return 'For $month';
+  }
+
+  @override
+  String get moneyMarkPaid => 'Mark paid';
+
+  @override
+  String moneyBillPaidSnack(Object bill, Object amount) {
+    return '$bill paid · $amount added';
+  }
+
+  @override
+  String get moneyAllSpends => 'All spends';
+
+  @override
+  String get moneySearch => 'Search spends';
+
+  @override
+  String moneyCount(int count, Object total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count spends · $total',
+      one: '1 spend · $total',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get moneyNoMatch => 'No spends match.';
+
+  @override
+  String moneyClearFilter(Object category) {
+    return 'Remove filter $category';
+  }
+
+  @override
+  String todayMonthSoFar(Object month) {
+    return '$month so far';
+  }
+
+  @override
+  String get todayMoneyLink => 'Money';
+
+  @override
+  String todayOfBudget(Object budget, int pct) {
+    return 'of $budget budget · $pct% used';
+  }
+
+  @override
+  String todayBillsDue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count bills due',
+      one: '1 bill due',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String todaySpentSoFar(Object amount) {
+    return '$amount spent so far';
+  }
+
+  @override
+  String get todaySetBudget => 'Set budget';
 }

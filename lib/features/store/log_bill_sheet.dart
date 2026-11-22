@@ -3,10 +3,12 @@ import 'package:material_ui/material_ui.dart';
 
 import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/data/repo/expenses_repo.dart';
+import 'package:nm_flat/core/data/repo/money_repo.dart';
 import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/time/dates.dart';
 import 'package:nm_flat/core/util/money.dart';
+import 'package:nm_flat/features/money/widgets/duplicate_hint_box.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
 Future<bool?> showLogBillSheet(
@@ -38,6 +40,8 @@ class _LogBillSheetState extends ConsumerState<_LogBillSheet> {
   String? _amountError;
   String? _nameError;
   bool _saving = false;
+  bool _dupConfirmed = false;
+  DuplicateHit? _dup;
 
   @override
   void dispose() {
@@ -88,7 +92,21 @@ class _LogBillSheetState extends ConsumerState<_LogBillSheet> {
       final nowMs = clock.nowMs;
       final expenses = ref.read(expensesRepoProvider);
       final listsRepo = ref.read(listsRepoProvider);
-      // P10: run the ALG-21 duplicate hint here (FR-STORE-3) before writing.
+      // Duplicate spend hint check via MoneyRepo.checkDuplicate.
+      if (!_dupConfirmed) {
+        final hit = await ref
+            .read(moneyRepoProvider)
+            .checkDuplicate(
+              amountPaise: paise,
+              merchant: store,
+              date: today,
+            );
+        if (!mounted) return;
+        if (hit != null) {
+          setState(() => _dup = hit);
+          return;
+        }
+      }
       final res = await ref.read(changesProvider).write('Store bill', (c) {
         expenses.createIn(
           c,
@@ -150,7 +168,13 @@ class _LogBillSheetState extends ConsumerState<_LogBillSheet> {
           autofocus: true,
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           onChanged: (_) {
-            if (_amountError != null) setState(() => _amountError = null);
+            if (_amountError != null || _dup != null || _dupConfirmed) {
+              setState(() {
+                _amountError = null;
+                _dup = null;
+                _dupConfirmed = false;
+              });
+            }
           },
           decoration: InputDecoration(
             labelText: l10n.storeBillAmount,
@@ -174,6 +198,8 @@ class _LogBillSheetState extends ConsumerState<_LogBillSheet> {
                 onTap: () => setState(() {
                   _storeKey = key;
                   _nameError = null;
+                  _dup = null;
+                  _dupConfirmed = false;
                 }),
               ),
           ],
@@ -184,7 +210,13 @@ class _LogBillSheetState extends ConsumerState<_LogBillSheet> {
             controller: _otherCtrl,
             textCapitalization: TextCapitalization.words,
             onChanged: (_) {
-              if (_nameError != null) setState(() => _nameError = null);
+              if (_nameError != null || _dup != null || _dupConfirmed) {
+                setState(() {
+                  _nameError = null;
+                  _dup = null;
+                  _dupConfirmed = false;
+                });
+              }
             },
             decoration: InputDecoration(
               labelText: l10n.storeOtherName,
@@ -219,6 +251,20 @@ class _LogBillSheetState extends ConsumerState<_LogBillSheet> {
             ),
           ],
         ),
+        if (_dup != null) ...[
+          const SizedBox(height: 16),
+          DuplicateHintBox(
+            hit: _dup!,
+            onDontAdd: () => _skip(l10n),
+            onAddAnyway: () {
+              setState(() {
+                _dupConfirmed = true;
+                _dup = null;
+              });
+              _save(l10n);
+            },
+          ),
+        ],
         NestSheetActions(
           children: [
             NestButton(

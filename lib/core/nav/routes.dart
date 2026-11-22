@@ -12,6 +12,7 @@ abstract final class Routes {
   static String staff(String id) => '/staff/$id';
   static String staffSalary(String id) => '/staff/$id/salary';
   static const listsStore = '/lists/store';
+  static const moneyTransactions = '/money/transactions';
 }
 
 enum NestTab { today, lists, tasks, meals, money }

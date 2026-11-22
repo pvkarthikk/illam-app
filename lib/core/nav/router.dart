@@ -14,6 +14,7 @@ import 'package:nm_flat/features/debug/gallery_screen.dart';
 import 'package:nm_flat/features/lists/lists_screen.dart';
 import 'package:nm_flat/features/meals/meals_screen.dart';
 import 'package:nm_flat/features/money/money_screen.dart';
+import 'package:nm_flat/features/money/transactions_screen.dart';
 import 'package:nm_flat/features/onboarding/onboarding_screen.dart';
 import 'package:nm_flat/features/salary/salary_screen.dart';
 import 'package:nm_flat/features/staff/staff_screen.dart';
@@ -138,6 +139,12 @@ final routerProvider = Provider<GoRouter>((ref) {
                 SalaryScreen(staffId: state.pathParameters['id'] ?? ''),
           ),
         ],
+      ),
+      GoRoute(
+        path: Routes.moneyTransactions,
+        builder: (_, state) => TransactionsScreen(
+          category: state.uri.queryParameters['category'],
+        ),
       ),
       GoRoute(
         path: Routes.listsStore,
