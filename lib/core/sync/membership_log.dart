@@ -38,6 +38,9 @@ class MembershipLog {
   final Clock clock;
   final Future<String> Function() _modelOf;
 
+  void Function()? onAppended;
+  void Function(String memberId, String name)? onMemberJoined;
+
   MemberOp _fromRow(MemberOpRow r) => MemberOp(
     opId: r.opId,
     homeId: r.homeId,
@@ -198,6 +201,7 @@ class MembershipLog {
         );
 
     final r = await replayAndProject(homeId);
+    onAppended?.call();
     final e = r.effects[signed.opId] ?? 'pending';
     final idx = e.indexOf(':');
     if (idx < 0) return AppendResult(signed.opId, e, null);
@@ -213,6 +217,10 @@ class MembershipLog {
     final rows = await (db.select(
       db.memberOps,
     )..where((t) => t.homeId.equals(homeId) & t.sigOk.equals(true))).get();
+    final oldEffects = <String, String>{
+      for (final row in rows)
+        if (row.opType == 'addMember') row.opId: row.effect,
+    };
     final ops = [for (final r in rows) _fromRow(r)];
     final r = replayMembership(ops);
 
@@ -298,6 +306,22 @@ class MembershipLog {
         );
       }
     });
+
+    final joinedCb = onMemberJoined;
+    if (joinedCb != null) {
+      final myId = (await keys).deviceId;
+      for (final op in ops) {
+        if (op.type != 'addMember' || op.authorDeviceId == myId) continue;
+        if (r.effects[op.opId] == 'applied' &&
+            oldEffects[op.opId] != 'applied') {
+          final memberId = op.payload['memberId'] as String?;
+          final name = (op.payload['name'] as String?) ?? '';
+          if (memberId != null) {
+            joinedCb(memberId, name);
+          }
+        }
+      }
+    }
 
     return r;
   }

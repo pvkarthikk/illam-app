@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:collection/collection.dart';
 import 'package:drift/drift.dart';
 
@@ -8,6 +10,7 @@ import 'package:nm_flat/core/data/ops/op_record.dart';
 import 'package:nm_flat/core/sync/drift_validation_view.dart';
 import 'package:nm_flat/core/sync/membership_log.dart';
 import 'package:nm_flat/core/sync/protocol/op_wire.dart';
+import 'package:nm_flat/core/sync/sync_store.dart';
 import 'package:nm_flat/core/sync/validator.dart';
 import 'package:nm_flat/core/time/clock.dart';
 import 'package:nm_flat/core/time/hlc.dart';
@@ -20,7 +23,7 @@ class IngestReport {
   final List<String> notes = [];
 }
 
-/// Validates, verifies signatures on, and applies or quarantines incoming ops.
+/// Validates, verifies signatures on, gap-orders, and applies incoming ops.
 class IncomingPipeline {
   IncomingPipeline({
     required this.db,
@@ -31,6 +34,7 @@ class IncomingPipeline {
     required this.clock,
     this.validator = const Validator(),
     this.onApplied,
+    this.afterIngest,
   });
 
   final NestDatabase db;
@@ -41,6 +45,7 @@ class IncomingPipeline {
   final Clock clock;
   final Validator validator;
   final void Function(OpRecord op)? onApplied;
+  final Future<void> Function()? afterIngest;
 
   /// Ingests [memberOps] first, then incoming [ops] for [homeId], and retries waiting ops.
   Future<IngestReport> ingest(
@@ -63,6 +68,7 @@ class IncomingPipeline {
         return a.seq.compareTo(b.seq);
       });
 
+    final have = Map<String, int>.from((await SyncStore(db).myVector(homeId)).map);
     final byChange = groupBy(decoded, (o) => o.changeId);
     final view = DriftValidationView(db, registry);
     final newlyPending = <String>{};
@@ -75,6 +81,22 @@ class IncomingPipeline {
         rep.already++;
         continue;
       }
+
+      final expected = (have[op.deviceId] ?? 0) + 1;
+      if (op.seq > expected) {
+        if (existing == null) {
+          await db
+              .into(db.ops)
+              .insert(
+                op.toCompanion().copyWith(status: const Value('pending')),
+                mode: InsertMode.insertOrIgnore,
+              );
+          rep.pending++;
+          newlyPending.add(op.opId);
+        }
+        continue;
+      }
+
       final decision = await _decide(op, byChange[op.changeId]!, view);
       await _store(
         op,
@@ -83,9 +105,13 @@ class IncomingPipeline {
         rep: rep,
         newlyPending: newlyPending,
       );
+      have[op.deviceId] = max(have[op.deviceId] ?? 0, op.seq);
     }
 
     await retryPending(homeId, rep, newlyPending: newlyPending);
+    if (afterIngest != null) {
+      await afterIngest!();
+    }
     return rep;
   }
 
@@ -167,14 +193,19 @@ class IncomingPipeline {
               .get();
       if (rows.isEmpty) break;
 
+      final have = Map<String, int>.from(
+        (await SyncStore(db).myVector(homeId)).map,
+      );
       final ops = [for (final r in rows) OpRecord.fromRow(r)];
       final byChange = groupBy(ops, (o) => o.changeId);
       final view = DriftValidationView(db, registry);
 
       for (final op in ops) {
+        if (op.seq > (have[op.deviceId] ?? 0) + 1) continue;
         final d = await _decide(op, byChange[op.changeId]!, view);
         if (d.verdict == Verdict.accept) {
           await _store(op, d, wasPending: true, rep: rep);
+          have[op.deviceId] = max(have[op.deviceId] ?? 0, op.seq);
           if ((newlyPending?.remove(op.opId) ?? false) && rep.pending > 0) {
             rep.pending--;
           }
@@ -182,6 +213,7 @@ class IncomingPipeline {
         } else if (d.verdict == Verdict.quarantine) {
           await (db.update(db.ops)..where((o) => o.opId.equals(op.opId)))
               .write(const OpsCompanion(status: Value('quarantined')));
+          have[op.deviceId] = max(have[op.deviceId] ?? 0, op.seq);
           rep.quarantined++;
           rep.notes.add('${op.opId}: ${d.reason}');
           if ((newlyPending?.remove(op.opId) ?? false) && rep.pending > 0) {

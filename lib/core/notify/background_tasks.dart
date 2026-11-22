@@ -17,6 +17,7 @@ import 'package:nm_flat/core/domain/staff_text.dart';
 import 'package:nm_flat/core/notify/notification_actions.dart';
 import 'package:nm_flat/core/notify/notifications.dart';
 import 'package:nm_flat/core/providers.dart';
+import 'package:nm_flat/core/sync/background_sync.dart';
 import 'package:nm_flat/core/time/dates.dart';
 import 'package:nm_flat/features/staff/staff_providers.dart';
 
@@ -48,6 +49,8 @@ void callbackDispatcher() {
             container.read,
             inputData ?? const <String, dynamic>{},
           );
+        case 'nm.sync':
+          await runBackgroundSync(container.read);
       }
       return true;
     } finally {

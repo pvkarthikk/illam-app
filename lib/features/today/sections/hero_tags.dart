@@ -10,22 +10,30 @@ import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/util/money.dart';
 import 'package:nm_flat/features/staff/staff_providers.dart';
+import 'package:nm_flat/features/today/sections/sync_tag.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
-/// Reserved slot filled in P15 ("✓ In sync" / "{n} phones behind").
+/// Hero tag showing sync freshness and opening Home details.
 class SyncPulseTag extends StatelessWidget {
   const SyncPulseTag({super.key});
 
   @override
-  Widget build(BuildContext context) => const SizedBox.shrink();
+  Widget build(BuildContext context) => const SyncTag();
 }
 
-/// Reserved slot filled in P15 ("Offline — changes will sync").
-class OfflineIndicator extends StatelessWidget {
+/// Banner shown at the top of Today when the device has no connectivity.
+class OfflineIndicator extends ConsumerWidget {
   const OfflineIndicator({super.key});
 
   @override
-  Widget build(BuildContext context) => const SizedBox.shrink();
+  Widget build(BuildContext context, WidgetRef ref) {
+    if (!ref.watch(isOfflineProvider)) return const SizedBox.shrink();
+    final l10n = AppLocalizations.of(context);
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+      child: AlertLine(icon: Icons.cloud_off_rounded, text: l10n.todayOffline),
+    );
+  }
 }
 
 class HeroTags extends ConsumerWidget {

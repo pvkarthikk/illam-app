@@ -86,60 +86,6 @@ Widget _dividedCard(BuildContext context, List<Widget> rows) {
   );
 }
 
-class HomeSyncCard extends StatelessWidget {
-  const HomeSyncCard({super.key, required this.myModel});
-
-  final String myModel;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final c = context.nest;
-    return _dividedCard(context, [
-      _cardRow(
-        context,
-        leading: _iconTile(Icons.sync_rounded, c.primarySoft, c.primary),
-        title: l10n.homeSyncPlaceholderTitle,
-        sub: l10n.homeSyncPlaceholderSub,
-      ),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        child: Row(
-          children: [
-            Container(
-              width: 8,
-              height: 8,
-              decoration: BoxDecoration(
-                color: c.primary,
-                shape: BoxShape.circle,
-              ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Text(
-                l10n.homeYourPhone(myModel),
-                style: NestText.body15.copyWith(color: c.ink),
-              ),
-            ),
-            const SizedBox(width: 8),
-            Text(
-              l10n.homeThisPhone,
-              style: NestText.meta13.copyWith(color: c.ink3),
-            ),
-          ],
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.fromLTRB(16, 10, 16, 12),
-        child: Text(
-          l10n.homeSyncFootnote,
-          style: NestText.small12.copyWith(color: c.ink3),
-        ),
-      ),
-    ]);
-  }
-}
-
 class HomeBackupCard extends ConsumerWidget {
   const HomeBackupCard({super.key});
 

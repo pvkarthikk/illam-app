@@ -4109,4 +4109,178 @@ class AppLocalizationsEn extends AppLocalizations {
   String setupBanner(int pct) {
     return 'Finishing setup… $pct% — keep Nest Mojo : Flat open on a family phone';
   }
+
+  @override
+  String get agoNow => 'now';
+
+  @override
+  String agoMinutes(int m) {
+    return '$m min ago';
+  }
+
+  @override
+  String agoHours(int h) {
+    return '$h h ago';
+  }
+
+  @override
+  String agoDays(int d) {
+    String _temp0 = intl.Intl.pluralLogic(
+      d,
+      locale: localeName,
+      other: '$d days ago',
+      one: '1 day ago',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get syncTagOnlyThisPhone => 'Only this phone';
+
+  @override
+  String syncTagJustNow(String name) {
+    return 'Synced with $name just now';
+  }
+
+  @override
+  String syncTagLast(String ago) {
+    return 'Last synced $ago';
+  }
+
+  @override
+  String syncTagLabel(String text) {
+    return '$text. Open sync details';
+  }
+
+  @override
+  String get syncNotYet => 'Not synced yet';
+
+  @override
+  String get todayOffline => 'Offline — changes will sync';
+
+  @override
+  String get syncCardAllInSync => 'All phones in sync';
+
+  @override
+  String syncCardBehind(int k) {
+    String _temp0 = intl.Intl.pluralLogic(
+      k,
+      locale: localeName,
+      other: '$k phones not up to date',
+      one: '1 phone not up to date',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String syncCardLastSynced(String ago) {
+    return 'Last synced $ago';
+  }
+
+  @override
+  String get syncNow => 'Sync now';
+
+  @override
+  String get syncing => 'Syncing…';
+
+  @override
+  String get syncedSnack => 'Synced with phones that are reachable right now';
+
+  @override
+  String get syncNoPeers => 'No family phones reachable right now';
+
+  @override
+  String syncRowTheirs(String name, String model) {
+    return '$name’s $model';
+  }
+
+  @override
+  String get syncOnWifiNow => 'On this Wi-Fi now';
+
+  @override
+  String syncSyncedAgo(String ago) {
+    return 'Synced $ago';
+  }
+
+  @override
+  String syncNotForDays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Not synced for $n days',
+      one: 'Not synced for 1 day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String syncMissing(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: ' · missing $n of your changes',
+      one: ' · missing 1 of your changes',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get syncClockWrong =>
+      'Your phone’s clock looks wrong — sync may be off';
+
+  @override
+  String get syncWifiBlocked =>
+      'Your Wi-Fi may block phones from seeing each other — syncing over the internet instead.';
+
+  @override
+  String syncUpdateNeeded(String name) {
+    return 'Update Nest Mojo : Flat to keep syncing with $name';
+  }
+
+  @override
+  String get profileInSync => '✓ In sync';
+
+  @override
+  String profileOneBehind(String name) {
+    return '$name’s phone is behind';
+  }
+
+  @override
+  String profileManyBehind(int n) {
+    return '$n phones behind';
+  }
+
+  @override
+  String get notifOutOfSync =>
+      'Nest Mojo : Flat hasn’t synced with your family for 3 days. Open it on the same Wi-Fi to catch up.';
+
+  @override
+  String get notifTodoAssignedTitle => 'To-do assigned to you';
+
+  @override
+  String notifTodoAssignedBody(String title, String name) {
+    return '$title · from $name';
+  }
+
+  @override
+  String notifJoinedTitle(String name, String home) {
+    return '$name joined $home';
+  }
+
+  @override
+  String get notifJoinedBody => 'Their phone now syncs with this home.';
+
+  @override
+  String syncLabPort(int port) {
+    return 'Listening on port $port';
+  }
+
+  @override
+  String get syncLabPeers => 'Peers';
+
+  @override
+  String get syncLabVector => 'My version vector';
+
+  @override
+  String get syncLabConnectLocal => 'Connect to 127.0.0.1';
 }

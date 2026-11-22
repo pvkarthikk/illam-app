@@ -1,20 +1,40 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
+import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/design/components/components.dart';
+import 'package:nm_flat/core/providers.dart';
+import 'package:nm_flat/core/sync/sync_engine.dart';
 import 'package:nm_flat/features/debug/sync_lab_controller.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
-class SyncLabScreen extends ConsumerWidget {
+class SyncLabScreen extends ConsumerStatefulWidget {
   const SyncLabScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<SyncLabScreen> createState() => _SyncLabScreenState();
+}
+
+class _SyncLabScreenState extends ConsumerState<SyncLabScreen> {
+  final _portCtrl = TextEditingController();
+
+  @override
+  void dispose() {
+    _portCtrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final c = context.nest;
     final ctrl = ref.read(syncLabControllerProvider.notifier);
     final labState = ref.watch(syncLabControllerProvider).value;
     final counts = ref.watch(syncCountsProvider).value ?? const SyncCounts();
+    final engineState =
+        ref.watch(syncEngineStateProvider).value ?? const SyncEngineState();
+    final vector = ref.watch(syncLabVectorProvider).value ?? const <String, int>{};
+    final peers = ref.watch(syncPeersProvider).value ?? const <SyncPeerRow>[];
     final memberLog =
         ref.watch(syncMemberLogProvider).value ?? const <MemberLogEntry>[];
     final recentOps =
@@ -115,6 +135,81 @@ class SyncLabScreen extends ConsumerWidget {
                     ),
                   ],
                 ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          NestCard(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  l.syncLabPort(engineState.port ?? 0),
+                  style: NestText.cardTitle20.copyWith(color: c.ink),
+                ),
+                const SizedBox(height: 12),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 120,
+                      child: TextField(
+                        controller: _portCtrl,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          isDense: true,
+                          border: const OutlineInputBorder(),
+                          labelText: l.syncLabPort(0).replaceAll('0', '').trim(),
+                        ),
+                      ),
+                    ),
+                    NestButton(
+                      label: l.syncLabConnectLocal,
+                      kind: NestButtonKind.tonal,
+                      size: NestButtonSize.sm,
+                      onPressed: () {
+                        final port = int.tryParse(_portCtrl.text.trim());
+                        if (port != null && port > 0 && port <= 65535) {
+                          ctrl.connectLocal(port);
+                        }
+                      },
+                    ),
+                    NestButton(
+                      label: l.syncNow,
+                      kind: NestButtonKind.primary,
+                      size: NestButtonSize.sm,
+                      onPressed: () => ctrl.syncNow(l),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  l.syncLabVector,
+                  style: NestText.itemTitle16.copyWith(color: c.ink),
+                ),
+                const SizedBox(height: 6),
+                for (final e in vector.entries)
+                  Text(
+                    '${e.key}: ${e.value}',
+                    style: NestText.meta13.copyWith(color: c.ink2),
+                  ),
+                const SizedBox(height: 16),
+                Text(
+                  l.syncLabPeers,
+                  style: NestText.itemTitle16.copyWith(color: c.ink),
+                ),
+                const SizedBox(height: 6),
+                for (final peer in peers)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 2),
+                    child: Text(
+                      '${peer.deviceId} (${peer.via}) · syncAt=${peer.lastSyncAt} · mops=${peer.ackedMemberOps} · vec=${peer.ackedVectorJson}',
+                      style: NestText.meta13.copyWith(color: c.ink2),
+                    ),
+                  ),
               ],
             ),
           ),

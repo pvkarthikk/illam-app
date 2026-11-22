@@ -8,6 +8,7 @@ import 'package:nm_flat/core/domain/names.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/features/account/home_members_parts.dart';
 import 'package:nm_flat/features/account/home_sheets.dart';
+import 'package:nm_flat/features/account/home_sync_card.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
 class HomeMembersScreen extends ConsumerWidget {
@@ -18,7 +19,6 @@ class HomeMembersScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final home = ref.watch(currentHomeProvider).value;
     final members = ref.watch(membersProvider).value ?? const <Member>[];
-    final me = ref.watch(myMemberProvider).value;
     final myMemberId = ref.watch(myMemberIdProvider);
     final isAdmin = ref.watch(isAdminProvider);
 
@@ -49,7 +49,7 @@ class HomeMembersScreen extends ConsumerWidget {
           : ListView(
               children: [
                 const SizedBox(height: 16),
-                HomeSyncCard(myModel: me?.deviceModel ?? ''),
+                const HomeSyncCard(),
                 const SizedBox(height: 12),
                 const HomeBackupCard(),
                 const SizedBox(height: 16),

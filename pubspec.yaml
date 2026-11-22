@@ -41,6 +41,7 @@ dependencies:
   qr_flutter: ^4.1.0
   mobile_scanner: ^7.5.0
   bonsoir: ^7.1.6
+  connectivity_plus: ^7.3.2
 
 dev_dependencies:
   flutter_test:

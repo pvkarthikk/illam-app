@@ -1,3 +1,8 @@
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:drift/drift.dart' show Variable;
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
@@ -30,11 +35,16 @@ import 'package:nm_flat/core/domain/money_math.dart';
 import 'package:nm_flat/core/domain/names.dart';
 import 'package:nm_flat/core/domain/routine_state.dart';
 import 'package:nm_flat/core/domain/salary_months.dart';
+import 'package:nm_flat/core/domain/sync_status.dart';
 import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/sync/incoming.dart';
 import 'package:nm_flat/core/sync/membership_log.dart';
 import 'package:nm_flat/core/sync/protocol/op_wire.dart';
+import 'package:nm_flat/core/sync/sync_engine.dart';
+import 'package:nm_flat/core/sync/sync_reactions.dart';
+import 'package:nm_flat/core/sync/sync_store.dart';
 import 'package:nm_flat/core/sync/validator.dart';
+import 'package:nm_flat/core/sync/version_vector.dart';
 import 'package:nm_flat/core/time/clock.dart';
 import 'package:nm_flat/core/time/dates.dart';
 import 'package:nm_flat/core/time/hlc.dart';
@@ -140,9 +150,19 @@ final membershipLogProvider = Provider(
     ref.watch(clockProvider),
   ),
 );
+final syncStoreProvider = Provider((ref) => SyncStore(ref.watch(dbProvider)));
+final syncReactionsProvider = Provider((ref) {
+  final reactions = SyncReactions(
+    ref.watch(dbProvider),
+    ref.watch(prefsProvider),
+  );
+  ref.watch(membershipLogProvider).onMemberJoined = reactions.memberJoined;
+  return reactions;
+});
 final incomingProvider = Provider((ref) {
   final db = ref.watch(dbProvider);
   final registry = ref.watch(registryProvider);
+  final reactions = ref.watch(syncReactionsProvider);
   return IncomingPipeline(
     db: db,
     registry: registry,
@@ -150,6 +170,130 @@ final incomingProvider = Provider((ref) {
     membership: ref.watch(membershipLogProvider),
     hlc: ref.watch(hlcProvider),
     clock: ref.watch(clockProvider),
+    onApplied: reactions.onApplied,
+    afterIngest: reactions.flush,
+  );
+});
+final syncEngineProvider = Provider((ref) {
+  final homeId = ref.watch(currentHomeIdProvider).value;
+  final membership = ref.watch(membershipLogProvider);
+  final engine = SyncEngine(
+    db: ref.watch(dbProvider),
+    prefs: ref.watch(prefsProvider),
+    secure: ref.watch(secureStoreProvider),
+    keys: ref.watch(deviceKeysProvider.future),
+    membership: membership,
+    incoming: ref.watch(incomingProvider),
+    clock: ref.watch(clockProvider),
+    homeId: homeId,
+  );
+  membership.onAppended = engine.onLocalChange;
+  ref.onDispose(() => unawaited(engine.dispose()));
+  return engine;
+});
+final syncEngineStateProvider = StreamProvider<SyncEngineState>((ref) async* {
+  final engine = ref.watch(syncEngineProvider);
+  yield engine.state;
+  yield* engine.states;
+});
+final connectivityProvider = StreamProvider<List<ConnectivityResult>>((
+  ref,
+) async* {
+  try {
+    final c = Connectivity();
+    yield await c.checkConnectivity();
+    yield* c.onConnectivityChanged;
+  } on Object {
+    yield const <ConnectivityResult>[];
+  }
+});
+final isOfflineProvider = Provider<bool>((ref) {
+  final list = ref.watch(connectivityProvider).value;
+  if (list == null || list.isEmpty) return false;
+  return list.every((r) => r == ConnectivityResult.none);
+});
+final syncPeersProvider = StreamProvider<List<SyncPeerRow>>((ref) {
+  final home = ref.watch(currentHomeIdProvider).value;
+  if (home == null) return Stream.value(const <SyncPeerRow>[]);
+  return ref.watch(syncStoreProvider).watchPeers(home);
+});
+final memberDevicesProvider = StreamProvider<List<DeviceInfo>>((ref) {
+  final home = ref.watch(currentHomeIdProvider).value;
+  if (home == null) return Stream.value(const <DeviceInfo>[]);
+  final db = ref.watch(dbProvider);
+  return db
+      .customSelect(
+        'SELECT d.device_id, d.member_id, m.first_name, m.full_name, d.model '
+        'FROM member_devices d '
+        'LEFT JOIN members m ON m.id = d.member_id AND m.home_id = d.home_id '
+        'WHERE d.home_id = ? AND d.active = 1',
+        variables: [Variable.withString(home)],
+        readsFrom: {db.memberDevices, db.members},
+      )
+      .watch()
+      .map(
+        (rows) => [
+          for (final r in rows)
+            DeviceInfo(
+              r.data['device_id'] as String,
+              r.data['member_id'] as String,
+              ((r.data['first_name'] as String?)?.isNotEmpty ?? false)
+                  ? r.data['first_name'] as String
+                  : ((r.data['full_name'] as String?) ?? ''),
+              (r.data['model'] as String?) ?? '',
+            ),
+        ],
+      );
+});
+final opsTickProvider = StreamProvider<int>((ref) {
+  final home = ref.watch(currentHomeIdProvider).value;
+  if (home == null) return Stream.value(0);
+  final db = ref.watch(dbProvider);
+  return db
+      .customSelect(
+        'SELECT COUNT(*) AS n FROM ops WHERE home_id = ?',
+        variables: [Variable.withString(home)],
+        readsFrom: {db.ops},
+      )
+      .watchSingle()
+      .map((r) => r.data['n'] as int);
+});
+final syncSummaryProvider = FutureProvider<SyncSummary>((ref) async {
+  final home = ref.watch(currentHomeIdProvider).value;
+  if (home == null) {
+    return const SyncSummary([], 0, 0, null, false);
+  }
+  final devices = await ref.watch(memberDevicesProvider.future);
+  final peers = await ref.watch(syncPeersProvider.future);
+  final engineState =
+      ref.watch(syncEngineStateProvider).value ?? const SyncEngineState();
+  ref.watch(opsTickProvider);
+  ref.watch(minuteTickProvider);
+
+  final store = ref.watch(syncStoreProvider);
+  final keys = await ref.watch(deviceKeysProvider.future);
+  final myVector = await store.myVector(home);
+  final myMemberOps = await store.memberOpCount(home);
+
+  final acks = <String, PeerAck>{};
+  for (final p in peers) {
+    final decoded = jsonDecode(p.ackedVectorJson) as Map<String, Object?>;
+    acks[p.deviceId] = PeerAck(
+      vector: VersionVector.fromJson(decoded),
+      memberOps: p.ackedMemberOps,
+      lastSyncAt: p.lastSyncAt,
+      clockSkewMs: p.clockSkewMs,
+    );
+  }
+
+  return computeSyncSummary(
+    myDeviceId: keys.deviceId,
+    devices: devices,
+    acks: acks,
+    myVector: myVector,
+    myMemberOps: myMemberOps,
+    connected: engineState.connected,
+    nowMs: ref.read(clockProvider).nowMs,
   );
 });
 final homeRepoProvider = Provider(

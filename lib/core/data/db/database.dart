@@ -20,6 +20,7 @@ import 'package:nm_flat/core/data/db/tables/recipes.dart';
 import 'package:nm_flat/core/data/db/tables/routines.dart';
 import 'package:nm_flat/core/data/db/tables/settlement_attempts.dart';
 import 'package:nm_flat/core/data/db/tables/staff.dart';
+import 'package:nm_flat/core/data/db/tables/sync_peers.dart';
 import 'package:nm_flat/core/data/db/tables/todos.dart';
 
 part 'database.g.dart';
@@ -49,6 +50,7 @@ part 'database.g.dart';
     Todos,
     MemberOps,
     MemberDevices,
+    SyncPeers,
   ],
 )
 class NestDatabase extends _$NestDatabase {
@@ -65,7 +67,7 @@ class NestDatabase extends _$NestDatabase {
     : super(DatabaseConnection(e, closeStreamsSynchronously: true));
 
   @override
-  int get schemaVersion => 9; // raise by 1 for every table change
+  int get schemaVersion => 10; // raise by 1 for every table change
 
   @override
   MigrationStrategy get migration => MigrationStrategy(

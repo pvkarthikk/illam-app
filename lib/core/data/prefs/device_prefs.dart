@@ -149,6 +149,11 @@ class DevicePrefs {
 
   Future<void> setSetupPct(int v) => setText('setupPct', '$v');
 
+  int get lastOutOfSyncNoticeAt => _s.getInt('lastOutOfSyncNoticeAt') ?? 0;
+
+  Future<void> setLastOutOfSyncNoticeAt(int v) =>
+      _s.setInt('lastOutOfSyncNoticeAt', v);
+
   /// Forgets the current home but keeps the device identity.
   Future<void> clearHome() async {
     await setCurrentHomeId(null);

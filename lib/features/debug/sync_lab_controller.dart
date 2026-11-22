@@ -161,6 +161,14 @@ String _labelForDevice(String deviceId, String? model) {
   return deviceId.length > 8 ? deviceId.substring(0, 8) : deviceId;
 }
 
+final syncLabVectorProvider = FutureProvider<Map<String, int>>((ref) async {
+  final home = ref.watch(currentHomeIdProvider).value;
+  if (home == null) return const {};
+  ref.watch(opsTickProvider);
+  final vec = await ref.watch(syncStoreProvider).myVector(home);
+  return vec.map;
+});
+
 final syncLabControllerProvider =
     AsyncNotifierProvider<SyncLabController, SyncLabState>(
       SyncLabController.new,
@@ -463,5 +471,14 @@ class SyncLabController extends AsyncNotifier<SyncLabState> {
       field: 'name',
       valueJson: '"Arjun Home"',
     );
+  }
+
+  Future<void> connectLocal(int port) async {
+    await ref.read(syncEngineProvider).dialForDebug('127.0.0.1', port);
+  }
+
+  Future<void> syncNow(AppLocalizations l) async {
+    final n = await ref.read(syncEngineProvider).syncNow();
+    ref.read(snackbarProvider).show(n > 0 ? l.syncedSnack : l.syncNoPeers);
   }
 }

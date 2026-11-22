@@ -4,6 +4,7 @@ import 'package:material_ui/material_ui.dart';
 
 import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/design/components/components.dart';
+import 'package:nm_flat/core/domain/sync_status.dart';
 import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/features/account/appearance_controller.dart';
@@ -104,6 +105,33 @@ class ProfileScreen extends ConsumerWidget {
         (ref.watch(membersProvider).value ?? const <Member>[]).length;
     final helpCount =
         (ref.watch(activeStaffProvider).value ?? const <StaffData>[]).length;
+    final syncSummary = ref.watch(syncSummaryProvider).value;
+
+    final Widget thisPhoneTag;
+    if (syncSummary == null || syncSummary.onlyThisPhone) {
+      thisPhoneTag = NestTag(label: l10n.profileOnlyThisPhone);
+    } else if (syncSummary.allInSync) {
+      thisPhoneTag = NestTag(label: l10n.profileInSync, kind: NestTagKind.ok);
+    } else if (syncSummary.notUpToDate == 1) {
+      final behindPeer = syncSummary.rows
+          .where(
+            (r) =>
+                r.state != PeerState.thisPhone &&
+                (r.behindBy > 0 || r.state == PeerState.never),
+          )
+          .firstOrNull;
+      thisPhoneTag = NestTag(
+        label: behindPeer != null
+            ? l10n.profileOneBehind(behindPeer.device.name)
+            : l10n.profileManyBehind(syncSummary.notUpToDate),
+        kind: NestTagKind.accent,
+      );
+    } else {
+      thisPhoneTag = NestTag(
+        label: l10n.profileManyBehind(syncSummary.notUpToDate),
+        kind: NestTagKind.accent,
+      );
+    }
 
     return Scaffold(
       appBar: NestTopBar.sub(title: l10n.profileTitle),
@@ -152,7 +180,7 @@ class ProfileScreen extends ConsumerWidget {
                   SettingsRow(
                     label: l10n.profileThisPhone,
                     value: member.deviceModel ?? '',
-                    trailing: NestTag(label: l10n.profileOnlyThisPhone),
+                    trailing: thisPhoneTag,
                   ),
                   Divider(height: 1, color: c.line),
                   SettingsRow(

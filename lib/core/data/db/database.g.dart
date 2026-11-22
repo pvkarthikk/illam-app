@@ -17965,6 +17965,681 @@ class MemberDevicesCompanion extends UpdateCompanion<MemberDeviceRow> {
   }
 }
 
+class $SyncPeersTable extends SyncPeers
+    with TableInfo<$SyncPeersTable, SyncPeerRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SyncPeersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _deviceIdMeta = const VerificationMeta(
+    'deviceId',
+  );
+  @override
+  late final GeneratedColumn<String> deviceId = GeneratedColumn<String>(
+    'device_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _homeIdMeta = const VerificationMeta('homeId');
+  @override
+  late final GeneratedColumn<String> homeId = GeneratedColumn<String>(
+    'home_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _lastSeenAtMeta = const VerificationMeta(
+    'lastSeenAt',
+  );
+  @override
+  late final GeneratedColumn<int> lastSeenAt = GeneratedColumn<int>(
+    'last_seen_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _lastSyncAtMeta = const VerificationMeta(
+    'lastSyncAt',
+  );
+  @override
+  late final GeneratedColumn<int> lastSyncAt = GeneratedColumn<int>(
+    'last_sync_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _viaMeta = const VerificationMeta('via');
+  @override
+  late final GeneratedColumn<String> via = GeneratedColumn<String>(
+    'via',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('lan'),
+  );
+  static const VerificationMeta _lastHostMeta = const VerificationMeta(
+    'lastHost',
+  );
+  @override
+  late final GeneratedColumn<String> lastHost = GeneratedColumn<String>(
+    'last_host',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _lastPortMeta = const VerificationMeta(
+    'lastPort',
+  );
+  @override
+  late final GeneratedColumn<int> lastPort = GeneratedColumn<int>(
+    'last_port',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _ackedVectorJsonMeta = const VerificationMeta(
+    'ackedVectorJson',
+  );
+  @override
+  late final GeneratedColumn<String> ackedVectorJson = GeneratedColumn<String>(
+    'acked_vector_json',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('{}'),
+  );
+  static const VerificationMeta _ackedMemberOpsMeta = const VerificationMeta(
+    'ackedMemberOps',
+  );
+  @override
+  late final GeneratedColumn<int> ackedMemberOps = GeneratedColumn<int>(
+    'acked_member_ops',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _clockSkewMsMeta = const VerificationMeta(
+    'clockSkewMs',
+  );
+  @override
+  late final GeneratedColumn<int> clockSkewMs = GeneratedColumn<int>(
+    'clock_skew_ms',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _peerVersionMeta = const VerificationMeta(
+    'peerVersion',
+  );
+  @override
+  late final GeneratedColumn<int> peerVersion = GeneratedColumn<int>(
+    'peer_version',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(1),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    deviceId,
+    homeId,
+    lastSeenAt,
+    lastSyncAt,
+    via,
+    lastHost,
+    lastPort,
+    ackedVectorJson,
+    ackedMemberOps,
+    clockSkewMs,
+    peerVersion,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'sync_peers';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<SyncPeerRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('device_id')) {
+      context.handle(
+        _deviceIdMeta,
+        deviceId.isAcceptableOrUnknown(data['device_id']!, _deviceIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_deviceIdMeta);
+    }
+    if (data.containsKey('home_id')) {
+      context.handle(
+        _homeIdMeta,
+        homeId.isAcceptableOrUnknown(data['home_id']!, _homeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_homeIdMeta);
+    }
+    if (data.containsKey('last_seen_at')) {
+      context.handle(
+        _lastSeenAtMeta,
+        lastSeenAt.isAcceptableOrUnknown(
+          data['last_seen_at']!,
+          _lastSeenAtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('last_sync_at')) {
+      context.handle(
+        _lastSyncAtMeta,
+        lastSyncAt.isAcceptableOrUnknown(
+          data['last_sync_at']!,
+          _lastSyncAtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('via')) {
+      context.handle(
+        _viaMeta,
+        via.isAcceptableOrUnknown(data['via']!, _viaMeta),
+      );
+    }
+    if (data.containsKey('last_host')) {
+      context.handle(
+        _lastHostMeta,
+        lastHost.isAcceptableOrUnknown(data['last_host']!, _lastHostMeta),
+      );
+    }
+    if (data.containsKey('last_port')) {
+      context.handle(
+        _lastPortMeta,
+        lastPort.isAcceptableOrUnknown(data['last_port']!, _lastPortMeta),
+      );
+    }
+    if (data.containsKey('acked_vector_json')) {
+      context.handle(
+        _ackedVectorJsonMeta,
+        ackedVectorJson.isAcceptableOrUnknown(
+          data['acked_vector_json']!,
+          _ackedVectorJsonMeta,
+        ),
+      );
+    }
+    if (data.containsKey('acked_member_ops')) {
+      context.handle(
+        _ackedMemberOpsMeta,
+        ackedMemberOps.isAcceptableOrUnknown(
+          data['acked_member_ops']!,
+          _ackedMemberOpsMeta,
+        ),
+      );
+    }
+    if (data.containsKey('clock_skew_ms')) {
+      context.handle(
+        _clockSkewMsMeta,
+        clockSkewMs.isAcceptableOrUnknown(
+          data['clock_skew_ms']!,
+          _clockSkewMsMeta,
+        ),
+      );
+    }
+    if (data.containsKey('peer_version')) {
+      context.handle(
+        _peerVersionMeta,
+        peerVersion.isAcceptableOrUnknown(
+          data['peer_version']!,
+          _peerVersionMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {deviceId};
+  @override
+  SyncPeerRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SyncPeerRow(
+      deviceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}device_id'],
+      )!,
+      homeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}home_id'],
+      )!,
+      lastSeenAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}last_seen_at'],
+      )!,
+      lastSyncAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}last_sync_at'],
+      )!,
+      via: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}via'],
+      )!,
+      lastHost: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}last_host'],
+      ),
+      lastPort: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}last_port'],
+      ),
+      ackedVectorJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}acked_vector_json'],
+      )!,
+      ackedMemberOps: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}acked_member_ops'],
+      )!,
+      clockSkewMs: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}clock_skew_ms'],
+      )!,
+      peerVersion: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}peer_version'],
+      )!,
+    );
+  }
+
+  @override
+  $SyncPeersTable createAlias(String alias) {
+    return $SyncPeersTable(attachedDatabase, alias);
+  }
+}
+
+class SyncPeerRow extends DataClass implements Insertable<SyncPeerRow> {
+  final String deviceId;
+  final String homeId;
+  final int lastSeenAt;
+  final int lastSyncAt;
+  final String via;
+  final String? lastHost;
+  final int? lastPort;
+  final String ackedVectorJson;
+  final int ackedMemberOps;
+  final int clockSkewMs;
+  final int peerVersion;
+  const SyncPeerRow({
+    required this.deviceId,
+    required this.homeId,
+    required this.lastSeenAt,
+    required this.lastSyncAt,
+    required this.via,
+    this.lastHost,
+    this.lastPort,
+    required this.ackedVectorJson,
+    required this.ackedMemberOps,
+    required this.clockSkewMs,
+    required this.peerVersion,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['device_id'] = Variable<String>(deviceId);
+    map['home_id'] = Variable<String>(homeId);
+    map['last_seen_at'] = Variable<int>(lastSeenAt);
+    map['last_sync_at'] = Variable<int>(lastSyncAt);
+    map['via'] = Variable<String>(via);
+    if (!nullToAbsent || lastHost != null) {
+      map['last_host'] = Variable<String>(lastHost);
+    }
+    if (!nullToAbsent || lastPort != null) {
+      map['last_port'] = Variable<int>(lastPort);
+    }
+    map['acked_vector_json'] = Variable<String>(ackedVectorJson);
+    map['acked_member_ops'] = Variable<int>(ackedMemberOps);
+    map['clock_skew_ms'] = Variable<int>(clockSkewMs);
+    map['peer_version'] = Variable<int>(peerVersion);
+    return map;
+  }
+
+  SyncPeersCompanion toCompanion(bool nullToAbsent) {
+    return SyncPeersCompanion(
+      deviceId: Value(deviceId),
+      homeId: Value(homeId),
+      lastSeenAt: Value(lastSeenAt),
+      lastSyncAt: Value(lastSyncAt),
+      via: Value(via),
+      lastHost: lastHost == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastHost),
+      lastPort: lastPort == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastPort),
+      ackedVectorJson: Value(ackedVectorJson),
+      ackedMemberOps: Value(ackedMemberOps),
+      clockSkewMs: Value(clockSkewMs),
+      peerVersion: Value(peerVersion),
+    );
+  }
+
+  factory SyncPeerRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SyncPeerRow(
+      deviceId: serializer.fromJson<String>(json['deviceId']),
+      homeId: serializer.fromJson<String>(json['homeId']),
+      lastSeenAt: serializer.fromJson<int>(json['lastSeenAt']),
+      lastSyncAt: serializer.fromJson<int>(json['lastSyncAt']),
+      via: serializer.fromJson<String>(json['via']),
+      lastHost: serializer.fromJson<String?>(json['lastHost']),
+      lastPort: serializer.fromJson<int?>(json['lastPort']),
+      ackedVectorJson: serializer.fromJson<String>(json['ackedVectorJson']),
+      ackedMemberOps: serializer.fromJson<int>(json['ackedMemberOps']),
+      clockSkewMs: serializer.fromJson<int>(json['clockSkewMs']),
+      peerVersion: serializer.fromJson<int>(json['peerVersion']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'deviceId': serializer.toJson<String>(deviceId),
+      'homeId': serializer.toJson<String>(homeId),
+      'lastSeenAt': serializer.toJson<int>(lastSeenAt),
+      'lastSyncAt': serializer.toJson<int>(lastSyncAt),
+      'via': serializer.toJson<String>(via),
+      'lastHost': serializer.toJson<String?>(lastHost),
+      'lastPort': serializer.toJson<int?>(lastPort),
+      'ackedVectorJson': serializer.toJson<String>(ackedVectorJson),
+      'ackedMemberOps': serializer.toJson<int>(ackedMemberOps),
+      'clockSkewMs': serializer.toJson<int>(clockSkewMs),
+      'peerVersion': serializer.toJson<int>(peerVersion),
+    };
+  }
+
+  SyncPeerRow copyWith({
+    String? deviceId,
+    String? homeId,
+    int? lastSeenAt,
+    int? lastSyncAt,
+    String? via,
+    Value<String?> lastHost = const Value.absent(),
+    Value<int?> lastPort = const Value.absent(),
+    String? ackedVectorJson,
+    int? ackedMemberOps,
+    int? clockSkewMs,
+    int? peerVersion,
+  }) => SyncPeerRow(
+    deviceId: deviceId ?? this.deviceId,
+    homeId: homeId ?? this.homeId,
+    lastSeenAt: lastSeenAt ?? this.lastSeenAt,
+    lastSyncAt: lastSyncAt ?? this.lastSyncAt,
+    via: via ?? this.via,
+    lastHost: lastHost.present ? lastHost.value : this.lastHost,
+    lastPort: lastPort.present ? lastPort.value : this.lastPort,
+    ackedVectorJson: ackedVectorJson ?? this.ackedVectorJson,
+    ackedMemberOps: ackedMemberOps ?? this.ackedMemberOps,
+    clockSkewMs: clockSkewMs ?? this.clockSkewMs,
+    peerVersion: peerVersion ?? this.peerVersion,
+  );
+  SyncPeerRow copyWithCompanion(SyncPeersCompanion data) {
+    return SyncPeerRow(
+      deviceId: data.deviceId.present ? data.deviceId.value : this.deviceId,
+      homeId: data.homeId.present ? data.homeId.value : this.homeId,
+      lastSeenAt: data.lastSeenAt.present
+          ? data.lastSeenAt.value
+          : this.lastSeenAt,
+      lastSyncAt: data.lastSyncAt.present
+          ? data.lastSyncAt.value
+          : this.lastSyncAt,
+      via: data.via.present ? data.via.value : this.via,
+      lastHost: data.lastHost.present ? data.lastHost.value : this.lastHost,
+      lastPort: data.lastPort.present ? data.lastPort.value : this.lastPort,
+      ackedVectorJson: data.ackedVectorJson.present
+          ? data.ackedVectorJson.value
+          : this.ackedVectorJson,
+      ackedMemberOps: data.ackedMemberOps.present
+          ? data.ackedMemberOps.value
+          : this.ackedMemberOps,
+      clockSkewMs: data.clockSkewMs.present
+          ? data.clockSkewMs.value
+          : this.clockSkewMs,
+      peerVersion: data.peerVersion.present
+          ? data.peerVersion.value
+          : this.peerVersion,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SyncPeerRow(')
+          ..write('deviceId: $deviceId, ')
+          ..write('homeId: $homeId, ')
+          ..write('lastSeenAt: $lastSeenAt, ')
+          ..write('lastSyncAt: $lastSyncAt, ')
+          ..write('via: $via, ')
+          ..write('lastHost: $lastHost, ')
+          ..write('lastPort: $lastPort, ')
+          ..write('ackedVectorJson: $ackedVectorJson, ')
+          ..write('ackedMemberOps: $ackedMemberOps, ')
+          ..write('clockSkewMs: $clockSkewMs, ')
+          ..write('peerVersion: $peerVersion')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    deviceId,
+    homeId,
+    lastSeenAt,
+    lastSyncAt,
+    via,
+    lastHost,
+    lastPort,
+    ackedVectorJson,
+    ackedMemberOps,
+    clockSkewMs,
+    peerVersion,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SyncPeerRow &&
+          other.deviceId == this.deviceId &&
+          other.homeId == this.homeId &&
+          other.lastSeenAt == this.lastSeenAt &&
+          other.lastSyncAt == this.lastSyncAt &&
+          other.via == this.via &&
+          other.lastHost == this.lastHost &&
+          other.lastPort == this.lastPort &&
+          other.ackedVectorJson == this.ackedVectorJson &&
+          other.ackedMemberOps == this.ackedMemberOps &&
+          other.clockSkewMs == this.clockSkewMs &&
+          other.peerVersion == this.peerVersion);
+}
+
+class SyncPeersCompanion extends UpdateCompanion<SyncPeerRow> {
+  final Value<String> deviceId;
+  final Value<String> homeId;
+  final Value<int> lastSeenAt;
+  final Value<int> lastSyncAt;
+  final Value<String> via;
+  final Value<String?> lastHost;
+  final Value<int?> lastPort;
+  final Value<String> ackedVectorJson;
+  final Value<int> ackedMemberOps;
+  final Value<int> clockSkewMs;
+  final Value<int> peerVersion;
+  final Value<int> rowid;
+  const SyncPeersCompanion({
+    this.deviceId = const Value.absent(),
+    this.homeId = const Value.absent(),
+    this.lastSeenAt = const Value.absent(),
+    this.lastSyncAt = const Value.absent(),
+    this.via = const Value.absent(),
+    this.lastHost = const Value.absent(),
+    this.lastPort = const Value.absent(),
+    this.ackedVectorJson = const Value.absent(),
+    this.ackedMemberOps = const Value.absent(),
+    this.clockSkewMs = const Value.absent(),
+    this.peerVersion = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SyncPeersCompanion.insert({
+    required String deviceId,
+    required String homeId,
+    this.lastSeenAt = const Value.absent(),
+    this.lastSyncAt = const Value.absent(),
+    this.via = const Value.absent(),
+    this.lastHost = const Value.absent(),
+    this.lastPort = const Value.absent(),
+    this.ackedVectorJson = const Value.absent(),
+    this.ackedMemberOps = const Value.absent(),
+    this.clockSkewMs = const Value.absent(),
+    this.peerVersion = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : deviceId = Value(deviceId),
+       homeId = Value(homeId);
+  static Insertable<SyncPeerRow> custom({
+    Expression<String>? deviceId,
+    Expression<String>? homeId,
+    Expression<int>? lastSeenAt,
+    Expression<int>? lastSyncAt,
+    Expression<String>? via,
+    Expression<String>? lastHost,
+    Expression<int>? lastPort,
+    Expression<String>? ackedVectorJson,
+    Expression<int>? ackedMemberOps,
+    Expression<int>? clockSkewMs,
+    Expression<int>? peerVersion,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (deviceId != null) 'device_id': deviceId,
+      if (homeId != null) 'home_id': homeId,
+      if (lastSeenAt != null) 'last_seen_at': lastSeenAt,
+      if (lastSyncAt != null) 'last_sync_at': lastSyncAt,
+      if (via != null) 'via': via,
+      if (lastHost != null) 'last_host': lastHost,
+      if (lastPort != null) 'last_port': lastPort,
+      if (ackedVectorJson != null) 'acked_vector_json': ackedVectorJson,
+      if (ackedMemberOps != null) 'acked_member_ops': ackedMemberOps,
+      if (clockSkewMs != null) 'clock_skew_ms': clockSkewMs,
+      if (peerVersion != null) 'peer_version': peerVersion,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SyncPeersCompanion copyWith({
+    Value<String>? deviceId,
+    Value<String>? homeId,
+    Value<int>? lastSeenAt,
+    Value<int>? lastSyncAt,
+    Value<String>? via,
+    Value<String?>? lastHost,
+    Value<int?>? lastPort,
+    Value<String>? ackedVectorJson,
+    Value<int>? ackedMemberOps,
+    Value<int>? clockSkewMs,
+    Value<int>? peerVersion,
+    Value<int>? rowid,
+  }) {
+    return SyncPeersCompanion(
+      deviceId: deviceId ?? this.deviceId,
+      homeId: homeId ?? this.homeId,
+      lastSeenAt: lastSeenAt ?? this.lastSeenAt,
+      lastSyncAt: lastSyncAt ?? this.lastSyncAt,
+      via: via ?? this.via,
+      lastHost: lastHost ?? this.lastHost,
+      lastPort: lastPort ?? this.lastPort,
+      ackedVectorJson: ackedVectorJson ?? this.ackedVectorJson,
+      ackedMemberOps: ackedMemberOps ?? this.ackedMemberOps,
+      clockSkewMs: clockSkewMs ?? this.clockSkewMs,
+      peerVersion: peerVersion ?? this.peerVersion,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (deviceId.present) {
+      map['device_id'] = Variable<String>(deviceId.value);
+    }
+    if (homeId.present) {
+      map['home_id'] = Variable<String>(homeId.value);
+    }
+    if (lastSeenAt.present) {
+      map['last_seen_at'] = Variable<int>(lastSeenAt.value);
+    }
+    if (lastSyncAt.present) {
+      map['last_sync_at'] = Variable<int>(lastSyncAt.value);
+    }
+    if (via.present) {
+      map['via'] = Variable<String>(via.value);
+    }
+    if (lastHost.present) {
+      map['last_host'] = Variable<String>(lastHost.value);
+    }
+    if (lastPort.present) {
+      map['last_port'] = Variable<int>(lastPort.value);
+    }
+    if (ackedVectorJson.present) {
+      map['acked_vector_json'] = Variable<String>(ackedVectorJson.value);
+    }
+    if (ackedMemberOps.present) {
+      map['acked_member_ops'] = Variable<int>(ackedMemberOps.value);
+    }
+    if (clockSkewMs.present) {
+      map['clock_skew_ms'] = Variable<int>(clockSkewMs.value);
+    }
+    if (peerVersion.present) {
+      map['peer_version'] = Variable<int>(peerVersion.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SyncPeersCompanion(')
+          ..write('deviceId: $deviceId, ')
+          ..write('homeId: $homeId, ')
+          ..write('lastSeenAt: $lastSeenAt, ')
+          ..write('lastSyncAt: $lastSyncAt, ')
+          ..write('via: $via, ')
+          ..write('lastHost: $lastHost, ')
+          ..write('lastPort: $lastPort, ')
+          ..write('ackedVectorJson: $ackedVectorJson, ')
+          ..write('ackedMemberOps: $ackedMemberOps, ')
+          ..write('clockSkewMs: $clockSkewMs, ')
+          ..write('peerVersion: $peerVersion, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$NestDatabase extends GeneratedDatabase {
   _$NestDatabase(QueryExecutor e) : super(e);
   $NestDatabaseManager get managers => $NestDatabaseManager(this);
@@ -17992,6 +18667,7 @@ abstract class _$NestDatabase extends GeneratedDatabase {
   late final $TodosTable todos = $TodosTable(this);
   late final $MemberOpsTable memberOps = $MemberOpsTable(this);
   late final $MemberDevicesTable memberDevices = $MemberDevicesTable(this);
+  late final $SyncPeersTable syncPeers = $SyncPeersTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -18020,6 +18696,7 @@ abstract class _$NestDatabase extends GeneratedDatabase {
     todos,
     memberOps,
     memberDevices,
+    syncPeers,
   ];
 }
 
@@ -26666,6 +27343,339 @@ typedef $$MemberDevicesTableProcessedTableManager =
       MemberDeviceRow,
       PrefetchHooks Function()
     >;
+typedef $$SyncPeersTableCreateCompanionBuilder = SyncPeersCompanion Function({
+  required String deviceId,
+  required String homeId,
+  Value<int> lastSeenAt,
+  Value<int> lastSyncAt,
+  Value<String> via,
+  Value<String?> lastHost,
+  Value<int?> lastPort,
+  Value<String> ackedVectorJson,
+  Value<int> ackedMemberOps,
+  Value<int> clockSkewMs,
+  Value<int> peerVersion,
+  Value<int> rowid,
+});
+typedef $$SyncPeersTableUpdateCompanionBuilder = SyncPeersCompanion Function({
+  Value<String> deviceId,
+  Value<String> homeId,
+  Value<int> lastSeenAt,
+  Value<int> lastSyncAt,
+  Value<String> via,
+  Value<String?> lastHost,
+  Value<int?> lastPort,
+  Value<String> ackedVectorJson,
+  Value<int> ackedMemberOps,
+  Value<int> clockSkewMs,
+  Value<int> peerVersion,
+  Value<int> rowid,
+});
+
+class $$SyncPeersTableFilterComposer
+    extends Composer<_$NestDatabase, $SyncPeersTable> {
+  $$SyncPeersTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get lastSeenAt => $composableBuilder(
+    column: $table.lastSeenAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get lastSyncAt => $composableBuilder(
+    column: $table.lastSyncAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get via => $composableBuilder(
+    column: $table.via,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get lastHost => $composableBuilder(
+    column: $table.lastHost,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get lastPort => $composableBuilder(
+    column: $table.lastPort,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get ackedVectorJson => $composableBuilder(
+    column: $table.ackedVectorJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get ackedMemberOps => $composableBuilder(
+    column: $table.ackedMemberOps,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get clockSkewMs => $composableBuilder(
+    column: $table.clockSkewMs,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get peerVersion => $composableBuilder(
+    column: $table.peerVersion,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$SyncPeersTableOrderingComposer
+    extends Composer<_$NestDatabase, $SyncPeersTable> {
+  $$SyncPeersTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get lastSeenAt => $composableBuilder(
+    column: $table.lastSeenAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get lastSyncAt => $composableBuilder(
+    column: $table.lastSyncAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get via => $composableBuilder(
+    column: $table.via,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get lastHost => $composableBuilder(
+    column: $table.lastHost,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get lastPort => $composableBuilder(
+    column: $table.lastPort,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get ackedVectorJson => $composableBuilder(
+    column: $table.ackedVectorJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get ackedMemberOps => $composableBuilder(
+    column: $table.ackedMemberOps,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get clockSkewMs => $composableBuilder(
+    column: $table.clockSkewMs,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get peerVersion => $composableBuilder(
+    column: $table.peerVersion,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$SyncPeersTableAnnotationComposer
+    extends Composer<_$NestDatabase, $SyncPeersTable> {
+  $$SyncPeersTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get deviceId =>
+      $composableBuilder(column: $table.deviceId, builder: (column) => column);
+
+  GeneratedColumn<String> get homeId =>
+      $composableBuilder(column: $table.homeId, builder: (column) => column);
+
+  GeneratedColumn<int> get lastSeenAt => $composableBuilder(
+    column: $table.lastSeenAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get lastSyncAt => $composableBuilder(
+    column: $table.lastSyncAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get via =>
+      $composableBuilder(column: $table.via, builder: (column) => column);
+
+  GeneratedColumn<String> get lastHost =>
+      $composableBuilder(column: $table.lastHost, builder: (column) => column);
+
+  GeneratedColumn<int> get lastPort =>
+      $composableBuilder(column: $table.lastPort, builder: (column) => column);
+
+  GeneratedColumn<String> get ackedVectorJson => $composableBuilder(
+    column: $table.ackedVectorJson,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get ackedMemberOps => $composableBuilder(
+    column: $table.ackedMemberOps,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get clockSkewMs => $composableBuilder(
+    column: $table.clockSkewMs,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get peerVersion => $composableBuilder(
+    column: $table.peerVersion,
+    builder: (column) => column,
+  );
+}
+
+class $$SyncPeersTableTableManager
+    extends
+        RootTableManager<
+          _$NestDatabase,
+          $SyncPeersTable,
+          SyncPeerRow,
+          $$SyncPeersTableFilterComposer,
+          $$SyncPeersTableOrderingComposer,
+          $$SyncPeersTableAnnotationComposer,
+          $$SyncPeersTableCreateCompanionBuilder,
+          $$SyncPeersTableUpdateCompanionBuilder,
+          (
+            SyncPeerRow,
+            BaseReferences<_$NestDatabase, $SyncPeersTable, SyncPeerRow>,
+          ),
+          SyncPeerRow,
+          PrefetchHooks Function()
+        > {
+  $$SyncPeersTableTableManager(_$NestDatabase db, $SyncPeersTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SyncPeersTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SyncPeersTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SyncPeersTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> deviceId = const Value.absent(),
+                Value<String> homeId = const Value.absent(),
+                Value<int> lastSeenAt = const Value.absent(),
+                Value<int> lastSyncAt = const Value.absent(),
+                Value<String> via = const Value.absent(),
+                Value<String?> lastHost = const Value.absent(),
+                Value<int?> lastPort = const Value.absent(),
+                Value<String> ackedVectorJson = const Value.absent(),
+                Value<int> ackedMemberOps = const Value.absent(),
+                Value<int> clockSkewMs = const Value.absent(),
+                Value<int> peerVersion = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SyncPeersCompanion(
+                deviceId: deviceId,
+                homeId: homeId,
+                lastSeenAt: lastSeenAt,
+                lastSyncAt: lastSyncAt,
+                via: via,
+                lastHost: lastHost,
+                lastPort: lastPort,
+                ackedVectorJson: ackedVectorJson,
+                ackedMemberOps: ackedMemberOps,
+                clockSkewMs: clockSkewMs,
+                peerVersion: peerVersion,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String deviceId,
+                required String homeId,
+                Value<int> lastSeenAt = const Value.absent(),
+                Value<int> lastSyncAt = const Value.absent(),
+                Value<String> via = const Value.absent(),
+                Value<String?> lastHost = const Value.absent(),
+                Value<int?> lastPort = const Value.absent(),
+                Value<String> ackedVectorJson = const Value.absent(),
+                Value<int> ackedMemberOps = const Value.absent(),
+                Value<int> clockSkewMs = const Value.absent(),
+                Value<int> peerVersion = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SyncPeersCompanion.insert(
+                deviceId: deviceId,
+                homeId: homeId,
+                lastSeenAt: lastSeenAt,
+                lastSyncAt: lastSyncAt,
+                via: via,
+                lastHost: lastHost,
+                lastPort: lastPort,
+                ackedVectorJson: ackedVectorJson,
+                ackedMemberOps: ackedMemberOps,
+                clockSkewMs: clockSkewMs,
+                peerVersion: peerVersion,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$SyncPeersTable, SyncPeerRow>(table),
+                  BaseReferences<_$NestDatabase, $SyncPeersTable, SyncPeerRow>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$SyncPeersTableProcessedTableManager =
+    ProcessedTableManager<
+      _$NestDatabase,
+      $SyncPeersTable,
+      SyncPeerRow,
+      $$SyncPeersTableFilterComposer,
+      $$SyncPeersTableOrderingComposer,
+      $$SyncPeersTableAnnotationComposer,
+      $$SyncPeersTableCreateCompanionBuilder,
+      $$SyncPeersTableUpdateCompanionBuilder,
+      (
+        SyncPeerRow,
+        BaseReferences<_$NestDatabase, $SyncPeersTable, SyncPeerRow>,
+      ),
+      SyncPeerRow,
+      PrefetchHooks Function()
+    >;
 
 class $NestDatabaseManager {
   final _$NestDatabase _db;
@@ -26715,4 +27725,6 @@ class $NestDatabaseManager {
       $$MemberOpsTableTableManager(_db, _db.memberOps);
   $$MemberDevicesTableTableManager get memberDevices =>
       $$MemberDevicesTableTableManager(_db, _db.memberDevices);
+  $$SyncPeersTableTableManager get syncPeers =>
+      $$SyncPeersTableTableManager(_db, _db.syncPeers);
 }

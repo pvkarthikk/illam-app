@@ -45,6 +45,13 @@ Future<void> main() async {
     frequency: const Duration(hours: 1),
     existingWorkPolicy: ExistingPeriodicWorkPolicy.keep,
   );
+  await Workmanager().registerPeriodicTask(
+    'nm.sync.periodic',
+    'nm.sync',
+    frequency: const Duration(minutes: 15),
+    constraints: Constraints(networkType: NetworkType.connected),
+    existingWorkPolicy: ExistingPeriodicWorkPolicy.keep,
+  );
   runApp(
     ProviderScope(
       overrides: [

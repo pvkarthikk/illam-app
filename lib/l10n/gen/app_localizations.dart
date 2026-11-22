@@ -6584,6 +6584,228 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Finishing setup… {pct}% — keep Nest Mojo : Flat open on a family phone'**
   String setupBanner(int pct);
+
+  /// No description provided for @agoNow.
+  ///
+  /// In en, this message translates to:
+  /// **'now'**
+  String get agoNow;
+
+  /// No description provided for @agoMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{m} min ago'**
+  String agoMinutes(int m);
+
+  /// No description provided for @agoHours.
+  ///
+  /// In en, this message translates to:
+  /// **'{h} h ago'**
+  String agoHours(int h);
+
+  /// No description provided for @agoDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{d, plural, =1{1 day ago} other{{d} days ago}}'**
+  String agoDays(int d);
+
+  /// No description provided for @syncTagOnlyThisPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Only this phone'**
+  String get syncTagOnlyThisPhone;
+
+  /// No description provided for @syncTagJustNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Synced with {name} just now'**
+  String syncTagJustNow(String name);
+
+  /// No description provided for @syncTagLast.
+  ///
+  /// In en, this message translates to:
+  /// **'Last synced {ago}'**
+  String syncTagLast(String ago);
+
+  /// No description provided for @syncTagLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{text}. Open sync details'**
+  String syncTagLabel(String text);
+
+  /// No description provided for @syncNotYet.
+  ///
+  /// In en, this message translates to:
+  /// **'Not synced yet'**
+  String get syncNotYet;
+
+  /// No description provided for @todayOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline — changes will sync'**
+  String get todayOffline;
+
+  /// No description provided for @syncCardAllInSync.
+  ///
+  /// In en, this message translates to:
+  /// **'All phones in sync'**
+  String get syncCardAllInSync;
+
+  /// No description provided for @syncCardBehind.
+  ///
+  /// In en, this message translates to:
+  /// **'{k, plural, =1{1 phone not up to date} other{{k} phones not up to date}}'**
+  String syncCardBehind(int k);
+
+  /// No description provided for @syncCardLastSynced.
+  ///
+  /// In en, this message translates to:
+  /// **'Last synced {ago}'**
+  String syncCardLastSynced(String ago);
+
+  /// No description provided for @syncNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync now'**
+  String get syncNow;
+
+  /// No description provided for @syncing.
+  ///
+  /// In en, this message translates to:
+  /// **'Syncing…'**
+  String get syncing;
+
+  /// No description provided for @syncedSnack.
+  ///
+  /// In en, this message translates to:
+  /// **'Synced with phones that are reachable right now'**
+  String get syncedSnack;
+
+  /// No description provided for @syncNoPeers.
+  ///
+  /// In en, this message translates to:
+  /// **'No family phones reachable right now'**
+  String get syncNoPeers;
+
+  /// No description provided for @syncRowTheirs.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}’s {model}'**
+  String syncRowTheirs(String name, String model);
+
+  /// No description provided for @syncOnWifiNow.
+  ///
+  /// In en, this message translates to:
+  /// **'On this Wi-Fi now'**
+  String get syncOnWifiNow;
+
+  /// No description provided for @syncSyncedAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'Synced {ago}'**
+  String syncSyncedAgo(String ago);
+
+  /// No description provided for @syncNotForDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{Not synced for 1 day} other{Not synced for {n} days}}'**
+  String syncNotForDays(int n);
+
+  /// No description provided for @syncMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{ · missing 1 of your changes} other{ · missing {n} of your changes}}'**
+  String syncMissing(int n);
+
+  /// No description provided for @syncClockWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Your phone’s clock looks wrong — sync may be off'**
+  String get syncClockWrong;
+
+  /// No description provided for @syncWifiBlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Wi-Fi may block phones from seeing each other — syncing over the internet instead.'**
+  String get syncWifiBlocked;
+
+  /// No description provided for @syncUpdateNeeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Nest Mojo : Flat to keep syncing with {name}'**
+  String syncUpdateNeeded(String name);
+
+  /// No description provided for @profileInSync.
+  ///
+  /// In en, this message translates to:
+  /// **'✓ In sync'**
+  String get profileInSync;
+
+  /// No description provided for @profileOneBehind.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}’s phone is behind'**
+  String profileOneBehind(String name);
+
+  /// No description provided for @profileManyBehind.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} phones behind'**
+  String profileManyBehind(int n);
+
+  /// No description provided for @notifOutOfSync.
+  ///
+  /// In en, this message translates to:
+  /// **'Nest Mojo : Flat hasn’t synced with your family for 3 days. Open it on the same Wi-Fi to catch up.'**
+  String get notifOutOfSync;
+
+  /// No description provided for @notifTodoAssignedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'To-do assigned to you'**
+  String get notifTodoAssignedTitle;
+
+  /// No description provided for @notifTodoAssignedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{title} · from {name}'**
+  String notifTodoAssignedBody(String title, String name);
+
+  /// No description provided for @notifJoinedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} joined {home}'**
+  String notifJoinedTitle(String name, String home);
+
+  /// No description provided for @notifJoinedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Their phone now syncs with this home.'**
+  String get notifJoinedBody;
+
+  /// No description provided for @syncLabPort.
+  ///
+  /// In en, this message translates to:
+  /// **'Listening on port {port}'**
+  String syncLabPort(int port);
+
+  /// No description provided for @syncLabPeers.
+  ///
+  /// In en, this message translates to:
+  /// **'Peers'**
+  String get syncLabPeers;
+
+  /// No description provided for @syncLabVector.
+  ///
+  /// In en, this message translates to:
+  /// **'My version vector'**
+  String get syncLabVector;
+
+  /// No description provided for @syncLabConnectLocal.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to 127.0.0.1'**
+  String get syncLabConnectLocal;
 }
 
 class _AppLocalizationsDelegate

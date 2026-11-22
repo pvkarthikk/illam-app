@@ -88,6 +88,10 @@ class ChangeWriter {
   final Clock? _clock;
   final void Function(String reason)? _onRejected;
   final OpApplier _applier;
+  final StreamController<void> _changed = StreamController<void>.broadcast();
+
+  /// Fires after every locally accepted change (not when rejected).
+  Stream<void> get changed => _changed.stream;
 
   Future<ChangeResult> write(
     String label,
@@ -184,6 +188,9 @@ class ChangeWriter {
     }
 
     await prefs.setNextSeq(nextSeq);
+    if (!_changed.isClosed) {
+      _changed.add(null);
+    }
     return ChangeResult(
       changeId,
       UndoToken(label: label, homeId: home, entries: inverse, runner: undo),

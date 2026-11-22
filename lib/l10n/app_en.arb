@@ -3073,5 +3073,177 @@
         "type": "int"
       }
     }
-  }
+  },
+  "agoNow": "now",
+  "agoMinutes": "{m} min ago",
+  "@agoMinutes": {
+    "placeholders": {
+      "m": {
+        "type": "int"
+      }
+    }
+  },
+  "agoHours": "{h} h ago",
+  "@agoHours": {
+    "placeholders": {
+      "h": {
+        "type": "int"
+      }
+    }
+  },
+  "agoDays": "{d, plural, =1{1 day ago} other{{d} days ago}}",
+  "@agoDays": {
+    "placeholders": {
+      "d": {
+        "type": "int"
+      }
+    }
+  },
+  "syncTagOnlyThisPhone": "Only this phone",
+  "syncTagJustNow": "Synced with {name} just now",
+  "@syncTagJustNow": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "syncTagLast": "Last synced {ago}",
+  "@syncTagLast": {
+    "placeholders": {
+      "ago": {
+        "type": "String"
+      }
+    }
+  },
+  "syncTagLabel": "{text}. Open sync details",
+  "@syncTagLabel": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "syncNotYet": "Not synced yet",
+  "todayOffline": "Offline — changes will sync",
+  "syncCardAllInSync": "All phones in sync",
+  "syncCardBehind": "{k, plural, =1{1 phone not up to date} other{{k} phones not up to date}}",
+  "@syncCardBehind": {
+    "placeholders": {
+      "k": {
+        "type": "int"
+      }
+    }
+  },
+  "syncCardLastSynced": "Last synced {ago}",
+  "@syncCardLastSynced": {
+    "placeholders": {
+      "ago": {
+        "type": "String"
+      }
+    }
+  },
+  "syncNow": "Sync now",
+  "syncing": "Syncing…",
+  "syncedSnack": "Synced with phones that are reachable right now",
+  "syncNoPeers": "No family phones reachable right now",
+  "syncRowTheirs": "{name}’s {model}",
+  "@syncRowTheirs": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "model": {
+        "type": "String"
+      }
+    }
+  },
+  "syncOnWifiNow": "On this Wi-Fi now",
+  "syncSyncedAgo": "Synced {ago}",
+  "@syncSyncedAgo": {
+    "placeholders": {
+      "ago": {
+        "type": "String"
+      }
+    }
+  },
+  "syncNotForDays": "{n, plural, =1{Not synced for 1 day} other{Not synced for {n} days}}",
+  "@syncNotForDays": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "syncMissing": "{n, plural, =1{ · missing 1 of your changes} other{ · missing {n} of your changes}}",
+  "@syncMissing": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "syncClockWrong": "Your phone’s clock looks wrong — sync may be off",
+  "syncWifiBlocked": "Your Wi-Fi may block phones from seeing each other — syncing over the internet instead.",
+  "syncUpdateNeeded": "Update Nest Mojo : Flat to keep syncing with {name}",
+  "@syncUpdateNeeded": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profileInSync": "✓ In sync",
+  "profileOneBehind": "{name}’s phone is behind",
+  "@profileOneBehind": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profileManyBehind": "{n} phones behind",
+  "@profileManyBehind": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "notifOutOfSync": "Nest Mojo : Flat hasn’t synced with your family for 3 days. Open it on the same Wi-Fi to catch up.",
+  "notifTodoAssignedTitle": "To-do assigned to you",
+  "notifTodoAssignedBody": "{title} · from {name}",
+  "@notifTodoAssignedBody": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "notifJoinedTitle": "{name} joined {home}",
+  "@notifJoinedTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "home": {
+        "type": "String"
+      }
+    }
+  },
+  "notifJoinedBody": "Their phone now syncs with this home.",
+  "syncLabPort": "Listening on port {port}",
+  "@syncLabPort": {
+    "placeholders": {
+      "port": {
+        "type": "int"
+      }
+    }
+  },
+  "syncLabPeers": "Peers",
+  "syncLabVector": "My version vector",
+  "syncLabConnectLocal": "Connect to 127.0.0.1"
 }
