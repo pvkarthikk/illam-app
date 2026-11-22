@@ -4,7 +4,9 @@ abstract final class Routes {
       tasks = '/tasks',
       meals = '/meals',
       money = '/money';
-  static const debug = '/debug', debugGallery = '/debug/gallery';
+  static const debug = '/debug',
+      debugGallery = '/debug/gallery',
+      debugDataLab = '/debug/data-lab';
 }
 
 enum NestTab { today, lists, tasks, meals, money }

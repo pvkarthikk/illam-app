@@ -207,6 +207,180 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Yesterday'**
   String get dayYesterday;
+
+  /// No description provided for @undoConflict.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn’t undo — {name} changed it.'**
+  String undoConflict(Object name);
+
+  /// No description provided for @undoConflictYou.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn’t undo — you changed it.'**
+  String get undoConflictYou;
+
+  /// No description provided for @undoConflictSomeone.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn’t undo — someone else changed it.'**
+  String get undoConflictSomeone;
+
+  /// No description provided for @debugDataLab.
+  ///
+  /// In en, this message translates to:
+  /// **'Data lab'**
+  String get debugDataLab;
+
+  /// No description provided for @debugDataLabSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes, undo and the op log'**
+  String get debugDataLabSub;
+
+  /// No description provided for @labAddNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Add note'**
+  String get labAddNote;
+
+  /// No description provided for @labNoteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Note title'**
+  String get labNoteHint;
+
+  /// No description provided for @labNoteAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Note added'**
+  String get labNoteAdded;
+
+  /// No description provided for @labNoteRenamed.
+  ///
+  /// In en, this message translates to:
+  /// **'Note renamed'**
+  String get labNoteRenamed;
+
+  /// No description provided for @labNoteDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Note deleted'**
+  String get labNoteDeleted;
+
+  /// No description provided for @labPinned.
+  ///
+  /// In en, this message translates to:
+  /// **'Pinned'**
+  String get labPinned;
+
+  /// No description provided for @labUnpinned.
+  ///
+  /// In en, this message translates to:
+  /// **'Unpinned'**
+  String get labUnpinned;
+
+  /// No description provided for @labTaps.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 tap} other{{count} taps}}'**
+  String labTaps(int count);
+
+  /// No description provided for @labRecent.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent changes'**
+  String get labRecent;
+
+  /// No description provided for @labOpLog.
+  ///
+  /// In en, this message translates to:
+  /// **'Op log'**
+  String get labOpLog;
+
+  /// No description provided for @labOpsTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} ops'**
+  String labOpsTotal(int count);
+
+  /// No description provided for @labPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Pin'**
+  String get labPin;
+
+  /// No description provided for @labEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get labEdit;
+
+  /// No description provided for @labDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get labDelete;
+
+  /// No description provided for @commonSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get commonSave;
+
+  /// No description provided for @debugLoadDemo.
+  ///
+  /// In en, this message translates to:
+  /// **'Load demo home'**
+  String get debugLoadDemo;
+
+  /// No description provided for @debugLoadDemoSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Adds sample data for every finished phase'**
+  String get debugLoadDemoSub;
+
+  /// No description provided for @debugDemoLoaded.
+  ///
+  /// In en, this message translates to:
+  /// **'Demo data loaded'**
+  String get debugDemoLoaded;
+
+  /// No description provided for @debugWipe.
+  ///
+  /// In en, this message translates to:
+  /// **'Wipe this phone'**
+  String get debugWipe;
+
+  /// No description provided for @debugWipeSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Erase the database and settings'**
+  String get debugWipeSub;
+
+  /// No description provided for @debugWipeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Erase everything on this phone?'**
+  String get debugWipeTitle;
+
+  /// No description provided for @debugWipeConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Wipe'**
+  String get debugWipeConfirm;
+
+  /// No description provided for @debugWiped.
+  ///
+  /// In en, this message translates to:
+  /// **'This phone was wiped'**
+  String get debugWiped;
+
+  /// No description provided for @commonCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get commonCancel;
 }
 
 class _AppLocalizationsDelegate

@@ -5,6 +5,7 @@ import 'package:material_ui/material_ui.dart';
 
 import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/nav/shell_scaffold.dart';
+import 'package:nm_flat/features/debug/data_lab_screen.dart';
 import 'package:nm_flat/features/debug/debug_screen.dart';
 import 'package:nm_flat/features/debug/gallery_screen.dart';
 import 'package:nm_flat/features/lists/lists_screen.dart';
@@ -73,6 +74,10 @@ final routerProvider = Provider<GoRouter>(
             GoRoute(
               path: 'gallery',
               builder: (_, _) => const GalleryScreen(),
+            ),
+            GoRoute(
+              path: 'data-lab',
+              builder: (_, _) => const DataLabScreen(),
             ),
           ],
         ),
