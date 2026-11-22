@@ -2622,5 +2622,110 @@
   "notifTurnOn": "Turn on",
   "debugRunJobs": "Run background jobs now",
   "debugPlanReminders": "Plan reminders",
-  "debugRanJobs": "Ran background jobs"
+  "debugRanJobs": "Ran background jobs",
+  "syncChangeNotApplied": "Your change wasn’t applied: {reason}",
+  "@syncChangeNotApplied": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "syncReasonAdminOnly": "only admins can change this",
+  "syncReasonOwnOnly": "you can only change your own entries",
+  "syncReasonTooOld": "it’s older than 48 hours",
+  "syncReasonLastAdmin": "A home needs at least one admin.",
+  "syncReasonOther": "Something went wrong. Try again.",
+  "syncLabTitle": "Sync lab",
+  "syncLabCounts": "Changes: {applied} applied · {pending} waiting · {quarantined} quarantined",
+  "@syncLabCounts": {
+    "placeholders": {
+      "applied": {
+        "type": "int"
+      },
+      "pending": {
+        "type": "int"
+      },
+      "quarantined": {
+        "type": "int"
+      }
+    }
+  },
+  "syncLabMemberLog": "Membership log",
+  "syncLabVerify": "Verify all signatures",
+  "syncLabVerifyResult": "{ok} ✓ signed · {bad} bad · {unsigned} unsigned",
+  "@syncLabVerifyResult": {
+    "placeholders": {
+      "ok": {
+        "type": "int"
+      },
+      "bad": {
+        "type": "int"
+      },
+      "unsigned": {
+        "type": "int"
+      }
+    }
+  },
+  "syncLabExport": "Export bundle",
+  "syncLabExported": "Bundle copied · {n} changes",
+  "@syncLabExported": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "syncLabImport": "Import bundle from clipboard",
+  "syncLabImportResult": "Applied {applied} · already had {already} · waiting {pending} · quarantined {quarantined}",
+  "@syncLabImportResult": {
+    "placeholders": {
+      "applied": {
+        "type": "int"
+      },
+      "already": {
+        "type": "int"
+      },
+      "pending": {
+        "type": "int"
+      },
+      "quarantined": {
+        "type": "int"
+      }
+    }
+  },
+  "syncLabOtherHome": "This bundle is for another home.",
+  "syncLabReplace": "Replace this phone’s home",
+  "syncLabBadBundle": "That isn’t a Nest Mojo : Flat bundle.",
+  "syncLabTamper": "Tamper test",
+  "syncLabAsArjunTick": "As Arjun: tick a grocery item",
+  "syncLabAsArjunRename": "As Arjun: rename the home",
+  "syncLabSigned": "✓ signed",
+  "syncLabUnsigned": "✕ not signed",
+  "syncLabShare": "Share",
+  "syncLabRecentOps": "Last {count} ops",
+  "@syncLabRecentOps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "syncLabMemberCounts": "{applied} applied · {ignored} ignored · {pending} waiting · {devices} devices",
+  "@syncLabMemberCounts": {
+    "placeholders": {
+      "applied": {
+        "type": "int"
+      },
+      "ignored": {
+        "type": "int"
+      },
+      "pending": {
+        "type": "int"
+      },
+      "devices": {
+        "type": "int"
+      }
+    }
+  }
 }

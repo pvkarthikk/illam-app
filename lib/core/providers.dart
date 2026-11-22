@@ -6,11 +6,13 @@ import 'package:nm_flat/core/crypto/device_keys.dart';
 import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/data/ops/change_writer.dart';
 import 'package:nm_flat/core/data/ops/collection_registry.dart';
+import 'package:nm_flat/core/data/ops/op_applier.dart';
 import 'package:nm_flat/core/data/prefs/device_prefs.dart';
 import 'package:nm_flat/core/data/repo/expenses_repo.dart';
 import 'package:nm_flat/core/data/repo/home_repo.dart';
 import 'package:nm_flat/core/data/repo/lists_repo.dart';
 import 'package:nm_flat/core/data/repo/local_membership_service.dart';
+import 'package:nm_flat/core/data/repo/log_membership_service.dart';
 import 'package:nm_flat/core/data/repo/meals_repo.dart';
 import 'package:nm_flat/core/data/repo/membership_service.dart';
 import 'package:nm_flat/core/data/repo/money_repo.dart';
@@ -29,6 +31,10 @@ import 'package:nm_flat/core/domain/names.dart';
 import 'package:nm_flat/core/domain/routine_state.dart';
 import 'package:nm_flat/core/domain/salary_months.dart';
 import 'package:nm_flat/core/nav/routes.dart';
+import 'package:nm_flat/core/sync/incoming.dart';
+import 'package:nm_flat/core/sync/membership_log.dart';
+import 'package:nm_flat/core/sync/protocol/op_wire.dart';
+import 'package:nm_flat/core/sync/validator.dart';
 import 'package:nm_flat/core/time/clock.dart';
 import 'package:nm_flat/core/time/dates.dart';
 import 'package:nm_flat/core/time/hlc.dart';
@@ -36,6 +42,19 @@ import 'package:nm_flat/core/ui/snackbar.dart';
 import 'package:nm_flat/features/account/appearance_controller.dart';
 import 'package:nm_flat/features/salary/salary_providers.dart';
 import 'package:nm_flat/features/staff/staff_providers.dart';
+import 'package:nm_flat/l10n/gen/app_localizations.dart';
+
+String rejectText(String reason) {
+  final l = lookupAppLocalizations(const Locale('en'));
+  final text = switch (reason) {
+    'adminOnly' => l.syncReasonAdminOnly,
+    'ownOnly' => l.syncReasonOwnOnly,
+    'tooOld' => l.syncReasonTooOld,
+    'lastAdmin' => l.syncReasonLastAdmin,
+    _ => l.syncReasonOther,
+  };
+  return l.syncChangeNotApplied(text);
+}
 
 final snackbarProvider = Provider((ref) => SnackbarService());
 final themeModeProvider = NotifierProvider<ThemeModeController, ThemeMode>(
@@ -89,14 +108,19 @@ final registryProvider = Provider(
 final hlcProvider = Provider(
   (ref) => HlcClock(ref.watch(clockProvider), ref.watch(prefsProvider)),
 );
-final changesProvider = Provider(
-  (ref) => ChangeWriter(
+final changesProvider = Provider((ref) {
+  final snackbar = ref.watch(snackbarProvider);
+  return ChangeWriter(
     ref.watch(dbProvider),
     ref.watch(registryProvider),
     ref.watch(hlcProvider),
     ref.watch(prefsProvider),
-  ),
-);
+    validator: const Validator(),
+    signer: ref.watch(opSignerProvider),
+    clock: ref.watch(clockProvider),
+    onRejected: (reason) => snackbar.show(rejectText(reason)),
+  );
+});
 final demoSeederProvider = Provider((ref) => DemoSeeder(ref));
 
 final secureStoreProvider = Provider<SecureStore>(
@@ -105,6 +129,29 @@ final secureStoreProvider = Provider<SecureStore>(
 final deviceKeysProvider = FutureProvider<DeviceKeys>(
   (ref) => DeviceKeys.ensure(ref.watch(secureStoreProvider)),
 );
+final opSignerProvider = Provider(
+  (ref) => OpSigner(ref.watch(deviceKeysProvider.future)),
+);
+final membershipLogProvider = Provider(
+  (ref) => MembershipLog(
+    ref.watch(dbProvider),
+    ref.watch(deviceKeysProvider.future),
+    ref.watch(hlcProvider),
+    ref.watch(clockProvider),
+  ),
+);
+final incomingProvider = Provider((ref) {
+  final db = ref.watch(dbProvider);
+  final registry = ref.watch(registryProvider);
+  return IncomingPipeline(
+    db: db,
+    registry: registry,
+    applier: OpApplier(db, registry),
+    membership: ref.watch(membershipLogProvider),
+    hlc: ref.watch(hlcProvider),
+    clock: ref.watch(clockProvider),
+  );
+});
 final homeRepoProvider = Provider(
   (ref) => HomeRepo(
     ref.watch(dbProvider),
@@ -112,6 +159,7 @@ final homeRepoProvider = Provider(
     ref.watch(prefsProvider),
     ref.watch(secureStoreProvider),
     ref.watch(clockProvider),
+    membershipLog: ref.watch(membershipLogProvider),
   ),
 );
 final currentHomeProvider = StreamProvider<Home?>((ref) {
@@ -119,18 +167,39 @@ final currentHomeProvider = StreamProvider<Home?>((ref) {
   if (id == null) return Stream.value(null);
   return ref.watch(homeRepoProvider).watchHome(id);
 });
-final membershipServiceProvider = Provider<MembershipService>(
-  (ref) => LocalMembershipService(
+final startupProvider = FutureProvider<void>((ref) async {
+  final home = await ref.watch(currentHomeProvider.future);
+  if (home != null) {
+    await ref
+        .read(membershipLogProvider)
+        .ensureGenesis(home.id, home.genesisJson);
+  }
+});
+final membershipServiceProvider = Provider<MembershipService>((ref) {
+  final homeId =
+      ref.watch(currentHomeIdProvider).value ??
+      ref.watch(prefsProvider).currentHomeId ??
+      '';
+  final myMemberId = ref.watch(myMemberIdProvider);
+  final changes = ref.watch(changesProvider);
+  final tasks = ref.watch(tasksRepoProvider);
+  final local = LocalMembershipService(
     ref.watch(dbProvider),
-    ref.watch(changesProvider),
-    ref.watch(tasksRepoProvider),
+    changes,
+    tasks,
     ref.watch(phoneWiperProvider),
-    ref.watch(currentHomeIdProvider).value ??
-        ref.watch(prefsProvider).currentHomeId ??
-        '',
-    ref.watch(myMemberIdProvider),
-  ),
-);
+    homeId,
+    myMemberId,
+  );
+  return LogMembershipService(
+    local,
+    ref.watch(membershipLogProvider),
+    changes,
+    tasks,
+    homeId,
+    myMemberId,
+  );
+});
 final membersProvider = StreamProvider<List<Member>>((ref) {
   final id = ref.watch(currentHomeIdProvider).value;
   if (id == null) return Stream.value(const <Member>[]);

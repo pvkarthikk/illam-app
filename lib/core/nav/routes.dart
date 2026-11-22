@@ -6,7 +6,8 @@ abstract final class Routes {
       money = '/money';
   static const debug = '/debug',
       debugGallery = '/debug/gallery',
-      debugDataLab = '/debug/data-lab';
+      debugDataLab = '/debug/data-lab',
+      debugSyncLab = '/debug/sync-lab';
   static const onboarding = '/onboarding';
   static String onboardingStep(String step) => '/onboarding/$step';
   static String staff(String id) => '/staff/$id';

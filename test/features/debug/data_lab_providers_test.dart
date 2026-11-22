@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/data/prefs/device_prefs.dart';
+import 'package:nm_flat/core/data/secure/secure_store.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/features/debug/data_lab_controller.dart';
 
@@ -19,6 +20,7 @@ void main() {
       overrides: [
         prefsProvider.overrideWithValue(prefs),
         dbProvider.overrideWithValue(db),
+        secureStoreProvider.overrideWithValue(MemorySecureStore()),
       ],
     );
     addTearDown(container.dispose);

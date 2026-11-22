@@ -10,17 +10,26 @@ import 'package:nm_flat/core/data/secure/secure_store.dart';
 import 'package:nm_flat/core/domain/avatar_colors.dart';
 import 'package:nm_flat/core/domain/home_ids.dart';
 import 'package:nm_flat/core/domain/names.dart';
+import 'package:nm_flat/core/sync/membership_log.dart';
 import 'package:nm_flat/core/time/clock.dart';
 import 'package:nm_flat/core/util/ids.dart';
 
 class HomeRepo {
-  HomeRepo(this.db, this.changes, this.prefs, this.secure, this.clock);
+  HomeRepo(
+    this.db,
+    this.changes,
+    this.prefs,
+    this.secure,
+    this.clock, {
+    this.membershipLog,
+  });
 
   final NestDatabase db;
   final ChangeWriter changes;
   final DevicePrefs prefs;
   final SecureStore secure;
   final Clock clock;
+  final MembershipLog? membershipLog;
 
   Stream<Home?> watchHome(String homeId) =>
       (db.select(db.homes)
@@ -74,6 +83,12 @@ class HomeRepo {
       base64.encode(Ids.randomBytes(32)),
     );
 
+    if (prefs.deviceId != keys.deviceId) {
+      await prefs.setDeviceId(keys.deviceId, kind: 'key');
+    }
+    await prefs.setMemberId(memberId);
+    await membershipLog?.ensureGenesis(homeId, genesis);
+
     await changes.write('Created home', (c) {
       c.create('homes', {
         'name': name,
@@ -84,16 +99,11 @@ class HomeRepo {
       c.create('members', {
         'full_name': full,
         'first_name': Names.firstName(full),
-        'role': 'admin',
-        'status': 'active',
         'color': AvatarColors.pick(memberId, {}),
         'device_model': model,
-        'joined_at': clock.nowMs,
-        'joined_via': 'created',
       }, id: memberId);
     }, homeId: homeId);
 
-    await prefs.setMemberId(memberId);
     await prefs.setCurrentHomeId(homeId);
     return homeId;
   }

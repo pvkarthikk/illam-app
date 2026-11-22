@@ -8,6 +8,7 @@ import 'package:nm_flat/core/data/ops/collection_registry.dart';
 import 'package:nm_flat/core/data/prefs/device_prefs.dart';
 import 'package:nm_flat/core/data/repo/home_repo.dart';
 import 'package:nm_flat/core/data/secure/secure_store.dart';
+import 'package:nm_flat/core/sync/membership_log.dart';
 import 'package:nm_flat/core/time/clock.dart';
 import 'package:nm_flat/core/time/hlc.dart';
 
@@ -16,6 +17,7 @@ typedef _Env = ({
   DevicePrefs prefs,
   MemorySecureStore secure,
   FixedClock clock,
+  HlcClock hlc,
   ChangeWriter changes,
 });
 
@@ -25,13 +27,21 @@ Future<_Env> _env() async {
   final prefs = await DevicePrefs.inMemory();
   final secure = MemorySecureStore();
   final clock = FixedClock(DateTime(2026, 11, 20, 9));
+  final hlc = HlcClock(clock, prefs);
   final changes = ChangeWriter(
     db,
     CollectionRegistry.build(db),
-    HlcClock(clock, prefs),
+    hlc,
     prefs,
   );
-  return (db: db, prefs: prefs, secure: secure, clock: clock, changes: changes);
+  return (
+    db: db,
+    prefs: prefs,
+    secure: secure,
+    clock: clock,
+    hlc: hlc,
+    changes: changes,
+  );
 }
 
 void main() {
@@ -73,7 +83,21 @@ void main() {
     test('createHome writes home, admin member, keys and prefs', () async {
       final e = await _env();
       final keys = await DeviceKeys.ensure(e.secure);
-      final repo = HomeRepo(e.db, e.changes, e.prefs, e.secure, e.clock);
+      final log = MembershipLog(
+        e.db,
+        Future.value(keys),
+        e.hlc,
+        e.clock,
+        modelOf: () async => 'Test',
+      );
+      final repo = HomeRepo(
+        e.db,
+        e.changes,
+        e.prefs,
+        e.secure,
+        e.clock,
+        membershipLog: log,
+      );
 
       final id = await repo.createHome(
         creatorName: 'anand kumar',

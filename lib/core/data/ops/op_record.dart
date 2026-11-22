@@ -1,6 +1,8 @@
 import 'package:drift/drift.dart';
 
+import 'package:nm_flat/core/crypto/canonical_json.dart';
 import 'package:nm_flat/core/data/db/database.dart';
+import 'package:nm_flat/core/sync/protocol/op_wire.dart';
 
 class OpRecord {
   const OpRecord({
@@ -17,6 +19,7 @@ class OpRecord {
     required this.field,
     this.valueJson,
     this.delta,
+    this.sig = '',
   });
 
   factory OpRecord.fromRow(OpRow r) => OpRecord(
@@ -33,6 +36,7 @@ class OpRecord {
     field: r.field,
     valueJson: r.valueJson,
     delta: r.delta,
+    sig: r.sig,
   );
 
   factory OpRecord.fromJson(Map<String, Object?> j) => OpRecord(
@@ -49,6 +53,7 @@ class OpRecord {
     field: j['field'] as String,
     valueJson: j['valueJson'] as String?,
     delta: (j['delta'] as num?)?.toInt(),
+    sig: (j['sig'] as String?) ?? '',
   );
 
   final String opId;
@@ -64,6 +69,26 @@ class OpRecord {
   final String field;
   final String? valueJson;
   final int? delta;
+  final String sig;
+
+  OpRecord copyWith({String? sig}) => OpRecord(
+    opId: opId,
+    homeId: homeId,
+    deviceId: deviceId,
+    seq: seq,
+    hlc: hlc,
+    authorMemberId: authorMemberId,
+    changeId: changeId,
+    tbl: tbl,
+    entityId: entityId,
+    kind: kind,
+    field: field,
+    valueJson: valueJson,
+    delta: delta,
+    sig: sig ?? this.sig,
+  );
+
+  String toCanonicalJson() => canonicalJson(opSigningMap(this));
 
   OpsCompanion toCompanion() => OpsCompanion.insert(
     opId: opId,
@@ -79,6 +104,7 @@ class OpRecord {
     field: field,
     valueJson: Value(valueJson),
     delta: Value(delta),
+    sig: Value(sig),
   );
 
   Map<String, Object?> toJson() => {
@@ -95,5 +121,6 @@ class OpRecord {
     'field': field,
     'valueJson': valueJson,
     'delta': delta,
+    'sig': sig,
   };
 }

@@ -55,37 +55,37 @@ class DemoSeeder {
     if (homeId == null) return;
 
     final db = ref.read(dbProvider);
+    final home = await (db.select(
+      db.homes,
+    )..where((h) => h.id.equals(homeId))).getSingleOrNull();
+    final log = ref.read(membershipLogProvider);
+    await log.ensureGenesis(homeId, home?.genesisJson);
+
     final existing = await (db.select(
       db.members,
     )..where((m) => m.id.equals('demo-priya'))).getSingleOrNull();
     if (existing != null) return;
 
-    final now = clock.nowMs;
-    const day = 86400000;
-    await ref.read(changesProvider).write('Demo data', (c) {
-      c.create('members', {
-        'full_name': 'Priya Anand',
-        'first_name': 'Priya',
-        'role': 'admin',
-        'status': 'active',
-        'color': '#34508A',
-        'device_model': 'Galaxy S23',
-        'joined_at': now - 209 * day,
-        'joined_via': 'qr',
-        'invited_by': prefs.memberId,
-      }, id: 'demo-priya');
-      c.create('members', {
-        'full_name': 'Arjun Anand',
-        'first_name': 'Arjun',
-        'role': 'member',
-        'status': 'active',
-        'color': '#B0412A',
-        'device_model': 'Redmi Note 13',
-        'joined_at': now - 120 * day,
-        'joined_via': 'phrase',
-        'invited_by': 'demo-priya',
-      }, id: 'demo-arjun');
-    }, homeId: homeId);
+    await log.addDemoMember(
+      homeId: homeId,
+      memberId: 'demo-priya',
+      fullName: 'Priya Anand',
+      color: '#34508A',
+      role: 'admin',
+      model: 'Galaxy S23',
+      via: 'qr',
+      seed: 'demo-priya',
+    );
+    await log.addDemoMember(
+      homeId: homeId,
+      memberId: 'demo-arjun',
+      fullName: 'Arjun Anand',
+      color: '#B0412A',
+      role: 'member',
+      model: 'Redmi Note 13',
+      via: 'phrase',
+      seed: 'demo-arjun',
+    );
   }
 
   Future<void> _seedStaff() async {

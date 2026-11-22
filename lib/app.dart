@@ -49,6 +49,7 @@ class _NestAppState extends ConsumerState<NestApp> {
 
   @override
   Widget build(BuildContext context) {
+    ref.watch(startupProvider);
     final router = ref.watch(routerProvider);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {

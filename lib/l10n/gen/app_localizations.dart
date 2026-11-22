@@ -5842,6 +5842,172 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Ran background jobs'**
   String get debugRanJobs;
+
+  /// No description provided for @syncChangeNotApplied.
+  ///
+  /// In en, this message translates to:
+  /// **'Your change wasn’t applied: {reason}'**
+  String syncChangeNotApplied(String reason);
+
+  /// No description provided for @syncReasonAdminOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'only admins can change this'**
+  String get syncReasonAdminOnly;
+
+  /// No description provided for @syncReasonOwnOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'you can only change your own entries'**
+  String get syncReasonOwnOnly;
+
+  /// No description provided for @syncReasonTooOld.
+  ///
+  /// In en, this message translates to:
+  /// **'it’s older than 48 hours'**
+  String get syncReasonTooOld;
+
+  /// No description provided for @syncReasonLastAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'A home needs at least one admin.'**
+  String get syncReasonLastAdmin;
+
+  /// No description provided for @syncReasonOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Try again.'**
+  String get syncReasonOther;
+
+  /// No description provided for @syncLabTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync lab'**
+  String get syncLabTitle;
+
+  /// No description provided for @syncLabCounts.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes: {applied} applied · {pending} waiting · {quarantined} quarantined'**
+  String syncLabCounts(int applied, int pending, int quarantined);
+
+  /// No description provided for @syncLabMemberLog.
+  ///
+  /// In en, this message translates to:
+  /// **'Membership log'**
+  String get syncLabMemberLog;
+
+  /// No description provided for @syncLabVerify.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify all signatures'**
+  String get syncLabVerify;
+
+  /// No description provided for @syncLabVerifyResult.
+  ///
+  /// In en, this message translates to:
+  /// **'{ok} ✓ signed · {bad} bad · {unsigned} unsigned'**
+  String syncLabVerifyResult(int ok, int bad, int unsigned);
+
+  /// No description provided for @syncLabExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Export bundle'**
+  String get syncLabExport;
+
+  /// No description provided for @syncLabExported.
+  ///
+  /// In en, this message translates to:
+  /// **'Bundle copied · {n} changes'**
+  String syncLabExported(int n);
+
+  /// No description provided for @syncLabImport.
+  ///
+  /// In en, this message translates to:
+  /// **'Import bundle from clipboard'**
+  String get syncLabImport;
+
+  /// No description provided for @syncLabImportResult.
+  ///
+  /// In en, this message translates to:
+  /// **'Applied {applied} · already had {already} · waiting {pending} · quarantined {quarantined}'**
+  String syncLabImportResult(
+    int applied,
+    int already,
+    int pending,
+    int quarantined,
+  );
+
+  /// No description provided for @syncLabOtherHome.
+  ///
+  /// In en, this message translates to:
+  /// **'This bundle is for another home.'**
+  String get syncLabOtherHome;
+
+  /// No description provided for @syncLabReplace.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace this phone’s home'**
+  String get syncLabReplace;
+
+  /// No description provided for @syncLabBadBundle.
+  ///
+  /// In en, this message translates to:
+  /// **'That isn’t a Nest Mojo : Flat bundle.'**
+  String get syncLabBadBundle;
+
+  /// No description provided for @syncLabTamper.
+  ///
+  /// In en, this message translates to:
+  /// **'Tamper test'**
+  String get syncLabTamper;
+
+  /// No description provided for @syncLabAsArjunTick.
+  ///
+  /// In en, this message translates to:
+  /// **'As Arjun: tick a grocery item'**
+  String get syncLabAsArjunTick;
+
+  /// No description provided for @syncLabAsArjunRename.
+  ///
+  /// In en, this message translates to:
+  /// **'As Arjun: rename the home'**
+  String get syncLabAsArjunRename;
+
+  /// No description provided for @syncLabSigned.
+  ///
+  /// In en, this message translates to:
+  /// **'✓ signed'**
+  String get syncLabSigned;
+
+  /// No description provided for @syncLabUnsigned.
+  ///
+  /// In en, this message translates to:
+  /// **'✕ not signed'**
+  String get syncLabUnsigned;
+
+  /// No description provided for @syncLabShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get syncLabShare;
+
+  /// No description provided for @syncLabRecentOps.
+  ///
+  /// In en, this message translates to:
+  /// **'Last {count} ops'**
+  String syncLabRecentOps(int count);
+
+  /// No description provided for @syncLabMemberCounts.
+  ///
+  /// In en, this message translates to:
+  /// **'{applied} applied · {ignored} ignored · {pending} waiting · {devices} devices'**
+  String syncLabMemberCounts(
+    int applied,
+    int ignored,
+    int pending,
+    int devices,
+  );
 }
 
 class _AppLocalizationsDelegate

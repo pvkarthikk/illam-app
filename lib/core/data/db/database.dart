@@ -8,6 +8,8 @@ import 'package:nm_flat/core/data/db/tables/homes.dart';
 import 'package:nm_flat/core/data/db/tables/item_history.dart';
 import 'package:nm_flat/core/data/db/tables/items.dart';
 import 'package:nm_flat/core/data/db/tables/meal_slots.dart';
+import 'package:nm_flat/core/data/db/tables/member_devices.dart';
+import 'package:nm_flat/core/data/db/tables/member_ops.dart';
 import 'package:nm_flat/core/data/db/tables/members.dart';
 import 'package:nm_flat/core/data/db/tables/merchant_rules.dart';
 import 'package:nm_flat/core/data/db/tables/ops.dart';
@@ -45,6 +47,8 @@ part 'database.g.dart';
     Pantry,
     Routines,
     Todos,
+    MemberOps,
+    MemberDevices,
   ],
 )
 class NestDatabase extends _$NestDatabase {
@@ -61,7 +65,7 @@ class NestDatabase extends _$NestDatabase {
     : super(DatabaseConnection(e, closeStreamsSynchronously: true));
 
   @override
-  int get schemaVersion => 8; // raise by 1 for every table change
+  int get schemaVersion => 9; // raise by 1 for every table change
 
   @override
   MigrationStrategy get migration => MigrationStrategy(

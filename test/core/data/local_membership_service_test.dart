@@ -42,6 +42,7 @@ _setup() async {
     overrides: [
       dbProvider.overrideWithValue(db),
       prefsProvider.overrideWithValue(prefs),
+      secureStoreProvider.overrideWithValue(MemorySecureStore()),
     ],
   );
   addTearDown(container.dispose);

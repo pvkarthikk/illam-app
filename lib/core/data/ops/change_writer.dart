@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:drift/drift.dart';
 
 import 'package:nm_flat/core/data/db/database.dart';
@@ -6,9 +8,20 @@ import 'package:nm_flat/core/data/ops/op_applier.dart';
 import 'package:nm_flat/core/data/ops/op_record.dart';
 import 'package:nm_flat/core/data/ops/undo.dart';
 import 'package:nm_flat/core/data/prefs/device_prefs.dart';
+import 'package:nm_flat/core/sync/drift_validation_view.dart';
+import 'package:nm_flat/core/sync/protocol/op_wire.dart';
+import 'package:nm_flat/core/sync/validator.dart';
+import 'package:nm_flat/core/time/clock.dart';
 import 'package:nm_flat/core/time/hlc.dart';
 import 'package:nm_flat/core/util/ids.dart';
 import 'package:nm_flat/core/util/json_util.dart';
+
+/// Thrown inside a local write transaction when validation refuses a change.
+class ChangeRejected implements Exception {
+  const ChangeRejected(this.reason);
+
+  final String reason;
+}
 
 class PendingOp {
   const PendingOp.set(this.tbl, this.id, this.field, this.value)
@@ -55,13 +68,25 @@ class ChangeBuilder {
 }
 
 class ChangeWriter {
-  ChangeWriter(this.db, this.registry, this.hlc, this.prefs)
-    : _applier = OpApplier(db, registry);
+  ChangeWriter(
+    this.db,
+    this.registry,
+    this.hlc,
+    this.prefs, {
+    this._validator,
+    this._signer,
+    this._clock,
+    this._onRejected,
+  }) : _applier = OpApplier(db, registry);
 
   final NestDatabase db;
   final CollectionRegistry registry;
   final HlcClock hlc;
   final DevicePrefs prefs;
+  final Validator? _validator;
+  final OpSigner? _signer;
+  final Clock? _clock;
+  final void Function(String reason)? _onRejected;
   final OpApplier _applier;
 
   Future<ChangeResult> write(
@@ -89,36 +114,74 @@ class ChangeWriter {
     final changeId = Ids.newId();
     late final List<UndoEntry> inverse;
     late final int nextSeq;
-    await db.transaction(() async {
-      inverse = await _inverseOf(ops);
-      final maxHlc = await _maxHlc();
-      if (maxHlc != null) {
-        await hlc.observe(maxHlc);
+    try {
+      await db.transaction(() async {
+        inverse = await _inverseOf(ops);
+        final maxHlc = await _maxHlc();
+        if (maxHlc != null) {
+          await hlc.observe(maxHlc);
+        }
+        var seq = await _nextSeq();
+        final recs = <OpRecord>[];
+        for (final op in ops) {
+          final opHlc = await hlc.next();
+          recs.add(
+            OpRecord(
+              opId: '${prefs.deviceId}:$seq',
+              homeId: home,
+              deviceId: prefs.deviceId,
+              seq: seq,
+              hlc: opHlc,
+              authorMemberId: member,
+              changeId: changeId,
+              tbl: op.tbl,
+              entityId: op.id,
+              kind: op.kind,
+              field: op.field,
+              valueJson: op.kind == 'set' ? encodeValue(op.value) : null,
+              delta: op.kind == 'inc' ? op.delta : null,
+            ),
+          );
+          seq++;
+        }
+
+        if (_validator != null) {
+          final hasDevices = await db
+              .customSelect(
+                'SELECT 1 FROM member_devices WHERE home_id = ? LIMIT 1',
+                variables: [Variable.withString(home)],
+              )
+              .getSingleOrNull();
+          if (hasDevices != null) {
+            final view = DriftValidationView(db, registry);
+            final nowMs = (_clock ?? SystemClock()).nowMs;
+            for (final rec in recs) {
+              final d = await _validator.check(
+                rec,
+                recs,
+                view,
+                nowMs: nowMs,
+              );
+              if (d.verdict != Verdict.accept) {
+                throw ChangeRejected(d.reason);
+              }
+            }
+          }
+        }
+
+        for (final rec in recs) {
+          final signed = _signer != null ? await _signer.sign(rec) : rec;
+          await _applier.applyOne(signed);
+        }
+        nextSeq = seq;
+      });
+    } on ChangeRejected catch (e) {
+      final cb = _onRejected;
+      if (cb != null) {
+        Timer.run(() => cb(e.reason));
       }
-      var seq = await _nextSeq();
-      for (final op in ops) {
-        final opHlc = await hlc.next();
-        await _applier.applyOne(
-          OpRecord(
-            opId: '${prefs.deviceId}:$seq',
-            homeId: home,
-            deviceId: prefs.deviceId,
-            seq: seq,
-            hlc: opHlc,
-            authorMemberId: member,
-            changeId: changeId,
-            tbl: op.tbl,
-            entityId: op.id,
-            kind: op.kind,
-            field: op.field,
-            valueJson: op.kind == 'set' ? encodeValue(op.value) : null,
-            delta: op.kind == 'inc' ? op.delta : null,
-          ),
-        );
-        seq++;
-      }
-      nextSeq = seq;
-    });
+      return ChangeResult(changeId, null);
+    }
 
     await prefs.setNextSeq(nextSeq);
     return ChangeResult(

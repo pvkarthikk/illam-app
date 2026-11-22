@@ -80,6 +80,12 @@ class DebugScreen extends ConsumerWidget {
                   onTap: () => context.push(Routes.debugDataLab),
                 ),
                 Divider(height: 1, color: c.line),
+                SettingsRow(
+                  label: l10n.syncLabTitle,
+                  value: '',
+                  onTap: () => context.push(Routes.debugSyncLab),
+                ),
+                Divider(height: 1, color: c.line),
                 SwitchRow(
                   title: l10n.debugViewAsMember,
                   subtitle: l10n.debugViewAsMemberSub,

@@ -3626,4 +3626,106 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get debugRanJobs => 'Ran background jobs';
+
+  @override
+  String syncChangeNotApplied(String reason) {
+    return 'Your change wasn’t applied: $reason';
+  }
+
+  @override
+  String get syncReasonAdminOnly => 'only admins can change this';
+
+  @override
+  String get syncReasonOwnOnly => 'you can only change your own entries';
+
+  @override
+  String get syncReasonTooOld => 'it’s older than 48 hours';
+
+  @override
+  String get syncReasonLastAdmin => 'A home needs at least one admin.';
+
+  @override
+  String get syncReasonOther => 'Something went wrong. Try again.';
+
+  @override
+  String get syncLabTitle => 'Sync lab';
+
+  @override
+  String syncLabCounts(int applied, int pending, int quarantined) {
+    return 'Changes: $applied applied · $pending waiting · $quarantined quarantined';
+  }
+
+  @override
+  String get syncLabMemberLog => 'Membership log';
+
+  @override
+  String get syncLabVerify => 'Verify all signatures';
+
+  @override
+  String syncLabVerifyResult(int ok, int bad, int unsigned) {
+    return '$ok ✓ signed · $bad bad · $unsigned unsigned';
+  }
+
+  @override
+  String get syncLabExport => 'Export bundle';
+
+  @override
+  String syncLabExported(int n) {
+    return 'Bundle copied · $n changes';
+  }
+
+  @override
+  String get syncLabImport => 'Import bundle from clipboard';
+
+  @override
+  String syncLabImportResult(
+    int applied,
+    int already,
+    int pending,
+    int quarantined,
+  ) {
+    return 'Applied $applied · already had $already · waiting $pending · quarantined $quarantined';
+  }
+
+  @override
+  String get syncLabOtherHome => 'This bundle is for another home.';
+
+  @override
+  String get syncLabReplace => 'Replace this phone’s home';
+
+  @override
+  String get syncLabBadBundle => 'That isn’t a Nest Mojo : Flat bundle.';
+
+  @override
+  String get syncLabTamper => 'Tamper test';
+
+  @override
+  String get syncLabAsArjunTick => 'As Arjun: tick a grocery item';
+
+  @override
+  String get syncLabAsArjunRename => 'As Arjun: rename the home';
+
+  @override
+  String get syncLabSigned => '✓ signed';
+
+  @override
+  String get syncLabUnsigned => '✕ not signed';
+
+  @override
+  String get syncLabShare => 'Share';
+
+  @override
+  String syncLabRecentOps(int count) {
+    return 'Last $count ops';
+  }
+
+  @override
+  String syncLabMemberCounts(
+    int applied,
+    int ignored,
+    int pending,
+    int devices,
+  ) {
+    return '$applied applied · $ignored ignored · $pending waiting · $devices devices';
+  }
 }

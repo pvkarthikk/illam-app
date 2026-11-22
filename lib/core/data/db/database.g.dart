@@ -16708,6 +16708,1263 @@ class TodosCompanion extends UpdateCompanion<TodoRow> {
   }
 }
 
+class $MemberOpsTable extends MemberOps
+    with TableInfo<$MemberOpsTable, MemberOpRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MemberOpsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _opIdMeta = const VerificationMeta('opId');
+  @override
+  late final GeneratedColumn<String> opId = GeneratedColumn<String>(
+    'op_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _homeIdMeta = const VerificationMeta('homeId');
+  @override
+  late final GeneratedColumn<String> homeId = GeneratedColumn<String>(
+    'home_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _opTypeMeta = const VerificationMeta('opType');
+  @override
+  late final GeneratedColumn<String> opType = GeneratedColumn<String>(
+    'op_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _authorDeviceIdMeta = const VerificationMeta(
+    'authorDeviceId',
+  );
+  @override
+  late final GeneratedColumn<String> authorDeviceId = GeneratedColumn<String>(
+    'author_device_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _hlcMeta = const VerificationMeta('hlc');
+  @override
+  late final GeneratedColumn<String> hlc = GeneratedColumn<String>(
+    'hlc',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _prevJsonMeta = const VerificationMeta(
+    'prevJson',
+  );
+  @override
+  late final GeneratedColumn<String> prevJson = GeneratedColumn<String>(
+    'prev_json',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('[]'),
+  );
+  static const VerificationMeta _payloadJsonMeta = const VerificationMeta(
+    'payloadJson',
+  );
+  @override
+  late final GeneratedColumn<String> payloadJson = GeneratedColumn<String>(
+    'payload_json',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('{}'),
+  );
+  static const VerificationMeta _sigMeta = const VerificationMeta('sig');
+  @override
+  late final GeneratedColumn<String> sig = GeneratedColumn<String>(
+    'sig',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _sigOkMeta = const VerificationMeta('sigOk');
+  @override
+  late final GeneratedColumn<bool> sigOk = GeneratedColumn<bool>(
+    'sig_ok',
+    aliasedName,
+    true,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("sig_ok" IN (0, 1))',
+    ),
+  );
+  static const VerificationMeta _effectMeta = const VerificationMeta('effect');
+  @override
+  late final GeneratedColumn<String> effect = GeneratedColumn<String>(
+    'effect',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('pending'),
+  );
+  static const VerificationMeta _reasonMeta = const VerificationMeta('reason');
+  @override
+  late final GeneratedColumn<String> reason = GeneratedColumn<String>(
+    'reason',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _receivedAtMeta = const VerificationMeta(
+    'receivedAt',
+  );
+  @override
+  late final GeneratedColumn<int> receivedAt = GeneratedColumn<int>(
+    'received_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    opId,
+    homeId,
+    opType,
+    authorDeviceId,
+    hlc,
+    prevJson,
+    payloadJson,
+    sig,
+    sigOk,
+    effect,
+    reason,
+    receivedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'member_ops';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<MemberOpRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('op_id')) {
+      context.handle(
+        _opIdMeta,
+        opId.isAcceptableOrUnknown(data['op_id']!, _opIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_opIdMeta);
+    }
+    if (data.containsKey('home_id')) {
+      context.handle(
+        _homeIdMeta,
+        homeId.isAcceptableOrUnknown(data['home_id']!, _homeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_homeIdMeta);
+    }
+    if (data.containsKey('op_type')) {
+      context.handle(
+        _opTypeMeta,
+        opType.isAcceptableOrUnknown(data['op_type']!, _opTypeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_opTypeMeta);
+    }
+    if (data.containsKey('author_device_id')) {
+      context.handle(
+        _authorDeviceIdMeta,
+        authorDeviceId.isAcceptableOrUnknown(
+          data['author_device_id']!,
+          _authorDeviceIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_authorDeviceIdMeta);
+    }
+    if (data.containsKey('hlc')) {
+      context.handle(
+        _hlcMeta,
+        hlc.isAcceptableOrUnknown(data['hlc']!, _hlcMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_hlcMeta);
+    }
+    if (data.containsKey('prev_json')) {
+      context.handle(
+        _prevJsonMeta,
+        prevJson.isAcceptableOrUnknown(data['prev_json']!, _prevJsonMeta),
+      );
+    }
+    if (data.containsKey('payload_json')) {
+      context.handle(
+        _payloadJsonMeta,
+        payloadJson.isAcceptableOrUnknown(
+          data['payload_json']!,
+          _payloadJsonMeta,
+        ),
+      );
+    }
+    if (data.containsKey('sig')) {
+      context.handle(
+        _sigMeta,
+        sig.isAcceptableOrUnknown(data['sig']!, _sigMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_sigMeta);
+    }
+    if (data.containsKey('sig_ok')) {
+      context.handle(
+        _sigOkMeta,
+        sigOk.isAcceptableOrUnknown(data['sig_ok']!, _sigOkMeta),
+      );
+    }
+    if (data.containsKey('effect')) {
+      context.handle(
+        _effectMeta,
+        effect.isAcceptableOrUnknown(data['effect']!, _effectMeta),
+      );
+    }
+    if (data.containsKey('reason')) {
+      context.handle(
+        _reasonMeta,
+        reason.isAcceptableOrUnknown(data['reason']!, _reasonMeta),
+      );
+    }
+    if (data.containsKey('received_at')) {
+      context.handle(
+        _receivedAtMeta,
+        receivedAt.isAcceptableOrUnknown(data['received_at']!, _receivedAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {opId};
+  @override
+  MemberOpRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MemberOpRow(
+      opId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}op_id'],
+      )!,
+      homeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}home_id'],
+      )!,
+      opType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}op_type'],
+      )!,
+      authorDeviceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}author_device_id'],
+      )!,
+      hlc: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}hlc'],
+      )!,
+      prevJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}prev_json'],
+      )!,
+      payloadJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}payload_json'],
+      )!,
+      sig: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}sig'],
+      )!,
+      sigOk: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}sig_ok'],
+      ),
+      effect: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}effect'],
+      )!,
+      reason: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reason'],
+      ),
+      receivedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}received_at'],
+      )!,
+    );
+  }
+
+  @override
+  $MemberOpsTable createAlias(String alias) {
+    return $MemberOpsTable(attachedDatabase, alias);
+  }
+}
+
+class MemberOpRow extends DataClass implements Insertable<MemberOpRow> {
+  final String opId;
+  final String homeId;
+  final String opType;
+  final String authorDeviceId;
+  final String hlc;
+  final String prevJson;
+  final String payloadJson;
+  final String sig;
+  final bool? sigOk;
+  final String effect;
+  final String? reason;
+  final int receivedAt;
+  const MemberOpRow({
+    required this.opId,
+    required this.homeId,
+    required this.opType,
+    required this.authorDeviceId,
+    required this.hlc,
+    required this.prevJson,
+    required this.payloadJson,
+    required this.sig,
+    this.sigOk,
+    required this.effect,
+    this.reason,
+    required this.receivedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['op_id'] = Variable<String>(opId);
+    map['home_id'] = Variable<String>(homeId);
+    map['op_type'] = Variable<String>(opType);
+    map['author_device_id'] = Variable<String>(authorDeviceId);
+    map['hlc'] = Variable<String>(hlc);
+    map['prev_json'] = Variable<String>(prevJson);
+    map['payload_json'] = Variable<String>(payloadJson);
+    map['sig'] = Variable<String>(sig);
+    if (!nullToAbsent || sigOk != null) {
+      map['sig_ok'] = Variable<bool>(sigOk);
+    }
+    map['effect'] = Variable<String>(effect);
+    if (!nullToAbsent || reason != null) {
+      map['reason'] = Variable<String>(reason);
+    }
+    map['received_at'] = Variable<int>(receivedAt);
+    return map;
+  }
+
+  MemberOpsCompanion toCompanion(bool nullToAbsent) {
+    return MemberOpsCompanion(
+      opId: Value(opId),
+      homeId: Value(homeId),
+      opType: Value(opType),
+      authorDeviceId: Value(authorDeviceId),
+      hlc: Value(hlc),
+      prevJson: Value(prevJson),
+      payloadJson: Value(payloadJson),
+      sig: Value(sig),
+      sigOk: sigOk == null && nullToAbsent
+          ? const Value.absent()
+          : Value(sigOk),
+      effect: Value(effect),
+      reason: reason == null && nullToAbsent
+          ? const Value.absent()
+          : Value(reason),
+      receivedAt: Value(receivedAt),
+    );
+  }
+
+  factory MemberOpRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MemberOpRow(
+      opId: serializer.fromJson<String>(json['opId']),
+      homeId: serializer.fromJson<String>(json['homeId']),
+      opType: serializer.fromJson<String>(json['opType']),
+      authorDeviceId: serializer.fromJson<String>(json['authorDeviceId']),
+      hlc: serializer.fromJson<String>(json['hlc']),
+      prevJson: serializer.fromJson<String>(json['prevJson']),
+      payloadJson: serializer.fromJson<String>(json['payloadJson']),
+      sig: serializer.fromJson<String>(json['sig']),
+      sigOk: serializer.fromJson<bool?>(json['sigOk']),
+      effect: serializer.fromJson<String>(json['effect']),
+      reason: serializer.fromJson<String?>(json['reason']),
+      receivedAt: serializer.fromJson<int>(json['receivedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'opId': serializer.toJson<String>(opId),
+      'homeId': serializer.toJson<String>(homeId),
+      'opType': serializer.toJson<String>(opType),
+      'authorDeviceId': serializer.toJson<String>(authorDeviceId),
+      'hlc': serializer.toJson<String>(hlc),
+      'prevJson': serializer.toJson<String>(prevJson),
+      'payloadJson': serializer.toJson<String>(payloadJson),
+      'sig': serializer.toJson<String>(sig),
+      'sigOk': serializer.toJson<bool?>(sigOk),
+      'effect': serializer.toJson<String>(effect),
+      'reason': serializer.toJson<String?>(reason),
+      'receivedAt': serializer.toJson<int>(receivedAt),
+    };
+  }
+
+  MemberOpRow copyWith({
+    String? opId,
+    String? homeId,
+    String? opType,
+    String? authorDeviceId,
+    String? hlc,
+    String? prevJson,
+    String? payloadJson,
+    String? sig,
+    Value<bool?> sigOk = const Value.absent(),
+    String? effect,
+    Value<String?> reason = const Value.absent(),
+    int? receivedAt,
+  }) => MemberOpRow(
+    opId: opId ?? this.opId,
+    homeId: homeId ?? this.homeId,
+    opType: opType ?? this.opType,
+    authorDeviceId: authorDeviceId ?? this.authorDeviceId,
+    hlc: hlc ?? this.hlc,
+    prevJson: prevJson ?? this.prevJson,
+    payloadJson: payloadJson ?? this.payloadJson,
+    sig: sig ?? this.sig,
+    sigOk: sigOk.present ? sigOk.value : this.sigOk,
+    effect: effect ?? this.effect,
+    reason: reason.present ? reason.value : this.reason,
+    receivedAt: receivedAt ?? this.receivedAt,
+  );
+  MemberOpRow copyWithCompanion(MemberOpsCompanion data) {
+    return MemberOpRow(
+      opId: data.opId.present ? data.opId.value : this.opId,
+      homeId: data.homeId.present ? data.homeId.value : this.homeId,
+      opType: data.opType.present ? data.opType.value : this.opType,
+      authorDeviceId: data.authorDeviceId.present
+          ? data.authorDeviceId.value
+          : this.authorDeviceId,
+      hlc: data.hlc.present ? data.hlc.value : this.hlc,
+      prevJson: data.prevJson.present ? data.prevJson.value : this.prevJson,
+      payloadJson: data.payloadJson.present
+          ? data.payloadJson.value
+          : this.payloadJson,
+      sig: data.sig.present ? data.sig.value : this.sig,
+      sigOk: data.sigOk.present ? data.sigOk.value : this.sigOk,
+      effect: data.effect.present ? data.effect.value : this.effect,
+      reason: data.reason.present ? data.reason.value : this.reason,
+      receivedAt: data.receivedAt.present
+          ? data.receivedAt.value
+          : this.receivedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MemberOpRow(')
+          ..write('opId: $opId, ')
+          ..write('homeId: $homeId, ')
+          ..write('opType: $opType, ')
+          ..write('authorDeviceId: $authorDeviceId, ')
+          ..write('hlc: $hlc, ')
+          ..write('prevJson: $prevJson, ')
+          ..write('payloadJson: $payloadJson, ')
+          ..write('sig: $sig, ')
+          ..write('sigOk: $sigOk, ')
+          ..write('effect: $effect, ')
+          ..write('reason: $reason, ')
+          ..write('receivedAt: $receivedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    opId,
+    homeId,
+    opType,
+    authorDeviceId,
+    hlc,
+    prevJson,
+    payloadJson,
+    sig,
+    sigOk,
+    effect,
+    reason,
+    receivedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MemberOpRow &&
+          other.opId == this.opId &&
+          other.homeId == this.homeId &&
+          other.opType == this.opType &&
+          other.authorDeviceId == this.authorDeviceId &&
+          other.hlc == this.hlc &&
+          other.prevJson == this.prevJson &&
+          other.payloadJson == this.payloadJson &&
+          other.sig == this.sig &&
+          other.sigOk == this.sigOk &&
+          other.effect == this.effect &&
+          other.reason == this.reason &&
+          other.receivedAt == this.receivedAt);
+}
+
+class MemberOpsCompanion extends UpdateCompanion<MemberOpRow> {
+  final Value<String> opId;
+  final Value<String> homeId;
+  final Value<String> opType;
+  final Value<String> authorDeviceId;
+  final Value<String> hlc;
+  final Value<String> prevJson;
+  final Value<String> payloadJson;
+  final Value<String> sig;
+  final Value<bool?> sigOk;
+  final Value<String> effect;
+  final Value<String?> reason;
+  final Value<int> receivedAt;
+  final Value<int> rowid;
+  const MemberOpsCompanion({
+    this.opId = const Value.absent(),
+    this.homeId = const Value.absent(),
+    this.opType = const Value.absent(),
+    this.authorDeviceId = const Value.absent(),
+    this.hlc = const Value.absent(),
+    this.prevJson = const Value.absent(),
+    this.payloadJson = const Value.absent(),
+    this.sig = const Value.absent(),
+    this.sigOk = const Value.absent(),
+    this.effect = const Value.absent(),
+    this.reason = const Value.absent(),
+    this.receivedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  MemberOpsCompanion.insert({
+    required String opId,
+    required String homeId,
+    required String opType,
+    required String authorDeviceId,
+    required String hlc,
+    this.prevJson = const Value.absent(),
+    this.payloadJson = const Value.absent(),
+    required String sig,
+    this.sigOk = const Value.absent(),
+    this.effect = const Value.absent(),
+    this.reason = const Value.absent(),
+    this.receivedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : opId = Value(opId),
+       homeId = Value(homeId),
+       opType = Value(opType),
+       authorDeviceId = Value(authorDeviceId),
+       hlc = Value(hlc),
+       sig = Value(sig);
+  static Insertable<MemberOpRow> custom({
+    Expression<String>? opId,
+    Expression<String>? homeId,
+    Expression<String>? opType,
+    Expression<String>? authorDeviceId,
+    Expression<String>? hlc,
+    Expression<String>? prevJson,
+    Expression<String>? payloadJson,
+    Expression<String>? sig,
+    Expression<bool>? sigOk,
+    Expression<String>? effect,
+    Expression<String>? reason,
+    Expression<int>? receivedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (opId != null) 'op_id': opId,
+      if (homeId != null) 'home_id': homeId,
+      if (opType != null) 'op_type': opType,
+      if (authorDeviceId != null) 'author_device_id': authorDeviceId,
+      if (hlc != null) 'hlc': hlc,
+      if (prevJson != null) 'prev_json': prevJson,
+      if (payloadJson != null) 'payload_json': payloadJson,
+      if (sig != null) 'sig': sig,
+      if (sigOk != null) 'sig_ok': sigOk,
+      if (effect != null) 'effect': effect,
+      if (reason != null) 'reason': reason,
+      if (receivedAt != null) 'received_at': receivedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  MemberOpsCompanion copyWith({
+    Value<String>? opId,
+    Value<String>? homeId,
+    Value<String>? opType,
+    Value<String>? authorDeviceId,
+    Value<String>? hlc,
+    Value<String>? prevJson,
+    Value<String>? payloadJson,
+    Value<String>? sig,
+    Value<bool?>? sigOk,
+    Value<String>? effect,
+    Value<String?>? reason,
+    Value<int>? receivedAt,
+    Value<int>? rowid,
+  }) {
+    return MemberOpsCompanion(
+      opId: opId ?? this.opId,
+      homeId: homeId ?? this.homeId,
+      opType: opType ?? this.opType,
+      authorDeviceId: authorDeviceId ?? this.authorDeviceId,
+      hlc: hlc ?? this.hlc,
+      prevJson: prevJson ?? this.prevJson,
+      payloadJson: payloadJson ?? this.payloadJson,
+      sig: sig ?? this.sig,
+      sigOk: sigOk ?? this.sigOk,
+      effect: effect ?? this.effect,
+      reason: reason ?? this.reason,
+      receivedAt: receivedAt ?? this.receivedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (opId.present) {
+      map['op_id'] = Variable<String>(opId.value);
+    }
+    if (homeId.present) {
+      map['home_id'] = Variable<String>(homeId.value);
+    }
+    if (opType.present) {
+      map['op_type'] = Variable<String>(opType.value);
+    }
+    if (authorDeviceId.present) {
+      map['author_device_id'] = Variable<String>(authorDeviceId.value);
+    }
+    if (hlc.present) {
+      map['hlc'] = Variable<String>(hlc.value);
+    }
+    if (prevJson.present) {
+      map['prev_json'] = Variable<String>(prevJson.value);
+    }
+    if (payloadJson.present) {
+      map['payload_json'] = Variable<String>(payloadJson.value);
+    }
+    if (sig.present) {
+      map['sig'] = Variable<String>(sig.value);
+    }
+    if (sigOk.present) {
+      map['sig_ok'] = Variable<bool>(sigOk.value);
+    }
+    if (effect.present) {
+      map['effect'] = Variable<String>(effect.value);
+    }
+    if (reason.present) {
+      map['reason'] = Variable<String>(reason.value);
+    }
+    if (receivedAt.present) {
+      map['received_at'] = Variable<int>(receivedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MemberOpsCompanion(')
+          ..write('opId: $opId, ')
+          ..write('homeId: $homeId, ')
+          ..write('opType: $opType, ')
+          ..write('authorDeviceId: $authorDeviceId, ')
+          ..write('hlc: $hlc, ')
+          ..write('prevJson: $prevJson, ')
+          ..write('payloadJson: $payloadJson, ')
+          ..write('sig: $sig, ')
+          ..write('sigOk: $sigOk, ')
+          ..write('effect: $effect, ')
+          ..write('reason: $reason, ')
+          ..write('receivedAt: $receivedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $MemberDevicesTable extends MemberDevices
+    with TableInfo<$MemberDevicesTable, MemberDeviceRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MemberDevicesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _deviceIdMeta = const VerificationMeta(
+    'deviceId',
+  );
+  @override
+  late final GeneratedColumn<String> deviceId = GeneratedColumn<String>(
+    'device_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _homeIdMeta = const VerificationMeta('homeId');
+  @override
+  late final GeneratedColumn<String> homeId = GeneratedColumn<String>(
+    'home_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _memberIdMeta = const VerificationMeta(
+    'memberId',
+  );
+  @override
+  late final GeneratedColumn<String> memberId = GeneratedColumn<String>(
+    'member_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _signPubMeta = const VerificationMeta(
+    'signPub',
+  );
+  @override
+  late final GeneratedColumn<String> signPub = GeneratedColumn<String>(
+    'sign_pub',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _agreePubMeta = const VerificationMeta(
+    'agreePub',
+  );
+  @override
+  late final GeneratedColumn<String> agreePub = GeneratedColumn<String>(
+    'agree_pub',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _modelMeta = const VerificationMeta('model');
+  @override
+  late final GeneratedColumn<String> model = GeneratedColumn<String>(
+    'model',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _addedAtMeta = const VerificationMeta(
+    'addedAt',
+  );
+  @override
+  late final GeneratedColumn<int> addedAt = GeneratedColumn<int>(
+    'added_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _activeMeta = const VerificationMeta('active');
+  @override
+  late final GeneratedColumn<bool> active = GeneratedColumn<bool>(
+    'active',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("active" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  static const VerificationMeta _endedHlcMeta = const VerificationMeta(
+    'endedHlc',
+  );
+  @override
+  late final GeneratedColumn<String> endedHlc = GeneratedColumn<String>(
+    'ended_hlc',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    deviceId,
+    homeId,
+    memberId,
+    signPub,
+    agreePub,
+    model,
+    addedAt,
+    active,
+    endedHlc,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'member_devices';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<MemberDeviceRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('device_id')) {
+      context.handle(
+        _deviceIdMeta,
+        deviceId.isAcceptableOrUnknown(data['device_id']!, _deviceIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_deviceIdMeta);
+    }
+    if (data.containsKey('home_id')) {
+      context.handle(
+        _homeIdMeta,
+        homeId.isAcceptableOrUnknown(data['home_id']!, _homeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_homeIdMeta);
+    }
+    if (data.containsKey('member_id')) {
+      context.handle(
+        _memberIdMeta,
+        memberId.isAcceptableOrUnknown(data['member_id']!, _memberIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_memberIdMeta);
+    }
+    if (data.containsKey('sign_pub')) {
+      context.handle(
+        _signPubMeta,
+        signPub.isAcceptableOrUnknown(data['sign_pub']!, _signPubMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_signPubMeta);
+    }
+    if (data.containsKey('agree_pub')) {
+      context.handle(
+        _agreePubMeta,
+        agreePub.isAcceptableOrUnknown(data['agree_pub']!, _agreePubMeta),
+      );
+    }
+    if (data.containsKey('model')) {
+      context.handle(
+        _modelMeta,
+        model.isAcceptableOrUnknown(data['model']!, _modelMeta),
+      );
+    }
+    if (data.containsKey('added_at')) {
+      context.handle(
+        _addedAtMeta,
+        addedAt.isAcceptableOrUnknown(data['added_at']!, _addedAtMeta),
+      );
+    }
+    if (data.containsKey('active')) {
+      context.handle(
+        _activeMeta,
+        active.isAcceptableOrUnknown(data['active']!, _activeMeta),
+      );
+    }
+    if (data.containsKey('ended_hlc')) {
+      context.handle(
+        _endedHlcMeta,
+        endedHlc.isAcceptableOrUnknown(data['ended_hlc']!, _endedHlcMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {deviceId};
+  @override
+  MemberDeviceRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MemberDeviceRow(
+      deviceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}device_id'],
+      )!,
+      homeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}home_id'],
+      )!,
+      memberId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}member_id'],
+      )!,
+      signPub: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}sign_pub'],
+      )!,
+      agreePub: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}agree_pub'],
+      )!,
+      model: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}model'],
+      )!,
+      addedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}added_at'],
+      )!,
+      active: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}active'],
+      )!,
+      endedHlc: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}ended_hlc'],
+      ),
+    );
+  }
+
+  @override
+  $MemberDevicesTable createAlias(String alias) {
+    return $MemberDevicesTable(attachedDatabase, alias);
+  }
+}
+
+class MemberDeviceRow extends DataClass implements Insertable<MemberDeviceRow> {
+  final String deviceId;
+  final String homeId;
+  final String memberId;
+  final String signPub;
+  final String agreePub;
+  final String model;
+  final int addedAt;
+  final bool active;
+  final String? endedHlc;
+  const MemberDeviceRow({
+    required this.deviceId,
+    required this.homeId,
+    required this.memberId,
+    required this.signPub,
+    required this.agreePub,
+    required this.model,
+    required this.addedAt,
+    required this.active,
+    this.endedHlc,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['device_id'] = Variable<String>(deviceId);
+    map['home_id'] = Variable<String>(homeId);
+    map['member_id'] = Variable<String>(memberId);
+    map['sign_pub'] = Variable<String>(signPub);
+    map['agree_pub'] = Variable<String>(agreePub);
+    map['model'] = Variable<String>(model);
+    map['added_at'] = Variable<int>(addedAt);
+    map['active'] = Variable<bool>(active);
+    if (!nullToAbsent || endedHlc != null) {
+      map['ended_hlc'] = Variable<String>(endedHlc);
+    }
+    return map;
+  }
+
+  MemberDevicesCompanion toCompanion(bool nullToAbsent) {
+    return MemberDevicesCompanion(
+      deviceId: Value(deviceId),
+      homeId: Value(homeId),
+      memberId: Value(memberId),
+      signPub: Value(signPub),
+      agreePub: Value(agreePub),
+      model: Value(model),
+      addedAt: Value(addedAt),
+      active: Value(active),
+      endedHlc: endedHlc == null && nullToAbsent
+          ? const Value.absent()
+          : Value(endedHlc),
+    );
+  }
+
+  factory MemberDeviceRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MemberDeviceRow(
+      deviceId: serializer.fromJson<String>(json['deviceId']),
+      homeId: serializer.fromJson<String>(json['homeId']),
+      memberId: serializer.fromJson<String>(json['memberId']),
+      signPub: serializer.fromJson<String>(json['signPub']),
+      agreePub: serializer.fromJson<String>(json['agreePub']),
+      model: serializer.fromJson<String>(json['model']),
+      addedAt: serializer.fromJson<int>(json['addedAt']),
+      active: serializer.fromJson<bool>(json['active']),
+      endedHlc: serializer.fromJson<String?>(json['endedHlc']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'deviceId': serializer.toJson<String>(deviceId),
+      'homeId': serializer.toJson<String>(homeId),
+      'memberId': serializer.toJson<String>(memberId),
+      'signPub': serializer.toJson<String>(signPub),
+      'agreePub': serializer.toJson<String>(agreePub),
+      'model': serializer.toJson<String>(model),
+      'addedAt': serializer.toJson<int>(addedAt),
+      'active': serializer.toJson<bool>(active),
+      'endedHlc': serializer.toJson<String?>(endedHlc),
+    };
+  }
+
+  MemberDeviceRow copyWith({
+    String? deviceId,
+    String? homeId,
+    String? memberId,
+    String? signPub,
+    String? agreePub,
+    String? model,
+    int? addedAt,
+    bool? active,
+    Value<String?> endedHlc = const Value.absent(),
+  }) => MemberDeviceRow(
+    deviceId: deviceId ?? this.deviceId,
+    homeId: homeId ?? this.homeId,
+    memberId: memberId ?? this.memberId,
+    signPub: signPub ?? this.signPub,
+    agreePub: agreePub ?? this.agreePub,
+    model: model ?? this.model,
+    addedAt: addedAt ?? this.addedAt,
+    active: active ?? this.active,
+    endedHlc: endedHlc.present ? endedHlc.value : this.endedHlc,
+  );
+  MemberDeviceRow copyWithCompanion(MemberDevicesCompanion data) {
+    return MemberDeviceRow(
+      deviceId: data.deviceId.present ? data.deviceId.value : this.deviceId,
+      homeId: data.homeId.present ? data.homeId.value : this.homeId,
+      memberId: data.memberId.present ? data.memberId.value : this.memberId,
+      signPub: data.signPub.present ? data.signPub.value : this.signPub,
+      agreePub: data.agreePub.present ? data.agreePub.value : this.agreePub,
+      model: data.model.present ? data.model.value : this.model,
+      addedAt: data.addedAt.present ? data.addedAt.value : this.addedAt,
+      active: data.active.present ? data.active.value : this.active,
+      endedHlc: data.endedHlc.present ? data.endedHlc.value : this.endedHlc,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MemberDeviceRow(')
+          ..write('deviceId: $deviceId, ')
+          ..write('homeId: $homeId, ')
+          ..write('memberId: $memberId, ')
+          ..write('signPub: $signPub, ')
+          ..write('agreePub: $agreePub, ')
+          ..write('model: $model, ')
+          ..write('addedAt: $addedAt, ')
+          ..write('active: $active, ')
+          ..write('endedHlc: $endedHlc')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    deviceId,
+    homeId,
+    memberId,
+    signPub,
+    agreePub,
+    model,
+    addedAt,
+    active,
+    endedHlc,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MemberDeviceRow &&
+          other.deviceId == this.deviceId &&
+          other.homeId == this.homeId &&
+          other.memberId == this.memberId &&
+          other.signPub == this.signPub &&
+          other.agreePub == this.agreePub &&
+          other.model == this.model &&
+          other.addedAt == this.addedAt &&
+          other.active == this.active &&
+          other.endedHlc == this.endedHlc);
+}
+
+class MemberDevicesCompanion extends UpdateCompanion<MemberDeviceRow> {
+  final Value<String> deviceId;
+  final Value<String> homeId;
+  final Value<String> memberId;
+  final Value<String> signPub;
+  final Value<String> agreePub;
+  final Value<String> model;
+  final Value<int> addedAt;
+  final Value<bool> active;
+  final Value<String?> endedHlc;
+  final Value<int> rowid;
+  const MemberDevicesCompanion({
+    this.deviceId = const Value.absent(),
+    this.homeId = const Value.absent(),
+    this.memberId = const Value.absent(),
+    this.signPub = const Value.absent(),
+    this.agreePub = const Value.absent(),
+    this.model = const Value.absent(),
+    this.addedAt = const Value.absent(),
+    this.active = const Value.absent(),
+    this.endedHlc = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  MemberDevicesCompanion.insert({
+    required String deviceId,
+    required String homeId,
+    required String memberId,
+    required String signPub,
+    this.agreePub = const Value.absent(),
+    this.model = const Value.absent(),
+    this.addedAt = const Value.absent(),
+    this.active = const Value.absent(),
+    this.endedHlc = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : deviceId = Value(deviceId),
+       homeId = Value(homeId),
+       memberId = Value(memberId),
+       signPub = Value(signPub);
+  static Insertable<MemberDeviceRow> custom({
+    Expression<String>? deviceId,
+    Expression<String>? homeId,
+    Expression<String>? memberId,
+    Expression<String>? signPub,
+    Expression<String>? agreePub,
+    Expression<String>? model,
+    Expression<int>? addedAt,
+    Expression<bool>? active,
+    Expression<String>? endedHlc,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (deviceId != null) 'device_id': deviceId,
+      if (homeId != null) 'home_id': homeId,
+      if (memberId != null) 'member_id': memberId,
+      if (signPub != null) 'sign_pub': signPub,
+      if (agreePub != null) 'agree_pub': agreePub,
+      if (model != null) 'model': model,
+      if (addedAt != null) 'added_at': addedAt,
+      if (active != null) 'active': active,
+      if (endedHlc != null) 'ended_hlc': endedHlc,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  MemberDevicesCompanion copyWith({
+    Value<String>? deviceId,
+    Value<String>? homeId,
+    Value<String>? memberId,
+    Value<String>? signPub,
+    Value<String>? agreePub,
+    Value<String>? model,
+    Value<int>? addedAt,
+    Value<bool>? active,
+    Value<String?>? endedHlc,
+    Value<int>? rowid,
+  }) {
+    return MemberDevicesCompanion(
+      deviceId: deviceId ?? this.deviceId,
+      homeId: homeId ?? this.homeId,
+      memberId: memberId ?? this.memberId,
+      signPub: signPub ?? this.signPub,
+      agreePub: agreePub ?? this.agreePub,
+      model: model ?? this.model,
+      addedAt: addedAt ?? this.addedAt,
+      active: active ?? this.active,
+      endedHlc: endedHlc ?? this.endedHlc,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (deviceId.present) {
+      map['device_id'] = Variable<String>(deviceId.value);
+    }
+    if (homeId.present) {
+      map['home_id'] = Variable<String>(homeId.value);
+    }
+    if (memberId.present) {
+      map['member_id'] = Variable<String>(memberId.value);
+    }
+    if (signPub.present) {
+      map['sign_pub'] = Variable<String>(signPub.value);
+    }
+    if (agreePub.present) {
+      map['agree_pub'] = Variable<String>(agreePub.value);
+    }
+    if (model.present) {
+      map['model'] = Variable<String>(model.value);
+    }
+    if (addedAt.present) {
+      map['added_at'] = Variable<int>(addedAt.value);
+    }
+    if (active.present) {
+      map['active'] = Variable<bool>(active.value);
+    }
+    if (endedHlc.present) {
+      map['ended_hlc'] = Variable<String>(endedHlc.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MemberDevicesCompanion(')
+          ..write('deviceId: $deviceId, ')
+          ..write('homeId: $homeId, ')
+          ..write('memberId: $memberId, ')
+          ..write('signPub: $signPub, ')
+          ..write('agreePub: $agreePub, ')
+          ..write('model: $model, ')
+          ..write('addedAt: $addedAt, ')
+          ..write('active: $active, ')
+          ..write('endedHlc: $endedHlc, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$NestDatabase extends GeneratedDatabase {
   _$NestDatabase(QueryExecutor e) : super(e);
   $NestDatabaseManager get managers => $NestDatabaseManager(this);
@@ -16733,6 +17990,8 @@ abstract class _$NestDatabase extends GeneratedDatabase {
   late final $PantryTable pantry = $PantryTable(this);
   late final $RoutinesTable routines = $RoutinesTable(this);
   late final $TodosTable todos = $TodosTable(this);
+  late final $MemberOpsTable memberOps = $MemberOpsTable(this);
+  late final $MemberDevicesTable memberDevices = $MemberDevicesTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -16759,6 +18018,8 @@ abstract class _$NestDatabase extends GeneratedDatabase {
     pantry,
     routines,
     todos,
+    memberOps,
+    memberDevices,
   ];
 }
 
@@ -24770,6 +26031,641 @@ typedef $$TodosTableProcessedTableManager =
       TodoRow,
       PrefetchHooks Function()
     >;
+typedef $$MemberOpsTableCreateCompanionBuilder = MemberOpsCompanion Function({
+  required String opId,
+  required String homeId,
+  required String opType,
+  required String authorDeviceId,
+  required String hlc,
+  Value<String> prevJson,
+  Value<String> payloadJson,
+  required String sig,
+  Value<bool?> sigOk,
+  Value<String> effect,
+  Value<String?> reason,
+  Value<int> receivedAt,
+  Value<int> rowid,
+});
+typedef $$MemberOpsTableUpdateCompanionBuilder = MemberOpsCompanion Function({
+  Value<String> opId,
+  Value<String> homeId,
+  Value<String> opType,
+  Value<String> authorDeviceId,
+  Value<String> hlc,
+  Value<String> prevJson,
+  Value<String> payloadJson,
+  Value<String> sig,
+  Value<bool?> sigOk,
+  Value<String> effect,
+  Value<String?> reason,
+  Value<int> receivedAt,
+  Value<int> rowid,
+});
+
+class $$MemberOpsTableFilterComposer
+    extends Composer<_$NestDatabase, $MemberOpsTable> {
+  $$MemberOpsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get opId => $composableBuilder(
+    column: $table.opId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get opType => $composableBuilder(
+    column: $table.opType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get authorDeviceId => $composableBuilder(
+    column: $table.authorDeviceId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get hlc => $composableBuilder(
+    column: $table.hlc,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get prevJson => $composableBuilder(
+    column: $table.prevJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get payloadJson => $composableBuilder(
+    column: $table.payloadJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get sig => $composableBuilder(
+    column: $table.sig,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get sigOk => $composableBuilder(
+    column: $table.sigOk,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get effect => $composableBuilder(
+    column: $table.effect,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get reason => $composableBuilder(
+    column: $table.reason,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get receivedAt => $composableBuilder(
+    column: $table.receivedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$MemberOpsTableOrderingComposer
+    extends Composer<_$NestDatabase, $MemberOpsTable> {
+  $$MemberOpsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get opId => $composableBuilder(
+    column: $table.opId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get opType => $composableBuilder(
+    column: $table.opType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get authorDeviceId => $composableBuilder(
+    column: $table.authorDeviceId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get hlc => $composableBuilder(
+    column: $table.hlc,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get prevJson => $composableBuilder(
+    column: $table.prevJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get payloadJson => $composableBuilder(
+    column: $table.payloadJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get sig => $composableBuilder(
+    column: $table.sig,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get sigOk => $composableBuilder(
+    column: $table.sigOk,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get effect => $composableBuilder(
+    column: $table.effect,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get reason => $composableBuilder(
+    column: $table.reason,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get receivedAt => $composableBuilder(
+    column: $table.receivedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$MemberOpsTableAnnotationComposer
+    extends Composer<_$NestDatabase, $MemberOpsTable> {
+  $$MemberOpsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get opId =>
+      $composableBuilder(column: $table.opId, builder: (column) => column);
+
+  GeneratedColumn<String> get homeId =>
+      $composableBuilder(column: $table.homeId, builder: (column) => column);
+
+  GeneratedColumn<String> get opType =>
+      $composableBuilder(column: $table.opType, builder: (column) => column);
+
+  GeneratedColumn<String> get authorDeviceId => $composableBuilder(
+    column: $table.authorDeviceId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get hlc =>
+      $composableBuilder(column: $table.hlc, builder: (column) => column);
+
+  GeneratedColumn<String> get prevJson =>
+      $composableBuilder(column: $table.prevJson, builder: (column) => column);
+
+  GeneratedColumn<String> get payloadJson => $composableBuilder(
+    column: $table.payloadJson,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get sig =>
+      $composableBuilder(column: $table.sig, builder: (column) => column);
+
+  GeneratedColumn<bool> get sigOk =>
+      $composableBuilder(column: $table.sigOk, builder: (column) => column);
+
+  GeneratedColumn<String> get effect =>
+      $composableBuilder(column: $table.effect, builder: (column) => column);
+
+  GeneratedColumn<String> get reason =>
+      $composableBuilder(column: $table.reason, builder: (column) => column);
+
+  GeneratedColumn<int> get receivedAt => $composableBuilder(
+    column: $table.receivedAt,
+    builder: (column) => column,
+  );
+}
+
+class $$MemberOpsTableTableManager
+    extends
+        RootTableManager<
+          _$NestDatabase,
+          $MemberOpsTable,
+          MemberOpRow,
+          $$MemberOpsTableFilterComposer,
+          $$MemberOpsTableOrderingComposer,
+          $$MemberOpsTableAnnotationComposer,
+          $$MemberOpsTableCreateCompanionBuilder,
+          $$MemberOpsTableUpdateCompanionBuilder,
+          (
+            MemberOpRow,
+            BaseReferences<_$NestDatabase, $MemberOpsTable, MemberOpRow>,
+          ),
+          MemberOpRow,
+          PrefetchHooks Function()
+        > {
+  $$MemberOpsTableTableManager(_$NestDatabase db, $MemberOpsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MemberOpsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MemberOpsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$MemberOpsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> opId = const Value.absent(),
+                Value<String> homeId = const Value.absent(),
+                Value<String> opType = const Value.absent(),
+                Value<String> authorDeviceId = const Value.absent(),
+                Value<String> hlc = const Value.absent(),
+                Value<String> prevJson = const Value.absent(),
+                Value<String> payloadJson = const Value.absent(),
+                Value<String> sig = const Value.absent(),
+                Value<bool?> sigOk = const Value.absent(),
+                Value<String> effect = const Value.absent(),
+                Value<String?> reason = const Value.absent(),
+                Value<int> receivedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MemberOpsCompanion(
+                opId: opId,
+                homeId: homeId,
+                opType: opType,
+                authorDeviceId: authorDeviceId,
+                hlc: hlc,
+                prevJson: prevJson,
+                payloadJson: payloadJson,
+                sig: sig,
+                sigOk: sigOk,
+                effect: effect,
+                reason: reason,
+                receivedAt: receivedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String opId,
+                required String homeId,
+                required String opType,
+                required String authorDeviceId,
+                required String hlc,
+                Value<String> prevJson = const Value.absent(),
+                Value<String> payloadJson = const Value.absent(),
+                required String sig,
+                Value<bool?> sigOk = const Value.absent(),
+                Value<String> effect = const Value.absent(),
+                Value<String?> reason = const Value.absent(),
+                Value<int> receivedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MemberOpsCompanion.insert(
+                opId: opId,
+                homeId: homeId,
+                opType: opType,
+                authorDeviceId: authorDeviceId,
+                hlc: hlc,
+                prevJson: prevJson,
+                payloadJson: payloadJson,
+                sig: sig,
+                sigOk: sigOk,
+                effect: effect,
+                reason: reason,
+                receivedAt: receivedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$MemberOpsTable, MemberOpRow>(table),
+                  BaseReferences<_$NestDatabase, $MemberOpsTable, MemberOpRow>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$MemberOpsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$NestDatabase,
+      $MemberOpsTable,
+      MemberOpRow,
+      $$MemberOpsTableFilterComposer,
+      $$MemberOpsTableOrderingComposer,
+      $$MemberOpsTableAnnotationComposer,
+      $$MemberOpsTableCreateCompanionBuilder,
+      $$MemberOpsTableUpdateCompanionBuilder,
+      (
+        MemberOpRow,
+        BaseReferences<_$NestDatabase, $MemberOpsTable, MemberOpRow>,
+      ),
+      MemberOpRow,
+      PrefetchHooks Function()
+    >;
+typedef $$MemberDevicesTableCreateCompanionBuilder =
+    MemberDevicesCompanion Function({
+      required String deviceId,
+      required String homeId,
+      required String memberId,
+      required String signPub,
+      Value<String> agreePub,
+      Value<String> model,
+      Value<int> addedAt,
+      Value<bool> active,
+      Value<String?> endedHlc,
+      Value<int> rowid,
+    });
+typedef $$MemberDevicesTableUpdateCompanionBuilder =
+    MemberDevicesCompanion Function({
+      Value<String> deviceId,
+      Value<String> homeId,
+      Value<String> memberId,
+      Value<String> signPub,
+      Value<String> agreePub,
+      Value<String> model,
+      Value<int> addedAt,
+      Value<bool> active,
+      Value<String?> endedHlc,
+      Value<int> rowid,
+    });
+
+class $$MemberDevicesTableFilterComposer
+    extends Composer<_$NestDatabase, $MemberDevicesTable> {
+  $$MemberDevicesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get memberId => $composableBuilder(
+    column: $table.memberId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get signPub => $composableBuilder(
+    column: $table.signPub,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get agreePub => $composableBuilder(
+    column: $table.agreePub,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get model => $composableBuilder(
+    column: $table.model,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get addedAt => $composableBuilder(
+    column: $table.addedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get active => $composableBuilder(
+    column: $table.active,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get endedHlc => $composableBuilder(
+    column: $table.endedHlc,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$MemberDevicesTableOrderingComposer
+    extends Composer<_$NestDatabase, $MemberDevicesTable> {
+  $$MemberDevicesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get memberId => $composableBuilder(
+    column: $table.memberId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get signPub => $composableBuilder(
+    column: $table.signPub,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get agreePub => $composableBuilder(
+    column: $table.agreePub,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get model => $composableBuilder(
+    column: $table.model,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get addedAt => $composableBuilder(
+    column: $table.addedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get active => $composableBuilder(
+    column: $table.active,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get endedHlc => $composableBuilder(
+    column: $table.endedHlc,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$MemberDevicesTableAnnotationComposer
+    extends Composer<_$NestDatabase, $MemberDevicesTable> {
+  $$MemberDevicesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get deviceId =>
+      $composableBuilder(column: $table.deviceId, builder: (column) => column);
+
+  GeneratedColumn<String> get homeId =>
+      $composableBuilder(column: $table.homeId, builder: (column) => column);
+
+  GeneratedColumn<String> get memberId =>
+      $composableBuilder(column: $table.memberId, builder: (column) => column);
+
+  GeneratedColumn<String> get signPub =>
+      $composableBuilder(column: $table.signPub, builder: (column) => column);
+
+  GeneratedColumn<String> get agreePub =>
+      $composableBuilder(column: $table.agreePub, builder: (column) => column);
+
+  GeneratedColumn<String> get model =>
+      $composableBuilder(column: $table.model, builder: (column) => column);
+
+  GeneratedColumn<int> get addedAt =>
+      $composableBuilder(column: $table.addedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get active =>
+      $composableBuilder(column: $table.active, builder: (column) => column);
+
+  GeneratedColumn<String> get endedHlc =>
+      $composableBuilder(column: $table.endedHlc, builder: (column) => column);
+}
+
+class $$MemberDevicesTableTableManager
+    extends
+        RootTableManager<
+          _$NestDatabase,
+          $MemberDevicesTable,
+          MemberDeviceRow,
+          $$MemberDevicesTableFilterComposer,
+          $$MemberDevicesTableOrderingComposer,
+          $$MemberDevicesTableAnnotationComposer,
+          $$MemberDevicesTableCreateCompanionBuilder,
+          $$MemberDevicesTableUpdateCompanionBuilder,
+          (
+            MemberDeviceRow,
+            BaseReferences<
+              _$NestDatabase,
+              $MemberDevicesTable,
+              MemberDeviceRow
+            >,
+          ),
+          MemberDeviceRow,
+          PrefetchHooks Function()
+        > {
+  $$MemberDevicesTableTableManager(_$NestDatabase db, $MemberDevicesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MemberDevicesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MemberDevicesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$MemberDevicesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> deviceId = const Value.absent(),
+                Value<String> homeId = const Value.absent(),
+                Value<String> memberId = const Value.absent(),
+                Value<String> signPub = const Value.absent(),
+                Value<String> agreePub = const Value.absent(),
+                Value<String> model = const Value.absent(),
+                Value<int> addedAt = const Value.absent(),
+                Value<bool> active = const Value.absent(),
+                Value<String?> endedHlc = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MemberDevicesCompanion(
+                deviceId: deviceId,
+                homeId: homeId,
+                memberId: memberId,
+                signPub: signPub,
+                agreePub: agreePub,
+                model: model,
+                addedAt: addedAt,
+                active: active,
+                endedHlc: endedHlc,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String deviceId,
+                required String homeId,
+                required String memberId,
+                required String signPub,
+                Value<String> agreePub = const Value.absent(),
+                Value<String> model = const Value.absent(),
+                Value<int> addedAt = const Value.absent(),
+                Value<bool> active = const Value.absent(),
+                Value<String?> endedHlc = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MemberDevicesCompanion.insert(
+                deviceId: deviceId,
+                homeId: homeId,
+                memberId: memberId,
+                signPub: signPub,
+                agreePub: agreePub,
+                model: model,
+                addedAt: addedAt,
+                active: active,
+                endedHlc: endedHlc,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$MemberDevicesTable, MemberDeviceRow>(table),
+                  BaseReferences<
+                    _$NestDatabase,
+                    $MemberDevicesTable,
+                    MemberDeviceRow
+                  >(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$MemberDevicesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$NestDatabase,
+      $MemberDevicesTable,
+      MemberDeviceRow,
+      $$MemberDevicesTableFilterComposer,
+      $$MemberDevicesTableOrderingComposer,
+      $$MemberDevicesTableAnnotationComposer,
+      $$MemberDevicesTableCreateCompanionBuilder,
+      $$MemberDevicesTableUpdateCompanionBuilder,
+      (
+        MemberDeviceRow,
+        BaseReferences<_$NestDatabase, $MemberDevicesTable, MemberDeviceRow>,
+      ),
+      MemberDeviceRow,
+      PrefetchHooks Function()
+    >;
 
 class $NestDatabaseManager {
   final _$NestDatabase _db;
@@ -24815,4 +26711,8 @@ class $NestDatabaseManager {
       $$RoutinesTableTableManager(_db, _db.routines);
   $$TodosTableTableManager get todos =>
       $$TodosTableTableManager(_db, _db.todos);
+  $$MemberOpsTableTableManager get memberOps =>
+      $$MemberOpsTableTableManager(_db, _db.memberOps);
+  $$MemberDevicesTableTableManager get memberDevices =>
+      $$MemberDevicesTableTableManager(_db, _db.memberDevices);
 }

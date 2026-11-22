@@ -8,7 +8,7 @@ import 'package:nm_flat/core/util/ids.dart';
 
 /// The phone's own key pairs. Seeds live only in [SecureStore].
 class DeviceKeys {
-  const DeviceKeys._({
+  DeviceKeys._({
     required this.signSeed,
     required this.signPub,
     required this.agreeSeed,
@@ -24,7 +24,18 @@ class DeviceKeys {
   final String deviceId;
   final String fingerprint;
 
+  SimpleKeyPair? _signKp;
+  SimpleKeyPair? _agreeKp;
+
   String get signPubB64 => base64.encode(signPub);
+
+  /// Cached Ed25519 key pair derived from [signSeed].
+  Future<SimpleKeyPair> signKeyPair() async =>
+      _signKp ??= await Ed25519().newKeyPairFromSeed(signSeed);
+
+  /// Cached X25519 key pair derived from [agreeSeed].
+  Future<SimpleKeyPair> agreeKeyPair() async =>
+      _agreeKp ??= await X25519().newKeyPairFromSeed(agreeSeed);
 
   static Future<DeviceKeys> ensure(SecureStore s) async =>
       (await load(s)) ?? await create(s);

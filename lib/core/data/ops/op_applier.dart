@@ -21,6 +21,14 @@ class OpApplier {
   final NestDatabase db;
   final CollectionRegistry registry;
 
+  /// Deletes an existing `'pending'` row for [op] and applies [op] as `'applied'`.
+  Future<void> applyPending(OpRecord op) async {
+    await (db.delete(
+      db.ops,
+    )..where((o) => o.opId.equals(op.opId) & o.status.equals('pending'))).go();
+    await applyOne(op);
+  }
+
   Future<bool> applyOne(OpRecord op) async {
     final value = op.kind == 'set' ? decodeValue(op.valueJson) : null;
     registry.check(
