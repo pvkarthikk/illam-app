@@ -15,6 +15,7 @@ import 'package:nm_flat/features/lists/lists_screen.dart';
 import 'package:nm_flat/features/meals/meals_screen.dart';
 import 'package:nm_flat/features/money/money_screen.dart';
 import 'package:nm_flat/features/onboarding/onboarding_screen.dart';
+import 'package:nm_flat/features/staff/staff_screen.dart';
 import 'package:nm_flat/features/tasks/tasks_screen.dart';
 import 'package:nm_flat/features/today/today_screen.dart';
 
@@ -123,6 +124,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/onboarding/:step',
         builder: (_, state) =>
             OnboardingScreen(step: state.pathParameters['step'] ?? 'welcome'),
+      ),
+      GoRoute(
+        path: '/staff/:id',
+        builder: (_, state) =>
+            StaffScreen(staffId: state.pathParameters['id'] ?? ''),
       ),
     ],
   );

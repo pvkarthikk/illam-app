@@ -627,6 +627,660 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Admin on this phone: {value}'**
   String debugIsAdmin(Object value);
+
+  /// No description provided for @weekdayShortMon.
+  ///
+  /// In en, this message translates to:
+  /// **'Mon'**
+  String get weekdayShortMon;
+
+  /// No description provided for @weekdayShortTue.
+  ///
+  /// In en, this message translates to:
+  /// **'Tue'**
+  String get weekdayShortTue;
+
+  /// No description provided for @weekdayShortWed.
+  ///
+  /// In en, this message translates to:
+  /// **'Wed'**
+  String get weekdayShortWed;
+
+  /// No description provided for @weekdayShortThu.
+  ///
+  /// In en, this message translates to:
+  /// **'Thu'**
+  String get weekdayShortThu;
+
+  /// No description provided for @weekdayShortFri.
+  ///
+  /// In en, this message translates to:
+  /// **'Fri'**
+  String get weekdayShortFri;
+
+  /// No description provided for @weekdayShortSat.
+  ///
+  /// In en, this message translates to:
+  /// **'Sat'**
+  String get weekdayShortSat;
+
+  /// No description provided for @weekdayShortSun.
+  ///
+  /// In en, this message translates to:
+  /// **'Sun'**
+  String get weekdayShortSun;
+
+  /// No description provided for @weekdayLetters.
+  ///
+  /// In en, this message translates to:
+  /// **'M,T,W,T,F,S,S'**
+  String get weekdayLetters;
+
+  /// No description provided for @staffDaily.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily'**
+  String get staffDaily;
+
+  /// No description provided for @staffTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Staff'**
+  String get staffTitle;
+
+  /// No description provided for @staffNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'This house help isn’t in your home any more.'**
+  String get staffNotFound;
+
+  /// No description provided for @staffMarkedIn.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} marked in at {time}'**
+  String staffMarkedIn(Object name, Object time);
+
+  /// No description provided for @staffMarkedOut.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} out · {duration} today'**
+  String staffMarkedOut(Object name, Object duration);
+
+  /// No description provided for @staffExpected.
+  ///
+  /// In en, this message translates to:
+  /// **'Expected {times}'**
+  String staffExpected(Object times);
+
+  /// No description provided for @staffInSince.
+  ///
+  /// In en, this message translates to:
+  /// **'In since {time} · {duration}'**
+  String staffInSince(Object time, Object duration);
+
+  /// No description provided for @staffDoneToday.
+  ///
+  /// In en, this message translates to:
+  /// **'{duration} today · out {time}'**
+  String staffDoneToday(Object duration, Object time);
+
+  /// No description provided for @staffOnLeaveToday.
+  ///
+  /// In en, this message translates to:
+  /// **'On leave today (informed)'**
+  String get staffOnLeaveToday;
+
+  /// No description provided for @staffDayOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Day off'**
+  String get staffDayOff;
+
+  /// No description provided for @staffMarkIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark in'**
+  String get staffMarkIn;
+
+  /// No description provided for @staffMarkOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark out'**
+  String get staffMarkOut;
+
+  /// No description provided for @staffVisitButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit'**
+  String get staffVisitButton;
+
+  /// No description provided for @staffChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get staffChange;
+
+  /// No description provided for @staffStartAnother.
+  ///
+  /// In en, this message translates to:
+  /// **'Start another visit for {name}'**
+  String staffStartAnother(Object name);
+
+  /// No description provided for @staffHelpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Help at home'**
+  String get staffHelpTitle;
+
+  /// No description provided for @staffHelpSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a name for attendance & pay'**
+  String get staffHelpSub;
+
+  /// No description provided for @staffNoneYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No house help added yet.'**
+  String get staffNoneYet;
+
+  /// No description provided for @commonAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get commonAdd;
+
+  /// No description provided for @commonFix.
+  ///
+  /// In en, this message translates to:
+  /// **'Fix'**
+  String get commonFix;
+
+  /// No description provided for @staffAlertNotMarkedOut.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} wasn’t marked out on {day}'**
+  String staffAlertNotMarkedOut(Object name, Object day);
+
+  /// No description provided for @staffAlertTwoOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} has 2 open visits'**
+  String staffAlertTwoOpen(Object name);
+
+  /// No description provided for @staffAddTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add house help'**
+  String get staffAddTitle;
+
+  /// No description provided for @staffAddLead.
+  ///
+  /// In en, this message translates to:
+  /// **'They don’t need the app. Anyone at home marks them in and out; pay is worked out for you.'**
+  String get staffAddLead;
+
+  /// No description provided for @staffName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get staffName;
+
+  /// No description provided for @staffAddNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Kamala'**
+  String get staffAddNameHint;
+
+  /// No description provided for @staffRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get staffRole;
+
+  /// No description provided for @staffRoleHouseHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'House help'**
+  String get staffRoleHouseHelp;
+
+  /// No description provided for @staffRoleCook.
+  ///
+  /// In en, this message translates to:
+  /// **'Cook'**
+  String get staffRoleCook;
+
+  /// No description provided for @staffRoleDriver.
+  ///
+  /// In en, this message translates to:
+  /// **'Driver'**
+  String get staffRoleDriver;
+
+  /// No description provided for @staffRoleNanny.
+  ///
+  /// In en, this message translates to:
+  /// **'Nanny'**
+  String get staffRoleNanny;
+
+  /// No description provided for @staffRoleGardener.
+  ///
+  /// In en, this message translates to:
+  /// **'Gardener'**
+  String get staffRoleGardener;
+
+  /// No description provided for @staffPay.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay'**
+  String get staffPay;
+
+  /// No description provided for @staffPayPerHour.
+  ///
+  /// In en, this message translates to:
+  /// **'Per hour'**
+  String get staffPayPerHour;
+
+  /// No description provided for @staffPayPerMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Per month'**
+  String get staffPayPerMonth;
+
+  /// No description provided for @staffAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount (₹)'**
+  String get staffAmount;
+
+  /// No description provided for @staffAmountHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. 6000'**
+  String get staffAmountHint;
+
+  /// No description provided for @staffUsuallyAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Usually comes at'**
+  String get staffUsuallyAt;
+
+  /// No description provided for @staffMobile.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile (optional, for WhatsApp)'**
+  String get staffMobile;
+
+  /// No description provided for @staffPhoneInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the number — 10 digits starting with 6, 7, 8 or 9.'**
+  String get staffPhoneInvalid;
+
+  /// No description provided for @staffAddInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Works Mon–Sat by default; change days and pay rules later on their page.'**
+  String get staffAddInfo;
+
+  /// No description provided for @staffAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} added · mark them in from Today'**
+  String staffAdded(Object name);
+
+  /// No description provided for @staffIn.
+  ///
+  /// In en, this message translates to:
+  /// **'In'**
+  String get staffIn;
+
+  /// No description provided for @staffOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Out'**
+  String get staffOut;
+
+  /// No description provided for @staffErrNoIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Add an in-time, or close this sheet.'**
+  String get staffErrNoIn;
+
+  /// No description provided for @staffErrOutBeforeIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Out time has to be after in time.'**
+  String get staffErrOutBeforeIn;
+
+  /// No description provided for @staffErrTooLong.
+  ///
+  /// In en, this message translates to:
+  /// **'A visit can’t be longer than 16 hours.'**
+  String get staffErrTooLong;
+
+  /// No description provided for @staffOverlap.
+  ///
+  /// In en, this message translates to:
+  /// **'This overlaps another visit at {time}.'**
+  String staffOverlap(Object time);
+
+  /// No description provided for @staffOnlyAdminsOlder.
+  ///
+  /// In en, this message translates to:
+  /// **'Only admins can change older visits.'**
+  String get staffOnlyAdminsOlder;
+
+  /// No description provided for @staffVisitTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} · {day}'**
+  String staffVisitTitle(Object name, Object day);
+
+  /// No description provided for @staffVisitLeadSome.
+  ///
+  /// In en, this message translates to:
+  /// **'Tapped late or forgot? Fix the time — salary recalculates from this.'**
+  String get staffVisitLeadSome;
+
+  /// No description provided for @staffVisitLeadNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No visit recorded. Add one, or mark an informed leave so it isn’t counted as absent.'**
+  String get staffVisitLeadNone;
+
+  /// No description provided for @staffNow.
+  ///
+  /// In en, this message translates to:
+  /// **'now'**
+  String get staffNow;
+
+  /// No description provided for @staffAddVisit.
+  ///
+  /// In en, this message translates to:
+  /// **'Add visit'**
+  String get staffAddVisit;
+
+  /// No description provided for @staffEditVisit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit visit'**
+  String get staffEditVisit;
+
+  /// No description provided for @staffRemoveVisit.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove visit'**
+  String get staffRemoveVisit;
+
+  /// No description provided for @staffSettledNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'{month} is settled — changes will show as a difference to pay'**
+  String staffSettledNotice(Object month);
+
+  /// No description provided for @staffVisitUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit updated · salary recalculated'**
+  String get staffVisitUpdated;
+
+  /// No description provided for @staffVisitRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit removed'**
+  String get staffVisitRemoved;
+
+  /// No description provided for @staffInformedLeave.
+  ///
+  /// In en, this message translates to:
+  /// **'Informed leave'**
+  String get staffInformedLeave;
+
+  /// No description provided for @staffUndoLeave.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo leave'**
+  String get staffUndoLeave;
+
+  /// No description provided for @staffLeaveMarked.
+  ///
+  /// In en, this message translates to:
+  /// **'{day} marked as informed leave'**
+  String staffLeaveMarked(Object day);
+
+  /// No description provided for @staffLeaveRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave removed'**
+  String get staffLeaveRemoved;
+
+  /// No description provided for @staffCall.
+  ///
+  /// In en, this message translates to:
+  /// **'Call {name}'**
+  String staffCall(Object name);
+
+  /// No description provided for @staffWhatsApp.
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp {name}'**
+  String staffWhatsApp(Object name);
+
+  /// No description provided for @staffEditDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit details'**
+  String get staffEditDetails;
+
+  /// No description provided for @staffRoleWindow.
+  ///
+  /// In en, this message translates to:
+  /// **'{role} · {window}'**
+  String staffRoleWindow(Object role, Object window);
+
+  /// No description provided for @staffPayHourlyLine.
+  ///
+  /// In en, this message translates to:
+  /// **'{rate}/hour'**
+  String staffPayHourlyLine(Object rate);
+
+  /// No description provided for @staffPayMonthlyLine.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount}/month'**
+  String staffPayMonthlyLine(Object amount);
+
+  /// No description provided for @staffFormerTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Former house help'**
+  String get staffFormerTag;
+
+  /// No description provided for @staffUpi.
+  ///
+  /// In en, this message translates to:
+  /// **'UPI ID (optional)'**
+  String get staffUpi;
+
+  /// No description provided for @staffWorkDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Work days'**
+  String get staffWorkDays;
+
+  /// No description provided for @staffAddTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a second time'**
+  String get staffAddTime;
+
+  /// No description provided for @staffDetailsSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Details saved'**
+  String get staffDetailsSaved;
+
+  /// No description provided for @staffMonthAttendance.
+  ///
+  /// In en, this message translates to:
+  /// **'{month} attendance'**
+  String staffMonthAttendance(Object month);
+
+  /// No description provided for @staffPrevMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous month'**
+  String get staffPrevMonth;
+
+  /// No description provided for @staffNextMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Next month'**
+  String get staffNextMonth;
+
+  /// No description provided for @staffCellWorked.
+  ///
+  /// In en, this message translates to:
+  /// **'{day}: worked {duration}'**
+  String staffCellWorked(Object day, Object duration);
+
+  /// No description provided for @staffCellAbsent.
+  ///
+  /// In en, this message translates to:
+  /// **'{day}: absent'**
+  String staffCellAbsent(Object day);
+
+  /// No description provided for @staffCellLeave.
+  ///
+  /// In en, this message translates to:
+  /// **'{day}: informed leave'**
+  String staffCellLeave(Object day);
+
+  /// No description provided for @staffCellOff.
+  ///
+  /// In en, this message translates to:
+  /// **'{day}: day off'**
+  String staffCellOff(Object day);
+
+  /// No description provided for @staffCellUpcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'{day}: upcoming'**
+  String staffCellUpcoming(Object day);
+
+  /// No description provided for @staffCellNotMarked.
+  ///
+  /// In en, this message translates to:
+  /// **'{day}: not marked yet'**
+  String staffCellNotMarked(Object day);
+
+  /// No description provided for @staffCellBeforeStart.
+  ///
+  /// In en, this message translates to:
+  /// **'{day}: before start'**
+  String staffCellBeforeStart(Object day);
+
+  /// No description provided for @staffLegendWorked.
+  ///
+  /// In en, this message translates to:
+  /// **'Worked (stronger = longer)'**
+  String get staffLegendWorked;
+
+  /// No description provided for @staffLegendAbsent.
+  ///
+  /// In en, this message translates to:
+  /// **'Absent'**
+  String get staffLegendAbsent;
+
+  /// No description provided for @staffLegendLeave.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave'**
+  String get staffLegendLeave;
+
+  /// No description provided for @staffStatPresent.
+  ///
+  /// In en, this message translates to:
+  /// **'Days present'**
+  String get staffStatPresent;
+
+  /// No description provided for @staffStatAbsent.
+  ///
+  /// In en, this message translates to:
+  /// **'Absent'**
+  String get staffStatAbsent;
+
+  /// No description provided for @staffStatHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Hours'**
+  String get staffStatHours;
+
+  /// No description provided for @staffVisitLog.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit log'**
+  String get staffVisitLog;
+
+  /// No description provided for @staffVisitLogHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to fix a time'**
+  String get staffVisitLogHint;
+
+  /// No description provided for @staffSalaryButton.
+  ///
+  /// In en, this message translates to:
+  /// **'{month} salary'**
+  String staffSalaryButton(Object month);
+
+  /// No description provided for @staffRemoveButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {name} from home'**
+  String staffRemoveButton(Object name);
+
+  /// No description provided for @staffRemoveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {name}?'**
+  String staffRemoveTitle(Object name);
+
+  /// No description provided for @staffRemoveLead.
+  ///
+  /// In en, this message translates to:
+  /// **'They disappear from Today and attendance. Salary already paid stays in Money.'**
+  String get staffRemoveLead;
+
+  /// No description provided for @commonRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get commonRemove;
+
+  /// No description provided for @staffRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} removed'**
+  String staffRemoved(Object name);
+
+  /// No description provided for @staffRestore.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore'**
+  String get staffRestore;
+
+  /// No description provided for @staffRestored.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} restored'**
+  String staffRestored(Object name);
+
+  /// No description provided for @staffFormerCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Former house help ({count})'**
+  String staffFormerCount(int count);
 }
 
 class _AppLocalizationsDelegate

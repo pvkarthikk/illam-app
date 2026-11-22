@@ -27,7 +27,10 @@ class CollectionRegistry {
       db.devNotes,
       db.homes,
       db.members,
-      // P03: db.homes, db.members   P04: db.staff, db.visits, db.leaves   … one line per synced table
+      db.staff,
+      db.visits,
+      db.leaves,
+      // … one line per synced table
     ])
       t.actualTableName: _specOf(t),
   });

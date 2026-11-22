@@ -311,4 +311,401 @@ class AppLocalizationsEn extends AppLocalizations {
   String debugIsAdmin(Object value) {
     return 'Admin on this phone: $value';
   }
+
+  @override
+  String get weekdayShortMon => 'Mon';
+
+  @override
+  String get weekdayShortTue => 'Tue';
+
+  @override
+  String get weekdayShortWed => 'Wed';
+
+  @override
+  String get weekdayShortThu => 'Thu';
+
+  @override
+  String get weekdayShortFri => 'Fri';
+
+  @override
+  String get weekdayShortSat => 'Sat';
+
+  @override
+  String get weekdayShortSun => 'Sun';
+
+  @override
+  String get weekdayLetters => 'M,T,W,T,F,S,S';
+
+  @override
+  String get staffDaily => 'Daily';
+
+  @override
+  String get staffTitle => 'Staff';
+
+  @override
+  String get staffNotFound => 'This house help isn’t in your home any more.';
+
+  @override
+  String staffMarkedIn(Object name, Object time) {
+    return '$name marked in at $time';
+  }
+
+  @override
+  String staffMarkedOut(Object name, Object duration) {
+    return '$name out · $duration today';
+  }
+
+  @override
+  String staffExpected(Object times) {
+    return 'Expected $times';
+  }
+
+  @override
+  String staffInSince(Object time, Object duration) {
+    return 'In since $time · $duration';
+  }
+
+  @override
+  String staffDoneToday(Object duration, Object time) {
+    return '$duration today · out $time';
+  }
+
+  @override
+  String get staffOnLeaveToday => 'On leave today (informed)';
+
+  @override
+  String get staffDayOff => 'Day off';
+
+  @override
+  String get staffMarkIn => 'Mark in';
+
+  @override
+  String get staffMarkOut => 'Mark out';
+
+  @override
+  String get staffVisitButton => 'Visit';
+
+  @override
+  String get staffChange => 'Change';
+
+  @override
+  String staffStartAnother(Object name) {
+    return 'Start another visit for $name';
+  }
+
+  @override
+  String get staffHelpTitle => 'Help at home';
+
+  @override
+  String get staffHelpSub => 'Tap a name for attendance & pay';
+
+  @override
+  String get staffNoneYet => 'No house help added yet.';
+
+  @override
+  String get commonAdd => 'Add';
+
+  @override
+  String get commonFix => 'Fix';
+
+  @override
+  String staffAlertNotMarkedOut(Object name, Object day) {
+    return '$name wasn’t marked out on $day';
+  }
+
+  @override
+  String staffAlertTwoOpen(Object name) {
+    return '$name has 2 open visits';
+  }
+
+  @override
+  String get staffAddTitle => 'Add house help';
+
+  @override
+  String get staffAddLead =>
+      'They don’t need the app. Anyone at home marks them in and out; pay is worked out for you.';
+
+  @override
+  String get staffName => 'Name';
+
+  @override
+  String get staffAddNameHint => 'e.g. Kamala';
+
+  @override
+  String get staffRole => 'Role';
+
+  @override
+  String get staffRoleHouseHelp => 'House help';
+
+  @override
+  String get staffRoleCook => 'Cook';
+
+  @override
+  String get staffRoleDriver => 'Driver';
+
+  @override
+  String get staffRoleNanny => 'Nanny';
+
+  @override
+  String get staffRoleGardener => 'Gardener';
+
+  @override
+  String get staffPay => 'Pay';
+
+  @override
+  String get staffPayPerHour => 'Per hour';
+
+  @override
+  String get staffPayPerMonth => 'Per month';
+
+  @override
+  String get staffAmount => 'Amount (₹)';
+
+  @override
+  String get staffAmountHint => 'e.g. 6000';
+
+  @override
+  String get staffUsuallyAt => 'Usually comes at';
+
+  @override
+  String get staffMobile => 'Mobile (optional, for WhatsApp)';
+
+  @override
+  String get staffPhoneInvalid =>
+      'Check the number — 10 digits starting with 6, 7, 8 or 9.';
+
+  @override
+  String get staffAddInfo =>
+      'Works Mon–Sat by default; change days and pay rules later on their page.';
+
+  @override
+  String staffAdded(Object name) {
+    return '$name added · mark them in from Today';
+  }
+
+  @override
+  String get staffIn => 'In';
+
+  @override
+  String get staffOut => 'Out';
+
+  @override
+  String get staffErrNoIn => 'Add an in-time, or close this sheet.';
+
+  @override
+  String get staffErrOutBeforeIn => 'Out time has to be after in time.';
+
+  @override
+  String get staffErrTooLong => 'A visit can’t be longer than 16 hours.';
+
+  @override
+  String staffOverlap(Object time) {
+    return 'This overlaps another visit at $time.';
+  }
+
+  @override
+  String get staffOnlyAdminsOlder => 'Only admins can change older visits.';
+
+  @override
+  String staffVisitTitle(Object name, Object day) {
+    return '$name · $day';
+  }
+
+  @override
+  String get staffVisitLeadSome =>
+      'Tapped late or forgot? Fix the time — salary recalculates from this.';
+
+  @override
+  String get staffVisitLeadNone =>
+      'No visit recorded. Add one, or mark an informed leave so it isn’t counted as absent.';
+
+  @override
+  String get staffNow => 'now';
+
+  @override
+  String get staffAddVisit => 'Add visit';
+
+  @override
+  String get staffEditVisit => 'Edit visit';
+
+  @override
+  String get staffRemoveVisit => 'Remove visit';
+
+  @override
+  String staffSettledNotice(Object month) {
+    return '$month is settled — changes will show as a difference to pay';
+  }
+
+  @override
+  String get staffVisitUpdated => 'Visit updated · salary recalculated';
+
+  @override
+  String get staffVisitRemoved => 'Visit removed';
+
+  @override
+  String get staffInformedLeave => 'Informed leave';
+
+  @override
+  String get staffUndoLeave => 'Undo leave';
+
+  @override
+  String staffLeaveMarked(Object day) {
+    return '$day marked as informed leave';
+  }
+
+  @override
+  String get staffLeaveRemoved => 'Leave removed';
+
+  @override
+  String staffCall(Object name) {
+    return 'Call $name';
+  }
+
+  @override
+  String staffWhatsApp(Object name) {
+    return 'WhatsApp $name';
+  }
+
+  @override
+  String get staffEditDetails => 'Edit details';
+
+  @override
+  String staffRoleWindow(Object role, Object window) {
+    return '$role · $window';
+  }
+
+  @override
+  String staffPayHourlyLine(Object rate) {
+    return '$rate/hour';
+  }
+
+  @override
+  String staffPayMonthlyLine(Object amount) {
+    return '$amount/month';
+  }
+
+  @override
+  String get staffFormerTag => 'Former house help';
+
+  @override
+  String get staffUpi => 'UPI ID (optional)';
+
+  @override
+  String get staffWorkDays => 'Work days';
+
+  @override
+  String get staffAddTime => 'Add a second time';
+
+  @override
+  String get staffDetailsSaved => 'Details saved';
+
+  @override
+  String staffMonthAttendance(Object month) {
+    return '$month attendance';
+  }
+
+  @override
+  String get staffPrevMonth => 'Previous month';
+
+  @override
+  String get staffNextMonth => 'Next month';
+
+  @override
+  String staffCellWorked(Object day, Object duration) {
+    return '$day: worked $duration';
+  }
+
+  @override
+  String staffCellAbsent(Object day) {
+    return '$day: absent';
+  }
+
+  @override
+  String staffCellLeave(Object day) {
+    return '$day: informed leave';
+  }
+
+  @override
+  String staffCellOff(Object day) {
+    return '$day: day off';
+  }
+
+  @override
+  String staffCellUpcoming(Object day) {
+    return '$day: upcoming';
+  }
+
+  @override
+  String staffCellNotMarked(Object day) {
+    return '$day: not marked yet';
+  }
+
+  @override
+  String staffCellBeforeStart(Object day) {
+    return '$day: before start';
+  }
+
+  @override
+  String get staffLegendWorked => 'Worked (stronger = longer)';
+
+  @override
+  String get staffLegendAbsent => 'Absent';
+
+  @override
+  String get staffLegendLeave => 'Leave';
+
+  @override
+  String get staffStatPresent => 'Days present';
+
+  @override
+  String get staffStatAbsent => 'Absent';
+
+  @override
+  String get staffStatHours => 'Hours';
+
+  @override
+  String get staffVisitLog => 'Visit log';
+
+  @override
+  String get staffVisitLogHint => 'Tap to fix a time';
+
+  @override
+  String staffSalaryButton(Object month) {
+    return '$month salary';
+  }
+
+  @override
+  String staffRemoveButton(Object name) {
+    return 'Remove $name from home';
+  }
+
+  @override
+  String staffRemoveTitle(Object name) {
+    return 'Remove $name?';
+  }
+
+  @override
+  String get staffRemoveLead =>
+      'They disappear from Today and attendance. Salary already paid stays in Money.';
+
+  @override
+  String get commonRemove => 'Remove';
+
+  @override
+  String staffRemoved(Object name) {
+    return '$name removed';
+  }
+
+  @override
+  String get staffRestore => 'Restore';
+
+  @override
+  String staffRestored(Object name) {
+    return '$name restored';
+  }
+
+  @override
+  String staffFormerCount(int count) {
+    return 'Former house help ($count)';
+  }
 }

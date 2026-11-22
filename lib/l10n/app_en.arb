@@ -148,5 +148,284 @@
     "placeholders": {
       "value": {}
     }
+  },
+  "weekdayShortMon": "Mon",
+  "weekdayShortTue": "Tue",
+  "weekdayShortWed": "Wed",
+  "weekdayShortThu": "Thu",
+  "weekdayShortFri": "Fri",
+  "weekdayShortSat": "Sat",
+  "weekdayShortSun": "Sun",
+  "weekdayLetters": "M,T,W,T,F,S,S",
+  "staffDaily": "Daily",
+  "staffTitle": "Staff",
+  "staffNotFound": "This house help isn’t in your home any more.",
+  "staffMarkedIn": "{name} marked in at {time}",
+  "@staffMarkedIn": {
+    "placeholders": {
+      "name": {},
+      "time": {}
+    }
+  },
+  "staffMarkedOut": "{name} out · {duration} today",
+  "@staffMarkedOut": {
+    "placeholders": {
+      "name": {},
+      "duration": {}
+    }
+  },
+  "staffExpected": "Expected {times}",
+  "@staffExpected": {
+    "placeholders": {
+      "times": {}
+    }
+  },
+  "staffInSince": "In since {time} · {duration}",
+  "@staffInSince": {
+    "placeholders": {
+      "time": {},
+      "duration": {}
+    }
+  },
+  "staffDoneToday": "{duration} today · out {time}",
+  "@staffDoneToday": {
+    "placeholders": {
+      "duration": {},
+      "time": {}
+    }
+  },
+  "staffOnLeaveToday": "On leave today (informed)",
+  "staffDayOff": "Day off",
+  "staffMarkIn": "Mark in",
+  "staffMarkOut": "Mark out",
+  "staffVisitButton": "Visit",
+  "staffChange": "Change",
+  "staffStartAnother": "Start another visit for {name}",
+  "@staffStartAnother": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "staffHelpTitle": "Help at home",
+  "staffHelpSub": "Tap a name for attendance & pay",
+  "staffNoneYet": "No house help added yet.",
+  "commonAdd": "Add",
+  "commonFix": "Fix",
+  "staffAlertNotMarkedOut": "{name} wasn’t marked out on {day}",
+  "@staffAlertNotMarkedOut": {
+    "placeholders": {
+      "name": {},
+      "day": {}
+    }
+  },
+  "staffAlertTwoOpen": "{name} has 2 open visits",
+  "@staffAlertTwoOpen": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "staffAddTitle": "Add house help",
+  "staffAddLead": "They don’t need the app. Anyone at home marks them in and out; pay is worked out for you.",
+  "staffName": "Name",
+  "staffAddNameHint": "e.g. Kamala",
+  "staffRole": "Role",
+  "staffRoleHouseHelp": "House help",
+  "staffRoleCook": "Cook",
+  "staffRoleDriver": "Driver",
+  "staffRoleNanny": "Nanny",
+  "staffRoleGardener": "Gardener",
+  "staffPay": "Pay",
+  "staffPayPerHour": "Per hour",
+  "staffPayPerMonth": "Per month",
+  "staffAmount": "Amount (₹)",
+  "staffAmountHint": "e.g. 6000",
+  "staffUsuallyAt": "Usually comes at",
+  "staffMobile": "Mobile (optional, for WhatsApp)",
+  "staffPhoneInvalid": "Check the number — 10 digits starting with 6, 7, 8 or 9.",
+  "staffAddInfo": "Works Mon–Sat by default; change days and pay rules later on their page.",
+  "staffAdded": "{name} added · mark them in from Today",
+  "@staffAdded": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "staffIn": "In",
+  "staffOut": "Out",
+  "staffErrNoIn": "Add an in-time, or close this sheet.",
+  "staffErrOutBeforeIn": "Out time has to be after in time.",
+  "staffErrTooLong": "A visit can’t be longer than 16 hours.",
+  "staffOverlap": "This overlaps another visit at {time}.",
+  "@staffOverlap": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "staffOnlyAdminsOlder": "Only admins can change older visits.",
+  "staffVisitTitle": "{name} · {day}",
+  "@staffVisitTitle": {
+    "placeholders": {
+      "name": {},
+      "day": {}
+    }
+  },
+  "staffVisitLeadSome": "Tapped late or forgot? Fix the time — salary recalculates from this.",
+  "staffVisitLeadNone": "No visit recorded. Add one, or mark an informed leave so it isn’t counted as absent.",
+  "staffNow": "now",
+  "staffAddVisit": "Add visit",
+  "staffEditVisit": "Edit visit",
+  "staffRemoveVisit": "Remove visit",
+  "staffSettledNotice": "{month} is settled — changes will show as a difference to pay",
+  "@staffSettledNotice": {
+    "placeholders": {
+      "month": {}
+    }
+  },
+  "staffVisitUpdated": "Visit updated · salary recalculated",
+  "staffVisitRemoved": "Visit removed",
+  "staffInformedLeave": "Informed leave",
+  "staffUndoLeave": "Undo leave",
+  "staffLeaveMarked": "{day} marked as informed leave",
+  "@staffLeaveMarked": {
+    "placeholders": {
+      "day": {}
+    }
+  },
+  "staffLeaveRemoved": "Leave removed",
+  "staffCall": "Call {name}",
+  "@staffCall": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "staffWhatsApp": "WhatsApp {name}",
+  "@staffWhatsApp": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "staffEditDetails": "Edit details",
+  "staffRoleWindow": "{role} · {window}",
+  "@staffRoleWindow": {
+    "placeholders": {
+      "role": {},
+      "window": {}
+    }
+  },
+  "staffPayHourlyLine": "{rate}/hour",
+  "@staffPayHourlyLine": {
+    "placeholders": {
+      "rate": {}
+    }
+  },
+  "staffPayMonthlyLine": "{amount}/month",
+  "@staffPayMonthlyLine": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "staffFormerTag": "Former house help",
+  "staffUpi": "UPI ID (optional)",
+  "staffWorkDays": "Work days",
+  "staffAddTime": "Add a second time",
+  "staffDetailsSaved": "Details saved",
+  "staffMonthAttendance": "{month} attendance",
+  "@staffMonthAttendance": {
+    "placeholders": {
+      "month": {}
+    }
+  },
+  "staffPrevMonth": "Previous month",
+  "staffNextMonth": "Next month",
+  "staffCellWorked": "{day}: worked {duration}",
+  "@staffCellWorked": {
+    "placeholders": {
+      "day": {},
+      "duration": {}
+    }
+  },
+  "staffCellAbsent": "{day}: absent",
+  "@staffCellAbsent": {
+    "placeholders": {
+      "day": {}
+    }
+  },
+  "staffCellLeave": "{day}: informed leave",
+  "@staffCellLeave": {
+    "placeholders": {
+      "day": {}
+    }
+  },
+  "staffCellOff": "{day}: day off",
+  "@staffCellOff": {
+    "placeholders": {
+      "day": {}
+    }
+  },
+  "staffCellUpcoming": "{day}: upcoming",
+  "@staffCellUpcoming": {
+    "placeholders": {
+      "day": {}
+    }
+  },
+  "staffCellNotMarked": "{day}: not marked yet",
+  "@staffCellNotMarked": {
+    "placeholders": {
+      "day": {}
+    }
+  },
+  "staffCellBeforeStart": "{day}: before start",
+  "@staffCellBeforeStart": {
+    "placeholders": {
+      "day": {}
+    }
+  },
+  "staffLegendWorked": "Worked (stronger = longer)",
+  "staffLegendAbsent": "Absent",
+  "staffLegendLeave": "Leave",
+  "staffStatPresent": "Days present",
+  "staffStatAbsent": "Absent",
+  "staffStatHours": "Hours",
+  "staffVisitLog": "Visit log",
+  "staffVisitLogHint": "Tap to fix a time",
+  "staffSalaryButton": "{month} salary",
+  "@staffSalaryButton": {
+    "placeholders": {
+      "month": {}
+    }
+  },
+  "staffRemoveButton": "Remove {name} from home",
+  "@staffRemoveButton": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "staffRemoveTitle": "Remove {name}?",
+  "@staffRemoveTitle": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "staffRemoveLead": "They disappear from Today and attendance. Salary already paid stays in Money.",
+  "commonRemove": "Remove",
+  "staffRemoved": "{name} removed",
+  "@staffRemoved": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "staffRestore": "Restore",
+  "staffRestored": "{name} restored",
+  "@staffRestored": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "staffFormerCount": "Former house help ({count})",
+  "@staffFormerCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

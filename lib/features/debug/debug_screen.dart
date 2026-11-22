@@ -7,6 +7,7 @@ import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/features/debug/data_lab_controller.dart';
+import 'package:nm_flat/features/staff/former_staff_section.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
 class DebugScreen extends ConsumerWidget {
@@ -112,6 +113,8 @@ class DebugScreen extends ConsumerWidget {
               ],
             ),
           ),
+          const SizedBox(height: 16),
+          const FormerStaffSection(),
         ],
       ),
     );

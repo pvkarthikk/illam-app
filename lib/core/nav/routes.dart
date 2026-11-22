@@ -9,6 +9,7 @@ abstract final class Routes {
       debugDataLab = '/debug/data-lab';
   static const onboarding = '/onboarding';
   static String onboardingStep(String step) => '/onboarding/$step';
+  static String staff(String id) => '/staff/$id';
 }
 
 enum NestTab { today, lists, tasks, meals, money }

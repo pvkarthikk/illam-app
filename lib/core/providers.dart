@@ -8,6 +8,7 @@ import 'package:nm_flat/core/data/ops/change_writer.dart';
 import 'package:nm_flat/core/data/ops/collection_registry.dart';
 import 'package:nm_flat/core/data/prefs/device_prefs.dart';
 import 'package:nm_flat/core/data/repo/home_repo.dart';
+import 'package:nm_flat/core/data/repo/staff_repo.dart';
 import 'package:nm_flat/core/data/secure/secure_store.dart';
 import 'package:nm_flat/core/data/seed/demo_seeder.dart';
 import 'package:nm_flat/core/nav/routes.dart';
@@ -111,3 +112,10 @@ final isAdminProvider = Provider<bool>((ref) {
   final viewingAsMember = kDebugMode && ref.watch(viewAsMemberProvider);
   return member != null && member.role == 'admin' && !viewingAsMember;
 });
+final staffRepoProvider = Provider(
+  (ref) => StaffRepo(
+    ref.watch(dbProvider),
+    ref.watch(changesProvider),
+    ref.watch(clockProvider),
+  ),
+);

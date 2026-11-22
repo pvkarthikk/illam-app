@@ -6,6 +6,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:nm_flat/app.dart';
 import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/data/prefs/device_prefs.dart';
+import 'package:nm_flat/core/data/secure/secure_store.dart';
 import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/features/today/sections/hero_section.dart';
@@ -66,6 +67,7 @@ void main() {
           overrides: [
             prefsProvider.overrideWithValue(prefs),
             dbProvider.overrideWithValue(db),
+            secureStoreProvider.overrideWithValue(MemorySecureStore()),
             themeModeProvider.overrideWithValue(ThemeMode.light),
           ],
           child: const NestApp(),
@@ -85,6 +87,7 @@ void main() {
           overrides: [
             prefsProvider.overrideWithValue(prefs),
             dbProvider.overrideWithValue(db),
+            secureStoreProvider.overrideWithValue(MemorySecureStore()),
             themeModeProvider.overrideWithValue(ThemeMode.dark),
           ],
           child: const NestApp(),

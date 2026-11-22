@@ -32,6 +32,8 @@ void main() {
     expect(notes.length, 3);
     final members = await db.select(db.members).get();
     expect(members.length, 3);
+    final staff = await db.select(db.staff).get();
+    expect(staff.map((s) => s.name).toSet(), {'Lakshmi', 'Selvi'});
     expect(
       notes.map((n) => n.title).toSet(),
       {'Milk 2L', 'Call plumber', 'Pay rent'},
