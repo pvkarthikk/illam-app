@@ -10,6 +10,7 @@ abstract final class Routes {
   static const onboarding = '/onboarding';
   static String onboardingStep(String step) => '/onboarding/$step';
   static String staff(String id) => '/staff/$id';
+  static String staffSalary(String id) => '/staff/$id/salary';
 }
 
 enum NestTab { today, lists, tasks, meals, money }

@@ -7,7 +7,9 @@ import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/data/ops/change_writer.dart';
 import 'package:nm_flat/core/data/ops/collection_registry.dart';
 import 'package:nm_flat/core/data/prefs/device_prefs.dart';
+import 'package:nm_flat/core/data/repo/expenses_repo.dart';
 import 'package:nm_flat/core/data/repo/home_repo.dart';
+import 'package:nm_flat/core/data/repo/salary_repo.dart';
 import 'package:nm_flat/core/data/repo/staff_repo.dart';
 import 'package:nm_flat/core/data/secure/secure_store.dart';
 import 'package:nm_flat/core/data/seed/demo_seeder.dart';
@@ -119,3 +121,23 @@ final staffRepoProvider = Provider(
     ref.watch(clockProvider),
   ),
 );
+final expensesRepoProvider = Provider(
+  (ref) => ExpensesRepo(ref.watch(dbProvider), ref.watch(prefsProvider)),
+);
+final salaryRepoProvider = Provider(
+  (ref) => SalaryRepo(
+    ref.watch(dbProvider),
+    ref.watch(changesProvider),
+    ref.watch(expensesRepoProvider),
+    ref.watch(prefsProvider),
+  ),
+);
+final adminNamesProvider = Provider<List<String>>((ref) {
+  final members = ref.watch(membersProvider).value ?? const <Member>[];
+  final me = ref.watch(myMemberIdProvider);
+  return [
+    for (final m in members)
+      if (m.role == 'admin' && m.status == 'active')
+        m.id == me ? 'you' : (m.firstName ?? ''),
+  ];
+});

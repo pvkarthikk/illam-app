@@ -1281,6 +1281,764 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Former house help ({count})'**
   String staffFormerCount(int count);
+
+  /// No description provided for @salaryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}’s salary'**
+  String salaryTitle(Object name);
+
+  /// No description provided for @salarySubtitleSoFar.
+  ///
+  /// In en, this message translates to:
+  /// **'{month} 1 – {day} · so far'**
+  String salarySubtitleSoFar(Object month, Object day);
+
+  /// No description provided for @salarySubtitleProjected.
+  ///
+  /// In en, this message translates to:
+  /// **'{month} 1 – {day} · projected'**
+  String salarySubtitleProjected(Object month, Object day);
+
+  /// No description provided for @salarySubtitlePast.
+  ///
+  /// In en, this message translates to:
+  /// **'{month} 1 – {day}'**
+  String salarySubtitlePast(Object month, Object day);
+
+  /// No description provided for @salaryFootnote.
+  ///
+  /// In en, this message translates to:
+  /// **'Every number traces back to the visit log. Fix a wrong time there and this updates instantly.'**
+  String get salaryFootnote;
+
+  /// No description provided for @salaryNotWorking.
+  ///
+  /// In en, this message translates to:
+  /// **'Not working in {month}'**
+  String salaryNotWorking(Object month);
+
+  /// No description provided for @salaryNoRules.
+  ///
+  /// In en, this message translates to:
+  /// **'No pay rules yet'**
+  String get salaryNoRules;
+
+  /// No description provided for @salaryNoRulesBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Set the hourly rate or monthly salary to see what to pay.'**
+  String get salaryNoRulesBody;
+
+  /// No description provided for @salarySetRules.
+  ///
+  /// In en, this message translates to:
+  /// **'Set pay rules'**
+  String get salarySetRules;
+
+  /// No description provided for @salaryEyebrowPayable.
+  ///
+  /// In en, this message translates to:
+  /// **'PAYABLE'**
+  String get salaryEyebrowPayable;
+
+  /// No description provided for @salaryEyebrowPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'PAID'**
+  String get salaryEyebrowPaid;
+
+  /// No description provided for @salaryDaysLine.
+  ///
+  /// In en, this message translates to:
+  /// **'{present} days present · {absent} absent · {leave} leave'**
+  String salaryDaysLine(Object present, Object absent, Object leave);
+
+  /// No description provided for @salaryCarryPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'₹0 to pay · {amount} will carry to {month}'**
+  String salaryCarryPreview(Object amount, Object month);
+
+  /// No description provided for @salaryHoursWorked.
+  ///
+  /// In en, this message translates to:
+  /// **'Hours worked'**
+  String get salaryHoursWorked;
+
+  /// No description provided for @salaryHoursDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'{billed} billed × {rate}/hr · {visits} visits · actual {actual}. Each visit rounded to {rounding}{minimum}'**
+  String salaryHoursDetail(
+    Object billed,
+    Object rate,
+    Object visits,
+    Object actual,
+    Object rounding,
+    Object minimum,
+  );
+
+  /// No description provided for @salaryRoundMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} min'**
+  String salaryRoundMinutes(Object n);
+
+  /// No description provided for @salaryRoundTheMinute.
+  ///
+  /// In en, this message translates to:
+  /// **'the minute'**
+  String get salaryRoundTheMinute;
+
+  /// No description provided for @salaryMinimumPart.
+  ///
+  /// In en, this message translates to:
+  /// **', min {hours} hr'**
+  String salaryMinimumPart(Object hours);
+
+  /// No description provided for @salaryMonthlyLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly salary'**
+  String get salaryMonthlyLine;
+
+  /// No description provided for @salaryMonthlyDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'{workDays} working days · {perDay}/day'**
+  String salaryMonthlyDetail(Object workDays, Object perDay);
+
+  /// No description provided for @salaryLeavesLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Leaves'**
+  String get salaryLeavesLine;
+
+  /// No description provided for @salaryLeavesDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'{taken} taken · {paid} paid · {unpaid} unpaid'**
+  String salaryLeavesDetail(Object taken, Object paid, Object unpaid);
+
+  /// No description provided for @salaryExtraDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Extra task'**
+  String get salaryExtraDetail;
+
+  /// No description provided for @salaryAdvanceLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Advance taken'**
+  String get salaryAdvanceLine;
+
+  /// No description provided for @salaryAdvanceDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Deducted this month'**
+  String get salaryAdvanceDetail;
+
+  /// No description provided for @salaryDeductionDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Deduction'**
+  String get salaryDeductionDetail;
+
+  /// No description provided for @salaryToPay.
+  ///
+  /// In en, this message translates to:
+  /// **'To pay'**
+  String get salaryToPay;
+
+  /// No description provided for @salaryChipRate.
+  ///
+  /// In en, this message translates to:
+  /// **'{rate}/hr'**
+  String salaryChipRate(Object rate);
+
+  /// No description provided for @salaryChipMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount}/mo'**
+  String salaryChipMonthly(Object amount);
+
+  /// No description provided for @salaryChipRound.
+  ///
+  /// In en, this message translates to:
+  /// **'Round {n} min'**
+  String salaryChipRound(Object n);
+
+  /// No description provided for @salaryChipExact.
+  ///
+  /// In en, this message translates to:
+  /// **'Exact minutes'**
+  String get salaryChipExact;
+
+  /// No description provided for @salaryChipPaidLeaves.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 paid leave} other{{n} paid leaves}}'**
+  String salaryChipPaidLeaves(int n);
+
+  /// No description provided for @salaryEditRules.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit pay rules'**
+  String get salaryEditRules;
+
+  /// No description provided for @salaryAdminsSetRules.
+  ///
+  /// In en, this message translates to:
+  /// **'Admins set pay rules'**
+  String get salaryAdminsSetRules;
+
+  /// No description provided for @salaryPrevMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous month'**
+  String get salaryPrevMonth;
+
+  /// No description provided for @salaryNextMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Next month'**
+  String get salaryNextMonth;
+
+  /// No description provided for @salaryMarkPaidButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark {amount} as paid'**
+  String salaryMarkPaidButton(Object amount);
+
+  /// No description provided for @salaryCloseAtZero.
+  ///
+  /// In en, this message translates to:
+  /// **'Close {month} at ₹0'**
+  String salaryCloseAtZero(Object month);
+
+  /// No description provided for @salaryClosedSnack.
+  ///
+  /// In en, this message translates to:
+  /// **'{month} closed at ₹0'**
+  String salaryClosedSnack(Object month);
+
+  /// No description provided for @salaryCarryNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Carried from {month}'**
+  String salaryCarryNote(Object month);
+
+  /// No description provided for @salaryMemberNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Only admins pay salary. Ask {names} — you’ll see it here once paid.'**
+  String salaryMemberNote(Object names);
+
+  /// No description provided for @salaryYou.
+  ///
+  /// In en, this message translates to:
+  /// **'you'**
+  String get salaryYou;
+
+  /// No description provided for @salaryNamesOr.
+  ///
+  /// In en, this message translates to:
+  /// **'{first} or {second}'**
+  String salaryNamesOr(Object first, Object second);
+
+  /// No description provided for @salaryPaidTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid {amount} on {date} · {method}'**
+  String salaryPaidTag(Object amount, Object date, Object method);
+
+  /// No description provided for @salaryClosedTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed at ₹0 on {date}'**
+  String salaryClosedTag(Object date);
+
+  /// No description provided for @salaryUndoPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo payment'**
+  String get salaryUndoPayment;
+
+  /// No description provided for @salaryUndoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo payment?'**
+  String get salaryUndoTitle;
+
+  /// No description provided for @salaryUndoLead.
+  ///
+  /// In en, this message translates to:
+  /// **'The {amount} salary spend is removed and {month} can be paid again.'**
+  String salaryUndoLead(Object amount, Object month);
+
+  /// No description provided for @salaryUndoneSnack.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment undone'**
+  String get salaryUndoneSnack;
+
+  /// No description provided for @salaryMethodUpi.
+  ///
+  /// In en, this message translates to:
+  /// **'UPI'**
+  String get salaryMethodUpi;
+
+  /// No description provided for @salaryMethodCash.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get salaryMethodCash;
+
+  /// No description provided for @salaryMethodBank.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank'**
+  String get salaryMethodBank;
+
+  /// No description provided for @salaryDuplicateAlert.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}’s {month} salary was marked paid twice ({a} by {x}, {b} by {y}). The first is kept — check you didn’t pay twice.'**
+  String salaryDuplicateAlert(
+    Object name,
+    Object month,
+    Object a,
+    Object x,
+    Object b,
+    Object y,
+  );
+
+  /// No description provided for @salaryUndoSecond.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo the second payment'**
+  String get salaryUndoSecond;
+
+  /// No description provided for @salaryDifferenceAlert.
+  ///
+  /// In en, this message translates to:
+  /// **'Recalculated {x} — settled at {y}. Difference {z}'**
+  String salaryDifferenceAlert(Object x, Object y, Object z);
+
+  /// No description provided for @salaryAddToMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to {month}'**
+  String salaryAddToMonth(Object month);
+
+  /// No description provided for @salaryDifferenceNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Difference from {month}'**
+  String salaryDifferenceNote(Object month);
+
+  /// No description provided for @salaryDifferenceSnack.
+  ///
+  /// In en, this message translates to:
+  /// **'Difference added to {month}'**
+  String salaryDifferenceSnack(Object month);
+
+  /// No description provided for @salarySharePaySlip.
+  ///
+  /// In en, this message translates to:
+  /// **'Share pay slip with {name}'**
+  String salarySharePaySlip(Object name);
+
+  /// No description provided for @salaryRulesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}’s pay rules'**
+  String salaryRulesTitle(Object name);
+
+  /// No description provided for @salaryRulesLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Agreed once, applied every month. Shown on the pay slip so there are no surprises.'**
+  String get salaryRulesLead;
+
+  /// No description provided for @salaryPayType.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay type'**
+  String get salaryPayType;
+
+  /// No description provided for @salaryHourly.
+  ///
+  /// In en, this message translates to:
+  /// **'Hourly'**
+  String get salaryHourly;
+
+  /// No description provided for @salaryMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get salaryMonthly;
+
+  /// No description provided for @salaryRatePerHour.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate per hour (₹)'**
+  String get salaryRatePerHour;
+
+  /// No description provided for @salaryRoundTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Round each visit to'**
+  String get salaryRoundTo;
+
+  /// No description provided for @salaryRoundExactMinute.
+  ///
+  /// In en, this message translates to:
+  /// **'Exact minute'**
+  String get salaryRoundExactMinute;
+
+  /// No description provided for @salaryRound15.
+  ///
+  /// In en, this message translates to:
+  /// **'15 min'**
+  String get salaryRound15;
+
+  /// No description provided for @salaryRound30.
+  ///
+  /// In en, this message translates to:
+  /// **'30 min'**
+  String get salaryRound30;
+
+  /// No description provided for @salaryMinimum.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum per visit'**
+  String get salaryMinimum;
+
+  /// No description provided for @salaryMinNone.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get salaryMinNone;
+
+  /// No description provided for @salaryMin1.
+  ///
+  /// In en, this message translates to:
+  /// **'1 hour'**
+  String get salaryMin1;
+
+  /// No description provided for @salaryMin2.
+  ///
+  /// In en, this message translates to:
+  /// **'2 hours'**
+  String get salaryMin2;
+
+  /// No description provided for @salaryMonthlyAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly salary (₹)'**
+  String get salaryMonthlyAmount;
+
+  /// No description provided for @salaryPaidLeaves.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid leaves per month'**
+  String get salaryPaidLeaves;
+
+  /// No description provided for @salaryWorkDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Work days'**
+  String get salaryWorkDays;
+
+  /// No description provided for @salaryDayMon.
+  ///
+  /// In en, this message translates to:
+  /// **'Mon'**
+  String get salaryDayMon;
+
+  /// No description provided for @salaryDayTue.
+  ///
+  /// In en, this message translates to:
+  /// **'Tue'**
+  String get salaryDayTue;
+
+  /// No description provided for @salaryDayWed.
+  ///
+  /// In en, this message translates to:
+  /// **'Wed'**
+  String get salaryDayWed;
+
+  /// No description provided for @salaryDayThu.
+  ///
+  /// In en, this message translates to:
+  /// **'Thu'**
+  String get salaryDayThu;
+
+  /// No description provided for @salaryDayFri.
+  ///
+  /// In en, this message translates to:
+  /// **'Fri'**
+  String get salaryDayFri;
+
+  /// No description provided for @salaryDaySat.
+  ///
+  /// In en, this message translates to:
+  /// **'Sat'**
+  String get salaryDaySat;
+
+  /// No description provided for @salaryDaySun.
+  ///
+  /// In en, this message translates to:
+  /// **'Sun'**
+  String get salaryDaySun;
+
+  /// No description provided for @salaryApplyFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply from'**
+  String get salaryApplyFrom;
+
+  /// No description provided for @salaryThisMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'This month'**
+  String get salaryThisMonth;
+
+  /// No description provided for @salaryNextMonthChip.
+  ///
+  /// In en, this message translates to:
+  /// **'Next month'**
+  String get salaryNextMonthChip;
+
+  /// No description provided for @salarySaveRules.
+  ///
+  /// In en, this message translates to:
+  /// **'Save rules'**
+  String get salarySaveRules;
+
+  /// No description provided for @salaryRulesSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay rules saved · salary recalculated'**
+  String get salaryRulesSaved;
+
+  /// No description provided for @salaryCheckAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the amount'**
+  String get salaryCheckAmount;
+
+  /// No description provided for @salaryAdjustmentsFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Adjustments for {month}'**
+  String salaryAdjustmentsFor(Object month);
+
+  /// No description provided for @salaryAddExtra.
+  ///
+  /// In en, this message translates to:
+  /// **'+ Add extra'**
+  String get salaryAddExtra;
+
+  /// No description provided for @salaryAddAdvance.
+  ///
+  /// In en, this message translates to:
+  /// **'+ Add advance'**
+  String get salaryAddAdvance;
+
+  /// No description provided for @salaryAddDeduction.
+  ///
+  /// In en, this message translates to:
+  /// **'+ Add deduction'**
+  String get salaryAddDeduction;
+
+  /// No description provided for @salaryAdjNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get salaryAdjNote;
+
+  /// No description provided for @salaryAdjAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount (₹)'**
+  String get salaryAdjAmount;
+
+  /// No description provided for @salaryAdjSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get salaryAdjSave;
+
+  /// No description provided for @salaryAdjRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get salaryAdjRemove;
+
+  /// No description provided for @salaryAdjAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Adjustment added · salary recalculated'**
+  String get salaryAdjAdded;
+
+  /// No description provided for @salaryAdjRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'Adjustment removed'**
+  String get salaryAdjRemoved;
+
+  /// No description provided for @salaryAdjLocked.
+  ///
+  /// In en, this message translates to:
+  /// **'{month} is settled — adjustments are locked.'**
+  String salaryAdjLocked(Object month);
+
+  /// No description provided for @salaryKindExtra.
+  ///
+  /// In en, this message translates to:
+  /// **'Extra'**
+  String get salaryKindExtra;
+
+  /// No description provided for @salaryKindAdvance.
+  ///
+  /// In en, this message translates to:
+  /// **'Advance'**
+  String get salaryKindAdvance;
+
+  /// No description provided for @salaryKindDeduction.
+  ///
+  /// In en, this message translates to:
+  /// **'Deduction'**
+  String get salaryKindDeduction;
+
+  /// No description provided for @salaryMarkPaidTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark {amount} as paid?'**
+  String salaryMarkPaidTitle(Object amount);
+
+  /// No description provided for @salaryPaidWith.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid with'**
+  String get salaryPaidWith;
+
+  /// No description provided for @salaryMarkPaidConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark paid'**
+  String get salaryMarkPaidConfirm;
+
+  /// No description provided for @salaryPaidSnack.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} paid to {name} · added to spends'**
+  String salaryPaidSnack(Object amount, Object name);
+
+  /// No description provided for @salaryExpenseMerchant.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} — {month} salary'**
+  String salaryExpenseMerchant(Object name, Object month);
+
+  /// No description provided for @salarySlipHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'{month} pay — {name}'**
+  String salarySlipHeader(Object month, Object name);
+
+  /// No description provided for @salarySlipDaysHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Days: {present} · Hours: {billed}'**
+  String salarySlipDaysHours(Object present, Object billed);
+
+  /// No description provided for @salarySlipHoursCalc.
+  ///
+  /// In en, this message translates to:
+  /// **'{billed} × {rate} = {gross}'**
+  String salarySlipHoursCalc(Object billed, Object rate, Object gross);
+
+  /// No description provided for @salarySlipExtra.
+  ///
+  /// In en, this message translates to:
+  /// **'+ {label}: {amount}'**
+  String salarySlipExtra(Object label, Object amount);
+
+  /// No description provided for @salarySlipAdvance.
+  ///
+  /// In en, this message translates to:
+  /// **'− Advance: {amount}'**
+  String salarySlipAdvance(Object amount);
+
+  /// No description provided for @salarySlipDeduction.
+  ///
+  /// In en, this message translates to:
+  /// **'− {label}: {amount}'**
+  String salarySlipDeduction(Object label, Object amount);
+
+  /// No description provided for @salarySlipSalary.
+  ///
+  /// In en, this message translates to:
+  /// **'Salary: {amount}'**
+  String salarySlipSalary(Object amount);
+
+  /// No description provided for @salarySlipLeaves.
+  ///
+  /// In en, this message translates to:
+  /// **'Leaves: {taken} ({paid} paid)'**
+  String salarySlipLeaves(Object taken, Object paid);
+
+  /// No description provided for @salarySlipTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total: {amount}'**
+  String salarySlipTotal(Object amount);
+
+  /// No description provided for @salarySlipTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay slip'**
+  String get salarySlipTitle;
+
+  /// No description provided for @salarySlipLead.
+  ///
+  /// In en, this message translates to:
+  /// **'A clear breakdown builds trust and ends “how did you calculate?” conversations.'**
+  String get salarySlipLead;
+
+  /// No description provided for @salarySlipSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send on WhatsApp'**
+  String get salarySlipSend;
+
+  /// No description provided for @salaryRuleHourlyRounded.
+  ///
+  /// In en, this message translates to:
+  /// **'{rate}/hour · rounded to {n} min'**
+  String salaryRuleHourlyRounded(Object rate, Object n);
+
+  /// No description provided for @salaryRuleHourlyExact.
+  ///
+  /// In en, this message translates to:
+  /// **'{rate}/hour · exact minutes'**
+  String salaryRuleHourlyExact(Object rate);
+
+  /// No description provided for @salaryRuleMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount}/month · {n, plural, =1{1 paid leave} other{{n} paid leaves}}'**
+  String salaryRuleMonthly(Object amount, int n);
+
+  /// No description provided for @salaryStaffButton.
+  ///
+  /// In en, this message translates to:
+  /// **'{month} salary · {amount}'**
+  String salaryStaffButton(Object month, Object amount);
 }
 
 class _AppLocalizationsDelegate

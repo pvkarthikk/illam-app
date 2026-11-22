@@ -1,13 +1,18 @@
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:drift/drift.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:nm_flat/core/data/db/database.dart';
+import 'package:nm_flat/core/domain/payroll.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/time/dates.dart';
+import 'package:nm_flat/core/ui/formatters.dart';
 import 'package:nm_flat/core/util/device_model.dart';
 import 'package:nm_flat/core/util/ids.dart';
 import 'package:nm_flat/features/debug/data_lab_controller.dart';
+import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
 class DemoSeeder {
   DemoSeeder(this.ref);
@@ -17,7 +22,7 @@ class DemoSeeder {
   Future<void> load() async {
     await _seedHomeAndMembers(); // must stay first (creates the home if missing)
     await _seedStaff();
-    // P05: await _seedPay();
+    await _seedPay();
     // P06: await _seedItems();
     // P08: await _seedTasks();
     // P09: await _seedMeals();
@@ -181,6 +186,192 @@ class DemoSeeder {
         });
       }
     }, homeId: homeId);
+  }
+
+  Future<void> _seedPay() async {
+    final prefs = ref.read(prefsProvider);
+    final homeId = prefs.currentHomeId;
+    if (homeId == null) return;
+
+    final db = ref.read(dbProvider);
+    final staffRows = await (db.select(
+      db.staff,
+    )..where((s) => s.homeId.equals(homeId) & s.deleted.equals(false))).get();
+
+    StaffData? lakshmi;
+    StaffData? selvi;
+    for (final s in staffRows) {
+      if (s.name == 'Lakshmi') lakshmi = s;
+      if (s.name == 'Selvi') selvi = s;
+    }
+    if (lakshmi == null || selvi == null) return;
+
+    final existing =
+        await (db.select(db.payRules)
+              ..where(
+                (r) =>
+                    r.staffId.equals(lakshmi!.id) & r.deleted.equals(false),
+              )
+              ..limit(1))
+            .getSingleOrNull();
+    if (existing != null) return;
+
+    final clock = ref.read(clockProvider);
+    final today = Dates.today(clock);
+    final thisMonth = Dates.month(today);
+    final lastMonth = Dates.addMonths(thisMonth, -1);
+    final me = prefs.memberId ?? prefs.deviceId;
+    final lakshmiStart = lakshmi.startDate ?? today;
+    final selviStart = selvi.startDate ?? today;
+
+    final lakshmiRule = PayRulesData(
+      effectiveMonth: Dates.month(lakshmiStart),
+      workDays: const [1, 2, 3, 4, 5, 6],
+      type: PayType.hourly,
+      ratePerHourPaise: 9000,
+      roundingMin: 15,
+      minHoursPerVisit: 1,
+    );
+    final selviRule = PayRulesData(
+      effectiveMonth: Dates.month(selviStart),
+      workDays: const [1, 2, 3, 4, 5, 6],
+      type: PayType.monthly,
+      amountPerMonthPaise: 700000,
+      paidLeavesPerMonth: 2,
+    );
+
+    final lakshmiVisits = <PayVisit>[];
+    final selviVisits = <PayVisit>[];
+
+    await ref.read(changesProvider).write('Demo data', (c) {
+      c.create('pay_rules', {
+        'staff_id': lakshmi!.id,
+        'effective_month': lakshmiRule.effectiveMonth,
+        'work_days': '1,2,3,4,5,6',
+        'pay_type': 'hourly',
+        'rate_per_hour_paise': 9000,
+        'rounding_min': 15,
+        'min_hours_per_visit': 1,
+      });
+      c.create('pay_rules', {
+        'staff_id': selvi!.id,
+        'effective_month': selviRule.effectiveMonth,
+        'work_days': '1,2,3,4,5,6',
+        'pay_type': 'monthly',
+        'amount_per_month_paise': 700000,
+        'paid_leaves_per_month': 2,
+      });
+      c.create('pay_adjustments', {
+        'staff_id': lakshmi.id,
+        'month': thisMonth,
+        'kind': 'extra',
+        'amount_paise': 20000,
+        'note': 'Balcony deep clean',
+      });
+      c.create('pay_adjustments', {
+        'staff_id': lakshmi.id,
+        'month': thisMonth,
+        'kind': 'advance',
+        'amount_paise': 50000,
+        'note': 'Advance',
+      });
+
+      final daysInLastMonth = Dates.daysInMonth(lastMonth);
+      for (var day = 1; day <= daysInLastMonth; day++) {
+        final d = '$lastMonth-${day.toString().padLeft(2, '0')}';
+        if (Dates.weekdayIso(d) == DateTime.sunday) continue;
+        final n = Dates.parse(d).day;
+        if (n % 9 != 4) {
+          final inM = 540 + (n * 7) % 22;
+          final outM = inM + 135 + (n * 13) % 35;
+          final inAt = Dates.msAt(d, inM);
+          final outAt = Dates.msAt(d, outM);
+          c.create('visits', {
+            'staff_id': lakshmi.id,
+            'date': d,
+            'in_at': inAt,
+            'out_at': outAt,
+            'in_by': me,
+            'out_by': me,
+          });
+          lakshmiVisits.add(PayVisit(d, inAt, outAt));
+        }
+        if (n % 11 != 6) {
+          final in1 = 445 + (n * 3) % 12;
+          final out1 = 515 + (n * 5) % 15;
+          final in1At = Dates.msAt(d, in1);
+          final out1At = Dates.msAt(d, out1);
+          c.create('visits', {
+            'staff_id': selvi.id,
+            'date': d,
+            'in_at': in1At,
+            'out_at': out1At,
+            'in_by': me,
+            'out_by': me,
+          });
+          selviVisits.add(PayVisit(d, in1At, out1At));
+
+          final in2 = 1080 + (n * 4) % 15;
+          final out2 = 1145 + (n * 7) % 20;
+          final in2At = Dates.msAt(d, in2);
+          final out2At = Dates.msAt(d, out2);
+          c.create('visits', {
+            'staff_id': selvi.id,
+            'date': d,
+            'in_at': in2At,
+            'out_at': out2At,
+            'in_by': me,
+            'out_by': me,
+          });
+          selviVisits.add(PayVisit(d, in2At, out2At));
+        }
+      }
+    }, homeId: homeId);
+
+    final rLakshmi = computePayroll(
+      PayrollInput(
+        month: lastMonth,
+        today: today,
+        startDate: lakshmiStart,
+        rules: [lakshmiRule],
+        visits: lakshmiVisits,
+        leaveDates: const {},
+        adjustments: const [],
+      ),
+    );
+    final rSelvi = computePayroll(
+      PayrollInput(
+        month: lastMonth,
+        today: today,
+        startDate: selviStart,
+        rules: [selviRule],
+        visits: selviVisits,
+        leaveDates: const {},
+        adjustments: const [],
+      ),
+    );
+
+    final l10n = lookupAppLocalizations(const Locale('en'));
+    final lastMonthName = Formatters.monthName(lastMonth);
+    final salaryRepo = ref.read(salaryRepoProvider);
+    await salaryRepo.markPaid(
+      staffId: lakshmi.id,
+      month: lastMonth,
+      r: rLakshmi,
+      method: 'upi',
+      merchantText: l10n.salaryExpenseMerchant('Lakshmi', lastMonthName),
+      today: today,
+      date: Dates.monthStart(thisMonth),
+    );
+    await salaryRepo.markPaid(
+      staffId: selvi.id,
+      month: lastMonth,
+      r: rSelvi,
+      method: 'cash',
+      merchantText: l10n.salaryExpenseMerchant('Selvi', lastMonthName),
+      today: today,
+      date: Dates.monthStart(thisMonth),
+    );
   }
 
   Future<void> _seedDevNotes() async {

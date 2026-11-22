@@ -2,13 +2,17 @@ import 'package:drift/drift.dart' show driftRuntimeOptions;
 import 'package:drift/native.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/data/prefs/device_prefs.dart';
 import 'package:nm_flat/core/data/secure/secure_store.dart';
 import 'package:nm_flat/core/providers.dart';
 
 void main() {
-  setUpAll(() => driftRuntimeOptions.dontWarnAboutMultipleDatabases = true);
+  setUpAll(() async {
+    driftRuntimeOptions.dontWarnAboutMultipleDatabases = true;
+    await initializeDateFormatting('en');
+  });
 
   test('DemoSeeder.load is idempotent and seeds 3 notes', () async {
     final prefs = await DevicePrefs.inMemory();
@@ -34,6 +38,14 @@ void main() {
     expect(members.length, 3);
     final staff = await db.select(db.staff).get();
     expect(staff.map((s) => s.name).toSet(), {'Lakshmi', 'Selvi'});
+    final rules = await db.select(db.payRules).get();
+    expect(rules.length, 2);
+    final adjustments = await db.select(db.payAdjustments).get();
+    expect(adjustments.length, 2);
+    final attempts = await db.select(db.settlementAttempts).get();
+    expect(attempts.length, 2);
+    final expenses = await db.select(db.expenses).get();
+    expect(expenses.length, 2);
     expect(
       notes.map((n) => n.title).toSet(),
       {'Milk 2L', 'Call plumber', 'Pay rent'},

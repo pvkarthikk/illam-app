@@ -189,7 +189,7 @@ class StaffRepo {
     required String today,
     String? phoneE164,
   }) => changes.write('Added house help', (c) {
-    c.create('staff', {
+    final staffId = c.create('staff', {
       'name': Names.titleCase(name),
       'role': role,
       'phone_e164': phoneE164,
@@ -200,6 +200,20 @@ class StaffRepo {
       'active': true,
       'initial_pay_type': payType,
       'initial_pay_paise': amountPaise,
+    });
+    c.create('pay_rules', {
+      'staff_id': staffId,
+      'effective_month': Dates.month(today),
+      'work_days': '1,2,3,4,5,6',
+      'pay_type': payType,
+      if (payType == 'hourly') ...{
+        'rate_per_hour_paise': amountPaise,
+        'rounding_min': 15,
+        'min_hours_per_visit': 1,
+      } else ...{
+        'amount_per_month_paise': amountPaise,
+        'paid_leaves_per_month': 2,
+      },
     });
   });
 

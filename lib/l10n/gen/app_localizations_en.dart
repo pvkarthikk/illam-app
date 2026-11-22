@@ -708,4 +708,506 @@ class AppLocalizationsEn extends AppLocalizations {
   String staffFormerCount(int count) {
     return 'Former house help ($count)';
   }
+
+  @override
+  String salaryTitle(Object name) {
+    return '$name’s salary';
+  }
+
+  @override
+  String salarySubtitleSoFar(Object month, Object day) {
+    return '$month 1 – $day · so far';
+  }
+
+  @override
+  String salarySubtitleProjected(Object month, Object day) {
+    return '$month 1 – $day · projected';
+  }
+
+  @override
+  String salarySubtitlePast(Object month, Object day) {
+    return '$month 1 – $day';
+  }
+
+  @override
+  String get salaryFootnote =>
+      'Every number traces back to the visit log. Fix a wrong time there and this updates instantly.';
+
+  @override
+  String salaryNotWorking(Object month) {
+    return 'Not working in $month';
+  }
+
+  @override
+  String get salaryNoRules => 'No pay rules yet';
+
+  @override
+  String get salaryNoRulesBody =>
+      'Set the hourly rate or monthly salary to see what to pay.';
+
+  @override
+  String get salarySetRules => 'Set pay rules';
+
+  @override
+  String get salaryEyebrowPayable => 'PAYABLE';
+
+  @override
+  String get salaryEyebrowPaid => 'PAID';
+
+  @override
+  String salaryDaysLine(Object present, Object absent, Object leave) {
+    return '$present days present · $absent absent · $leave leave';
+  }
+
+  @override
+  String salaryCarryPreview(Object amount, Object month) {
+    return '₹0 to pay · $amount will carry to $month';
+  }
+
+  @override
+  String get salaryHoursWorked => 'Hours worked';
+
+  @override
+  String salaryHoursDetail(
+    Object billed,
+    Object rate,
+    Object visits,
+    Object actual,
+    Object rounding,
+    Object minimum,
+  ) {
+    return '$billed billed × $rate/hr · $visits visits · actual $actual. Each visit rounded to $rounding$minimum';
+  }
+
+  @override
+  String salaryRoundMinutes(Object n) {
+    return '$n min';
+  }
+
+  @override
+  String get salaryRoundTheMinute => 'the minute';
+
+  @override
+  String salaryMinimumPart(Object hours) {
+    return ', min $hours hr';
+  }
+
+  @override
+  String get salaryMonthlyLine => 'Monthly salary';
+
+  @override
+  String salaryMonthlyDetail(Object workDays, Object perDay) {
+    return '$workDays working days · $perDay/day';
+  }
+
+  @override
+  String get salaryLeavesLine => 'Leaves';
+
+  @override
+  String salaryLeavesDetail(Object taken, Object paid, Object unpaid) {
+    return '$taken taken · $paid paid · $unpaid unpaid';
+  }
+
+  @override
+  String get salaryExtraDetail => 'Extra task';
+
+  @override
+  String get salaryAdvanceLine => 'Advance taken';
+
+  @override
+  String get salaryAdvanceDetail => 'Deducted this month';
+
+  @override
+  String get salaryDeductionDetail => 'Deduction';
+
+  @override
+  String get salaryToPay => 'To pay';
+
+  @override
+  String salaryChipRate(Object rate) {
+    return '$rate/hr';
+  }
+
+  @override
+  String salaryChipMonthly(Object amount) {
+    return '$amount/mo';
+  }
+
+  @override
+  String salaryChipRound(Object n) {
+    return 'Round $n min';
+  }
+
+  @override
+  String get salaryChipExact => 'Exact minutes';
+
+  @override
+  String salaryChipPaidLeaves(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n paid leaves',
+      one: '1 paid leave',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get salaryEditRules => 'Edit pay rules';
+
+  @override
+  String get salaryAdminsSetRules => 'Admins set pay rules';
+
+  @override
+  String get salaryPrevMonth => 'Previous month';
+
+  @override
+  String get salaryNextMonth => 'Next month';
+
+  @override
+  String salaryMarkPaidButton(Object amount) {
+    return 'Mark $amount as paid';
+  }
+
+  @override
+  String salaryCloseAtZero(Object month) {
+    return 'Close $month at ₹0';
+  }
+
+  @override
+  String salaryClosedSnack(Object month) {
+    return '$month closed at ₹0';
+  }
+
+  @override
+  String salaryCarryNote(Object month) {
+    return 'Carried from $month';
+  }
+
+  @override
+  String salaryMemberNote(Object names) {
+    return 'Only admins pay salary. Ask $names — you’ll see it here once paid.';
+  }
+
+  @override
+  String get salaryYou => 'you';
+
+  @override
+  String salaryNamesOr(Object first, Object second) {
+    return '$first or $second';
+  }
+
+  @override
+  String salaryPaidTag(Object amount, Object date, Object method) {
+    return 'Paid $amount on $date · $method';
+  }
+
+  @override
+  String salaryClosedTag(Object date) {
+    return 'Closed at ₹0 on $date';
+  }
+
+  @override
+  String get salaryUndoPayment => 'Undo payment';
+
+  @override
+  String get salaryUndoTitle => 'Undo payment?';
+
+  @override
+  String salaryUndoLead(Object amount, Object month) {
+    return 'The $amount salary spend is removed and $month can be paid again.';
+  }
+
+  @override
+  String get salaryUndoneSnack => 'Payment undone';
+
+  @override
+  String get salaryMethodUpi => 'UPI';
+
+  @override
+  String get salaryMethodCash => 'Cash';
+
+  @override
+  String get salaryMethodBank => 'Bank';
+
+  @override
+  String salaryDuplicateAlert(
+    Object name,
+    Object month,
+    Object a,
+    Object x,
+    Object b,
+    Object y,
+  ) {
+    return '$name’s $month salary was marked paid twice ($a by $x, $b by $y). The first is kept — check you didn’t pay twice.';
+  }
+
+  @override
+  String get salaryUndoSecond => 'Undo the second payment';
+
+  @override
+  String salaryDifferenceAlert(Object x, Object y, Object z) {
+    return 'Recalculated $x — settled at $y. Difference $z';
+  }
+
+  @override
+  String salaryAddToMonth(Object month) {
+    return 'Add to $month';
+  }
+
+  @override
+  String salaryDifferenceNote(Object month) {
+    return 'Difference from $month';
+  }
+
+  @override
+  String salaryDifferenceSnack(Object month) {
+    return 'Difference added to $month';
+  }
+
+  @override
+  String salarySharePaySlip(Object name) {
+    return 'Share pay slip with $name';
+  }
+
+  @override
+  String salaryRulesTitle(Object name) {
+    return '$name’s pay rules';
+  }
+
+  @override
+  String get salaryRulesLead =>
+      'Agreed once, applied every month. Shown on the pay slip so there are no surprises.';
+
+  @override
+  String get salaryPayType => 'Pay type';
+
+  @override
+  String get salaryHourly => 'Hourly';
+
+  @override
+  String get salaryMonthly => 'Monthly';
+
+  @override
+  String get salaryRatePerHour => 'Rate per hour (₹)';
+
+  @override
+  String get salaryRoundTo => 'Round each visit to';
+
+  @override
+  String get salaryRoundExactMinute => 'Exact minute';
+
+  @override
+  String get salaryRound15 => '15 min';
+
+  @override
+  String get salaryRound30 => '30 min';
+
+  @override
+  String get salaryMinimum => 'Minimum per visit';
+
+  @override
+  String get salaryMinNone => 'None';
+
+  @override
+  String get salaryMin1 => '1 hour';
+
+  @override
+  String get salaryMin2 => '2 hours';
+
+  @override
+  String get salaryMonthlyAmount => 'Monthly salary (₹)';
+
+  @override
+  String get salaryPaidLeaves => 'Paid leaves per month';
+
+  @override
+  String get salaryWorkDays => 'Work days';
+
+  @override
+  String get salaryDayMon => 'Mon';
+
+  @override
+  String get salaryDayTue => 'Tue';
+
+  @override
+  String get salaryDayWed => 'Wed';
+
+  @override
+  String get salaryDayThu => 'Thu';
+
+  @override
+  String get salaryDayFri => 'Fri';
+
+  @override
+  String get salaryDaySat => 'Sat';
+
+  @override
+  String get salaryDaySun => 'Sun';
+
+  @override
+  String get salaryApplyFrom => 'Apply from';
+
+  @override
+  String get salaryThisMonth => 'This month';
+
+  @override
+  String get salaryNextMonthChip => 'Next month';
+
+  @override
+  String get salarySaveRules => 'Save rules';
+
+  @override
+  String get salaryRulesSaved => 'Pay rules saved · salary recalculated';
+
+  @override
+  String get salaryCheckAmount => 'Check the amount';
+
+  @override
+  String salaryAdjustmentsFor(Object month) {
+    return 'Adjustments for $month';
+  }
+
+  @override
+  String get salaryAddExtra => '+ Add extra';
+
+  @override
+  String get salaryAddAdvance => '+ Add advance';
+
+  @override
+  String get salaryAddDeduction => '+ Add deduction';
+
+  @override
+  String get salaryAdjNote => 'Note';
+
+  @override
+  String get salaryAdjAmount => 'Amount (₹)';
+
+  @override
+  String get salaryAdjSave => 'Save';
+
+  @override
+  String get salaryAdjRemove => 'Remove';
+
+  @override
+  String get salaryAdjAdded => 'Adjustment added · salary recalculated';
+
+  @override
+  String get salaryAdjRemoved => 'Adjustment removed';
+
+  @override
+  String salaryAdjLocked(Object month) {
+    return '$month is settled — adjustments are locked.';
+  }
+
+  @override
+  String get salaryKindExtra => 'Extra';
+
+  @override
+  String get salaryKindAdvance => 'Advance';
+
+  @override
+  String get salaryKindDeduction => 'Deduction';
+
+  @override
+  String salaryMarkPaidTitle(Object amount) {
+    return 'Mark $amount as paid?';
+  }
+
+  @override
+  String get salaryPaidWith => 'Paid with';
+
+  @override
+  String get salaryMarkPaidConfirm => 'Mark paid';
+
+  @override
+  String salaryPaidSnack(Object amount, Object name) {
+    return '$amount paid to $name · added to spends';
+  }
+
+  @override
+  String salaryExpenseMerchant(Object name, Object month) {
+    return '$name — $month salary';
+  }
+
+  @override
+  String salarySlipHeader(Object month, Object name) {
+    return '$month pay — $name';
+  }
+
+  @override
+  String salarySlipDaysHours(Object present, Object billed) {
+    return 'Days: $present · Hours: $billed';
+  }
+
+  @override
+  String salarySlipHoursCalc(Object billed, Object rate, Object gross) {
+    return '$billed × $rate = $gross';
+  }
+
+  @override
+  String salarySlipExtra(Object label, Object amount) {
+    return '+ $label: $amount';
+  }
+
+  @override
+  String salarySlipAdvance(Object amount) {
+    return '− Advance: $amount';
+  }
+
+  @override
+  String salarySlipDeduction(Object label, Object amount) {
+    return '− $label: $amount';
+  }
+
+  @override
+  String salarySlipSalary(Object amount) {
+    return 'Salary: $amount';
+  }
+
+  @override
+  String salarySlipLeaves(Object taken, Object paid) {
+    return 'Leaves: $taken ($paid paid)';
+  }
+
+  @override
+  String salarySlipTotal(Object amount) {
+    return 'Total: $amount';
+  }
+
+  @override
+  String get salarySlipTitle => 'Pay slip';
+
+  @override
+  String get salarySlipLead =>
+      'A clear breakdown builds trust and ends “how did you calculate?” conversations.';
+
+  @override
+  String get salarySlipSend => 'Send on WhatsApp';
+
+  @override
+  String salaryRuleHourlyRounded(Object rate, Object n) {
+    return '$rate/hour · rounded to $n min';
+  }
+
+  @override
+  String salaryRuleHourlyExact(Object rate) {
+    return '$rate/hour · exact minutes';
+  }
+
+  @override
+  String salaryRuleMonthly(Object amount, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n paid leaves',
+      one: '1 paid leave',
+    );
+    return '$amount/month · $_temp0';
+  }
+
+  @override
+  String salaryStaffButton(Object month, Object amount) {
+    return '$month salary · $amount';
+  }
 }

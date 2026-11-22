@@ -1,11 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'package:nm_flat/core/design/components/components.dart';
+import 'package:nm_flat/core/domain/payroll.dart';
+import 'package:nm_flat/core/domain/salary_months.dart';
 import 'package:nm_flat/core/domain/staff_text.dart';
+import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/providers.dart';
+import 'package:nm_flat/core/time/dates.dart';
 import 'package:nm_flat/core/ui/formatters.dart';
 import 'package:nm_flat/core/util/money.dart';
+import 'package:nm_flat/features/salary/salary_providers.dart';
 import 'package:nm_flat/features/staff/attendance_calendar_card.dart';
 import 'package:nm_flat/features/staff/edit_staff_sheet.dart';
 import 'package:nm_flat/features/staff/remove_staff_sheet.dart';
@@ -45,7 +51,6 @@ class StaffScreen extends ConsumerWidget {
 
     final name = staff.name ?? '';
     final ctrl = ref.read(staffControllerProvider(staffId).notifier);
-    final month = ref.watch(staffControllerProvider(staffId));
     final isAdmin = ref.watch(isAdminProvider);
     final avatarColor = staff.color != null
         ? NestPalette.fromHex(staff.color!)
@@ -63,10 +68,53 @@ class StaffScreen extends ConsumerWidget {
     final window =
         '${daysText(parseWorkDays(staff.workDays), short: shortDays, daily: l10n.staffDaily)} · '
         '${timesText(parseTimes(staff.expectedTimes), staff.usualEndTime)}';
-    final paise = staff.initialPayPaise ?? 0;
-    final payLine = staff.initialPayType == 'hourly'
-        ? l10n.staffPayHourlyLine(Money.format(paise))
-        : l10n.staffPayMonthlyLine(Money.format(paise));
+    final today = ref.watch(todayDateProvider);
+    final curMonth = Dates.month(today);
+    final curRules = ref
+        .watch(salaryViewProvider((staffId, curMonth)))
+        .value
+        ?.payroll
+        .rules;
+    String? payLine;
+    if (curRules != null) {
+      payLine = switch (curRules.type) {
+        PayType.hourly =>
+          curRules.roundingMin == 1
+              ? l10n.salaryRuleHourlyExact(
+                  Money.format(curRules.ratePerHourPaise),
+                )
+              : l10n.salaryRuleHourlyRounded(
+                  Money.format(curRules.ratePerHourPaise),
+                  curRules.roundingMin,
+                ),
+        PayType.monthly => l10n.salaryRuleMonthly(
+          Money.format(curRules.amountPerMonthPaise),
+          curRules.paidLeavesPerMonth,
+        ),
+      };
+    }
+
+    final settled =
+        ref.watch(settledMonthsProvider(staffId)).value ?? const <String>{};
+    final rawMonths = salaryMonths(
+      startDate: staff.startDate ?? today,
+      endDate: staff.endDate,
+      today: today,
+    );
+    final months = rawMonths.isEmpty ? <String>[curMonth] : rawMonths;
+    final btnMonth = defaultSalaryMonth(
+      today: today,
+      months: months,
+      isSettled: settled.contains,
+    );
+    final btnMonthName = Formatters.monthName(btnMonth);
+    final btnView = ref.watch(salaryViewProvider((staffId, btnMonth))).value;
+    final salaryBtnLabel = btnView != null && !btnView.shown.noRules
+        ? l10n.salaryStaffButton(
+            btnMonthName,
+            Money.format(btnView.shown.toPayRupees * 100),
+          )
+        : l10n.staffSalaryButton(btnMonthName);
 
     return Scaffold(
       appBar: NestTopBar.sub(
@@ -128,17 +176,19 @@ class StaffScreen extends ConsumerWidget {
                         ),
                         style: NestText.meta13.copyWith(color: c.ink3),
                       ),
-                      const SizedBox(height: 4),
-                      Text(
-                        payLine,
-                        style: TextStyle(
-                          fontFamily: NestText.sans,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w700,
-                          fontVariations: const [FontVariation.weight(700)],
-                          color: c.ink2,
+                      if (payLine != null) ...[
+                        const SizedBox(height: 4),
+                        Text(
+                          payLine,
+                          style: TextStyle(
+                            fontFamily: NestText.sans,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700,
+                            fontVariations: const [FontVariation.weight(700)],
+                            color: c.ink2,
+                          ),
                         ),
-                      ),
+                      ],
                     ],
                   ),
                 ),
@@ -196,13 +246,11 @@ class StaffScreen extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 NestButton(
-                  label: l10n.staffSalaryButton(Formatters.monthName(month)),
+                  label: salaryBtnLabel,
                   icon: Icons.currency_rupee_rounded,
                   kind: NestButtonKind.primary,
                   size: NestButtonSize.block,
-                  onPressed: () => ref
-                      .read(snackbarProvider)
-                      .show(l10n.commonArrivesIn('P05')),
+                  onPressed: () => context.push(Routes.staffSalary(staffId)),
                 ),
                 if (isAdmin && staff.active) ...[
                   const SizedBox(height: 12),

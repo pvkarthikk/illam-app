@@ -2,14 +2,33 @@ import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 
 import 'package:nm_flat/core/data/db/tables/dev_notes.dart';
+import 'package:nm_flat/core/data/db/tables/expenses.dart';
 import 'package:nm_flat/core/data/db/tables/homes.dart';
 import 'package:nm_flat/core/data/db/tables/members.dart';
 import 'package:nm_flat/core/data/db/tables/ops.dart';
+import 'package:nm_flat/core/data/db/tables/pay_adjustments.dart';
+import 'package:nm_flat/core/data/db/tables/pay_rules.dart';
+import 'package:nm_flat/core/data/db/tables/settlement_attempts.dart';
 import 'package:nm_flat/core/data/db/tables/staff.dart';
 
 part 'database.g.dart';
 
-@DriftDatabase(tables: [Ops, FieldClocks, DevNotes, Homes, Members, Staff, Visits, Leaves])
+@DriftDatabase(
+  tables: [
+    Ops,
+    FieldClocks,
+    DevNotes,
+    Homes,
+    Members,
+    Staff,
+    Visits,
+    Leaves,
+    PayRules,
+    PayAdjustments,
+    SettlementAttempts,
+    Expenses,
+  ],
+)
 class NestDatabase extends _$NestDatabase {
   NestDatabase(super.e);
 
@@ -20,7 +39,7 @@ class NestDatabase extends _$NestDatabase {
     : super(DatabaseConnection(e, closeStreamsSynchronously: true));
 
   @override
-  int get schemaVersion => 3; // raise by 1 for every table change
+  int get schemaVersion => 4; // raise by 1 for every table change
 
   @override
   MigrationStrategy get migration => MigrationStrategy(

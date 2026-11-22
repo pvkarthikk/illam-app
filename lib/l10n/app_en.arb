@@ -427,5 +427,420 @@
         "type": "int"
       }
     }
+  },
+  "salaryTitle": "{name}’s salary",
+  "@salaryTitle": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "salarySubtitleSoFar": "{month} 1 – {day} · so far",
+  "@salarySubtitleSoFar": {
+    "placeholders": {
+      "month": {},
+      "day": {}
+    }
+  },
+  "salarySubtitleProjected": "{month} 1 – {day} · projected",
+  "@salarySubtitleProjected": {
+    "placeholders": {
+      "month": {},
+      "day": {}
+    }
+  },
+  "salarySubtitlePast": "{month} 1 – {day}",
+  "@salarySubtitlePast": {
+    "placeholders": {
+      "month": {},
+      "day": {}
+    }
+  },
+  "salaryFootnote": "Every number traces back to the visit log. Fix a wrong time there and this updates instantly.",
+  "salaryNotWorking": "Not working in {month}",
+  "@salaryNotWorking": {
+    "placeholders": {
+      "month": {}
+    }
+  },
+  "salaryNoRules": "No pay rules yet",
+  "salaryNoRulesBody": "Set the hourly rate or monthly salary to see what to pay.",
+  "salarySetRules": "Set pay rules",
+  "salaryEyebrowPayable": "PAYABLE",
+  "salaryEyebrowPaid": "PAID",
+  "salaryDaysLine": "{present} days present · {absent} absent · {leave} leave",
+  "@salaryDaysLine": {
+    "placeholders": {
+      "present": {},
+      "absent": {},
+      "leave": {}
+    }
+  },
+  "salaryCarryPreview": "₹0 to pay · {amount} will carry to {month}",
+  "@salaryCarryPreview": {
+    "placeholders": {
+      "amount": {},
+      "month": {}
+    }
+  },
+  "salaryHoursWorked": "Hours worked",
+  "salaryHoursDetail": "{billed} billed × {rate}/hr · {visits} visits · actual {actual}. Each visit rounded to {rounding}{minimum}",
+  "@salaryHoursDetail": {
+    "placeholders": {
+      "billed": {},
+      "rate": {},
+      "visits": {},
+      "actual": {},
+      "rounding": {},
+      "minimum": {}
+    }
+  },
+  "salaryRoundMinutes": "{n} min",
+  "@salaryRoundMinutes": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "salaryRoundTheMinute": "the minute",
+  "salaryMinimumPart": ", min {hours} hr",
+  "@salaryMinimumPart": {
+    "placeholders": {
+      "hours": {}
+    }
+  },
+  "salaryMonthlyLine": "Monthly salary",
+  "salaryMonthlyDetail": "{workDays} working days · {perDay}/day",
+  "@salaryMonthlyDetail": {
+    "placeholders": {
+      "workDays": {},
+      "perDay": {}
+    }
+  },
+  "salaryLeavesLine": "Leaves",
+  "salaryLeavesDetail": "{taken} taken · {paid} paid · {unpaid} unpaid",
+  "@salaryLeavesDetail": {
+    "placeholders": {
+      "taken": {},
+      "paid": {},
+      "unpaid": {}
+    }
+  },
+  "salaryExtraDetail": "Extra task",
+  "salaryAdvanceLine": "Advance taken",
+  "salaryAdvanceDetail": "Deducted this month",
+  "salaryDeductionDetail": "Deduction",
+  "salaryToPay": "To pay",
+  "salaryChipRate": "{rate}/hr",
+  "@salaryChipRate": {
+    "placeholders": {
+      "rate": {}
+    }
+  },
+  "salaryChipMonthly": "{amount}/mo",
+  "@salaryChipMonthly": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "salaryChipRound": "Round {n} min",
+  "@salaryChipRound": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "salaryChipExact": "Exact minutes",
+  "salaryChipPaidLeaves": "{n, plural, =1{1 paid leave} other{{n} paid leaves}}",
+  "@salaryChipPaidLeaves": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "salaryEditRules": "Edit pay rules",
+  "salaryAdminsSetRules": "Admins set pay rules",
+  "salaryPrevMonth": "Previous month",
+  "salaryNextMonth": "Next month",
+  "salaryMarkPaidButton": "Mark {amount} as paid",
+  "@salaryMarkPaidButton": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "salaryCloseAtZero": "Close {month} at ₹0",
+  "@salaryCloseAtZero": {
+    "placeholders": {
+      "month": {}
+    }
+  },
+  "salaryClosedSnack": "{month} closed at ₹0",
+  "@salaryClosedSnack": {
+    "placeholders": {
+      "month": {}
+    }
+  },
+  "salaryCarryNote": "Carried from {month}",
+  "@salaryCarryNote": {
+    "placeholders": {
+      "month": {}
+    }
+  },
+  "salaryMemberNote": "Only admins pay salary. Ask {names} — you’ll see it here once paid.",
+  "@salaryMemberNote": {
+    "placeholders": {
+      "names": {}
+    }
+  },
+  "salaryYou": "you",
+  "salaryNamesOr": "{first} or {second}",
+  "@salaryNamesOr": {
+    "placeholders": {
+      "first": {},
+      "second": {}
+    }
+  },
+  "salaryPaidTag": "Paid {amount} on {date} · {method}",
+  "@salaryPaidTag": {
+    "placeholders": {
+      "amount": {},
+      "date": {},
+      "method": {}
+    }
+  },
+  "salaryClosedTag": "Closed at ₹0 on {date}",
+  "@salaryClosedTag": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "salaryUndoPayment": "Undo payment",
+  "salaryUndoTitle": "Undo payment?",
+  "salaryUndoLead": "The {amount} salary spend is removed and {month} can be paid again.",
+  "@salaryUndoLead": {
+    "placeholders": {
+      "amount": {},
+      "month": {}
+    }
+  },
+  "salaryUndoneSnack": "Payment undone",
+  "salaryMethodUpi": "UPI",
+  "salaryMethodCash": "Cash",
+  "salaryMethodBank": "Bank",
+  "salaryDuplicateAlert": "{name}’s {month} salary was marked paid twice ({a} by {x}, {b} by {y}). The first is kept — check you didn’t pay twice.",
+  "@salaryDuplicateAlert": {
+    "placeholders": {
+      "name": {},
+      "month": {},
+      "a": {},
+      "x": {},
+      "b": {},
+      "y": {}
+    }
+  },
+  "salaryUndoSecond": "Undo the second payment",
+  "salaryDifferenceAlert": "Recalculated {x} — settled at {y}. Difference {z}",
+  "@salaryDifferenceAlert": {
+    "placeholders": {
+      "x": {},
+      "y": {},
+      "z": {}
+    }
+  },
+  "salaryAddToMonth": "Add to {month}",
+  "@salaryAddToMonth": {
+    "placeholders": {
+      "month": {}
+    }
+  },
+  "salaryDifferenceNote": "Difference from {month}",
+  "@salaryDifferenceNote": {
+    "placeholders": {
+      "month": {}
+    }
+  },
+  "salaryDifferenceSnack": "Difference added to {month}",
+  "@salaryDifferenceSnack": {
+    "placeholders": {
+      "month": {}
+    }
+  },
+  "salarySharePaySlip": "Share pay slip with {name}",
+  "@salarySharePaySlip": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "salaryRulesTitle": "{name}’s pay rules",
+  "@salaryRulesTitle": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "salaryRulesLead": "Agreed once, applied every month. Shown on the pay slip so there are no surprises.",
+  "salaryPayType": "Pay type",
+  "salaryHourly": "Hourly",
+  "salaryMonthly": "Monthly",
+  "salaryRatePerHour": "Rate per hour (₹)",
+  "salaryRoundTo": "Round each visit to",
+  "salaryRoundExactMinute": "Exact minute",
+  "salaryRound15": "15 min",
+  "salaryRound30": "30 min",
+  "salaryMinimum": "Minimum per visit",
+  "salaryMinNone": "None",
+  "salaryMin1": "1 hour",
+  "salaryMin2": "2 hours",
+  "salaryMonthlyAmount": "Monthly salary (₹)",
+  "salaryPaidLeaves": "Paid leaves per month",
+  "salaryWorkDays": "Work days",
+  "salaryDayMon": "Mon",
+  "salaryDayTue": "Tue",
+  "salaryDayWed": "Wed",
+  "salaryDayThu": "Thu",
+  "salaryDayFri": "Fri",
+  "salaryDaySat": "Sat",
+  "salaryDaySun": "Sun",
+  "salaryApplyFrom": "Apply from",
+  "salaryThisMonth": "This month",
+  "salaryNextMonthChip": "Next month",
+  "salarySaveRules": "Save rules",
+  "salaryRulesSaved": "Pay rules saved · salary recalculated",
+  "salaryCheckAmount": "Check the amount",
+  "salaryAdjustmentsFor": "Adjustments for {month}",
+  "@salaryAdjustmentsFor": {
+    "placeholders": {
+      "month": {}
+    }
+  },
+  "salaryAddExtra": "+ Add extra",
+  "salaryAddAdvance": "+ Add advance",
+  "salaryAddDeduction": "+ Add deduction",
+  "salaryAdjNote": "Note",
+  "salaryAdjAmount": "Amount (₹)",
+  "salaryAdjSave": "Save",
+  "salaryAdjRemove": "Remove",
+  "salaryAdjAdded": "Adjustment added · salary recalculated",
+  "salaryAdjRemoved": "Adjustment removed",
+  "salaryAdjLocked": "{month} is settled — adjustments are locked.",
+  "@salaryAdjLocked": {
+    "placeholders": {
+      "month": {}
+    }
+  },
+  "salaryKindExtra": "Extra",
+  "salaryKindAdvance": "Advance",
+  "salaryKindDeduction": "Deduction",
+  "salaryMarkPaidTitle": "Mark {amount} as paid?",
+  "@salaryMarkPaidTitle": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "salaryPaidWith": "Paid with",
+  "salaryMarkPaidConfirm": "Mark paid",
+  "salaryPaidSnack": "{amount} paid to {name} · added to spends",
+  "@salaryPaidSnack": {
+    "placeholders": {
+      "amount": {},
+      "name": {}
+    }
+  },
+  "salaryExpenseMerchant": "{name} — {month} salary",
+  "@salaryExpenseMerchant": {
+    "placeholders": {
+      "name": {},
+      "month": {}
+    }
+  },
+  "salarySlipHeader": "{month} pay — {name}",
+  "@salarySlipHeader": {
+    "placeholders": {
+      "month": {},
+      "name": {}
+    }
+  },
+  "salarySlipDaysHours": "Days: {present} · Hours: {billed}",
+  "@salarySlipDaysHours": {
+    "placeholders": {
+      "present": {},
+      "billed": {}
+    }
+  },
+  "salarySlipHoursCalc": "{billed} × {rate} = {gross}",
+  "@salarySlipHoursCalc": {
+    "placeholders": {
+      "billed": {},
+      "rate": {},
+      "gross": {}
+    }
+  },
+  "salarySlipExtra": "+ {label}: {amount}",
+  "@salarySlipExtra": {
+    "placeholders": {
+      "label": {},
+      "amount": {}
+    }
+  },
+  "salarySlipAdvance": "− Advance: {amount}",
+  "@salarySlipAdvance": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "salarySlipDeduction": "− {label}: {amount}",
+  "@salarySlipDeduction": {
+    "placeholders": {
+      "label": {},
+      "amount": {}
+    }
+  },
+  "salarySlipSalary": "Salary: {amount}",
+  "@salarySlipSalary": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "salarySlipLeaves": "Leaves: {taken} ({paid} paid)",
+  "@salarySlipLeaves": {
+    "placeholders": {
+      "taken": {},
+      "paid": {}
+    }
+  },
+  "salarySlipTotal": "Total: {amount}",
+  "@salarySlipTotal": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "salarySlipTitle": "Pay slip",
+  "salarySlipLead": "A clear breakdown builds trust and ends “how did you calculate?” conversations.",
+  "salarySlipSend": "Send on WhatsApp",
+  "salaryRuleHourlyRounded": "{rate}/hour · rounded to {n} min",
+  "@salaryRuleHourlyRounded": {
+    "placeholders": {
+      "rate": {},
+      "n": {}
+    }
+  },
+  "salaryRuleHourlyExact": "{rate}/hour · exact minutes",
+  "@salaryRuleHourlyExact": {
+    "placeholders": {
+      "rate": {}
+    }
+  },
+  "salaryRuleMonthly": "{amount}/month · {n, plural, =1{1 paid leave} other{{n} paid leaves}}",
+  "@salaryRuleMonthly": {
+    "placeholders": {
+      "amount": {},
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "salaryStaffButton": "{month} salary · {amount}",
+  "@salaryStaffButton": {
+    "placeholders": {
+      "month": {},
+      "amount": {}
+    }
   }
 }

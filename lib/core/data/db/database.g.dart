@@ -5803,6 +5803,3919 @@ class LeavesCompanion extends UpdateCompanion<Leave> {
   }
 }
 
+class $PayRulesTable extends PayRules
+    with TableInfo<$PayRulesTable, PayRuleRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PayRulesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _homeIdMeta = const VerificationMeta('homeId');
+  @override
+  late final GeneratedColumn<String> homeId = GeneratedColumn<String>(
+    'home_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _deletedMeta = const VerificationMeta(
+    'deleted',
+  );
+  @override
+  late final GeneratedColumn<bool> deleted = GeneratedColumn<bool>(
+    'deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _createdByMeta = const VerificationMeta(
+    'createdBy',
+  );
+  @override
+  late final GeneratedColumn<String> createdBy = GeneratedColumn<String>(
+    'created_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _updatedByMeta = const VerificationMeta(
+    'updatedBy',
+  );
+  @override
+  late final GeneratedColumn<String> updatedBy = GeneratedColumn<String>(
+    'updated_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _staffIdMeta = const VerificationMeta(
+    'staffId',
+  );
+  @override
+  late final GeneratedColumn<String> staffId = GeneratedColumn<String>(
+    'staff_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _effectiveMonthMeta = const VerificationMeta(
+    'effectiveMonth',
+  );
+  @override
+  late final GeneratedColumn<String> effectiveMonth = GeneratedColumn<String>(
+    'effective_month',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _workDaysMeta = const VerificationMeta(
+    'workDays',
+  );
+  @override
+  late final GeneratedColumn<String> workDays = GeneratedColumn<String>(
+    'work_days',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('1,2,3,4,5,6'),
+  );
+  static const VerificationMeta _payTypeMeta = const VerificationMeta(
+    'payType',
+  );
+  @override
+  late final GeneratedColumn<String> payType = GeneratedColumn<String>(
+    'pay_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('hourly'),
+  );
+  static const VerificationMeta _ratePerHourPaiseMeta = const VerificationMeta(
+    'ratePerHourPaise',
+  );
+  @override
+  late final GeneratedColumn<int> ratePerHourPaise = GeneratedColumn<int>(
+    'rate_per_hour_paise',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _roundingMinMeta = const VerificationMeta(
+    'roundingMin',
+  );
+  @override
+  late final GeneratedColumn<int> roundingMin = GeneratedColumn<int>(
+    'rounding_min',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(1),
+  );
+  static const VerificationMeta _minHoursPerVisitMeta = const VerificationMeta(
+    'minHoursPerVisit',
+  );
+  @override
+  late final GeneratedColumn<int> minHoursPerVisit = GeneratedColumn<int>(
+    'min_hours_per_visit',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _amountPerMonthPaiseMeta =
+      const VerificationMeta('amountPerMonthPaise');
+  @override
+  late final GeneratedColumn<int> amountPerMonthPaise = GeneratedColumn<int>(
+    'amount_per_month_paise',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _paidLeavesPerMonthMeta =
+      const VerificationMeta('paidLeavesPerMonth');
+  @override
+  late final GeneratedColumn<int> paidLeavesPerMonth = GeneratedColumn<int>(
+    'paid_leaves_per_month',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    homeId,
+    deleted,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    staffId,
+    effectiveMonth,
+    workDays,
+    payType,
+    ratePerHourPaise,
+    roundingMin,
+    minHoursPerVisit,
+    amountPerMonthPaise,
+    paidLeavesPerMonth,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'pay_rules';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<PayRuleRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('home_id')) {
+      context.handle(
+        _homeIdMeta,
+        homeId.isAcceptableOrUnknown(data['home_id']!, _homeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_homeIdMeta);
+    }
+    if (data.containsKey('deleted')) {
+      context.handle(
+        _deletedMeta,
+        deleted.isAcceptableOrUnknown(data['deleted']!, _deletedMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('created_by')) {
+      context.handle(
+        _createdByMeta,
+        createdBy.isAcceptableOrUnknown(data['created_by']!, _createdByMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('updated_by')) {
+      context.handle(
+        _updatedByMeta,
+        updatedBy.isAcceptableOrUnknown(data['updated_by']!, _updatedByMeta),
+      );
+    }
+    if (data.containsKey('staff_id')) {
+      context.handle(
+        _staffIdMeta,
+        staffId.isAcceptableOrUnknown(data['staff_id']!, _staffIdMeta),
+      );
+    }
+    if (data.containsKey('effective_month')) {
+      context.handle(
+        _effectiveMonthMeta,
+        effectiveMonth.isAcceptableOrUnknown(
+          data['effective_month']!,
+          _effectiveMonthMeta,
+        ),
+      );
+    }
+    if (data.containsKey('work_days')) {
+      context.handle(
+        _workDaysMeta,
+        workDays.isAcceptableOrUnknown(data['work_days']!, _workDaysMeta),
+      );
+    }
+    if (data.containsKey('pay_type')) {
+      context.handle(
+        _payTypeMeta,
+        payType.isAcceptableOrUnknown(data['pay_type']!, _payTypeMeta),
+      );
+    }
+    if (data.containsKey('rate_per_hour_paise')) {
+      context.handle(
+        _ratePerHourPaiseMeta,
+        ratePerHourPaise.isAcceptableOrUnknown(
+          data['rate_per_hour_paise']!,
+          _ratePerHourPaiseMeta,
+        ),
+      );
+    }
+    if (data.containsKey('rounding_min')) {
+      context.handle(
+        _roundingMinMeta,
+        roundingMin.isAcceptableOrUnknown(
+          data['rounding_min']!,
+          _roundingMinMeta,
+        ),
+      );
+    }
+    if (data.containsKey('min_hours_per_visit')) {
+      context.handle(
+        _minHoursPerVisitMeta,
+        minHoursPerVisit.isAcceptableOrUnknown(
+          data['min_hours_per_visit']!,
+          _minHoursPerVisitMeta,
+        ),
+      );
+    }
+    if (data.containsKey('amount_per_month_paise')) {
+      context.handle(
+        _amountPerMonthPaiseMeta,
+        amountPerMonthPaise.isAcceptableOrUnknown(
+          data['amount_per_month_paise']!,
+          _amountPerMonthPaiseMeta,
+        ),
+      );
+    }
+    if (data.containsKey('paid_leaves_per_month')) {
+      context.handle(
+        _paidLeavesPerMonthMeta,
+        paidLeavesPerMonth.isAcceptableOrUnknown(
+          data['paid_leaves_per_month']!,
+          _paidLeavesPerMonthMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PayRuleRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PayRuleRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      homeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}home_id'],
+      )!,
+      deleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}deleted'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}created_at'],
+      )!,
+      createdBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_by'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      updatedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by'],
+      )!,
+      staffId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}staff_id'],
+      )!,
+      effectiveMonth: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}effective_month'],
+      )!,
+      workDays: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}work_days'],
+      )!,
+      payType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}pay_type'],
+      )!,
+      ratePerHourPaise: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}rate_per_hour_paise'],
+      )!,
+      roundingMin: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}rounding_min'],
+      )!,
+      minHoursPerVisit: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}min_hours_per_visit'],
+      )!,
+      amountPerMonthPaise: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}amount_per_month_paise'],
+      )!,
+      paidLeavesPerMonth: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}paid_leaves_per_month'],
+      )!,
+    );
+  }
+
+  @override
+  $PayRulesTable createAlias(String alias) {
+    return $PayRulesTable(attachedDatabase, alias);
+  }
+}
+
+class PayRuleRow extends DataClass implements Insertable<PayRuleRow> {
+  final String id;
+  final String homeId;
+  final bool deleted;
+  final int createdAt;
+  final String createdBy;
+  final int updatedAt;
+  final String updatedBy;
+  final String staffId;
+  final String effectiveMonth;
+  final String workDays;
+  final String payType;
+  final int ratePerHourPaise;
+  final int roundingMin;
+  final int minHoursPerVisit;
+  final int amountPerMonthPaise;
+  final int paidLeavesPerMonth;
+  const PayRuleRow({
+    required this.id,
+    required this.homeId,
+    required this.deleted,
+    required this.createdAt,
+    required this.createdBy,
+    required this.updatedAt,
+    required this.updatedBy,
+    required this.staffId,
+    required this.effectiveMonth,
+    required this.workDays,
+    required this.payType,
+    required this.ratePerHourPaise,
+    required this.roundingMin,
+    required this.minHoursPerVisit,
+    required this.amountPerMonthPaise,
+    required this.paidLeavesPerMonth,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['home_id'] = Variable<String>(homeId);
+    map['deleted'] = Variable<bool>(deleted);
+    map['created_at'] = Variable<int>(createdAt);
+    map['created_by'] = Variable<String>(createdBy);
+    map['updated_at'] = Variable<int>(updatedAt);
+    map['updated_by'] = Variable<String>(updatedBy);
+    map['staff_id'] = Variable<String>(staffId);
+    map['effective_month'] = Variable<String>(effectiveMonth);
+    map['work_days'] = Variable<String>(workDays);
+    map['pay_type'] = Variable<String>(payType);
+    map['rate_per_hour_paise'] = Variable<int>(ratePerHourPaise);
+    map['rounding_min'] = Variable<int>(roundingMin);
+    map['min_hours_per_visit'] = Variable<int>(minHoursPerVisit);
+    map['amount_per_month_paise'] = Variable<int>(amountPerMonthPaise);
+    map['paid_leaves_per_month'] = Variable<int>(paidLeavesPerMonth);
+    return map;
+  }
+
+  PayRulesCompanion toCompanion(bool nullToAbsent) {
+    return PayRulesCompanion(
+      id: Value(id),
+      homeId: Value(homeId),
+      deleted: Value(deleted),
+      createdAt: Value(createdAt),
+      createdBy: Value(createdBy),
+      updatedAt: Value(updatedAt),
+      updatedBy: Value(updatedBy),
+      staffId: Value(staffId),
+      effectiveMonth: Value(effectiveMonth),
+      workDays: Value(workDays),
+      payType: Value(payType),
+      ratePerHourPaise: Value(ratePerHourPaise),
+      roundingMin: Value(roundingMin),
+      minHoursPerVisit: Value(minHoursPerVisit),
+      amountPerMonthPaise: Value(amountPerMonthPaise),
+      paidLeavesPerMonth: Value(paidLeavesPerMonth),
+    );
+  }
+
+  factory PayRuleRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PayRuleRow(
+      id: serializer.fromJson<String>(json['id']),
+      homeId: serializer.fromJson<String>(json['homeId']),
+      deleted: serializer.fromJson<bool>(json['deleted']),
+      createdAt: serializer.fromJson<int>(json['createdAt']),
+      createdBy: serializer.fromJson<String>(json['createdBy']),
+      updatedAt: serializer.fromJson<int>(json['updatedAt']),
+      updatedBy: serializer.fromJson<String>(json['updatedBy']),
+      staffId: serializer.fromJson<String>(json['staffId']),
+      effectiveMonth: serializer.fromJson<String>(json['effectiveMonth']),
+      workDays: serializer.fromJson<String>(json['workDays']),
+      payType: serializer.fromJson<String>(json['payType']),
+      ratePerHourPaise: serializer.fromJson<int>(json['ratePerHourPaise']),
+      roundingMin: serializer.fromJson<int>(json['roundingMin']),
+      minHoursPerVisit: serializer.fromJson<int>(json['minHoursPerVisit']),
+      amountPerMonthPaise: serializer.fromJson<int>(
+        json['amountPerMonthPaise'],
+      ),
+      paidLeavesPerMonth: serializer.fromJson<int>(json['paidLeavesPerMonth']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'homeId': serializer.toJson<String>(homeId),
+      'deleted': serializer.toJson<bool>(deleted),
+      'createdAt': serializer.toJson<int>(createdAt),
+      'createdBy': serializer.toJson<String>(createdBy),
+      'updatedAt': serializer.toJson<int>(updatedAt),
+      'updatedBy': serializer.toJson<String>(updatedBy),
+      'staffId': serializer.toJson<String>(staffId),
+      'effectiveMonth': serializer.toJson<String>(effectiveMonth),
+      'workDays': serializer.toJson<String>(workDays),
+      'payType': serializer.toJson<String>(payType),
+      'ratePerHourPaise': serializer.toJson<int>(ratePerHourPaise),
+      'roundingMin': serializer.toJson<int>(roundingMin),
+      'minHoursPerVisit': serializer.toJson<int>(minHoursPerVisit),
+      'amountPerMonthPaise': serializer.toJson<int>(amountPerMonthPaise),
+      'paidLeavesPerMonth': serializer.toJson<int>(paidLeavesPerMonth),
+    };
+  }
+
+  PayRuleRow copyWith({
+    String? id,
+    String? homeId,
+    bool? deleted,
+    int? createdAt,
+    String? createdBy,
+    int? updatedAt,
+    String? updatedBy,
+    String? staffId,
+    String? effectiveMonth,
+    String? workDays,
+    String? payType,
+    int? ratePerHourPaise,
+    int? roundingMin,
+    int? minHoursPerVisit,
+    int? amountPerMonthPaise,
+    int? paidLeavesPerMonth,
+  }) => PayRuleRow(
+    id: id ?? this.id,
+    homeId: homeId ?? this.homeId,
+    deleted: deleted ?? this.deleted,
+    createdAt: createdAt ?? this.createdAt,
+    createdBy: createdBy ?? this.createdBy,
+    updatedAt: updatedAt ?? this.updatedAt,
+    updatedBy: updatedBy ?? this.updatedBy,
+    staffId: staffId ?? this.staffId,
+    effectiveMonth: effectiveMonth ?? this.effectiveMonth,
+    workDays: workDays ?? this.workDays,
+    payType: payType ?? this.payType,
+    ratePerHourPaise: ratePerHourPaise ?? this.ratePerHourPaise,
+    roundingMin: roundingMin ?? this.roundingMin,
+    minHoursPerVisit: minHoursPerVisit ?? this.minHoursPerVisit,
+    amountPerMonthPaise: amountPerMonthPaise ?? this.amountPerMonthPaise,
+    paidLeavesPerMonth: paidLeavesPerMonth ?? this.paidLeavesPerMonth,
+  );
+  PayRuleRow copyWithCompanion(PayRulesCompanion data) {
+    return PayRuleRow(
+      id: data.id.present ? data.id.value : this.id,
+      homeId: data.homeId.present ? data.homeId.value : this.homeId,
+      deleted: data.deleted.present ? data.deleted.value : this.deleted,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      createdBy: data.createdBy.present ? data.createdBy.value : this.createdBy,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      updatedBy: data.updatedBy.present ? data.updatedBy.value : this.updatedBy,
+      staffId: data.staffId.present ? data.staffId.value : this.staffId,
+      effectiveMonth: data.effectiveMonth.present
+          ? data.effectiveMonth.value
+          : this.effectiveMonth,
+      workDays: data.workDays.present ? data.workDays.value : this.workDays,
+      payType: data.payType.present ? data.payType.value : this.payType,
+      ratePerHourPaise: data.ratePerHourPaise.present
+          ? data.ratePerHourPaise.value
+          : this.ratePerHourPaise,
+      roundingMin: data.roundingMin.present
+          ? data.roundingMin.value
+          : this.roundingMin,
+      minHoursPerVisit: data.minHoursPerVisit.present
+          ? data.minHoursPerVisit.value
+          : this.minHoursPerVisit,
+      amountPerMonthPaise: data.amountPerMonthPaise.present
+          ? data.amountPerMonthPaise.value
+          : this.amountPerMonthPaise,
+      paidLeavesPerMonth: data.paidLeavesPerMonth.present
+          ? data.paidLeavesPerMonth.value
+          : this.paidLeavesPerMonth,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PayRuleRow(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('deleted: $deleted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('staffId: $staffId, ')
+          ..write('effectiveMonth: $effectiveMonth, ')
+          ..write('workDays: $workDays, ')
+          ..write('payType: $payType, ')
+          ..write('ratePerHourPaise: $ratePerHourPaise, ')
+          ..write('roundingMin: $roundingMin, ')
+          ..write('minHoursPerVisit: $minHoursPerVisit, ')
+          ..write('amountPerMonthPaise: $amountPerMonthPaise, ')
+          ..write('paidLeavesPerMonth: $paidLeavesPerMonth')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    homeId,
+    deleted,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    staffId,
+    effectiveMonth,
+    workDays,
+    payType,
+    ratePerHourPaise,
+    roundingMin,
+    minHoursPerVisit,
+    amountPerMonthPaise,
+    paidLeavesPerMonth,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PayRuleRow &&
+          other.id == this.id &&
+          other.homeId == this.homeId &&
+          other.deleted == this.deleted &&
+          other.createdAt == this.createdAt &&
+          other.createdBy == this.createdBy &&
+          other.updatedAt == this.updatedAt &&
+          other.updatedBy == this.updatedBy &&
+          other.staffId == this.staffId &&
+          other.effectiveMonth == this.effectiveMonth &&
+          other.workDays == this.workDays &&
+          other.payType == this.payType &&
+          other.ratePerHourPaise == this.ratePerHourPaise &&
+          other.roundingMin == this.roundingMin &&
+          other.minHoursPerVisit == this.minHoursPerVisit &&
+          other.amountPerMonthPaise == this.amountPerMonthPaise &&
+          other.paidLeavesPerMonth == this.paidLeavesPerMonth);
+}
+
+class PayRulesCompanion extends UpdateCompanion<PayRuleRow> {
+  final Value<String> id;
+  final Value<String> homeId;
+  final Value<bool> deleted;
+  final Value<int> createdAt;
+  final Value<String> createdBy;
+  final Value<int> updatedAt;
+  final Value<String> updatedBy;
+  final Value<String> staffId;
+  final Value<String> effectiveMonth;
+  final Value<String> workDays;
+  final Value<String> payType;
+  final Value<int> ratePerHourPaise;
+  final Value<int> roundingMin;
+  final Value<int> minHoursPerVisit;
+  final Value<int> amountPerMonthPaise;
+  final Value<int> paidLeavesPerMonth;
+  final Value<int> rowid;
+  const PayRulesCompanion({
+    this.id = const Value.absent(),
+    this.homeId = const Value.absent(),
+    this.deleted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.staffId = const Value.absent(),
+    this.effectiveMonth = const Value.absent(),
+    this.workDays = const Value.absent(),
+    this.payType = const Value.absent(),
+    this.ratePerHourPaise = const Value.absent(),
+    this.roundingMin = const Value.absent(),
+    this.minHoursPerVisit = const Value.absent(),
+    this.amountPerMonthPaise = const Value.absent(),
+    this.paidLeavesPerMonth = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PayRulesCompanion.insert({
+    required String id,
+    required String homeId,
+    this.deleted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.staffId = const Value.absent(),
+    this.effectiveMonth = const Value.absent(),
+    this.workDays = const Value.absent(),
+    this.payType = const Value.absent(),
+    this.ratePerHourPaise = const Value.absent(),
+    this.roundingMin = const Value.absent(),
+    this.minHoursPerVisit = const Value.absent(),
+    this.amountPerMonthPaise = const Value.absent(),
+    this.paidLeavesPerMonth = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       homeId = Value(homeId);
+  static Insertable<PayRuleRow> custom({
+    Expression<String>? id,
+    Expression<String>? homeId,
+    Expression<bool>? deleted,
+    Expression<int>? createdAt,
+    Expression<String>? createdBy,
+    Expression<int>? updatedAt,
+    Expression<String>? updatedBy,
+    Expression<String>? staffId,
+    Expression<String>? effectiveMonth,
+    Expression<String>? workDays,
+    Expression<String>? payType,
+    Expression<int>? ratePerHourPaise,
+    Expression<int>? roundingMin,
+    Expression<int>? minHoursPerVisit,
+    Expression<int>? amountPerMonthPaise,
+    Expression<int>? paidLeavesPerMonth,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (homeId != null) 'home_id': homeId,
+      if (deleted != null) 'deleted': deleted,
+      if (createdAt != null) 'created_at': createdAt,
+      if (createdBy != null) 'created_by': createdBy,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (updatedBy != null) 'updated_by': updatedBy,
+      if (staffId != null) 'staff_id': staffId,
+      if (effectiveMonth != null) 'effective_month': effectiveMonth,
+      if (workDays != null) 'work_days': workDays,
+      if (payType != null) 'pay_type': payType,
+      if (ratePerHourPaise != null) 'rate_per_hour_paise': ratePerHourPaise,
+      if (roundingMin != null) 'rounding_min': roundingMin,
+      if (minHoursPerVisit != null) 'min_hours_per_visit': minHoursPerVisit,
+      if (amountPerMonthPaise != null)
+        'amount_per_month_paise': amountPerMonthPaise,
+      if (paidLeavesPerMonth != null)
+        'paid_leaves_per_month': paidLeavesPerMonth,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  PayRulesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? homeId,
+    Value<bool>? deleted,
+    Value<int>? createdAt,
+    Value<String>? createdBy,
+    Value<int>? updatedAt,
+    Value<String>? updatedBy,
+    Value<String>? staffId,
+    Value<String>? effectiveMonth,
+    Value<String>? workDays,
+    Value<String>? payType,
+    Value<int>? ratePerHourPaise,
+    Value<int>? roundingMin,
+    Value<int>? minHoursPerVisit,
+    Value<int>? amountPerMonthPaise,
+    Value<int>? paidLeavesPerMonth,
+    Value<int>? rowid,
+  }) {
+    return PayRulesCompanion(
+      id: id ?? this.id,
+      homeId: homeId ?? this.homeId,
+      deleted: deleted ?? this.deleted,
+      createdAt: createdAt ?? this.createdAt,
+      createdBy: createdBy ?? this.createdBy,
+      updatedAt: updatedAt ?? this.updatedAt,
+      updatedBy: updatedBy ?? this.updatedBy,
+      staffId: staffId ?? this.staffId,
+      effectiveMonth: effectiveMonth ?? this.effectiveMonth,
+      workDays: workDays ?? this.workDays,
+      payType: payType ?? this.payType,
+      ratePerHourPaise: ratePerHourPaise ?? this.ratePerHourPaise,
+      roundingMin: roundingMin ?? this.roundingMin,
+      minHoursPerVisit: minHoursPerVisit ?? this.minHoursPerVisit,
+      amountPerMonthPaise: amountPerMonthPaise ?? this.amountPerMonthPaise,
+      paidLeavesPerMonth: paidLeavesPerMonth ?? this.paidLeavesPerMonth,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (homeId.present) {
+      map['home_id'] = Variable<String>(homeId.value);
+    }
+    if (deleted.present) {
+      map['deleted'] = Variable<bool>(deleted.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (createdBy.present) {
+      map['created_by'] = Variable<String>(createdBy.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (updatedBy.present) {
+      map['updated_by'] = Variable<String>(updatedBy.value);
+    }
+    if (staffId.present) {
+      map['staff_id'] = Variable<String>(staffId.value);
+    }
+    if (effectiveMonth.present) {
+      map['effective_month'] = Variable<String>(effectiveMonth.value);
+    }
+    if (workDays.present) {
+      map['work_days'] = Variable<String>(workDays.value);
+    }
+    if (payType.present) {
+      map['pay_type'] = Variable<String>(payType.value);
+    }
+    if (ratePerHourPaise.present) {
+      map['rate_per_hour_paise'] = Variable<int>(ratePerHourPaise.value);
+    }
+    if (roundingMin.present) {
+      map['rounding_min'] = Variable<int>(roundingMin.value);
+    }
+    if (minHoursPerVisit.present) {
+      map['min_hours_per_visit'] = Variable<int>(minHoursPerVisit.value);
+    }
+    if (amountPerMonthPaise.present) {
+      map['amount_per_month_paise'] = Variable<int>(amountPerMonthPaise.value);
+    }
+    if (paidLeavesPerMonth.present) {
+      map['paid_leaves_per_month'] = Variable<int>(paidLeavesPerMonth.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PayRulesCompanion(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('deleted: $deleted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('staffId: $staffId, ')
+          ..write('effectiveMonth: $effectiveMonth, ')
+          ..write('workDays: $workDays, ')
+          ..write('payType: $payType, ')
+          ..write('ratePerHourPaise: $ratePerHourPaise, ')
+          ..write('roundingMin: $roundingMin, ')
+          ..write('minHoursPerVisit: $minHoursPerVisit, ')
+          ..write('amountPerMonthPaise: $amountPerMonthPaise, ')
+          ..write('paidLeavesPerMonth: $paidLeavesPerMonth, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PayAdjustmentsTable extends PayAdjustments
+    with TableInfo<$PayAdjustmentsTable, PayAdjustmentRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PayAdjustmentsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _homeIdMeta = const VerificationMeta('homeId');
+  @override
+  late final GeneratedColumn<String> homeId = GeneratedColumn<String>(
+    'home_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _deletedMeta = const VerificationMeta(
+    'deleted',
+  );
+  @override
+  late final GeneratedColumn<bool> deleted = GeneratedColumn<bool>(
+    'deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _createdByMeta = const VerificationMeta(
+    'createdBy',
+  );
+  @override
+  late final GeneratedColumn<String> createdBy = GeneratedColumn<String>(
+    'created_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _updatedByMeta = const VerificationMeta(
+    'updatedBy',
+  );
+  @override
+  late final GeneratedColumn<String> updatedBy = GeneratedColumn<String>(
+    'updated_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _staffIdMeta = const VerificationMeta(
+    'staffId',
+  );
+  @override
+  late final GeneratedColumn<String> staffId = GeneratedColumn<String>(
+    'staff_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _monthMeta = const VerificationMeta('month');
+  @override
+  late final GeneratedColumn<String> month = GeneratedColumn<String>(
+    'month',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _kindMeta = const VerificationMeta('kind');
+  @override
+  late final GeneratedColumn<String> kind = GeneratedColumn<String>(
+    'kind',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('extra'),
+  );
+  static const VerificationMeta _amountPaiseMeta = const VerificationMeta(
+    'amountPaise',
+  );
+  @override
+  late final GeneratedColumn<int> amountPaise = GeneratedColumn<int>(
+    'amount_paise',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _noteMeta = const VerificationMeta('note');
+  @override
+  late final GeneratedColumn<String> note = GeneratedColumn<String>(
+    'note',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _settlementAttemptIdMeta =
+      const VerificationMeta('settlementAttemptId');
+  @override
+  late final GeneratedColumn<String> settlementAttemptId =
+      GeneratedColumn<String>(
+        'settlement_attempt_id',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    homeId,
+    deleted,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    staffId,
+    month,
+    kind,
+    amountPaise,
+    note,
+    settlementAttemptId,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'pay_adjustments';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<PayAdjustmentRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('home_id')) {
+      context.handle(
+        _homeIdMeta,
+        homeId.isAcceptableOrUnknown(data['home_id']!, _homeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_homeIdMeta);
+    }
+    if (data.containsKey('deleted')) {
+      context.handle(
+        _deletedMeta,
+        deleted.isAcceptableOrUnknown(data['deleted']!, _deletedMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('created_by')) {
+      context.handle(
+        _createdByMeta,
+        createdBy.isAcceptableOrUnknown(data['created_by']!, _createdByMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('updated_by')) {
+      context.handle(
+        _updatedByMeta,
+        updatedBy.isAcceptableOrUnknown(data['updated_by']!, _updatedByMeta),
+      );
+    }
+    if (data.containsKey('staff_id')) {
+      context.handle(
+        _staffIdMeta,
+        staffId.isAcceptableOrUnknown(data['staff_id']!, _staffIdMeta),
+      );
+    }
+    if (data.containsKey('month')) {
+      context.handle(
+        _monthMeta,
+        month.isAcceptableOrUnknown(data['month']!, _monthMeta),
+      );
+    }
+    if (data.containsKey('kind')) {
+      context.handle(
+        _kindMeta,
+        kind.isAcceptableOrUnknown(data['kind']!, _kindMeta),
+      );
+    }
+    if (data.containsKey('amount_paise')) {
+      context.handle(
+        _amountPaiseMeta,
+        amountPaise.isAcceptableOrUnknown(
+          data['amount_paise']!,
+          _amountPaiseMeta,
+        ),
+      );
+    }
+    if (data.containsKey('note')) {
+      context.handle(
+        _noteMeta,
+        note.isAcceptableOrUnknown(data['note']!, _noteMeta),
+      );
+    }
+    if (data.containsKey('settlement_attempt_id')) {
+      context.handle(
+        _settlementAttemptIdMeta,
+        settlementAttemptId.isAcceptableOrUnknown(
+          data['settlement_attempt_id']!,
+          _settlementAttemptIdMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PayAdjustmentRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PayAdjustmentRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      homeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}home_id'],
+      )!,
+      deleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}deleted'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}created_at'],
+      )!,
+      createdBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_by'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      updatedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by'],
+      )!,
+      staffId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}staff_id'],
+      )!,
+      month: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}month'],
+      )!,
+      kind: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}kind'],
+      )!,
+      amountPaise: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}amount_paise'],
+      )!,
+      note: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}note'],
+      )!,
+      settlementAttemptId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}settlement_attempt_id'],
+      ),
+    );
+  }
+
+  @override
+  $PayAdjustmentsTable createAlias(String alias) {
+    return $PayAdjustmentsTable(attachedDatabase, alias);
+  }
+}
+
+class PayAdjustmentRow extends DataClass
+    implements Insertable<PayAdjustmentRow> {
+  final String id;
+  final String homeId;
+  final bool deleted;
+  final int createdAt;
+  final String createdBy;
+  final int updatedAt;
+  final String updatedBy;
+  final String staffId;
+  final String month;
+  final String kind;
+  final int amountPaise;
+  final String note;
+  final String? settlementAttemptId;
+  const PayAdjustmentRow({
+    required this.id,
+    required this.homeId,
+    required this.deleted,
+    required this.createdAt,
+    required this.createdBy,
+    required this.updatedAt,
+    required this.updatedBy,
+    required this.staffId,
+    required this.month,
+    required this.kind,
+    required this.amountPaise,
+    required this.note,
+    this.settlementAttemptId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['home_id'] = Variable<String>(homeId);
+    map['deleted'] = Variable<bool>(deleted);
+    map['created_at'] = Variable<int>(createdAt);
+    map['created_by'] = Variable<String>(createdBy);
+    map['updated_at'] = Variable<int>(updatedAt);
+    map['updated_by'] = Variable<String>(updatedBy);
+    map['staff_id'] = Variable<String>(staffId);
+    map['month'] = Variable<String>(month);
+    map['kind'] = Variable<String>(kind);
+    map['amount_paise'] = Variable<int>(amountPaise);
+    map['note'] = Variable<String>(note);
+    if (!nullToAbsent || settlementAttemptId != null) {
+      map['settlement_attempt_id'] = Variable<String>(settlementAttemptId);
+    }
+    return map;
+  }
+
+  PayAdjustmentsCompanion toCompanion(bool nullToAbsent) {
+    return PayAdjustmentsCompanion(
+      id: Value(id),
+      homeId: Value(homeId),
+      deleted: Value(deleted),
+      createdAt: Value(createdAt),
+      createdBy: Value(createdBy),
+      updatedAt: Value(updatedAt),
+      updatedBy: Value(updatedBy),
+      staffId: Value(staffId),
+      month: Value(month),
+      kind: Value(kind),
+      amountPaise: Value(amountPaise),
+      note: Value(note),
+      settlementAttemptId: settlementAttemptId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(settlementAttemptId),
+    );
+  }
+
+  factory PayAdjustmentRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PayAdjustmentRow(
+      id: serializer.fromJson<String>(json['id']),
+      homeId: serializer.fromJson<String>(json['homeId']),
+      deleted: serializer.fromJson<bool>(json['deleted']),
+      createdAt: serializer.fromJson<int>(json['createdAt']),
+      createdBy: serializer.fromJson<String>(json['createdBy']),
+      updatedAt: serializer.fromJson<int>(json['updatedAt']),
+      updatedBy: serializer.fromJson<String>(json['updatedBy']),
+      staffId: serializer.fromJson<String>(json['staffId']),
+      month: serializer.fromJson<String>(json['month']),
+      kind: serializer.fromJson<String>(json['kind']),
+      amountPaise: serializer.fromJson<int>(json['amountPaise']),
+      note: serializer.fromJson<String>(json['note']),
+      settlementAttemptId: serializer.fromJson<String?>(
+        json['settlementAttemptId'],
+      ),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'homeId': serializer.toJson<String>(homeId),
+      'deleted': serializer.toJson<bool>(deleted),
+      'createdAt': serializer.toJson<int>(createdAt),
+      'createdBy': serializer.toJson<String>(createdBy),
+      'updatedAt': serializer.toJson<int>(updatedAt),
+      'updatedBy': serializer.toJson<String>(updatedBy),
+      'staffId': serializer.toJson<String>(staffId),
+      'month': serializer.toJson<String>(month),
+      'kind': serializer.toJson<String>(kind),
+      'amountPaise': serializer.toJson<int>(amountPaise),
+      'note': serializer.toJson<String>(note),
+      'settlementAttemptId': serializer.toJson<String?>(settlementAttemptId),
+    };
+  }
+
+  PayAdjustmentRow copyWith({
+    String? id,
+    String? homeId,
+    bool? deleted,
+    int? createdAt,
+    String? createdBy,
+    int? updatedAt,
+    String? updatedBy,
+    String? staffId,
+    String? month,
+    String? kind,
+    int? amountPaise,
+    String? note,
+    Value<String?> settlementAttemptId = const Value.absent(),
+  }) => PayAdjustmentRow(
+    id: id ?? this.id,
+    homeId: homeId ?? this.homeId,
+    deleted: deleted ?? this.deleted,
+    createdAt: createdAt ?? this.createdAt,
+    createdBy: createdBy ?? this.createdBy,
+    updatedAt: updatedAt ?? this.updatedAt,
+    updatedBy: updatedBy ?? this.updatedBy,
+    staffId: staffId ?? this.staffId,
+    month: month ?? this.month,
+    kind: kind ?? this.kind,
+    amountPaise: amountPaise ?? this.amountPaise,
+    note: note ?? this.note,
+    settlementAttemptId: settlementAttemptId.present
+        ? settlementAttemptId.value
+        : this.settlementAttemptId,
+  );
+  PayAdjustmentRow copyWithCompanion(PayAdjustmentsCompanion data) {
+    return PayAdjustmentRow(
+      id: data.id.present ? data.id.value : this.id,
+      homeId: data.homeId.present ? data.homeId.value : this.homeId,
+      deleted: data.deleted.present ? data.deleted.value : this.deleted,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      createdBy: data.createdBy.present ? data.createdBy.value : this.createdBy,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      updatedBy: data.updatedBy.present ? data.updatedBy.value : this.updatedBy,
+      staffId: data.staffId.present ? data.staffId.value : this.staffId,
+      month: data.month.present ? data.month.value : this.month,
+      kind: data.kind.present ? data.kind.value : this.kind,
+      amountPaise: data.amountPaise.present
+          ? data.amountPaise.value
+          : this.amountPaise,
+      note: data.note.present ? data.note.value : this.note,
+      settlementAttemptId: data.settlementAttemptId.present
+          ? data.settlementAttemptId.value
+          : this.settlementAttemptId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PayAdjustmentRow(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('deleted: $deleted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('staffId: $staffId, ')
+          ..write('month: $month, ')
+          ..write('kind: $kind, ')
+          ..write('amountPaise: $amountPaise, ')
+          ..write('note: $note, ')
+          ..write('settlementAttemptId: $settlementAttemptId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    homeId,
+    deleted,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    staffId,
+    month,
+    kind,
+    amountPaise,
+    note,
+    settlementAttemptId,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PayAdjustmentRow &&
+          other.id == this.id &&
+          other.homeId == this.homeId &&
+          other.deleted == this.deleted &&
+          other.createdAt == this.createdAt &&
+          other.createdBy == this.createdBy &&
+          other.updatedAt == this.updatedAt &&
+          other.updatedBy == this.updatedBy &&
+          other.staffId == this.staffId &&
+          other.month == this.month &&
+          other.kind == this.kind &&
+          other.amountPaise == this.amountPaise &&
+          other.note == this.note &&
+          other.settlementAttemptId == this.settlementAttemptId);
+}
+
+class PayAdjustmentsCompanion extends UpdateCompanion<PayAdjustmentRow> {
+  final Value<String> id;
+  final Value<String> homeId;
+  final Value<bool> deleted;
+  final Value<int> createdAt;
+  final Value<String> createdBy;
+  final Value<int> updatedAt;
+  final Value<String> updatedBy;
+  final Value<String> staffId;
+  final Value<String> month;
+  final Value<String> kind;
+  final Value<int> amountPaise;
+  final Value<String> note;
+  final Value<String?> settlementAttemptId;
+  final Value<int> rowid;
+  const PayAdjustmentsCompanion({
+    this.id = const Value.absent(),
+    this.homeId = const Value.absent(),
+    this.deleted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.staffId = const Value.absent(),
+    this.month = const Value.absent(),
+    this.kind = const Value.absent(),
+    this.amountPaise = const Value.absent(),
+    this.note = const Value.absent(),
+    this.settlementAttemptId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PayAdjustmentsCompanion.insert({
+    required String id,
+    required String homeId,
+    this.deleted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.staffId = const Value.absent(),
+    this.month = const Value.absent(),
+    this.kind = const Value.absent(),
+    this.amountPaise = const Value.absent(),
+    this.note = const Value.absent(),
+    this.settlementAttemptId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       homeId = Value(homeId);
+  static Insertable<PayAdjustmentRow> custom({
+    Expression<String>? id,
+    Expression<String>? homeId,
+    Expression<bool>? deleted,
+    Expression<int>? createdAt,
+    Expression<String>? createdBy,
+    Expression<int>? updatedAt,
+    Expression<String>? updatedBy,
+    Expression<String>? staffId,
+    Expression<String>? month,
+    Expression<String>? kind,
+    Expression<int>? amountPaise,
+    Expression<String>? note,
+    Expression<String>? settlementAttemptId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (homeId != null) 'home_id': homeId,
+      if (deleted != null) 'deleted': deleted,
+      if (createdAt != null) 'created_at': createdAt,
+      if (createdBy != null) 'created_by': createdBy,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (updatedBy != null) 'updated_by': updatedBy,
+      if (staffId != null) 'staff_id': staffId,
+      if (month != null) 'month': month,
+      if (kind != null) 'kind': kind,
+      if (amountPaise != null) 'amount_paise': amountPaise,
+      if (note != null) 'note': note,
+      if (settlementAttemptId != null)
+        'settlement_attempt_id': settlementAttemptId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  PayAdjustmentsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? homeId,
+    Value<bool>? deleted,
+    Value<int>? createdAt,
+    Value<String>? createdBy,
+    Value<int>? updatedAt,
+    Value<String>? updatedBy,
+    Value<String>? staffId,
+    Value<String>? month,
+    Value<String>? kind,
+    Value<int>? amountPaise,
+    Value<String>? note,
+    Value<String?>? settlementAttemptId,
+    Value<int>? rowid,
+  }) {
+    return PayAdjustmentsCompanion(
+      id: id ?? this.id,
+      homeId: homeId ?? this.homeId,
+      deleted: deleted ?? this.deleted,
+      createdAt: createdAt ?? this.createdAt,
+      createdBy: createdBy ?? this.createdBy,
+      updatedAt: updatedAt ?? this.updatedAt,
+      updatedBy: updatedBy ?? this.updatedBy,
+      staffId: staffId ?? this.staffId,
+      month: month ?? this.month,
+      kind: kind ?? this.kind,
+      amountPaise: amountPaise ?? this.amountPaise,
+      note: note ?? this.note,
+      settlementAttemptId: settlementAttemptId ?? this.settlementAttemptId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (homeId.present) {
+      map['home_id'] = Variable<String>(homeId.value);
+    }
+    if (deleted.present) {
+      map['deleted'] = Variable<bool>(deleted.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (createdBy.present) {
+      map['created_by'] = Variable<String>(createdBy.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (updatedBy.present) {
+      map['updated_by'] = Variable<String>(updatedBy.value);
+    }
+    if (staffId.present) {
+      map['staff_id'] = Variable<String>(staffId.value);
+    }
+    if (month.present) {
+      map['month'] = Variable<String>(month.value);
+    }
+    if (kind.present) {
+      map['kind'] = Variable<String>(kind.value);
+    }
+    if (amountPaise.present) {
+      map['amount_paise'] = Variable<int>(amountPaise.value);
+    }
+    if (note.present) {
+      map['note'] = Variable<String>(note.value);
+    }
+    if (settlementAttemptId.present) {
+      map['settlement_attempt_id'] = Variable<String>(
+        settlementAttemptId.value,
+      );
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PayAdjustmentsCompanion(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('deleted: $deleted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('staffId: $staffId, ')
+          ..write('month: $month, ')
+          ..write('kind: $kind, ')
+          ..write('amountPaise: $amountPaise, ')
+          ..write('note: $note, ')
+          ..write('settlementAttemptId: $settlementAttemptId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $SettlementAttemptsTable extends SettlementAttempts
+    with TableInfo<$SettlementAttemptsTable, SettlementAttemptRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SettlementAttemptsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _homeIdMeta = const VerificationMeta('homeId');
+  @override
+  late final GeneratedColumn<String> homeId = GeneratedColumn<String>(
+    'home_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _deletedMeta = const VerificationMeta(
+    'deleted',
+  );
+  @override
+  late final GeneratedColumn<bool> deleted = GeneratedColumn<bool>(
+    'deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _createdByMeta = const VerificationMeta(
+    'createdBy',
+  );
+  @override
+  late final GeneratedColumn<String> createdBy = GeneratedColumn<String>(
+    'created_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _updatedByMeta = const VerificationMeta(
+    'updatedBy',
+  );
+  @override
+  late final GeneratedColumn<String> updatedBy = GeneratedColumn<String>(
+    'updated_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _staffIdMeta = const VerificationMeta(
+    'staffId',
+  );
+  @override
+  late final GeneratedColumn<String> staffId = GeneratedColumn<String>(
+    'staff_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _monthMeta = const VerificationMeta('month');
+  @override
+  late final GeneratedColumn<String> month = GeneratedColumn<String>(
+    'month',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _kindMeta = const VerificationMeta('kind');
+  @override
+  late final GeneratedColumn<String> kind = GeneratedColumn<String>(
+    'kind',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('settle'),
+  );
+  static const VerificationMeta _refAttemptIdMeta = const VerificationMeta(
+    'refAttemptId',
+  );
+  @override
+  late final GeneratedColumn<String> refAttemptId = GeneratedColumn<String>(
+    'ref_attempt_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _amountPaiseMeta = const VerificationMeta(
+    'amountPaise',
+  );
+  @override
+  late final GeneratedColumn<int> amountPaise = GeneratedColumn<int>(
+    'amount_paise',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _methodMeta = const VerificationMeta('method');
+  @override
+  late final GeneratedColumn<String> method = GeneratedColumn<String>(
+    'method',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _netPaiseMeta = const VerificationMeta(
+    'netPaise',
+  );
+  @override
+  late final GeneratedColumn<int> netPaise = GeneratedColumn<int>(
+    'net_paise',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _breakdownJsonMeta = const VerificationMeta(
+    'breakdownJson',
+  );
+  @override
+  late final GeneratedColumn<String> breakdownJson = GeneratedColumn<String>(
+    'breakdown_json',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _deltaPaiseMeta = const VerificationMeta(
+    'deltaPaise',
+  );
+  @override
+  late final GeneratedColumn<int> deltaPaise = GeneratedColumn<int>(
+    'delta_paise',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _prevTransferIdsMeta = const VerificationMeta(
+    'prevTransferIds',
+  );
+  @override
+  late final GeneratedColumn<String> prevTransferIds = GeneratedColumn<String>(
+    'prev_transfer_ids',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _expenseIdMeta = const VerificationMeta(
+    'expenseId',
+  );
+  @override
+  late final GeneratedColumn<String> expenseId = GeneratedColumn<String>(
+    'expense_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _byMemberMeta = const VerificationMeta(
+    'byMember',
+  );
+  @override
+  late final GeneratedColumn<String> byMember = GeneratedColumn<String>(
+    'by_member',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    homeId,
+    deleted,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    staffId,
+    month,
+    kind,
+    refAttemptId,
+    amountPaise,
+    method,
+    netPaise,
+    breakdownJson,
+    deltaPaise,
+    prevTransferIds,
+    expenseId,
+    byMember,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'settlement_attempts';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<SettlementAttemptRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('home_id')) {
+      context.handle(
+        _homeIdMeta,
+        homeId.isAcceptableOrUnknown(data['home_id']!, _homeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_homeIdMeta);
+    }
+    if (data.containsKey('deleted')) {
+      context.handle(
+        _deletedMeta,
+        deleted.isAcceptableOrUnknown(data['deleted']!, _deletedMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('created_by')) {
+      context.handle(
+        _createdByMeta,
+        createdBy.isAcceptableOrUnknown(data['created_by']!, _createdByMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('updated_by')) {
+      context.handle(
+        _updatedByMeta,
+        updatedBy.isAcceptableOrUnknown(data['updated_by']!, _updatedByMeta),
+      );
+    }
+    if (data.containsKey('staff_id')) {
+      context.handle(
+        _staffIdMeta,
+        staffId.isAcceptableOrUnknown(data['staff_id']!, _staffIdMeta),
+      );
+    }
+    if (data.containsKey('month')) {
+      context.handle(
+        _monthMeta,
+        month.isAcceptableOrUnknown(data['month']!, _monthMeta),
+      );
+    }
+    if (data.containsKey('kind')) {
+      context.handle(
+        _kindMeta,
+        kind.isAcceptableOrUnknown(data['kind']!, _kindMeta),
+      );
+    }
+    if (data.containsKey('ref_attempt_id')) {
+      context.handle(
+        _refAttemptIdMeta,
+        refAttemptId.isAcceptableOrUnknown(
+          data['ref_attempt_id']!,
+          _refAttemptIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('amount_paise')) {
+      context.handle(
+        _amountPaiseMeta,
+        amountPaise.isAcceptableOrUnknown(
+          data['amount_paise']!,
+          _amountPaiseMeta,
+        ),
+      );
+    }
+    if (data.containsKey('method')) {
+      context.handle(
+        _methodMeta,
+        method.isAcceptableOrUnknown(data['method']!, _methodMeta),
+      );
+    }
+    if (data.containsKey('net_paise')) {
+      context.handle(
+        _netPaiseMeta,
+        netPaise.isAcceptableOrUnknown(data['net_paise']!, _netPaiseMeta),
+      );
+    }
+    if (data.containsKey('breakdown_json')) {
+      context.handle(
+        _breakdownJsonMeta,
+        breakdownJson.isAcceptableOrUnknown(
+          data['breakdown_json']!,
+          _breakdownJsonMeta,
+        ),
+      );
+    }
+    if (data.containsKey('delta_paise')) {
+      context.handle(
+        _deltaPaiseMeta,
+        deltaPaise.isAcceptableOrUnknown(data['delta_paise']!, _deltaPaiseMeta),
+      );
+    }
+    if (data.containsKey('prev_transfer_ids')) {
+      context.handle(
+        _prevTransferIdsMeta,
+        prevTransferIds.isAcceptableOrUnknown(
+          data['prev_transfer_ids']!,
+          _prevTransferIdsMeta,
+        ),
+      );
+    }
+    if (data.containsKey('expense_id')) {
+      context.handle(
+        _expenseIdMeta,
+        expenseId.isAcceptableOrUnknown(data['expense_id']!, _expenseIdMeta),
+      );
+    }
+    if (data.containsKey('by_member')) {
+      context.handle(
+        _byMemberMeta,
+        byMember.isAcceptableOrUnknown(data['by_member']!, _byMemberMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  SettlementAttemptRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SettlementAttemptRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      homeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}home_id'],
+      )!,
+      deleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}deleted'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}created_at'],
+      )!,
+      createdBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_by'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      updatedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by'],
+      )!,
+      staffId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}staff_id'],
+      )!,
+      month: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}month'],
+      )!,
+      kind: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}kind'],
+      )!,
+      refAttemptId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}ref_attempt_id'],
+      ),
+      amountPaise: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}amount_paise'],
+      )!,
+      method: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}method'],
+      ),
+      netPaise: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}net_paise'],
+      )!,
+      breakdownJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}breakdown_json'],
+      ),
+      deltaPaise: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}delta_paise'],
+      )!,
+      prevTransferIds: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}prev_transfer_ids'],
+      ),
+      expenseId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}expense_id'],
+      ),
+      byMember: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}by_member'],
+      )!,
+    );
+  }
+
+  @override
+  $SettlementAttemptsTable createAlias(String alias) {
+    return $SettlementAttemptsTable(attachedDatabase, alias);
+  }
+}
+
+class SettlementAttemptRow extends DataClass
+    implements Insertable<SettlementAttemptRow> {
+  final String id;
+  final String homeId;
+  final bool deleted;
+  final int createdAt;
+  final String createdBy;
+  final int updatedAt;
+  final String updatedBy;
+  final String staffId;
+  final String month;
+  final String kind;
+  final String? refAttemptId;
+  final int amountPaise;
+  final String? method;
+  final int netPaise;
+  final String? breakdownJson;
+  final int deltaPaise;
+  final String? prevTransferIds;
+  final String? expenseId;
+  final String byMember;
+  const SettlementAttemptRow({
+    required this.id,
+    required this.homeId,
+    required this.deleted,
+    required this.createdAt,
+    required this.createdBy,
+    required this.updatedAt,
+    required this.updatedBy,
+    required this.staffId,
+    required this.month,
+    required this.kind,
+    this.refAttemptId,
+    required this.amountPaise,
+    this.method,
+    required this.netPaise,
+    this.breakdownJson,
+    required this.deltaPaise,
+    this.prevTransferIds,
+    this.expenseId,
+    required this.byMember,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['home_id'] = Variable<String>(homeId);
+    map['deleted'] = Variable<bool>(deleted);
+    map['created_at'] = Variable<int>(createdAt);
+    map['created_by'] = Variable<String>(createdBy);
+    map['updated_at'] = Variable<int>(updatedAt);
+    map['updated_by'] = Variable<String>(updatedBy);
+    map['staff_id'] = Variable<String>(staffId);
+    map['month'] = Variable<String>(month);
+    map['kind'] = Variable<String>(kind);
+    if (!nullToAbsent || refAttemptId != null) {
+      map['ref_attempt_id'] = Variable<String>(refAttemptId);
+    }
+    map['amount_paise'] = Variable<int>(amountPaise);
+    if (!nullToAbsent || method != null) {
+      map['method'] = Variable<String>(method);
+    }
+    map['net_paise'] = Variable<int>(netPaise);
+    if (!nullToAbsent || breakdownJson != null) {
+      map['breakdown_json'] = Variable<String>(breakdownJson);
+    }
+    map['delta_paise'] = Variable<int>(deltaPaise);
+    if (!nullToAbsent || prevTransferIds != null) {
+      map['prev_transfer_ids'] = Variable<String>(prevTransferIds);
+    }
+    if (!nullToAbsent || expenseId != null) {
+      map['expense_id'] = Variable<String>(expenseId);
+    }
+    map['by_member'] = Variable<String>(byMember);
+    return map;
+  }
+
+  SettlementAttemptsCompanion toCompanion(bool nullToAbsent) {
+    return SettlementAttemptsCompanion(
+      id: Value(id),
+      homeId: Value(homeId),
+      deleted: Value(deleted),
+      createdAt: Value(createdAt),
+      createdBy: Value(createdBy),
+      updatedAt: Value(updatedAt),
+      updatedBy: Value(updatedBy),
+      staffId: Value(staffId),
+      month: Value(month),
+      kind: Value(kind),
+      refAttemptId: refAttemptId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(refAttemptId),
+      amountPaise: Value(amountPaise),
+      method: method == null && nullToAbsent
+          ? const Value.absent()
+          : Value(method),
+      netPaise: Value(netPaise),
+      breakdownJson: breakdownJson == null && nullToAbsent
+          ? const Value.absent()
+          : Value(breakdownJson),
+      deltaPaise: Value(deltaPaise),
+      prevTransferIds: prevTransferIds == null && nullToAbsent
+          ? const Value.absent()
+          : Value(prevTransferIds),
+      expenseId: expenseId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(expenseId),
+      byMember: Value(byMember),
+    );
+  }
+
+  factory SettlementAttemptRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SettlementAttemptRow(
+      id: serializer.fromJson<String>(json['id']),
+      homeId: serializer.fromJson<String>(json['homeId']),
+      deleted: serializer.fromJson<bool>(json['deleted']),
+      createdAt: serializer.fromJson<int>(json['createdAt']),
+      createdBy: serializer.fromJson<String>(json['createdBy']),
+      updatedAt: serializer.fromJson<int>(json['updatedAt']),
+      updatedBy: serializer.fromJson<String>(json['updatedBy']),
+      staffId: serializer.fromJson<String>(json['staffId']),
+      month: serializer.fromJson<String>(json['month']),
+      kind: serializer.fromJson<String>(json['kind']),
+      refAttemptId: serializer.fromJson<String?>(json['refAttemptId']),
+      amountPaise: serializer.fromJson<int>(json['amountPaise']),
+      method: serializer.fromJson<String?>(json['method']),
+      netPaise: serializer.fromJson<int>(json['netPaise']),
+      breakdownJson: serializer.fromJson<String?>(json['breakdownJson']),
+      deltaPaise: serializer.fromJson<int>(json['deltaPaise']),
+      prevTransferIds: serializer.fromJson<String?>(json['prevTransferIds']),
+      expenseId: serializer.fromJson<String?>(json['expenseId']),
+      byMember: serializer.fromJson<String>(json['byMember']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'homeId': serializer.toJson<String>(homeId),
+      'deleted': serializer.toJson<bool>(deleted),
+      'createdAt': serializer.toJson<int>(createdAt),
+      'createdBy': serializer.toJson<String>(createdBy),
+      'updatedAt': serializer.toJson<int>(updatedAt),
+      'updatedBy': serializer.toJson<String>(updatedBy),
+      'staffId': serializer.toJson<String>(staffId),
+      'month': serializer.toJson<String>(month),
+      'kind': serializer.toJson<String>(kind),
+      'refAttemptId': serializer.toJson<String?>(refAttemptId),
+      'amountPaise': serializer.toJson<int>(amountPaise),
+      'method': serializer.toJson<String?>(method),
+      'netPaise': serializer.toJson<int>(netPaise),
+      'breakdownJson': serializer.toJson<String?>(breakdownJson),
+      'deltaPaise': serializer.toJson<int>(deltaPaise),
+      'prevTransferIds': serializer.toJson<String?>(prevTransferIds),
+      'expenseId': serializer.toJson<String?>(expenseId),
+      'byMember': serializer.toJson<String>(byMember),
+    };
+  }
+
+  SettlementAttemptRow copyWith({
+    String? id,
+    String? homeId,
+    bool? deleted,
+    int? createdAt,
+    String? createdBy,
+    int? updatedAt,
+    String? updatedBy,
+    String? staffId,
+    String? month,
+    String? kind,
+    Value<String?> refAttemptId = const Value.absent(),
+    int? amountPaise,
+    Value<String?> method = const Value.absent(),
+    int? netPaise,
+    Value<String?> breakdownJson = const Value.absent(),
+    int? deltaPaise,
+    Value<String?> prevTransferIds = const Value.absent(),
+    Value<String?> expenseId = const Value.absent(),
+    String? byMember,
+  }) => SettlementAttemptRow(
+    id: id ?? this.id,
+    homeId: homeId ?? this.homeId,
+    deleted: deleted ?? this.deleted,
+    createdAt: createdAt ?? this.createdAt,
+    createdBy: createdBy ?? this.createdBy,
+    updatedAt: updatedAt ?? this.updatedAt,
+    updatedBy: updatedBy ?? this.updatedBy,
+    staffId: staffId ?? this.staffId,
+    month: month ?? this.month,
+    kind: kind ?? this.kind,
+    refAttemptId: refAttemptId.present ? refAttemptId.value : this.refAttemptId,
+    amountPaise: amountPaise ?? this.amountPaise,
+    method: method.present ? method.value : this.method,
+    netPaise: netPaise ?? this.netPaise,
+    breakdownJson: breakdownJson.present
+        ? breakdownJson.value
+        : this.breakdownJson,
+    deltaPaise: deltaPaise ?? this.deltaPaise,
+    prevTransferIds: prevTransferIds.present
+        ? prevTransferIds.value
+        : this.prevTransferIds,
+    expenseId: expenseId.present ? expenseId.value : this.expenseId,
+    byMember: byMember ?? this.byMember,
+  );
+  SettlementAttemptRow copyWithCompanion(SettlementAttemptsCompanion data) {
+    return SettlementAttemptRow(
+      id: data.id.present ? data.id.value : this.id,
+      homeId: data.homeId.present ? data.homeId.value : this.homeId,
+      deleted: data.deleted.present ? data.deleted.value : this.deleted,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      createdBy: data.createdBy.present ? data.createdBy.value : this.createdBy,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      updatedBy: data.updatedBy.present ? data.updatedBy.value : this.updatedBy,
+      staffId: data.staffId.present ? data.staffId.value : this.staffId,
+      month: data.month.present ? data.month.value : this.month,
+      kind: data.kind.present ? data.kind.value : this.kind,
+      refAttemptId: data.refAttemptId.present
+          ? data.refAttemptId.value
+          : this.refAttemptId,
+      amountPaise: data.amountPaise.present
+          ? data.amountPaise.value
+          : this.amountPaise,
+      method: data.method.present ? data.method.value : this.method,
+      netPaise: data.netPaise.present ? data.netPaise.value : this.netPaise,
+      breakdownJson: data.breakdownJson.present
+          ? data.breakdownJson.value
+          : this.breakdownJson,
+      deltaPaise: data.deltaPaise.present
+          ? data.deltaPaise.value
+          : this.deltaPaise,
+      prevTransferIds: data.prevTransferIds.present
+          ? data.prevTransferIds.value
+          : this.prevTransferIds,
+      expenseId: data.expenseId.present ? data.expenseId.value : this.expenseId,
+      byMember: data.byMember.present ? data.byMember.value : this.byMember,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SettlementAttemptRow(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('deleted: $deleted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('staffId: $staffId, ')
+          ..write('month: $month, ')
+          ..write('kind: $kind, ')
+          ..write('refAttemptId: $refAttemptId, ')
+          ..write('amountPaise: $amountPaise, ')
+          ..write('method: $method, ')
+          ..write('netPaise: $netPaise, ')
+          ..write('breakdownJson: $breakdownJson, ')
+          ..write('deltaPaise: $deltaPaise, ')
+          ..write('prevTransferIds: $prevTransferIds, ')
+          ..write('expenseId: $expenseId, ')
+          ..write('byMember: $byMember')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    homeId,
+    deleted,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    staffId,
+    month,
+    kind,
+    refAttemptId,
+    amountPaise,
+    method,
+    netPaise,
+    breakdownJson,
+    deltaPaise,
+    prevTransferIds,
+    expenseId,
+    byMember,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SettlementAttemptRow &&
+          other.id == this.id &&
+          other.homeId == this.homeId &&
+          other.deleted == this.deleted &&
+          other.createdAt == this.createdAt &&
+          other.createdBy == this.createdBy &&
+          other.updatedAt == this.updatedAt &&
+          other.updatedBy == this.updatedBy &&
+          other.staffId == this.staffId &&
+          other.month == this.month &&
+          other.kind == this.kind &&
+          other.refAttemptId == this.refAttemptId &&
+          other.amountPaise == this.amountPaise &&
+          other.method == this.method &&
+          other.netPaise == this.netPaise &&
+          other.breakdownJson == this.breakdownJson &&
+          other.deltaPaise == this.deltaPaise &&
+          other.prevTransferIds == this.prevTransferIds &&
+          other.expenseId == this.expenseId &&
+          other.byMember == this.byMember);
+}
+
+class SettlementAttemptsCompanion
+    extends UpdateCompanion<SettlementAttemptRow> {
+  final Value<String> id;
+  final Value<String> homeId;
+  final Value<bool> deleted;
+  final Value<int> createdAt;
+  final Value<String> createdBy;
+  final Value<int> updatedAt;
+  final Value<String> updatedBy;
+  final Value<String> staffId;
+  final Value<String> month;
+  final Value<String> kind;
+  final Value<String?> refAttemptId;
+  final Value<int> amountPaise;
+  final Value<String?> method;
+  final Value<int> netPaise;
+  final Value<String?> breakdownJson;
+  final Value<int> deltaPaise;
+  final Value<String?> prevTransferIds;
+  final Value<String?> expenseId;
+  final Value<String> byMember;
+  final Value<int> rowid;
+  const SettlementAttemptsCompanion({
+    this.id = const Value.absent(),
+    this.homeId = const Value.absent(),
+    this.deleted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.staffId = const Value.absent(),
+    this.month = const Value.absent(),
+    this.kind = const Value.absent(),
+    this.refAttemptId = const Value.absent(),
+    this.amountPaise = const Value.absent(),
+    this.method = const Value.absent(),
+    this.netPaise = const Value.absent(),
+    this.breakdownJson = const Value.absent(),
+    this.deltaPaise = const Value.absent(),
+    this.prevTransferIds = const Value.absent(),
+    this.expenseId = const Value.absent(),
+    this.byMember = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SettlementAttemptsCompanion.insert({
+    required String id,
+    required String homeId,
+    this.deleted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.staffId = const Value.absent(),
+    this.month = const Value.absent(),
+    this.kind = const Value.absent(),
+    this.refAttemptId = const Value.absent(),
+    this.amountPaise = const Value.absent(),
+    this.method = const Value.absent(),
+    this.netPaise = const Value.absent(),
+    this.breakdownJson = const Value.absent(),
+    this.deltaPaise = const Value.absent(),
+    this.prevTransferIds = const Value.absent(),
+    this.expenseId = const Value.absent(),
+    this.byMember = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       homeId = Value(homeId);
+  static Insertable<SettlementAttemptRow> custom({
+    Expression<String>? id,
+    Expression<String>? homeId,
+    Expression<bool>? deleted,
+    Expression<int>? createdAt,
+    Expression<String>? createdBy,
+    Expression<int>? updatedAt,
+    Expression<String>? updatedBy,
+    Expression<String>? staffId,
+    Expression<String>? month,
+    Expression<String>? kind,
+    Expression<String>? refAttemptId,
+    Expression<int>? amountPaise,
+    Expression<String>? method,
+    Expression<int>? netPaise,
+    Expression<String>? breakdownJson,
+    Expression<int>? deltaPaise,
+    Expression<String>? prevTransferIds,
+    Expression<String>? expenseId,
+    Expression<String>? byMember,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (homeId != null) 'home_id': homeId,
+      if (deleted != null) 'deleted': deleted,
+      if (createdAt != null) 'created_at': createdAt,
+      if (createdBy != null) 'created_by': createdBy,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (updatedBy != null) 'updated_by': updatedBy,
+      if (staffId != null) 'staff_id': staffId,
+      if (month != null) 'month': month,
+      if (kind != null) 'kind': kind,
+      if (refAttemptId != null) 'ref_attempt_id': refAttemptId,
+      if (amountPaise != null) 'amount_paise': amountPaise,
+      if (method != null) 'method': method,
+      if (netPaise != null) 'net_paise': netPaise,
+      if (breakdownJson != null) 'breakdown_json': breakdownJson,
+      if (deltaPaise != null) 'delta_paise': deltaPaise,
+      if (prevTransferIds != null) 'prev_transfer_ids': prevTransferIds,
+      if (expenseId != null) 'expense_id': expenseId,
+      if (byMember != null) 'by_member': byMember,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SettlementAttemptsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? homeId,
+    Value<bool>? deleted,
+    Value<int>? createdAt,
+    Value<String>? createdBy,
+    Value<int>? updatedAt,
+    Value<String>? updatedBy,
+    Value<String>? staffId,
+    Value<String>? month,
+    Value<String>? kind,
+    Value<String?>? refAttemptId,
+    Value<int>? amountPaise,
+    Value<String?>? method,
+    Value<int>? netPaise,
+    Value<String?>? breakdownJson,
+    Value<int>? deltaPaise,
+    Value<String?>? prevTransferIds,
+    Value<String?>? expenseId,
+    Value<String>? byMember,
+    Value<int>? rowid,
+  }) {
+    return SettlementAttemptsCompanion(
+      id: id ?? this.id,
+      homeId: homeId ?? this.homeId,
+      deleted: deleted ?? this.deleted,
+      createdAt: createdAt ?? this.createdAt,
+      createdBy: createdBy ?? this.createdBy,
+      updatedAt: updatedAt ?? this.updatedAt,
+      updatedBy: updatedBy ?? this.updatedBy,
+      staffId: staffId ?? this.staffId,
+      month: month ?? this.month,
+      kind: kind ?? this.kind,
+      refAttemptId: refAttemptId ?? this.refAttemptId,
+      amountPaise: amountPaise ?? this.amountPaise,
+      method: method ?? this.method,
+      netPaise: netPaise ?? this.netPaise,
+      breakdownJson: breakdownJson ?? this.breakdownJson,
+      deltaPaise: deltaPaise ?? this.deltaPaise,
+      prevTransferIds: prevTransferIds ?? this.prevTransferIds,
+      expenseId: expenseId ?? this.expenseId,
+      byMember: byMember ?? this.byMember,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (homeId.present) {
+      map['home_id'] = Variable<String>(homeId.value);
+    }
+    if (deleted.present) {
+      map['deleted'] = Variable<bool>(deleted.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (createdBy.present) {
+      map['created_by'] = Variable<String>(createdBy.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (updatedBy.present) {
+      map['updated_by'] = Variable<String>(updatedBy.value);
+    }
+    if (staffId.present) {
+      map['staff_id'] = Variable<String>(staffId.value);
+    }
+    if (month.present) {
+      map['month'] = Variable<String>(month.value);
+    }
+    if (kind.present) {
+      map['kind'] = Variable<String>(kind.value);
+    }
+    if (refAttemptId.present) {
+      map['ref_attempt_id'] = Variable<String>(refAttemptId.value);
+    }
+    if (amountPaise.present) {
+      map['amount_paise'] = Variable<int>(amountPaise.value);
+    }
+    if (method.present) {
+      map['method'] = Variable<String>(method.value);
+    }
+    if (netPaise.present) {
+      map['net_paise'] = Variable<int>(netPaise.value);
+    }
+    if (breakdownJson.present) {
+      map['breakdown_json'] = Variable<String>(breakdownJson.value);
+    }
+    if (deltaPaise.present) {
+      map['delta_paise'] = Variable<int>(deltaPaise.value);
+    }
+    if (prevTransferIds.present) {
+      map['prev_transfer_ids'] = Variable<String>(prevTransferIds.value);
+    }
+    if (expenseId.present) {
+      map['expense_id'] = Variable<String>(expenseId.value);
+    }
+    if (byMember.present) {
+      map['by_member'] = Variable<String>(byMember.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SettlementAttemptsCompanion(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('deleted: $deleted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('staffId: $staffId, ')
+          ..write('month: $month, ')
+          ..write('kind: $kind, ')
+          ..write('refAttemptId: $refAttemptId, ')
+          ..write('amountPaise: $amountPaise, ')
+          ..write('method: $method, ')
+          ..write('netPaise: $netPaise, ')
+          ..write('breakdownJson: $breakdownJson, ')
+          ..write('deltaPaise: $deltaPaise, ')
+          ..write('prevTransferIds: $prevTransferIds, ')
+          ..write('expenseId: $expenseId, ')
+          ..write('byMember: $byMember, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ExpensesTable extends Expenses
+    with TableInfo<$ExpensesTable, ExpenseRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ExpensesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _homeIdMeta = const VerificationMeta('homeId');
+  @override
+  late final GeneratedColumn<String> homeId = GeneratedColumn<String>(
+    'home_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _deletedMeta = const VerificationMeta(
+    'deleted',
+  );
+  @override
+  late final GeneratedColumn<bool> deleted = GeneratedColumn<bool>(
+    'deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _createdByMeta = const VerificationMeta(
+    'createdBy',
+  );
+  @override
+  late final GeneratedColumn<String> createdBy = GeneratedColumn<String>(
+    'created_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _updatedByMeta = const VerificationMeta(
+    'updatedBy',
+  );
+  @override
+  late final GeneratedColumn<String> updatedBy = GeneratedColumn<String>(
+    'updated_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _amountPaiseMeta = const VerificationMeta(
+    'amountPaise',
+  );
+  @override
+  late final GeneratedColumn<int> amountPaise = GeneratedColumn<int>(
+    'amount_paise',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _merchantMeta = const VerificationMeta(
+    'merchant',
+  );
+  @override
+  late final GeneratedColumn<String> merchant = GeneratedColumn<String>(
+    'merchant',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _merchantKeyMeta = const VerificationMeta(
+    'merchantKey',
+  );
+  @override
+  late final GeneratedColumn<String> merchantKey = GeneratedColumn<String>(
+    'merchant_key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _categoryMeta = const VerificationMeta(
+    'category',
+  );
+  @override
+  late final GeneratedColumn<String> category = GeneratedColumn<String>(
+    'category',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('Other'),
+  );
+  static const VerificationMeta _methodMeta = const VerificationMeta('method');
+  @override
+  late final GeneratedColumn<String> method = GeneratedColumn<String>(
+    'method',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('upi'),
+  );
+  static const VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
+  late final GeneratedColumn<String> date = GeneratedColumn<String>(
+    'date',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _docMonthMeta = const VerificationMeta(
+    'docMonth',
+  );
+  @override
+  late final GeneratedColumn<String> docMonth = GeneratedColumn<String>(
+    'doc_month',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _forMonthMeta = const VerificationMeta(
+    'forMonth',
+  );
+  @override
+  late final GeneratedColumn<String> forMonth = GeneratedColumn<String>(
+    'for_month',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _paidByMeta = const VerificationMeta('paidBy');
+  @override
+  late final GeneratedColumn<String> paidBy = GeneratedColumn<String>(
+    'paid_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _addedByMeta = const VerificationMeta(
+    'addedBy',
+  );
+  @override
+  late final GeneratedColumn<String> addedBy = GeneratedColumn<String>(
+    'added_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _sourceMeta = const VerificationMeta('source');
+  @override
+  late final GeneratedColumn<String> source = GeneratedColumn<String>(
+    'source',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('manual'),
+  );
+  static const VerificationMeta _billIdMeta = const VerificationMeta('billId');
+  @override
+  late final GeneratedColumn<String> billId = GeneratedColumn<String>(
+    'bill_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _orderChannelMeta = const VerificationMeta(
+    'orderChannel',
+  );
+  @override
+  late final GeneratedColumn<String> orderChannel = GeneratedColumn<String>(
+    'order_channel',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _staffIdMeta = const VerificationMeta(
+    'staffId',
+  );
+  @override
+  late final GeneratedColumn<String> staffId = GeneratedColumn<String>(
+    'staff_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _settlementAttemptIdMeta =
+      const VerificationMeta('settlementAttemptId');
+  @override
+  late final GeneratedColumn<String> settlementAttemptId =
+      GeneratedColumn<String>(
+        'settlement_attempt_id',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _noteMeta = const VerificationMeta('note');
+  @override
+  late final GeneratedColumn<String> note = GeneratedColumn<String>(
+    'note',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    homeId,
+    deleted,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    amountPaise,
+    merchant,
+    merchantKey,
+    category,
+    method,
+    date,
+    docMonth,
+    forMonth,
+    paidBy,
+    addedBy,
+    source,
+    billId,
+    orderChannel,
+    staffId,
+    settlementAttemptId,
+    note,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'expenses';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ExpenseRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('home_id')) {
+      context.handle(
+        _homeIdMeta,
+        homeId.isAcceptableOrUnknown(data['home_id']!, _homeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_homeIdMeta);
+    }
+    if (data.containsKey('deleted')) {
+      context.handle(
+        _deletedMeta,
+        deleted.isAcceptableOrUnknown(data['deleted']!, _deletedMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('created_by')) {
+      context.handle(
+        _createdByMeta,
+        createdBy.isAcceptableOrUnknown(data['created_by']!, _createdByMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('updated_by')) {
+      context.handle(
+        _updatedByMeta,
+        updatedBy.isAcceptableOrUnknown(data['updated_by']!, _updatedByMeta),
+      );
+    }
+    if (data.containsKey('amount_paise')) {
+      context.handle(
+        _amountPaiseMeta,
+        amountPaise.isAcceptableOrUnknown(
+          data['amount_paise']!,
+          _amountPaiseMeta,
+        ),
+      );
+    }
+    if (data.containsKey('merchant')) {
+      context.handle(
+        _merchantMeta,
+        merchant.isAcceptableOrUnknown(data['merchant']!, _merchantMeta),
+      );
+    }
+    if (data.containsKey('merchant_key')) {
+      context.handle(
+        _merchantKeyMeta,
+        merchantKey.isAcceptableOrUnknown(
+          data['merchant_key']!,
+          _merchantKeyMeta,
+        ),
+      );
+    }
+    if (data.containsKey('category')) {
+      context.handle(
+        _categoryMeta,
+        category.isAcceptableOrUnknown(data['category']!, _categoryMeta),
+      );
+    }
+    if (data.containsKey('method')) {
+      context.handle(
+        _methodMeta,
+        method.isAcceptableOrUnknown(data['method']!, _methodMeta),
+      );
+    }
+    if (data.containsKey('date')) {
+      context.handle(
+        _dateMeta,
+        date.isAcceptableOrUnknown(data['date']!, _dateMeta),
+      );
+    }
+    if (data.containsKey('doc_month')) {
+      context.handle(
+        _docMonthMeta,
+        docMonth.isAcceptableOrUnknown(data['doc_month']!, _docMonthMeta),
+      );
+    }
+    if (data.containsKey('for_month')) {
+      context.handle(
+        _forMonthMeta,
+        forMonth.isAcceptableOrUnknown(data['for_month']!, _forMonthMeta),
+      );
+    }
+    if (data.containsKey('paid_by')) {
+      context.handle(
+        _paidByMeta,
+        paidBy.isAcceptableOrUnknown(data['paid_by']!, _paidByMeta),
+      );
+    }
+    if (data.containsKey('added_by')) {
+      context.handle(
+        _addedByMeta,
+        addedBy.isAcceptableOrUnknown(data['added_by']!, _addedByMeta),
+      );
+    }
+    if (data.containsKey('source')) {
+      context.handle(
+        _sourceMeta,
+        source.isAcceptableOrUnknown(data['source']!, _sourceMeta),
+      );
+    }
+    if (data.containsKey('bill_id')) {
+      context.handle(
+        _billIdMeta,
+        billId.isAcceptableOrUnknown(data['bill_id']!, _billIdMeta),
+      );
+    }
+    if (data.containsKey('order_channel')) {
+      context.handle(
+        _orderChannelMeta,
+        orderChannel.isAcceptableOrUnknown(
+          data['order_channel']!,
+          _orderChannelMeta,
+        ),
+      );
+    }
+    if (data.containsKey('staff_id')) {
+      context.handle(
+        _staffIdMeta,
+        staffId.isAcceptableOrUnknown(data['staff_id']!, _staffIdMeta),
+      );
+    }
+    if (data.containsKey('settlement_attempt_id')) {
+      context.handle(
+        _settlementAttemptIdMeta,
+        settlementAttemptId.isAcceptableOrUnknown(
+          data['settlement_attempt_id']!,
+          _settlementAttemptIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('note')) {
+      context.handle(
+        _noteMeta,
+        note.isAcceptableOrUnknown(data['note']!, _noteMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ExpenseRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ExpenseRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      homeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}home_id'],
+      )!,
+      deleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}deleted'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}created_at'],
+      )!,
+      createdBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_by'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      updatedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by'],
+      )!,
+      amountPaise: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}amount_paise'],
+      )!,
+      merchant: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}merchant'],
+      )!,
+      merchantKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}merchant_key'],
+      )!,
+      category: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}category'],
+      )!,
+      method: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}method'],
+      )!,
+      date: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}date'],
+      )!,
+      docMonth: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}doc_month'],
+      )!,
+      forMonth: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}for_month'],
+      ),
+      paidBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}paid_by'],
+      )!,
+      addedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}added_by'],
+      )!,
+      source: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}source'],
+      )!,
+      billId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}bill_id'],
+      ),
+      orderChannel: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}order_channel'],
+      ),
+      staffId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}staff_id'],
+      ),
+      settlementAttemptId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}settlement_attempt_id'],
+      ),
+      note: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}note'],
+      ),
+    );
+  }
+
+  @override
+  $ExpensesTable createAlias(String alias) {
+    return $ExpensesTable(attachedDatabase, alias);
+  }
+}
+
+class ExpenseRow extends DataClass implements Insertable<ExpenseRow> {
+  final String id;
+  final String homeId;
+  final bool deleted;
+  final int createdAt;
+  final String createdBy;
+  final int updatedAt;
+  final String updatedBy;
+  final int amountPaise;
+  final String merchant;
+  final String merchantKey;
+  final String category;
+  final String method;
+  final String date;
+  final String docMonth;
+  final String? forMonth;
+  final String paidBy;
+  final String addedBy;
+  final String source;
+  final String? billId;
+  final String? orderChannel;
+  final String? staffId;
+  final String? settlementAttemptId;
+  final String? note;
+  const ExpenseRow({
+    required this.id,
+    required this.homeId,
+    required this.deleted,
+    required this.createdAt,
+    required this.createdBy,
+    required this.updatedAt,
+    required this.updatedBy,
+    required this.amountPaise,
+    required this.merchant,
+    required this.merchantKey,
+    required this.category,
+    required this.method,
+    required this.date,
+    required this.docMonth,
+    this.forMonth,
+    required this.paidBy,
+    required this.addedBy,
+    required this.source,
+    this.billId,
+    this.orderChannel,
+    this.staffId,
+    this.settlementAttemptId,
+    this.note,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['home_id'] = Variable<String>(homeId);
+    map['deleted'] = Variable<bool>(deleted);
+    map['created_at'] = Variable<int>(createdAt);
+    map['created_by'] = Variable<String>(createdBy);
+    map['updated_at'] = Variable<int>(updatedAt);
+    map['updated_by'] = Variable<String>(updatedBy);
+    map['amount_paise'] = Variable<int>(amountPaise);
+    map['merchant'] = Variable<String>(merchant);
+    map['merchant_key'] = Variable<String>(merchantKey);
+    map['category'] = Variable<String>(category);
+    map['method'] = Variable<String>(method);
+    map['date'] = Variable<String>(date);
+    map['doc_month'] = Variable<String>(docMonth);
+    if (!nullToAbsent || forMonth != null) {
+      map['for_month'] = Variable<String>(forMonth);
+    }
+    map['paid_by'] = Variable<String>(paidBy);
+    map['added_by'] = Variable<String>(addedBy);
+    map['source'] = Variable<String>(source);
+    if (!nullToAbsent || billId != null) {
+      map['bill_id'] = Variable<String>(billId);
+    }
+    if (!nullToAbsent || orderChannel != null) {
+      map['order_channel'] = Variable<String>(orderChannel);
+    }
+    if (!nullToAbsent || staffId != null) {
+      map['staff_id'] = Variable<String>(staffId);
+    }
+    if (!nullToAbsent || settlementAttemptId != null) {
+      map['settlement_attempt_id'] = Variable<String>(settlementAttemptId);
+    }
+    if (!nullToAbsent || note != null) {
+      map['note'] = Variable<String>(note);
+    }
+    return map;
+  }
+
+  ExpensesCompanion toCompanion(bool nullToAbsent) {
+    return ExpensesCompanion(
+      id: Value(id),
+      homeId: Value(homeId),
+      deleted: Value(deleted),
+      createdAt: Value(createdAt),
+      createdBy: Value(createdBy),
+      updatedAt: Value(updatedAt),
+      updatedBy: Value(updatedBy),
+      amountPaise: Value(amountPaise),
+      merchant: Value(merchant),
+      merchantKey: Value(merchantKey),
+      category: Value(category),
+      method: Value(method),
+      date: Value(date),
+      docMonth: Value(docMonth),
+      forMonth: forMonth == null && nullToAbsent
+          ? const Value.absent()
+          : Value(forMonth),
+      paidBy: Value(paidBy),
+      addedBy: Value(addedBy),
+      source: Value(source),
+      billId: billId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(billId),
+      orderChannel: orderChannel == null && nullToAbsent
+          ? const Value.absent()
+          : Value(orderChannel),
+      staffId: staffId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(staffId),
+      settlementAttemptId: settlementAttemptId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(settlementAttemptId),
+      note: note == null && nullToAbsent ? const Value.absent() : Value(note),
+    );
+  }
+
+  factory ExpenseRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ExpenseRow(
+      id: serializer.fromJson<String>(json['id']),
+      homeId: serializer.fromJson<String>(json['homeId']),
+      deleted: serializer.fromJson<bool>(json['deleted']),
+      createdAt: serializer.fromJson<int>(json['createdAt']),
+      createdBy: serializer.fromJson<String>(json['createdBy']),
+      updatedAt: serializer.fromJson<int>(json['updatedAt']),
+      updatedBy: serializer.fromJson<String>(json['updatedBy']),
+      amountPaise: serializer.fromJson<int>(json['amountPaise']),
+      merchant: serializer.fromJson<String>(json['merchant']),
+      merchantKey: serializer.fromJson<String>(json['merchantKey']),
+      category: serializer.fromJson<String>(json['category']),
+      method: serializer.fromJson<String>(json['method']),
+      date: serializer.fromJson<String>(json['date']),
+      docMonth: serializer.fromJson<String>(json['docMonth']),
+      forMonth: serializer.fromJson<String?>(json['forMonth']),
+      paidBy: serializer.fromJson<String>(json['paidBy']),
+      addedBy: serializer.fromJson<String>(json['addedBy']),
+      source: serializer.fromJson<String>(json['source']),
+      billId: serializer.fromJson<String?>(json['billId']),
+      orderChannel: serializer.fromJson<String?>(json['orderChannel']),
+      staffId: serializer.fromJson<String?>(json['staffId']),
+      settlementAttemptId: serializer.fromJson<String?>(
+        json['settlementAttemptId'],
+      ),
+      note: serializer.fromJson<String?>(json['note']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'homeId': serializer.toJson<String>(homeId),
+      'deleted': serializer.toJson<bool>(deleted),
+      'createdAt': serializer.toJson<int>(createdAt),
+      'createdBy': serializer.toJson<String>(createdBy),
+      'updatedAt': serializer.toJson<int>(updatedAt),
+      'updatedBy': serializer.toJson<String>(updatedBy),
+      'amountPaise': serializer.toJson<int>(amountPaise),
+      'merchant': serializer.toJson<String>(merchant),
+      'merchantKey': serializer.toJson<String>(merchantKey),
+      'category': serializer.toJson<String>(category),
+      'method': serializer.toJson<String>(method),
+      'date': serializer.toJson<String>(date),
+      'docMonth': serializer.toJson<String>(docMonth),
+      'forMonth': serializer.toJson<String?>(forMonth),
+      'paidBy': serializer.toJson<String>(paidBy),
+      'addedBy': serializer.toJson<String>(addedBy),
+      'source': serializer.toJson<String>(source),
+      'billId': serializer.toJson<String?>(billId),
+      'orderChannel': serializer.toJson<String?>(orderChannel),
+      'staffId': serializer.toJson<String?>(staffId),
+      'settlementAttemptId': serializer.toJson<String?>(settlementAttemptId),
+      'note': serializer.toJson<String?>(note),
+    };
+  }
+
+  ExpenseRow copyWith({
+    String? id,
+    String? homeId,
+    bool? deleted,
+    int? createdAt,
+    String? createdBy,
+    int? updatedAt,
+    String? updatedBy,
+    int? amountPaise,
+    String? merchant,
+    String? merchantKey,
+    String? category,
+    String? method,
+    String? date,
+    String? docMonth,
+    Value<String?> forMonth = const Value.absent(),
+    String? paidBy,
+    String? addedBy,
+    String? source,
+    Value<String?> billId = const Value.absent(),
+    Value<String?> orderChannel = const Value.absent(),
+    Value<String?> staffId = const Value.absent(),
+    Value<String?> settlementAttemptId = const Value.absent(),
+    Value<String?> note = const Value.absent(),
+  }) => ExpenseRow(
+    id: id ?? this.id,
+    homeId: homeId ?? this.homeId,
+    deleted: deleted ?? this.deleted,
+    createdAt: createdAt ?? this.createdAt,
+    createdBy: createdBy ?? this.createdBy,
+    updatedAt: updatedAt ?? this.updatedAt,
+    updatedBy: updatedBy ?? this.updatedBy,
+    amountPaise: amountPaise ?? this.amountPaise,
+    merchant: merchant ?? this.merchant,
+    merchantKey: merchantKey ?? this.merchantKey,
+    category: category ?? this.category,
+    method: method ?? this.method,
+    date: date ?? this.date,
+    docMonth: docMonth ?? this.docMonth,
+    forMonth: forMonth.present ? forMonth.value : this.forMonth,
+    paidBy: paidBy ?? this.paidBy,
+    addedBy: addedBy ?? this.addedBy,
+    source: source ?? this.source,
+    billId: billId.present ? billId.value : this.billId,
+    orderChannel: orderChannel.present ? orderChannel.value : this.orderChannel,
+    staffId: staffId.present ? staffId.value : this.staffId,
+    settlementAttemptId: settlementAttemptId.present
+        ? settlementAttemptId.value
+        : this.settlementAttemptId,
+    note: note.present ? note.value : this.note,
+  );
+  ExpenseRow copyWithCompanion(ExpensesCompanion data) {
+    return ExpenseRow(
+      id: data.id.present ? data.id.value : this.id,
+      homeId: data.homeId.present ? data.homeId.value : this.homeId,
+      deleted: data.deleted.present ? data.deleted.value : this.deleted,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      createdBy: data.createdBy.present ? data.createdBy.value : this.createdBy,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      updatedBy: data.updatedBy.present ? data.updatedBy.value : this.updatedBy,
+      amountPaise: data.amountPaise.present
+          ? data.amountPaise.value
+          : this.amountPaise,
+      merchant: data.merchant.present ? data.merchant.value : this.merchant,
+      merchantKey: data.merchantKey.present
+          ? data.merchantKey.value
+          : this.merchantKey,
+      category: data.category.present ? data.category.value : this.category,
+      method: data.method.present ? data.method.value : this.method,
+      date: data.date.present ? data.date.value : this.date,
+      docMonth: data.docMonth.present ? data.docMonth.value : this.docMonth,
+      forMonth: data.forMonth.present ? data.forMonth.value : this.forMonth,
+      paidBy: data.paidBy.present ? data.paidBy.value : this.paidBy,
+      addedBy: data.addedBy.present ? data.addedBy.value : this.addedBy,
+      source: data.source.present ? data.source.value : this.source,
+      billId: data.billId.present ? data.billId.value : this.billId,
+      orderChannel: data.orderChannel.present
+          ? data.orderChannel.value
+          : this.orderChannel,
+      staffId: data.staffId.present ? data.staffId.value : this.staffId,
+      settlementAttemptId: data.settlementAttemptId.present
+          ? data.settlementAttemptId.value
+          : this.settlementAttemptId,
+      note: data.note.present ? data.note.value : this.note,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExpenseRow(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('deleted: $deleted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('amountPaise: $amountPaise, ')
+          ..write('merchant: $merchant, ')
+          ..write('merchantKey: $merchantKey, ')
+          ..write('category: $category, ')
+          ..write('method: $method, ')
+          ..write('date: $date, ')
+          ..write('docMonth: $docMonth, ')
+          ..write('forMonth: $forMonth, ')
+          ..write('paidBy: $paidBy, ')
+          ..write('addedBy: $addedBy, ')
+          ..write('source: $source, ')
+          ..write('billId: $billId, ')
+          ..write('orderChannel: $orderChannel, ')
+          ..write('staffId: $staffId, ')
+          ..write('settlementAttemptId: $settlementAttemptId, ')
+          ..write('note: $note')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+    homeId,
+    deleted,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    amountPaise,
+    merchant,
+    merchantKey,
+    category,
+    method,
+    date,
+    docMonth,
+    forMonth,
+    paidBy,
+    addedBy,
+    source,
+    billId,
+    orderChannel,
+    staffId,
+    settlementAttemptId,
+    note,
+  ]);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ExpenseRow &&
+          other.id == this.id &&
+          other.homeId == this.homeId &&
+          other.deleted == this.deleted &&
+          other.createdAt == this.createdAt &&
+          other.createdBy == this.createdBy &&
+          other.updatedAt == this.updatedAt &&
+          other.updatedBy == this.updatedBy &&
+          other.amountPaise == this.amountPaise &&
+          other.merchant == this.merchant &&
+          other.merchantKey == this.merchantKey &&
+          other.category == this.category &&
+          other.method == this.method &&
+          other.date == this.date &&
+          other.docMonth == this.docMonth &&
+          other.forMonth == this.forMonth &&
+          other.paidBy == this.paidBy &&
+          other.addedBy == this.addedBy &&
+          other.source == this.source &&
+          other.billId == this.billId &&
+          other.orderChannel == this.orderChannel &&
+          other.staffId == this.staffId &&
+          other.settlementAttemptId == this.settlementAttemptId &&
+          other.note == this.note);
+}
+
+class ExpensesCompanion extends UpdateCompanion<ExpenseRow> {
+  final Value<String> id;
+  final Value<String> homeId;
+  final Value<bool> deleted;
+  final Value<int> createdAt;
+  final Value<String> createdBy;
+  final Value<int> updatedAt;
+  final Value<String> updatedBy;
+  final Value<int> amountPaise;
+  final Value<String> merchant;
+  final Value<String> merchantKey;
+  final Value<String> category;
+  final Value<String> method;
+  final Value<String> date;
+  final Value<String> docMonth;
+  final Value<String?> forMonth;
+  final Value<String> paidBy;
+  final Value<String> addedBy;
+  final Value<String> source;
+  final Value<String?> billId;
+  final Value<String?> orderChannel;
+  final Value<String?> staffId;
+  final Value<String?> settlementAttemptId;
+  final Value<String?> note;
+  final Value<int> rowid;
+  const ExpensesCompanion({
+    this.id = const Value.absent(),
+    this.homeId = const Value.absent(),
+    this.deleted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.amountPaise = const Value.absent(),
+    this.merchant = const Value.absent(),
+    this.merchantKey = const Value.absent(),
+    this.category = const Value.absent(),
+    this.method = const Value.absent(),
+    this.date = const Value.absent(),
+    this.docMonth = const Value.absent(),
+    this.forMonth = const Value.absent(),
+    this.paidBy = const Value.absent(),
+    this.addedBy = const Value.absent(),
+    this.source = const Value.absent(),
+    this.billId = const Value.absent(),
+    this.orderChannel = const Value.absent(),
+    this.staffId = const Value.absent(),
+    this.settlementAttemptId = const Value.absent(),
+    this.note = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ExpensesCompanion.insert({
+    required String id,
+    required String homeId,
+    this.deleted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.amountPaise = const Value.absent(),
+    this.merchant = const Value.absent(),
+    this.merchantKey = const Value.absent(),
+    this.category = const Value.absent(),
+    this.method = const Value.absent(),
+    this.date = const Value.absent(),
+    this.docMonth = const Value.absent(),
+    this.forMonth = const Value.absent(),
+    this.paidBy = const Value.absent(),
+    this.addedBy = const Value.absent(),
+    this.source = const Value.absent(),
+    this.billId = const Value.absent(),
+    this.orderChannel = const Value.absent(),
+    this.staffId = const Value.absent(),
+    this.settlementAttemptId = const Value.absent(),
+    this.note = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       homeId = Value(homeId);
+  static Insertable<ExpenseRow> custom({
+    Expression<String>? id,
+    Expression<String>? homeId,
+    Expression<bool>? deleted,
+    Expression<int>? createdAt,
+    Expression<String>? createdBy,
+    Expression<int>? updatedAt,
+    Expression<String>? updatedBy,
+    Expression<int>? amountPaise,
+    Expression<String>? merchant,
+    Expression<String>? merchantKey,
+    Expression<String>? category,
+    Expression<String>? method,
+    Expression<String>? date,
+    Expression<String>? docMonth,
+    Expression<String>? forMonth,
+    Expression<String>? paidBy,
+    Expression<String>? addedBy,
+    Expression<String>? source,
+    Expression<String>? billId,
+    Expression<String>? orderChannel,
+    Expression<String>? staffId,
+    Expression<String>? settlementAttemptId,
+    Expression<String>? note,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (homeId != null) 'home_id': homeId,
+      if (deleted != null) 'deleted': deleted,
+      if (createdAt != null) 'created_at': createdAt,
+      if (createdBy != null) 'created_by': createdBy,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (updatedBy != null) 'updated_by': updatedBy,
+      if (amountPaise != null) 'amount_paise': amountPaise,
+      if (merchant != null) 'merchant': merchant,
+      if (merchantKey != null) 'merchant_key': merchantKey,
+      if (category != null) 'category': category,
+      if (method != null) 'method': method,
+      if (date != null) 'date': date,
+      if (docMonth != null) 'doc_month': docMonth,
+      if (forMonth != null) 'for_month': forMonth,
+      if (paidBy != null) 'paid_by': paidBy,
+      if (addedBy != null) 'added_by': addedBy,
+      if (source != null) 'source': source,
+      if (billId != null) 'bill_id': billId,
+      if (orderChannel != null) 'order_channel': orderChannel,
+      if (staffId != null) 'staff_id': staffId,
+      if (settlementAttemptId != null)
+        'settlement_attempt_id': settlementAttemptId,
+      if (note != null) 'note': note,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ExpensesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? homeId,
+    Value<bool>? deleted,
+    Value<int>? createdAt,
+    Value<String>? createdBy,
+    Value<int>? updatedAt,
+    Value<String>? updatedBy,
+    Value<int>? amountPaise,
+    Value<String>? merchant,
+    Value<String>? merchantKey,
+    Value<String>? category,
+    Value<String>? method,
+    Value<String>? date,
+    Value<String>? docMonth,
+    Value<String?>? forMonth,
+    Value<String>? paidBy,
+    Value<String>? addedBy,
+    Value<String>? source,
+    Value<String?>? billId,
+    Value<String?>? orderChannel,
+    Value<String?>? staffId,
+    Value<String?>? settlementAttemptId,
+    Value<String?>? note,
+    Value<int>? rowid,
+  }) {
+    return ExpensesCompanion(
+      id: id ?? this.id,
+      homeId: homeId ?? this.homeId,
+      deleted: deleted ?? this.deleted,
+      createdAt: createdAt ?? this.createdAt,
+      createdBy: createdBy ?? this.createdBy,
+      updatedAt: updatedAt ?? this.updatedAt,
+      updatedBy: updatedBy ?? this.updatedBy,
+      amountPaise: amountPaise ?? this.amountPaise,
+      merchant: merchant ?? this.merchant,
+      merchantKey: merchantKey ?? this.merchantKey,
+      category: category ?? this.category,
+      method: method ?? this.method,
+      date: date ?? this.date,
+      docMonth: docMonth ?? this.docMonth,
+      forMonth: forMonth ?? this.forMonth,
+      paidBy: paidBy ?? this.paidBy,
+      addedBy: addedBy ?? this.addedBy,
+      source: source ?? this.source,
+      billId: billId ?? this.billId,
+      orderChannel: orderChannel ?? this.orderChannel,
+      staffId: staffId ?? this.staffId,
+      settlementAttemptId: settlementAttemptId ?? this.settlementAttemptId,
+      note: note ?? this.note,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (homeId.present) {
+      map['home_id'] = Variable<String>(homeId.value);
+    }
+    if (deleted.present) {
+      map['deleted'] = Variable<bool>(deleted.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (createdBy.present) {
+      map['created_by'] = Variable<String>(createdBy.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (updatedBy.present) {
+      map['updated_by'] = Variable<String>(updatedBy.value);
+    }
+    if (amountPaise.present) {
+      map['amount_paise'] = Variable<int>(amountPaise.value);
+    }
+    if (merchant.present) {
+      map['merchant'] = Variable<String>(merchant.value);
+    }
+    if (merchantKey.present) {
+      map['merchant_key'] = Variable<String>(merchantKey.value);
+    }
+    if (category.present) {
+      map['category'] = Variable<String>(category.value);
+    }
+    if (method.present) {
+      map['method'] = Variable<String>(method.value);
+    }
+    if (date.present) {
+      map['date'] = Variable<String>(date.value);
+    }
+    if (docMonth.present) {
+      map['doc_month'] = Variable<String>(docMonth.value);
+    }
+    if (forMonth.present) {
+      map['for_month'] = Variable<String>(forMonth.value);
+    }
+    if (paidBy.present) {
+      map['paid_by'] = Variable<String>(paidBy.value);
+    }
+    if (addedBy.present) {
+      map['added_by'] = Variable<String>(addedBy.value);
+    }
+    if (source.present) {
+      map['source'] = Variable<String>(source.value);
+    }
+    if (billId.present) {
+      map['bill_id'] = Variable<String>(billId.value);
+    }
+    if (orderChannel.present) {
+      map['order_channel'] = Variable<String>(orderChannel.value);
+    }
+    if (staffId.present) {
+      map['staff_id'] = Variable<String>(staffId.value);
+    }
+    if (settlementAttemptId.present) {
+      map['settlement_attempt_id'] = Variable<String>(
+        settlementAttemptId.value,
+      );
+    }
+    if (note.present) {
+      map['note'] = Variable<String>(note.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExpensesCompanion(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('deleted: $deleted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('amountPaise: $amountPaise, ')
+          ..write('merchant: $merchant, ')
+          ..write('merchantKey: $merchantKey, ')
+          ..write('category: $category, ')
+          ..write('method: $method, ')
+          ..write('date: $date, ')
+          ..write('docMonth: $docMonth, ')
+          ..write('forMonth: $forMonth, ')
+          ..write('paidBy: $paidBy, ')
+          ..write('addedBy: $addedBy, ')
+          ..write('source: $source, ')
+          ..write('billId: $billId, ')
+          ..write('orderChannel: $orderChannel, ')
+          ..write('staffId: $staffId, ')
+          ..write('settlementAttemptId: $settlementAttemptId, ')
+          ..write('note: $note, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$NestDatabase extends GeneratedDatabase {
   _$NestDatabase(QueryExecutor e) : super(e);
   $NestDatabaseManager get managers => $NestDatabaseManager(this);
@@ -5814,6 +9727,11 @@ abstract class _$NestDatabase extends GeneratedDatabase {
   late final $StaffTable staff = $StaffTable(this);
   late final $VisitsTable visits = $VisitsTable(this);
   late final $LeavesTable leaves = $LeavesTable(this);
+  late final $PayRulesTable payRules = $PayRulesTable(this);
+  late final $PayAdjustmentsTable payAdjustments = $PayAdjustmentsTable(this);
+  late final $SettlementAttemptsTable settlementAttempts =
+      $SettlementAttemptsTable(this);
+  late final $ExpensesTable expenses = $ExpensesTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -5827,6 +9745,10 @@ abstract class _$NestDatabase extends GeneratedDatabase {
     staff,
     visits,
     leaves,
+    payRules,
+    payAdjustments,
+    settlementAttempts,
+    expenses,
   ];
 }
 
@@ -8616,6 +12538,1856 @@ typedef $$LeavesTableProcessedTableManager =
       Leave,
       PrefetchHooks Function()
     >;
+typedef $$PayRulesTableCreateCompanionBuilder = PayRulesCompanion Function({
+  required String id,
+  required String homeId,
+  Value<bool> deleted,
+  Value<int> createdAt,
+  Value<String> createdBy,
+  Value<int> updatedAt,
+  Value<String> updatedBy,
+  Value<String> staffId,
+  Value<String> effectiveMonth,
+  Value<String> workDays,
+  Value<String> payType,
+  Value<int> ratePerHourPaise,
+  Value<int> roundingMin,
+  Value<int> minHoursPerVisit,
+  Value<int> amountPerMonthPaise,
+  Value<int> paidLeavesPerMonth,
+  Value<int> rowid,
+});
+typedef $$PayRulesTableUpdateCompanionBuilder = PayRulesCompanion Function({
+  Value<String> id,
+  Value<String> homeId,
+  Value<bool> deleted,
+  Value<int> createdAt,
+  Value<String> createdBy,
+  Value<int> updatedAt,
+  Value<String> updatedBy,
+  Value<String> staffId,
+  Value<String> effectiveMonth,
+  Value<String> workDays,
+  Value<String> payType,
+  Value<int> ratePerHourPaise,
+  Value<int> roundingMin,
+  Value<int> minHoursPerVisit,
+  Value<int> amountPerMonthPaise,
+  Value<int> paidLeavesPerMonth,
+  Value<int> rowid,
+});
+
+class $$PayRulesTableFilterComposer
+    extends Composer<_$NestDatabase, $PayRulesTable> {
+  $$PayRulesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get staffId => $composableBuilder(
+    column: $table.staffId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get effectiveMonth => $composableBuilder(
+    column: $table.effectiveMonth,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get workDays => $composableBuilder(
+    column: $table.workDays,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get payType => $composableBuilder(
+    column: $table.payType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get ratePerHourPaise => $composableBuilder(
+    column: $table.ratePerHourPaise,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get roundingMin => $composableBuilder(
+    column: $table.roundingMin,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get minHoursPerVisit => $composableBuilder(
+    column: $table.minHoursPerVisit,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get amountPerMonthPaise => $composableBuilder(
+    column: $table.amountPerMonthPaise,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get paidLeavesPerMonth => $composableBuilder(
+    column: $table.paidLeavesPerMonth,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$PayRulesTableOrderingComposer
+    extends Composer<_$NestDatabase, $PayRulesTable> {
+  $$PayRulesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get staffId => $composableBuilder(
+    column: $table.staffId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get effectiveMonth => $composableBuilder(
+    column: $table.effectiveMonth,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get workDays => $composableBuilder(
+    column: $table.workDays,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get payType => $composableBuilder(
+    column: $table.payType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get ratePerHourPaise => $composableBuilder(
+    column: $table.ratePerHourPaise,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get roundingMin => $composableBuilder(
+    column: $table.roundingMin,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get minHoursPerVisit => $composableBuilder(
+    column: $table.minHoursPerVisit,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get amountPerMonthPaise => $composableBuilder(
+    column: $table.amountPerMonthPaise,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get paidLeavesPerMonth => $composableBuilder(
+    column: $table.paidLeavesPerMonth,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$PayRulesTableAnnotationComposer
+    extends Composer<_$NestDatabase, $PayRulesTable> {
+  $$PayRulesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get homeId =>
+      $composableBuilder(column: $table.homeId, builder: (column) => column);
+
+  GeneratedColumn<bool> get deleted =>
+      $composableBuilder(column: $table.deleted, builder: (column) => column);
+
+  GeneratedColumn<int> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<String> get createdBy =>
+      $composableBuilder(column: $table.createdBy, builder: (column) => column);
+
+  GeneratedColumn<int> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get updatedBy =>
+      $composableBuilder(column: $table.updatedBy, builder: (column) => column);
+
+  GeneratedColumn<String> get staffId =>
+      $composableBuilder(column: $table.staffId, builder: (column) => column);
+
+  GeneratedColumn<String> get effectiveMonth => $composableBuilder(
+    column: $table.effectiveMonth,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get workDays =>
+      $composableBuilder(column: $table.workDays, builder: (column) => column);
+
+  GeneratedColumn<String> get payType =>
+      $composableBuilder(column: $table.payType, builder: (column) => column);
+
+  GeneratedColumn<int> get ratePerHourPaise => $composableBuilder(
+    column: $table.ratePerHourPaise,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get roundingMin => $composableBuilder(
+    column: $table.roundingMin,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get minHoursPerVisit => $composableBuilder(
+    column: $table.minHoursPerVisit,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get amountPerMonthPaise => $composableBuilder(
+    column: $table.amountPerMonthPaise,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get paidLeavesPerMonth => $composableBuilder(
+    column: $table.paidLeavesPerMonth,
+    builder: (column) => column,
+  );
+}
+
+class $$PayRulesTableTableManager
+    extends
+        RootTableManager<
+          _$NestDatabase,
+          $PayRulesTable,
+          PayRuleRow,
+          $$PayRulesTableFilterComposer,
+          $$PayRulesTableOrderingComposer,
+          $$PayRulesTableAnnotationComposer,
+          $$PayRulesTableCreateCompanionBuilder,
+          $$PayRulesTableUpdateCompanionBuilder,
+          (
+            PayRuleRow,
+            BaseReferences<_$NestDatabase, $PayRulesTable, PayRuleRow>,
+          ),
+          PayRuleRow,
+          PrefetchHooks Function()
+        > {
+  $$PayRulesTableTableManager(_$NestDatabase db, $PayRulesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PayRulesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PayRulesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$PayRulesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> homeId = const Value.absent(),
+                Value<bool> deleted = const Value.absent(),
+                Value<int> createdAt = const Value.absent(),
+                Value<String> createdBy = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> updatedBy = const Value.absent(),
+                Value<String> staffId = const Value.absent(),
+                Value<String> effectiveMonth = const Value.absent(),
+                Value<String> workDays = const Value.absent(),
+                Value<String> payType = const Value.absent(),
+                Value<int> ratePerHourPaise = const Value.absent(),
+                Value<int> roundingMin = const Value.absent(),
+                Value<int> minHoursPerVisit = const Value.absent(),
+                Value<int> amountPerMonthPaise = const Value.absent(),
+                Value<int> paidLeavesPerMonth = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PayRulesCompanion(
+                id: id,
+                homeId: homeId,
+                deleted: deleted,
+                createdAt: createdAt,
+                createdBy: createdBy,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy,
+                staffId: staffId,
+                effectiveMonth: effectiveMonth,
+                workDays: workDays,
+                payType: payType,
+                ratePerHourPaise: ratePerHourPaise,
+                roundingMin: roundingMin,
+                minHoursPerVisit: minHoursPerVisit,
+                amountPerMonthPaise: amountPerMonthPaise,
+                paidLeavesPerMonth: paidLeavesPerMonth,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String homeId,
+                Value<bool> deleted = const Value.absent(),
+                Value<int> createdAt = const Value.absent(),
+                Value<String> createdBy = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> updatedBy = const Value.absent(),
+                Value<String> staffId = const Value.absent(),
+                Value<String> effectiveMonth = const Value.absent(),
+                Value<String> workDays = const Value.absent(),
+                Value<String> payType = const Value.absent(),
+                Value<int> ratePerHourPaise = const Value.absent(),
+                Value<int> roundingMin = const Value.absent(),
+                Value<int> minHoursPerVisit = const Value.absent(),
+                Value<int> amountPerMonthPaise = const Value.absent(),
+                Value<int> paidLeavesPerMonth = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PayRulesCompanion.insert(
+                id: id,
+                homeId: homeId,
+                deleted: deleted,
+                createdAt: createdAt,
+                createdBy: createdBy,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy,
+                staffId: staffId,
+                effectiveMonth: effectiveMonth,
+                workDays: workDays,
+                payType: payType,
+                ratePerHourPaise: ratePerHourPaise,
+                roundingMin: roundingMin,
+                minHoursPerVisit: minHoursPerVisit,
+                amountPerMonthPaise: amountPerMonthPaise,
+                paidLeavesPerMonth: paidLeavesPerMonth,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$PayRulesTable, PayRuleRow>(table),
+                  BaseReferences<_$NestDatabase, $PayRulesTable, PayRuleRow>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$PayRulesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$NestDatabase,
+      $PayRulesTable,
+      PayRuleRow,
+      $$PayRulesTableFilterComposer,
+      $$PayRulesTableOrderingComposer,
+      $$PayRulesTableAnnotationComposer,
+      $$PayRulesTableCreateCompanionBuilder,
+      $$PayRulesTableUpdateCompanionBuilder,
+      (PayRuleRow, BaseReferences<_$NestDatabase, $PayRulesTable, PayRuleRow>),
+      PayRuleRow,
+      PrefetchHooks Function()
+    >;
+typedef $$PayAdjustmentsTableCreateCompanionBuilder =
+    PayAdjustmentsCompanion Function({
+      required String id,
+      required String homeId,
+      Value<bool> deleted,
+      Value<int> createdAt,
+      Value<String> createdBy,
+      Value<int> updatedAt,
+      Value<String> updatedBy,
+      Value<String> staffId,
+      Value<String> month,
+      Value<String> kind,
+      Value<int> amountPaise,
+      Value<String> note,
+      Value<String?> settlementAttemptId,
+      Value<int> rowid,
+    });
+typedef $$PayAdjustmentsTableUpdateCompanionBuilder =
+    PayAdjustmentsCompanion Function({
+      Value<String> id,
+      Value<String> homeId,
+      Value<bool> deleted,
+      Value<int> createdAt,
+      Value<String> createdBy,
+      Value<int> updatedAt,
+      Value<String> updatedBy,
+      Value<String> staffId,
+      Value<String> month,
+      Value<String> kind,
+      Value<int> amountPaise,
+      Value<String> note,
+      Value<String?> settlementAttemptId,
+      Value<int> rowid,
+    });
+
+class $$PayAdjustmentsTableFilterComposer
+    extends Composer<_$NestDatabase, $PayAdjustmentsTable> {
+  $$PayAdjustmentsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get staffId => $composableBuilder(
+    column: $table.staffId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get month => $composableBuilder(
+    column: $table.month,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get amountPaise => $composableBuilder(
+    column: $table.amountPaise,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get settlementAttemptId => $composableBuilder(
+    column: $table.settlementAttemptId,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$PayAdjustmentsTableOrderingComposer
+    extends Composer<_$NestDatabase, $PayAdjustmentsTable> {
+  $$PayAdjustmentsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get staffId => $composableBuilder(
+    column: $table.staffId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get month => $composableBuilder(
+    column: $table.month,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get amountPaise => $composableBuilder(
+    column: $table.amountPaise,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get settlementAttemptId => $composableBuilder(
+    column: $table.settlementAttemptId,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$PayAdjustmentsTableAnnotationComposer
+    extends Composer<_$NestDatabase, $PayAdjustmentsTable> {
+  $$PayAdjustmentsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get homeId =>
+      $composableBuilder(column: $table.homeId, builder: (column) => column);
+
+  GeneratedColumn<bool> get deleted =>
+      $composableBuilder(column: $table.deleted, builder: (column) => column);
+
+  GeneratedColumn<int> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<String> get createdBy =>
+      $composableBuilder(column: $table.createdBy, builder: (column) => column);
+
+  GeneratedColumn<int> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get updatedBy =>
+      $composableBuilder(column: $table.updatedBy, builder: (column) => column);
+
+  GeneratedColumn<String> get staffId =>
+      $composableBuilder(column: $table.staffId, builder: (column) => column);
+
+  GeneratedColumn<String> get month =>
+      $composableBuilder(column: $table.month, builder: (column) => column);
+
+  GeneratedColumn<String> get kind =>
+      $composableBuilder(column: $table.kind, builder: (column) => column);
+
+  GeneratedColumn<int> get amountPaise => $composableBuilder(
+    column: $table.amountPaise,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get note =>
+      $composableBuilder(column: $table.note, builder: (column) => column);
+
+  GeneratedColumn<String> get settlementAttemptId => $composableBuilder(
+    column: $table.settlementAttemptId,
+    builder: (column) => column,
+  );
+}
+
+class $$PayAdjustmentsTableTableManager
+    extends
+        RootTableManager<
+          _$NestDatabase,
+          $PayAdjustmentsTable,
+          PayAdjustmentRow,
+          $$PayAdjustmentsTableFilterComposer,
+          $$PayAdjustmentsTableOrderingComposer,
+          $$PayAdjustmentsTableAnnotationComposer,
+          $$PayAdjustmentsTableCreateCompanionBuilder,
+          $$PayAdjustmentsTableUpdateCompanionBuilder,
+          (
+            PayAdjustmentRow,
+            BaseReferences<
+              _$NestDatabase,
+              $PayAdjustmentsTable,
+              PayAdjustmentRow
+            >,
+          ),
+          PayAdjustmentRow,
+          PrefetchHooks Function()
+        > {
+  $$PayAdjustmentsTableTableManager(
+    _$NestDatabase db,
+    $PayAdjustmentsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PayAdjustmentsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PayAdjustmentsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$PayAdjustmentsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> homeId = const Value.absent(),
+                Value<bool> deleted = const Value.absent(),
+                Value<int> createdAt = const Value.absent(),
+                Value<String> createdBy = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> updatedBy = const Value.absent(),
+                Value<String> staffId = const Value.absent(),
+                Value<String> month = const Value.absent(),
+                Value<String> kind = const Value.absent(),
+                Value<int> amountPaise = const Value.absent(),
+                Value<String> note = const Value.absent(),
+                Value<String?> settlementAttemptId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PayAdjustmentsCompanion(
+                id: id,
+                homeId: homeId,
+                deleted: deleted,
+                createdAt: createdAt,
+                createdBy: createdBy,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy,
+                staffId: staffId,
+                month: month,
+                kind: kind,
+                amountPaise: amountPaise,
+                note: note,
+                settlementAttemptId: settlementAttemptId,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String homeId,
+                Value<bool> deleted = const Value.absent(),
+                Value<int> createdAt = const Value.absent(),
+                Value<String> createdBy = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> updatedBy = const Value.absent(),
+                Value<String> staffId = const Value.absent(),
+                Value<String> month = const Value.absent(),
+                Value<String> kind = const Value.absent(),
+                Value<int> amountPaise = const Value.absent(),
+                Value<String> note = const Value.absent(),
+                Value<String?> settlementAttemptId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PayAdjustmentsCompanion.insert(
+                id: id,
+                homeId: homeId,
+                deleted: deleted,
+                createdAt: createdAt,
+                createdBy: createdBy,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy,
+                staffId: staffId,
+                month: month,
+                kind: kind,
+                amountPaise: amountPaise,
+                note: note,
+                settlementAttemptId: settlementAttemptId,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$PayAdjustmentsTable, PayAdjustmentRow>(table),
+                  BaseReferences<
+                    _$NestDatabase,
+                    $PayAdjustmentsTable,
+                    PayAdjustmentRow
+                  >(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$PayAdjustmentsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$NestDatabase,
+      $PayAdjustmentsTable,
+      PayAdjustmentRow,
+      $$PayAdjustmentsTableFilterComposer,
+      $$PayAdjustmentsTableOrderingComposer,
+      $$PayAdjustmentsTableAnnotationComposer,
+      $$PayAdjustmentsTableCreateCompanionBuilder,
+      $$PayAdjustmentsTableUpdateCompanionBuilder,
+      (
+        PayAdjustmentRow,
+        BaseReferences<_$NestDatabase, $PayAdjustmentsTable, PayAdjustmentRow>,
+      ),
+      PayAdjustmentRow,
+      PrefetchHooks Function()
+    >;
+typedef $$SettlementAttemptsTableCreateCompanionBuilder =
+    SettlementAttemptsCompanion Function({
+      required String id,
+      required String homeId,
+      Value<bool> deleted,
+      Value<int> createdAt,
+      Value<String> createdBy,
+      Value<int> updatedAt,
+      Value<String> updatedBy,
+      Value<String> staffId,
+      Value<String> month,
+      Value<String> kind,
+      Value<String?> refAttemptId,
+      Value<int> amountPaise,
+      Value<String?> method,
+      Value<int> netPaise,
+      Value<String?> breakdownJson,
+      Value<int> deltaPaise,
+      Value<String?> prevTransferIds,
+      Value<String?> expenseId,
+      Value<String> byMember,
+      Value<int> rowid,
+    });
+typedef $$SettlementAttemptsTableUpdateCompanionBuilder =
+    SettlementAttemptsCompanion Function({
+      Value<String> id,
+      Value<String> homeId,
+      Value<bool> deleted,
+      Value<int> createdAt,
+      Value<String> createdBy,
+      Value<int> updatedAt,
+      Value<String> updatedBy,
+      Value<String> staffId,
+      Value<String> month,
+      Value<String> kind,
+      Value<String?> refAttemptId,
+      Value<int> amountPaise,
+      Value<String?> method,
+      Value<int> netPaise,
+      Value<String?> breakdownJson,
+      Value<int> deltaPaise,
+      Value<String?> prevTransferIds,
+      Value<String?> expenseId,
+      Value<String> byMember,
+      Value<int> rowid,
+    });
+
+class $$SettlementAttemptsTableFilterComposer
+    extends Composer<_$NestDatabase, $SettlementAttemptsTable> {
+  $$SettlementAttemptsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get staffId => $composableBuilder(
+    column: $table.staffId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get month => $composableBuilder(
+    column: $table.month,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get refAttemptId => $composableBuilder(
+    column: $table.refAttemptId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get amountPaise => $composableBuilder(
+    column: $table.amountPaise,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get method => $composableBuilder(
+    column: $table.method,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get netPaise => $composableBuilder(
+    column: $table.netPaise,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get breakdownJson => $composableBuilder(
+    column: $table.breakdownJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get deltaPaise => $composableBuilder(
+    column: $table.deltaPaise,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get prevTransferIds => $composableBuilder(
+    column: $table.prevTransferIds,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get expenseId => $composableBuilder(
+    column: $table.expenseId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get byMember => $composableBuilder(
+    column: $table.byMember,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$SettlementAttemptsTableOrderingComposer
+    extends Composer<_$NestDatabase, $SettlementAttemptsTable> {
+  $$SettlementAttemptsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get staffId => $composableBuilder(
+    column: $table.staffId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get month => $composableBuilder(
+    column: $table.month,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get refAttemptId => $composableBuilder(
+    column: $table.refAttemptId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get amountPaise => $composableBuilder(
+    column: $table.amountPaise,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get method => $composableBuilder(
+    column: $table.method,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get netPaise => $composableBuilder(
+    column: $table.netPaise,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get breakdownJson => $composableBuilder(
+    column: $table.breakdownJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get deltaPaise => $composableBuilder(
+    column: $table.deltaPaise,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get prevTransferIds => $composableBuilder(
+    column: $table.prevTransferIds,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get expenseId => $composableBuilder(
+    column: $table.expenseId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get byMember => $composableBuilder(
+    column: $table.byMember,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$SettlementAttemptsTableAnnotationComposer
+    extends Composer<_$NestDatabase, $SettlementAttemptsTable> {
+  $$SettlementAttemptsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get homeId =>
+      $composableBuilder(column: $table.homeId, builder: (column) => column);
+
+  GeneratedColumn<bool> get deleted =>
+      $composableBuilder(column: $table.deleted, builder: (column) => column);
+
+  GeneratedColumn<int> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<String> get createdBy =>
+      $composableBuilder(column: $table.createdBy, builder: (column) => column);
+
+  GeneratedColumn<int> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get updatedBy =>
+      $composableBuilder(column: $table.updatedBy, builder: (column) => column);
+
+  GeneratedColumn<String> get staffId =>
+      $composableBuilder(column: $table.staffId, builder: (column) => column);
+
+  GeneratedColumn<String> get month =>
+      $composableBuilder(column: $table.month, builder: (column) => column);
+
+  GeneratedColumn<String> get kind =>
+      $composableBuilder(column: $table.kind, builder: (column) => column);
+
+  GeneratedColumn<String> get refAttemptId => $composableBuilder(
+    column: $table.refAttemptId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get amountPaise => $composableBuilder(
+    column: $table.amountPaise,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get method =>
+      $composableBuilder(column: $table.method, builder: (column) => column);
+
+  GeneratedColumn<int> get netPaise =>
+      $composableBuilder(column: $table.netPaise, builder: (column) => column);
+
+  GeneratedColumn<String> get breakdownJson => $composableBuilder(
+    column: $table.breakdownJson,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get deltaPaise => $composableBuilder(
+    column: $table.deltaPaise,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get prevTransferIds => $composableBuilder(
+    column: $table.prevTransferIds,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get expenseId =>
+      $composableBuilder(column: $table.expenseId, builder: (column) => column);
+
+  GeneratedColumn<String> get byMember =>
+      $composableBuilder(column: $table.byMember, builder: (column) => column);
+}
+
+class $$SettlementAttemptsTableTableManager
+    extends
+        RootTableManager<
+          _$NestDatabase,
+          $SettlementAttemptsTable,
+          SettlementAttemptRow,
+          $$SettlementAttemptsTableFilterComposer,
+          $$SettlementAttemptsTableOrderingComposer,
+          $$SettlementAttemptsTableAnnotationComposer,
+          $$SettlementAttemptsTableCreateCompanionBuilder,
+          $$SettlementAttemptsTableUpdateCompanionBuilder,
+          (
+            SettlementAttemptRow,
+            BaseReferences<
+              _$NestDatabase,
+              $SettlementAttemptsTable,
+              SettlementAttemptRow
+            >,
+          ),
+          SettlementAttemptRow,
+          PrefetchHooks Function()
+        > {
+  $$SettlementAttemptsTableTableManager(
+    _$NestDatabase db,
+    $SettlementAttemptsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SettlementAttemptsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SettlementAttemptsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SettlementAttemptsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> homeId = const Value.absent(),
+                Value<bool> deleted = const Value.absent(),
+                Value<int> createdAt = const Value.absent(),
+                Value<String> createdBy = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> updatedBy = const Value.absent(),
+                Value<String> staffId = const Value.absent(),
+                Value<String> month = const Value.absent(),
+                Value<String> kind = const Value.absent(),
+                Value<String?> refAttemptId = const Value.absent(),
+                Value<int> amountPaise = const Value.absent(),
+                Value<String?> method = const Value.absent(),
+                Value<int> netPaise = const Value.absent(),
+                Value<String?> breakdownJson = const Value.absent(),
+                Value<int> deltaPaise = const Value.absent(),
+                Value<String?> prevTransferIds = const Value.absent(),
+                Value<String?> expenseId = const Value.absent(),
+                Value<String> byMember = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SettlementAttemptsCompanion(
+                id: id,
+                homeId: homeId,
+                deleted: deleted,
+                createdAt: createdAt,
+                createdBy: createdBy,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy,
+                staffId: staffId,
+                month: month,
+                kind: kind,
+                refAttemptId: refAttemptId,
+                amountPaise: amountPaise,
+                method: method,
+                netPaise: netPaise,
+                breakdownJson: breakdownJson,
+                deltaPaise: deltaPaise,
+                prevTransferIds: prevTransferIds,
+                expenseId: expenseId,
+                byMember: byMember,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String homeId,
+                Value<bool> deleted = const Value.absent(),
+                Value<int> createdAt = const Value.absent(),
+                Value<String> createdBy = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> updatedBy = const Value.absent(),
+                Value<String> staffId = const Value.absent(),
+                Value<String> month = const Value.absent(),
+                Value<String> kind = const Value.absent(),
+                Value<String?> refAttemptId = const Value.absent(),
+                Value<int> amountPaise = const Value.absent(),
+                Value<String?> method = const Value.absent(),
+                Value<int> netPaise = const Value.absent(),
+                Value<String?> breakdownJson = const Value.absent(),
+                Value<int> deltaPaise = const Value.absent(),
+                Value<String?> prevTransferIds = const Value.absent(),
+                Value<String?> expenseId = const Value.absent(),
+                Value<String> byMember = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SettlementAttemptsCompanion.insert(
+                id: id,
+                homeId: homeId,
+                deleted: deleted,
+                createdAt: createdAt,
+                createdBy: createdBy,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy,
+                staffId: staffId,
+                month: month,
+                kind: kind,
+                refAttemptId: refAttemptId,
+                amountPaise: amountPaise,
+                method: method,
+                netPaise: netPaise,
+                breakdownJson: breakdownJson,
+                deltaPaise: deltaPaise,
+                prevTransferIds: prevTransferIds,
+                expenseId: expenseId,
+                byMember: byMember,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$SettlementAttemptsTable, SettlementAttemptRow>(
+                    table,
+                  ),
+                  BaseReferences<
+                    _$NestDatabase,
+                    $SettlementAttemptsTable,
+                    SettlementAttemptRow
+                  >(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$SettlementAttemptsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$NestDatabase,
+      $SettlementAttemptsTable,
+      SettlementAttemptRow,
+      $$SettlementAttemptsTableFilterComposer,
+      $$SettlementAttemptsTableOrderingComposer,
+      $$SettlementAttemptsTableAnnotationComposer,
+      $$SettlementAttemptsTableCreateCompanionBuilder,
+      $$SettlementAttemptsTableUpdateCompanionBuilder,
+      (
+        SettlementAttemptRow,
+        BaseReferences<
+          _$NestDatabase,
+          $SettlementAttemptsTable,
+          SettlementAttemptRow
+        >,
+      ),
+      SettlementAttemptRow,
+      PrefetchHooks Function()
+    >;
+typedef $$ExpensesTableCreateCompanionBuilder = ExpensesCompanion Function({
+  required String id,
+  required String homeId,
+  Value<bool> deleted,
+  Value<int> createdAt,
+  Value<String> createdBy,
+  Value<int> updatedAt,
+  Value<String> updatedBy,
+  Value<int> amountPaise,
+  Value<String> merchant,
+  Value<String> merchantKey,
+  Value<String> category,
+  Value<String> method,
+  Value<String> date,
+  Value<String> docMonth,
+  Value<String?> forMonth,
+  Value<String> paidBy,
+  Value<String> addedBy,
+  Value<String> source,
+  Value<String?> billId,
+  Value<String?> orderChannel,
+  Value<String?> staffId,
+  Value<String?> settlementAttemptId,
+  Value<String?> note,
+  Value<int> rowid,
+});
+typedef $$ExpensesTableUpdateCompanionBuilder = ExpensesCompanion Function({
+  Value<String> id,
+  Value<String> homeId,
+  Value<bool> deleted,
+  Value<int> createdAt,
+  Value<String> createdBy,
+  Value<int> updatedAt,
+  Value<String> updatedBy,
+  Value<int> amountPaise,
+  Value<String> merchant,
+  Value<String> merchantKey,
+  Value<String> category,
+  Value<String> method,
+  Value<String> date,
+  Value<String> docMonth,
+  Value<String?> forMonth,
+  Value<String> paidBy,
+  Value<String> addedBy,
+  Value<String> source,
+  Value<String?> billId,
+  Value<String?> orderChannel,
+  Value<String?> staffId,
+  Value<String?> settlementAttemptId,
+  Value<String?> note,
+  Value<int> rowid,
+});
+
+class $$ExpensesTableFilterComposer
+    extends Composer<_$NestDatabase, $ExpensesTable> {
+  $$ExpensesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get amountPaise => $composableBuilder(
+    column: $table.amountPaise,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get merchant => $composableBuilder(
+    column: $table.merchant,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get merchantKey => $composableBuilder(
+    column: $table.merchantKey,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get method => $composableBuilder(
+    column: $table.method,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get docMonth => $composableBuilder(
+    column: $table.docMonth,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get forMonth => $composableBuilder(
+    column: $table.forMonth,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get paidBy => $composableBuilder(
+    column: $table.paidBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get addedBy => $composableBuilder(
+    column: $table.addedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get source => $composableBuilder(
+    column: $table.source,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get billId => $composableBuilder(
+    column: $table.billId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get orderChannel => $composableBuilder(
+    column: $table.orderChannel,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get staffId => $composableBuilder(
+    column: $table.staffId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get settlementAttemptId => $composableBuilder(
+    column: $table.settlementAttemptId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ExpensesTableOrderingComposer
+    extends Composer<_$NestDatabase, $ExpensesTable> {
+  $$ExpensesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get amountPaise => $composableBuilder(
+    column: $table.amountPaise,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get merchant => $composableBuilder(
+    column: $table.merchant,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get merchantKey => $composableBuilder(
+    column: $table.merchantKey,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get method => $composableBuilder(
+    column: $table.method,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get docMonth => $composableBuilder(
+    column: $table.docMonth,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get forMonth => $composableBuilder(
+    column: $table.forMonth,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get paidBy => $composableBuilder(
+    column: $table.paidBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get addedBy => $composableBuilder(
+    column: $table.addedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get source => $composableBuilder(
+    column: $table.source,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get billId => $composableBuilder(
+    column: $table.billId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get orderChannel => $composableBuilder(
+    column: $table.orderChannel,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get staffId => $composableBuilder(
+    column: $table.staffId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get settlementAttemptId => $composableBuilder(
+    column: $table.settlementAttemptId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ExpensesTableAnnotationComposer
+    extends Composer<_$NestDatabase, $ExpensesTable> {
+  $$ExpensesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get homeId =>
+      $composableBuilder(column: $table.homeId, builder: (column) => column);
+
+  GeneratedColumn<bool> get deleted =>
+      $composableBuilder(column: $table.deleted, builder: (column) => column);
+
+  GeneratedColumn<int> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<String> get createdBy =>
+      $composableBuilder(column: $table.createdBy, builder: (column) => column);
+
+  GeneratedColumn<int> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get updatedBy =>
+      $composableBuilder(column: $table.updatedBy, builder: (column) => column);
+
+  GeneratedColumn<int> get amountPaise => $composableBuilder(
+    column: $table.amountPaise,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get merchant =>
+      $composableBuilder(column: $table.merchant, builder: (column) => column);
+
+  GeneratedColumn<String> get merchantKey => $composableBuilder(
+    column: $table.merchantKey,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get category =>
+      $composableBuilder(column: $table.category, builder: (column) => column);
+
+  GeneratedColumn<String> get method =>
+      $composableBuilder(column: $table.method, builder: (column) => column);
+
+  GeneratedColumn<String> get date =>
+      $composableBuilder(column: $table.date, builder: (column) => column);
+
+  GeneratedColumn<String> get docMonth =>
+      $composableBuilder(column: $table.docMonth, builder: (column) => column);
+
+  GeneratedColumn<String> get forMonth =>
+      $composableBuilder(column: $table.forMonth, builder: (column) => column);
+
+  GeneratedColumn<String> get paidBy =>
+      $composableBuilder(column: $table.paidBy, builder: (column) => column);
+
+  GeneratedColumn<String> get addedBy =>
+      $composableBuilder(column: $table.addedBy, builder: (column) => column);
+
+  GeneratedColumn<String> get source =>
+      $composableBuilder(column: $table.source, builder: (column) => column);
+
+  GeneratedColumn<String> get billId =>
+      $composableBuilder(column: $table.billId, builder: (column) => column);
+
+  GeneratedColumn<String> get orderChannel => $composableBuilder(
+    column: $table.orderChannel,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get staffId =>
+      $composableBuilder(column: $table.staffId, builder: (column) => column);
+
+  GeneratedColumn<String> get settlementAttemptId => $composableBuilder(
+    column: $table.settlementAttemptId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get note =>
+      $composableBuilder(column: $table.note, builder: (column) => column);
+}
+
+class $$ExpensesTableTableManager
+    extends
+        RootTableManager<
+          _$NestDatabase,
+          $ExpensesTable,
+          ExpenseRow,
+          $$ExpensesTableFilterComposer,
+          $$ExpensesTableOrderingComposer,
+          $$ExpensesTableAnnotationComposer,
+          $$ExpensesTableCreateCompanionBuilder,
+          $$ExpensesTableUpdateCompanionBuilder,
+          (
+            ExpenseRow,
+            BaseReferences<_$NestDatabase, $ExpensesTable, ExpenseRow>,
+          ),
+          ExpenseRow,
+          PrefetchHooks Function()
+        > {
+  $$ExpensesTableTableManager(_$NestDatabase db, $ExpensesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ExpensesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ExpensesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ExpensesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> homeId = const Value.absent(),
+                Value<bool> deleted = const Value.absent(),
+                Value<int> createdAt = const Value.absent(),
+                Value<String> createdBy = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> updatedBy = const Value.absent(),
+                Value<int> amountPaise = const Value.absent(),
+                Value<String> merchant = const Value.absent(),
+                Value<String> merchantKey = const Value.absent(),
+                Value<String> category = const Value.absent(),
+                Value<String> method = const Value.absent(),
+                Value<String> date = const Value.absent(),
+                Value<String> docMonth = const Value.absent(),
+                Value<String?> forMonth = const Value.absent(),
+                Value<String> paidBy = const Value.absent(),
+                Value<String> addedBy = const Value.absent(),
+                Value<String> source = const Value.absent(),
+                Value<String?> billId = const Value.absent(),
+                Value<String?> orderChannel = const Value.absent(),
+                Value<String?> staffId = const Value.absent(),
+                Value<String?> settlementAttemptId = const Value.absent(),
+                Value<String?> note = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ExpensesCompanion(
+                id: id,
+                homeId: homeId,
+                deleted: deleted,
+                createdAt: createdAt,
+                createdBy: createdBy,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy,
+                amountPaise: amountPaise,
+                merchant: merchant,
+                merchantKey: merchantKey,
+                category: category,
+                method: method,
+                date: date,
+                docMonth: docMonth,
+                forMonth: forMonth,
+                paidBy: paidBy,
+                addedBy: addedBy,
+                source: source,
+                billId: billId,
+                orderChannel: orderChannel,
+                staffId: staffId,
+                settlementAttemptId: settlementAttemptId,
+                note: note,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String homeId,
+                Value<bool> deleted = const Value.absent(),
+                Value<int> createdAt = const Value.absent(),
+                Value<String> createdBy = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> updatedBy = const Value.absent(),
+                Value<int> amountPaise = const Value.absent(),
+                Value<String> merchant = const Value.absent(),
+                Value<String> merchantKey = const Value.absent(),
+                Value<String> category = const Value.absent(),
+                Value<String> method = const Value.absent(),
+                Value<String> date = const Value.absent(),
+                Value<String> docMonth = const Value.absent(),
+                Value<String?> forMonth = const Value.absent(),
+                Value<String> paidBy = const Value.absent(),
+                Value<String> addedBy = const Value.absent(),
+                Value<String> source = const Value.absent(),
+                Value<String?> billId = const Value.absent(),
+                Value<String?> orderChannel = const Value.absent(),
+                Value<String?> staffId = const Value.absent(),
+                Value<String?> settlementAttemptId = const Value.absent(),
+                Value<String?> note = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ExpensesCompanion.insert(
+                id: id,
+                homeId: homeId,
+                deleted: deleted,
+                createdAt: createdAt,
+                createdBy: createdBy,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy,
+                amountPaise: amountPaise,
+                merchant: merchant,
+                merchantKey: merchantKey,
+                category: category,
+                method: method,
+                date: date,
+                docMonth: docMonth,
+                forMonth: forMonth,
+                paidBy: paidBy,
+                addedBy: addedBy,
+                source: source,
+                billId: billId,
+                orderChannel: orderChannel,
+                staffId: staffId,
+                settlementAttemptId: settlementAttemptId,
+                note: note,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$ExpensesTable, ExpenseRow>(table),
+                  BaseReferences<_$NestDatabase, $ExpensesTable, ExpenseRow>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ExpensesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$NestDatabase,
+      $ExpensesTable,
+      ExpenseRow,
+      $$ExpensesTableFilterComposer,
+      $$ExpensesTableOrderingComposer,
+      $$ExpensesTableAnnotationComposer,
+      $$ExpensesTableCreateCompanionBuilder,
+      $$ExpensesTableUpdateCompanionBuilder,
+      (ExpenseRow, BaseReferences<_$NestDatabase, $ExpensesTable, ExpenseRow>),
+      ExpenseRow,
+      PrefetchHooks Function()
+    >;
 
 class $NestDatabaseManager {
   final _$NestDatabase _db;
@@ -8635,4 +14407,12 @@ class $NestDatabaseManager {
       $$VisitsTableTableManager(_db, _db.visits);
   $$LeavesTableTableManager get leaves =>
       $$LeavesTableTableManager(_db, _db.leaves);
+  $$PayRulesTableTableManager get payRules =>
+      $$PayRulesTableTableManager(_db, _db.payRules);
+  $$PayAdjustmentsTableTableManager get payAdjustments =>
+      $$PayAdjustmentsTableTableManager(_db, _db.payAdjustments);
+  $$SettlementAttemptsTableTableManager get settlementAttempts =>
+      $$SettlementAttemptsTableTableManager(_db, _db.settlementAttempts);
+  $$ExpensesTableTableManager get expenses =>
+      $$ExpensesTableTableManager(_db, _db.expenses);
 }

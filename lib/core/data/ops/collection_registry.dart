@@ -30,6 +30,10 @@ class CollectionRegistry {
       db.staff,
       db.visits,
       db.leaves,
+      db.payRules,
+      db.payAdjustments,
+      db.settlementAttempts,
+      db.expenses,
       // … one line per synced table
     ])
       t.actualTableName: _specOf(t),

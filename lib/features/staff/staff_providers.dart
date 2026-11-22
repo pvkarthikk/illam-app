@@ -6,6 +6,7 @@ import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/domain/attendance.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/time/dates.dart';
+import 'package:nm_flat/features/salary/salary_providers.dart';
 
 final minuteTickProvider = StreamProvider<DateTime>((ref) async* {
   final clock = ref.watch(clockProvider);
@@ -21,9 +22,9 @@ final todayDateProvider = Provider<String>((ref) {
 VisitLite toLite(Visit v) =>
     VisitLite(id: v.id, date: v.date ?? '', inAt: v.inAt ?? 0, outAt: v.outAt);
 
-/// TEMPORARY: always false — P05 replaces the body.
 final monthSettledProvider = Provider.family<bool, (String, String)>(
-  (ref, arg) => false,
+  (ref, arg) =>
+      ref.watch(settledMonthsProvider(arg.$1)).value?.contains(arg.$2) ?? false,
 );
 
 final activeStaffProvider = StreamProvider<List<StaffData>>((ref) {
