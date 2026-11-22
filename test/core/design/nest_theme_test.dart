@@ -1,10 +1,11 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 
-import 'package:nm_flat/core/design/nest_colors.dart';
-import 'package:nm_flat/core/design/nest_text.dart';
-import 'package:nm_flat/core/design/nest_theme.dart';
-import 'package:nm_flat/main.dart';
+import 'package:nm_flat/app.dart';
+import 'package:nm_flat/core/design/components/components.dart';
+import 'package:nm_flat/core/providers.dart';
+import 'package:nm_flat/features/today/today_screen.dart';
 
 void main() {
   group('NestTheme palette & typography', () {
@@ -47,39 +48,36 @@ void main() {
     });
   });
 
-  group('MyApp branding and theme switching', () {
-    testWidgets('uses Nest Mojo - Flat title and switches between light and dark', (
+  group('NestApp shell and theme mode', () {
+    testWidgets('renders 5 tabs and honours themeModeProvider', (
       WidgetTester tester,
     ) async {
-      await tester.pumpWidget(const MyApp(initialThemeMode: ThemeMode.light));
-
-      final app = tester.widget<MaterialApp>(find.byType(MaterialApp));
-      expect(app.title, 'Nest Mojo - Flat');
-      expect(
-        find.descendant(
-          of: find.byType(AppBar),
-          matching: find.text('Nest Mojo - Flat'),
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [themeModeProvider.overrideWithValue(ThemeMode.light)],
+          child: const NestApp(),
         ),
-        findsOneWidget,
       );
-
-      var scaffoldContext = tester.element(find.byType(Scaffold));
-      expect(Theme.of(scaffoldContext).brightness, Brightness.light);
-      expect(scaffoldContext.nest.paper, const Color(0xFFF4ECDF));
-
-      await tester.tap(find.text('Dark'));
       await tester.pumpAndSettle();
 
-      scaffoldContext = tester.element(find.byType(Scaffold));
-      expect(Theme.of(scaffoldContext).brightness, Brightness.dark);
-      expect(scaffoldContext.nest.paper, const Color(0xFF0F1612));
+      expect(find.byType(NavigationDestination), findsNWidgets(5));
+      expect(find.text('Arrives in P03'), findsOneWidget);
 
-      await tester.tap(find.text('Light'));
+      var todayContext = tester.element(find.byType(TodayScreen));
+      expect(Theme.of(todayContext).brightness, Brightness.light);
+      expect(todayContext.nest.paper, const Color(0xFFF4ECDF));
+
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [themeModeProvider.overrideWithValue(ThemeMode.dark)],
+          child: const NestApp(),
+        ),
+      );
       await tester.pumpAndSettle();
 
-      scaffoldContext = tester.element(find.byType(Scaffold));
-      expect(Theme.of(scaffoldContext).brightness, Brightness.light);
-      expect(scaffoldContext.nest.paper, const Color(0xFFF4ECDF));
+      todayContext = tester.element(find.byType(TodayScreen));
+      expect(Theme.of(todayContext).brightness, Brightness.dark);
+      expect(todayContext.nest.paper, const Color(0xFF0F1612));
     });
   });
 }
