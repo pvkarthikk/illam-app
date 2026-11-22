@@ -10,7 +10,9 @@ import 'package:nm_flat/core/data/prefs/device_prefs.dart';
 import 'package:nm_flat/core/data/repo/expenses_repo.dart';
 import 'package:nm_flat/core/data/repo/home_repo.dart';
 import 'package:nm_flat/core/data/repo/lists_repo.dart';
+import 'package:nm_flat/core/data/repo/meals_repo.dart';
 import 'package:nm_flat/core/data/repo/money_repo.dart';
+import 'package:nm_flat/core/data/repo/recipes_repo.dart';
 import 'package:nm_flat/core/data/repo/salary_repo.dart';
 import 'package:nm_flat/core/data/repo/staff_repo.dart';
 import 'package:nm_flat/core/data/repo/tasks_repo.dart';
@@ -365,3 +367,46 @@ final budgetPaiseProvider = Provider<int?>((ref) {
   final budget = ref.watch(currentHomeProvider).value?.budgetMonthlyPaise;
   return (budget == null || budget <= 0) ? null : budget;
 });
+
+final recipesRepoProvider = Provider<RecipesRepo>(
+  (ref) => RecipesRepo(
+    ref.watch(dbProvider),
+    ref.watch(changesProvider),
+    ref.watch(currentHomeIdProvider).value ??
+        ref.watch(prefsProvider).currentHomeId ??
+        '',
+  ),
+);
+
+final mealsRepoProvider = Provider<MealsRepo>(
+  (ref) => MealsRepo(
+    ref.watch(dbProvider),
+    ref.watch(changesProvider),
+    ref.watch(prefsProvider),
+    ref.watch(currentHomeIdProvider).value ??
+        ref.watch(prefsProvider).currentHomeId ??
+        '',
+  ),
+);
+
+final recipesProvider = StreamProvider<List<RecipeView>>(
+  (ref) => ref.watch(recipesRepoProvider).watchAll(),
+);
+
+final recipeProvider = StreamProvider.family<RecipeView?, String>(
+  (ref, id) => ref.watch(recipesRepoProvider).watchOne(id),
+);
+
+final weekSlotsProvider = StreamProvider.family<List<MealSlot>, String>(
+  (ref, mondayIso) => ref
+      .watch(mealsRepoProvider)
+      .watchRange(mondayIso, Dates.addDays(mondayIso, 6)),
+);
+
+final pantryKeysProvider = StreamProvider<Set<String>>(
+  (ref) => ref.watch(mealsRepoProvider).watchPantryInStock(),
+);
+
+final openGroceryKeysProvider = StreamProvider<Set<String>>(
+  (ref) => ref.watch(mealsRepoProvider).watchOpenGroceryKeys(),
+);

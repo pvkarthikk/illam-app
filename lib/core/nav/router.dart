@@ -12,7 +12,10 @@ import 'package:nm_flat/features/debug/data_lab_screen.dart';
 import 'package:nm_flat/features/debug/debug_screen.dart';
 import 'package:nm_flat/features/debug/gallery_screen.dart';
 import 'package:nm_flat/features/lists/lists_screen.dart';
+import 'package:nm_flat/features/meals/cook_screen.dart';
 import 'package:nm_flat/features/meals/meals_screen.dart';
+import 'package:nm_flat/features/meals/recipe_edit_screen.dart';
+import 'package:nm_flat/features/meals/recipe_screen.dart';
 import 'package:nm_flat/features/money/money_screen.dart';
 import 'package:nm_flat/features/money/transactions_screen.dart';
 import 'package:nm_flat/features/onboarding/onboarding_screen.dart';
@@ -145,6 +148,21 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (_, state) => TransactionsScreen(
           category: state.uri.queryParameters['category'],
         ),
+      ),
+      GoRoute(
+        path: '/meals/recipe/:id',
+        builder: (_, state) =>
+            RecipeScreen(id: state.pathParameters['id'] ?? ''),
+      ),
+      GoRoute(
+        path: '/meals/recipe-edit/:id',
+        builder: (_, state) =>
+            RecipeEditScreen(id: state.pathParameters['id'] ?? 'new'),
+      ),
+      GoRoute(
+        path: '/meals/cook/:id',
+        builder: (_, state) =>
+            CookScreen(id: state.pathParameters['id'] ?? ''),
       ),
       GoRoute(
         path: Routes.listsStore,

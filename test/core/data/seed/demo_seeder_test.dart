@@ -10,6 +10,7 @@ import 'package:nm_flat/core/providers.dart';
 
 void main() {
   setUpAll(() async {
+    TestWidgetsFlutterBinding.ensureInitialized();
     driftRuntimeOptions.dontWarnAboutMultipleDatabases = true;
     await initializeDateFormatting('en');
   });
@@ -60,6 +61,10 @@ void main() {
     expect(routines.length, 8);
     final todos = await db.select(db.todos).get();
     expect(todos.length, 7);
+    final recipes = await db.select(db.recipes).get();
+    expect(recipes.length, 9);
+    final slots = await db.select(db.mealSlots).get();
+    expect(slots.length, 15);
     expect(
       notes.map((n) => n.title).toSet(),
       {'Milk 2L', 'Call plumber', 'Pay rent'},

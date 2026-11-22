@@ -30,7 +30,7 @@ class DemoSeeder {
     await _seedPay();
     await _seedItems();
     await _seedTasks();
-    // P09: await _seedMeals();
+    await _seedMeals();
     await _seedMoney();
     await _seedDevNotes();
   }
@@ -600,6 +600,70 @@ class DemoSeeder {
         });
       }
     }, homeId: homeId);
+  }
+
+  Future<void> _seedMeals() async {
+    final prefs = ref.read(prefsProvider);
+    final homeId = prefs.currentHomeId;
+    if (homeId == null) return;
+
+    final recipesRepo = ref.read(recipesRepoProvider);
+    await recipesRepo.addStarterPack();
+
+    final db = ref.read(dbProvider);
+    final existingSlot =
+        await (db.select(db.mealSlots)
+              ..where((s) => s.homeId.equals(homeId) & s.deleted.equals(false))
+              ..limit(1))
+            .getSingleOrNull();
+    if (existingSlot != null) return;
+
+    final recipeList = await recipesRepo.watchAll().first;
+    final byName = {for (final r in recipeList) r.name: r};
+    final today = Dates.today(ref.read(clockProvider));
+    final monday = Dates.addDays(today, 1 - Dates.weekdayIso(today));
+    final mealsRepo = ref.read(mealsRepoProvider);
+
+    const plan = <(int offset, String slot, String recipeName)>[
+      (0, 'breakfast', 'Pesarattu'),
+      (0, 'lunch', 'Drumstick sambar'),
+      (0, 'dinner', 'Paneer butter masala'),
+      (1, 'breakfast', 'Aloo paratha'),
+      (1, 'lunch', 'Lemon rice'),
+      (1, 'dinner', 'Tomato rasam'),
+      (2, 'breakfast', 'Rava upma'),
+      (2, 'lunch', 'Drumstick sambar'),
+      (2, 'dinner', 'Veg pulao'),
+      (3, 'breakfast', 'Pesarattu'),
+      (3, 'lunch', 'Tomato rasam'),
+      (3, 'dinner', 'Paneer butter masala'),
+      (4, 'lunch', 'Veg pulao'),
+      (4, 'dinner', 'Dal tadka'),
+      (5, 'breakfast', 'Aloo paratha'),
+    ];
+
+    for (final (offset, slot, name) in plan) {
+      final r = byName[name];
+      if (r != null) {
+        await mealsRepo.planRecipe(Dates.addDays(monday, offset), slot, r);
+      }
+    }
+
+    final openKeys = await mealsRepo.watchOpenGroceryKeys().first;
+    final seen = <String, String>{};
+    for (final r in recipeList) {
+      for (final ing in r.ingredients) {
+        if (ing.nameKey == 'green chillies' ||
+            ing.nameKey == 'fresh cream' ||
+            openKeys.contains(ing.nameKey)) {
+          continue;
+        }
+        seen.putIfAbsent(ing.nameKey, () => ing.name);
+      }
+    }
+    for (final entry in seen.entries) {
+      await mealsRepo.setPantry(entry.value, entry.key, true);
+    }
   }
 
   Future<void> _seedMoney() async {

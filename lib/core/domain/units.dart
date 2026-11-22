@@ -58,3 +58,14 @@ String formatQty(int milli, String u) {
       .replaceFirst(RegExp(r'\.?0+$'), '');
   return u.isEmpty ? '×$numText' : '$numText $u';
 }
+
+const allUnits = <String>[...groceryUnits, ...kitchenUnits];
+
+double toBaseQty(double qty, String unit) =>
+    (unit == 'kg' || unit == 'L') ? qty * 1000 : qty;
+
+String baseUnit(String unit) => switch (unit) {
+  'kg' || 'g' => 'g',
+  'L' || 'ml' => 'ml',
+  _ => unit,
+};

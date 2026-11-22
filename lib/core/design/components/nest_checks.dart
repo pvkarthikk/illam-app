@@ -123,7 +123,7 @@ class QtyStepper extends StatelessWidget {
 
   final String valueText;
   final VoidCallback? onMinus;
-  final VoidCallback onPlus;
+  final VoidCallback? onPlus;
   final String semanticLabel;
   final String? minusTooltip;
   final String? plusTooltip;

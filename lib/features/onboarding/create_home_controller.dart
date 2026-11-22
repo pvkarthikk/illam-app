@@ -14,6 +14,7 @@ class CreateHomeController extends Notifier<bool> {
     required String homeName,
     required int createdAt,
     required String nonceB64,
+    bool addStarter = true,
   }) async {
     state = true;
     try {
@@ -29,6 +30,9 @@ class CreateHomeController extends Notifier<bool> {
             nonceB64: nonceB64,
             model: model,
           );
+      if (addStarter) {
+        await ref.read(recipesRepoProvider).addStarterPack();
+      }
     } finally {
       state = false;
     }

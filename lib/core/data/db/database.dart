@@ -7,11 +7,14 @@ import 'package:nm_flat/core/data/db/tables/expenses.dart';
 import 'package:nm_flat/core/data/db/tables/homes.dart';
 import 'package:nm_flat/core/data/db/tables/item_history.dart';
 import 'package:nm_flat/core/data/db/tables/items.dart';
+import 'package:nm_flat/core/data/db/tables/meal_slots.dart';
 import 'package:nm_flat/core/data/db/tables/members.dart';
 import 'package:nm_flat/core/data/db/tables/merchant_rules.dart';
 import 'package:nm_flat/core/data/db/tables/ops.dart';
+import 'package:nm_flat/core/data/db/tables/pantry.dart';
 import 'package:nm_flat/core/data/db/tables/pay_adjustments.dart';
 import 'package:nm_flat/core/data/db/tables/pay_rules.dart';
+import 'package:nm_flat/core/data/db/tables/recipes.dart';
 import 'package:nm_flat/core/data/db/tables/routines.dart';
 import 'package:nm_flat/core/data/db/tables/settlement_attempts.dart';
 import 'package:nm_flat/core/data/db/tables/staff.dart';
@@ -37,6 +40,9 @@ part 'database.g.dart';
     MerchantRules,
     Items,
     ItemHistory,
+    Recipes,
+    MealSlots,
+    Pantry,
     Routines,
     Todos,
   ],
@@ -51,7 +57,7 @@ class NestDatabase extends _$NestDatabase {
     : super(DatabaseConnection(e, closeStreamsSynchronously: true));
 
   @override
-  int get schemaVersion => 7; // raise by 1 for every table change
+  int get schemaVersion => 8; // raise by 1 for every table change
 
   @override
   MigrationStrategy get migration => MigrationStrategy(

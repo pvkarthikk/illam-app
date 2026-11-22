@@ -1691,5 +1691,391 @@
       "amount": {}
     }
   },
-  "todaySetBudget": "Set budget"
+  "todaySetBudget": "Set budget",
+  "recipeAPinch": "a pinch",
+  "onboardingAddStarterRecipes": "Add 9 popular recipes",
+  "mealsTitle": "Meals",
+  "mealsWeekOf": "Week of {date}",
+  "@mealsWeekOf": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "mealsPrevWeek": "Previous week",
+  "mealsNextWeek": "Next week",
+  "mealsThisWeek": "This week",
+  "mealsDaySemantics": "{weekday} {date}, {count} of 3 meals planned",
+  "@mealsDaySemantics": {
+    "placeholders": {
+      "weekday": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "mealsMissingWeek": "{count, plural, =1{1 ingredient missing for the rest of the week} other{{count} ingredients missing for the rest of the week}}",
+  "@mealsMissingWeek": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "mealsAddAll": "Add all",
+  "mealsPastDay": "Past day",
+  "mealsSlotTitle": "{slot, select, breakfast{Breakfast} lunch{Lunch} other{Dinner}}",
+  "@mealsSlotTitle": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "mealsSlotLower": "{slot, select, breakfast{breakfast} lunch{lunch} other{dinner}}",
+  "@mealsSlotLower": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "mealsPlanSlot": "Plan {slot}",
+  "@mealsPlanSlot": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "mealsChangeSlot": "Change {slot}",
+  "@mealsChangeSlot": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "mealsPickFromBook": "Pick from your recipe book",
+  "mealsMinutes": "{min} min",
+  "@mealsMinutes": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "mealsReadyToCook": "ready to cook",
+  "mealsMissingCount": "{count} missing",
+  "@mealsMissingCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "mealsEatingOut": "Eating out",
+  "mealsLeftovers": "Leftovers",
+  "mealsRemoved": "{name} (removed)",
+  "@mealsRemoved": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "mealsRecipeBook": "Recipe book",
+  "mealsAdd": "Add",
+  "mealsCardMeta": "{min} min · {tag}",
+  "@mealsCardMeta": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "tag": {
+        "type": "String"
+      }
+    }
+  },
+  "mealsEmptyTitle": "No recipes yet",
+  "mealsEmptyBody": "Add your first, or add the 9 popular ones.",
+  "mealsAddStarter": "Add 9 popular recipes",
+  "mealsTypeRecipe": "Type a recipe",
+  "mealsStarterAdded": "{count, plural, =1{Added 1 recipe} other{Added {count} recipes}}",
+  "@mealsStarterAdded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "mealsPickerTitle": "{slot} · {day}",
+  "@mealsPickerTitle": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      },
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "mealsPickerLead": "Suggested for {slot} first. Missing ingredients flow into your grocery list.",
+  "@mealsPickerLead": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "mealsOptEatingOut": "🍽 Eating out",
+  "mealsOptLeftovers": "♻ Leftovers",
+  "mealsOptNote": "✎ Note…",
+  "mealsNoteHint": "e.g. Dosa from Amma",
+  "mealsNoteSave": "Save note",
+  "mealsSearchRecipes": "Search recipes",
+  "mealsClearSlot": "Clear {slot}",
+  "@mealsClearSlot": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "mealsPlanned": "{dish} planned",
+  "@mealsPlanned": {
+    "placeholders": {
+      "dish": {
+        "type": "String"
+      }
+    }
+  },
+  "mealsPlannedMissing": "{dish} planned · {count, plural, =1{1 ingredient missing} other{{count} ingredients missing}}",
+  "@mealsPlannedMissing": {
+    "placeholders": {
+      "dish": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "mealsPlannedKind": "{slot} · {what}",
+  "@mealsPlannedKind": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      },
+      "what": {
+        "type": "String"
+      }
+    }
+  },
+  "mealsSlotCleared": "Slot cleared",
+  "mealsReviewTitle": "Add to Grocery",
+  "mealsReviewLead": "Untick anything you already have — we’ll remember it.",
+  "mealsReviewAdd": "Add {count}",
+  "@mealsReviewAdd": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "mealsAddedToGrocery": "Added {count} to Grocery",
+  "@mealsAddedToGrocery": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "recipeTitle": "Recipe",
+  "recipeAddToPlan": "Add to meal plan",
+  "recipeMoreOptions": "More options",
+  "recipeEdit": "Edit",
+  "recipeDelete": "Delete",
+  "recipeServes": "Serves {n}",
+  "@recipeServes": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "recipeIngredients": "Ingredients",
+  "recipeServings": "Servings",
+  "recipePpl": "{n} ppl",
+  "@recipePpl": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "recipeFewer": "Fewer servings",
+  "recipeMoreServings": "More servings",
+  "recipeInKitchen": "In kitchen",
+  "recipeOnList": "On list",
+  "recipeMissing": "Missing",
+  "recipeSrHave": "in kitchen",
+  "recipeSrOnList": "already on grocery list",
+  "recipeSrMissing": "missing",
+  "recipeMarkedHave": "{name} marked as in kitchen",
+  "@recipeMarkedHave": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "recipeMarkedMissing": "{name} marked as missing",
+  "@recipeMarkedMissing": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "recipeAddMissing": "🛒 Add {count} missing to Grocery",
+  "@recipeAddMissing": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "recipeAllThere": "✓ Everything is in the kitchen or on the list",
+  "recipeMethod": "Method",
+  "recipeStartCook": "🔥 Start cook mode",
+  "recipePlanTitle": "Plan {dish}",
+  "@recipePlanTitle": {
+    "placeholders": {
+      "dish": {
+        "type": "String"
+      }
+    }
+  },
+  "recipePlanDay": "Day",
+  "recipePlanMeal": "Meal",
+  "recipePlanAdd": "Add to plan",
+  "recipePlannedFor": "Planned for {day} {slot}",
+  "@recipePlannedFor": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "recipeDeletePlanned": "{dish} is planned on {count, plural, =1{1 day} other{{count} days}}. Remove it from those days too?",
+  "@recipeDeletePlanned": {
+    "placeholders": {
+      "dish": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "recipeKeepPlans": "Keep on those days",
+  "recipeRemoveToo": "Remove too",
+  "recipeDeleted": "Recipe deleted",
+  "recipeAddTitle": "Add a recipe",
+  "recipeAddLead": "Pick the fastest way in — you can tidy it later.",
+  "recipeTypeIt": "Type it",
+  "recipeTypeItSub": "Name, ingredients, steps",
+  "recipePasteLink": "Paste a link",
+  "recipePasteLinkSub": "YouTube, Instagram or a blog — ingredients are pulled out for you",
+  "recipeSnap": "Snap a page",
+  "recipeSnapSub": "Photo of a cookbook or a handwritten card",
+  "recipeComingSoon": "Coming soon",
+  "recipeFormNew": "New recipe",
+  "recipeFormEdit": "Edit recipe",
+  "recipeFieldName": "Name",
+  "recipeFieldTime": "Time in minutes",
+  "recipeFieldServes": "Serves",
+  "recipeFieldMealType": "Meal type",
+  "recipeFieldTags": "Tags",
+  "recipeTagsHint": "e.g. Quick, Kids like",
+  "recipeFieldIngredients": "Ingredients",
+  "recipeIngName": "Ingredient",
+  "recipeIngQty": "Qty",
+  "recipeIngUnit": "Unit",
+  "recipeUnitNone": "(none)",
+  "recipeAddIngredient": "+ Add ingredient",
+  "recipeFieldSteps": "Steps",
+  "recipeStepLabel": "Step {n}",
+  "@recipeStepLabel": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "recipeAddStep": "+ Add step",
+  "recipeMoveUp": "Move up",
+  "recipeMoveDown": "Move down",
+  "recipeRemoveRow": "Remove",
+  "recipeSave": "Save",
+  "recipeSaved": "Recipe saved",
+  "recipeErrName": "Add a name.",
+  "recipeErrIngredients": "Add at least one ingredient.",
+  "recipeErrSteps": "Add at least one step.",
+  "recipeErrQty": "Quantity must be more than 0.",
+  "recipeErrIngName": "Add the ingredient’s name.",
+  "recipeErrTime": "Time must be 1–600 minutes.",
+  "recipeErrServes": "Serves must be 1–20.",
+  "recipeErrStepLong": "A step can be at most 500 characters.",
+  "recipeDiscardTitle": "Discard changes?",
+  "recipeKeepEditing": "Keep editing",
+  "recipeDiscard": "Discard",
+  "cookSub": "Cook mode · screen stays on",
+  "cookOf": "/{total}",
+  "@cookOf": {
+    "placeholders": {
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "cookStepSemantics": "Step {n} of {total}: {text}",
+  "@cookStepSemantics": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "cookBack": "Back",
+  "cookNext": "Next step",
+  "cookFinished": "✓ Finished",
+  "todayMenuTitle": "On the menu",
+  "todayWeekPlan": "Week plan",
+  "todayPlan": "+ Plan",
+  "todayMissingToday": "{count, plural, =1{🛒 1 ingredient missing today} other{🛒 {count} ingredients missing today}}",
+  "@todayMissingToday": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "todayAddToList": "Add to list"
 }

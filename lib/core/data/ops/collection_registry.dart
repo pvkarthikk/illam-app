@@ -38,6 +38,9 @@ class CollectionRegistry {
       db.merchantRules,
       db.items,
       db.itemHistory,
+      db.recipes,
+      db.mealSlots,
+      db.pantry,
       db.routines,
       db.todos,
       // … one line per synced table

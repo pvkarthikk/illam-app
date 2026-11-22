@@ -301,6 +301,14 @@ class ListsRepo {
         'last_unit': item.unit,
       });
       c.inc('item_history', histId, 'times_bought', 1);
+      if (item.list == 'grocery') {
+        c.setAll('pantry', sha1Hex(item.nameKey), {
+          'deleted': false,
+          'name': item.name,
+          'name_key': item.nameKey,
+          'in_stock': true,
+        });
+      }
     }
   }
 

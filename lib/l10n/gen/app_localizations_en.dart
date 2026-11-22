@@ -2433,4 +2433,507 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get todaySetBudget => 'Set budget';
+
+  @override
+  String get recipeAPinch => 'a pinch';
+
+  @override
+  String get onboardingAddStarterRecipes => 'Add 9 popular recipes';
+
+  @override
+  String get mealsTitle => 'Meals';
+
+  @override
+  String mealsWeekOf(String date) {
+    return 'Week of $date';
+  }
+
+  @override
+  String get mealsPrevWeek => 'Previous week';
+
+  @override
+  String get mealsNextWeek => 'Next week';
+
+  @override
+  String get mealsThisWeek => 'This week';
+
+  @override
+  String mealsDaySemantics(String weekday, String date, int count) {
+    return '$weekday $date, $count of 3 meals planned';
+  }
+
+  @override
+  String mealsMissingWeek(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ingredients missing for the rest of the week',
+      one: '1 ingredient missing for the rest of the week',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get mealsAddAll => 'Add all';
+
+  @override
+  String get mealsPastDay => 'Past day';
+
+  @override
+  String mealsSlotTitle(String slot) {
+    String _temp0 = intl.Intl.selectLogic(slot, {
+      'breakfast': 'Breakfast',
+      'lunch': 'Lunch',
+      'other': 'Dinner',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String mealsSlotLower(String slot) {
+    String _temp0 = intl.Intl.selectLogic(slot, {
+      'breakfast': 'breakfast',
+      'lunch': 'lunch',
+      'other': 'dinner',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String mealsPlanSlot(String slot) {
+    return 'Plan $slot';
+  }
+
+  @override
+  String mealsChangeSlot(String slot) {
+    return 'Change $slot';
+  }
+
+  @override
+  String get mealsPickFromBook => 'Pick from your recipe book';
+
+  @override
+  String mealsMinutes(int min) {
+    return '$min min';
+  }
+
+  @override
+  String get mealsReadyToCook => 'ready to cook';
+
+  @override
+  String mealsMissingCount(int count) {
+    return '$count missing';
+  }
+
+  @override
+  String get mealsEatingOut => 'Eating out';
+
+  @override
+  String get mealsLeftovers => 'Leftovers';
+
+  @override
+  String mealsRemoved(String name) {
+    return '$name (removed)';
+  }
+
+  @override
+  String get mealsRecipeBook => 'Recipe book';
+
+  @override
+  String get mealsAdd => 'Add';
+
+  @override
+  String mealsCardMeta(int min, String tag) {
+    return '$min min · $tag';
+  }
+
+  @override
+  String get mealsEmptyTitle => 'No recipes yet';
+
+  @override
+  String get mealsEmptyBody => 'Add your first, or add the 9 popular ones.';
+
+  @override
+  String get mealsAddStarter => 'Add 9 popular recipes';
+
+  @override
+  String get mealsTypeRecipe => 'Type a recipe';
+
+  @override
+  String mealsStarterAdded(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Added $count recipes',
+      one: 'Added 1 recipe',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String mealsPickerTitle(String slot, String day) {
+    return '$slot · $day';
+  }
+
+  @override
+  String mealsPickerLead(String slot) {
+    return 'Suggested for $slot first. Missing ingredients flow into your grocery list.';
+  }
+
+  @override
+  String get mealsOptEatingOut => '🍽 Eating out';
+
+  @override
+  String get mealsOptLeftovers => '♻ Leftovers';
+
+  @override
+  String get mealsOptNote => '✎ Note…';
+
+  @override
+  String get mealsNoteHint => 'e.g. Dosa from Amma';
+
+  @override
+  String get mealsNoteSave => 'Save note';
+
+  @override
+  String get mealsSearchRecipes => 'Search recipes';
+
+  @override
+  String mealsClearSlot(String slot) {
+    return 'Clear $slot';
+  }
+
+  @override
+  String mealsPlanned(String dish) {
+    return '$dish planned';
+  }
+
+  @override
+  String mealsPlannedMissing(String dish, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ingredients missing',
+      one: '1 ingredient missing',
+    );
+    return '$dish planned · $_temp0';
+  }
+
+  @override
+  String mealsPlannedKind(String slot, String what) {
+    return '$slot · $what';
+  }
+
+  @override
+  String get mealsSlotCleared => 'Slot cleared';
+
+  @override
+  String get mealsReviewTitle => 'Add to Grocery';
+
+  @override
+  String get mealsReviewLead =>
+      'Untick anything you already have — we’ll remember it.';
+
+  @override
+  String mealsReviewAdd(int count) {
+    return 'Add $count';
+  }
+
+  @override
+  String mealsAddedToGrocery(int count) {
+    return 'Added $count to Grocery';
+  }
+
+  @override
+  String get recipeTitle => 'Recipe';
+
+  @override
+  String get recipeAddToPlan => 'Add to meal plan';
+
+  @override
+  String get recipeMoreOptions => 'More options';
+
+  @override
+  String get recipeEdit => 'Edit';
+
+  @override
+  String get recipeDelete => 'Delete';
+
+  @override
+  String recipeServes(int n) {
+    return 'Serves $n';
+  }
+
+  @override
+  String get recipeIngredients => 'Ingredients';
+
+  @override
+  String get recipeServings => 'Servings';
+
+  @override
+  String recipePpl(int n) {
+    return '$n ppl';
+  }
+
+  @override
+  String get recipeFewer => 'Fewer servings';
+
+  @override
+  String get recipeMoreServings => 'More servings';
+
+  @override
+  String get recipeInKitchen => 'In kitchen';
+
+  @override
+  String get recipeOnList => 'On list';
+
+  @override
+  String get recipeMissing => 'Missing';
+
+  @override
+  String get recipeSrHave => 'in kitchen';
+
+  @override
+  String get recipeSrOnList => 'already on grocery list';
+
+  @override
+  String get recipeSrMissing => 'missing';
+
+  @override
+  String recipeMarkedHave(String name) {
+    return '$name marked as in kitchen';
+  }
+
+  @override
+  String recipeMarkedMissing(String name) {
+    return '$name marked as missing';
+  }
+
+  @override
+  String recipeAddMissing(int count) {
+    return '🛒 Add $count missing to Grocery';
+  }
+
+  @override
+  String get recipeAllThere => '✓ Everything is in the kitchen or on the list';
+
+  @override
+  String get recipeMethod => 'Method';
+
+  @override
+  String get recipeStartCook => '🔥 Start cook mode';
+
+  @override
+  String recipePlanTitle(String dish) {
+    return 'Plan $dish';
+  }
+
+  @override
+  String get recipePlanDay => 'Day';
+
+  @override
+  String get recipePlanMeal => 'Meal';
+
+  @override
+  String get recipePlanAdd => 'Add to plan';
+
+  @override
+  String recipePlannedFor(String day, String slot) {
+    return 'Planned for $day $slot';
+  }
+
+  @override
+  String recipeDeletePlanned(String dish, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days',
+      one: '1 day',
+    );
+    return '$dish is planned on $_temp0. Remove it from those days too?';
+  }
+
+  @override
+  String get recipeKeepPlans => 'Keep on those days';
+
+  @override
+  String get recipeRemoveToo => 'Remove too';
+
+  @override
+  String get recipeDeleted => 'Recipe deleted';
+
+  @override
+  String get recipeAddTitle => 'Add a recipe';
+
+  @override
+  String get recipeAddLead =>
+      'Pick the fastest way in — you can tidy it later.';
+
+  @override
+  String get recipeTypeIt => 'Type it';
+
+  @override
+  String get recipeTypeItSub => 'Name, ingredients, steps';
+
+  @override
+  String get recipePasteLink => 'Paste a link';
+
+  @override
+  String get recipePasteLinkSub =>
+      'YouTube, Instagram or a blog — ingredients are pulled out for you';
+
+  @override
+  String get recipeSnap => 'Snap a page';
+
+  @override
+  String get recipeSnapSub => 'Photo of a cookbook or a handwritten card';
+
+  @override
+  String get recipeComingSoon => 'Coming soon';
+
+  @override
+  String get recipeFormNew => 'New recipe';
+
+  @override
+  String get recipeFormEdit => 'Edit recipe';
+
+  @override
+  String get recipeFieldName => 'Name';
+
+  @override
+  String get recipeFieldTime => 'Time in minutes';
+
+  @override
+  String get recipeFieldServes => 'Serves';
+
+  @override
+  String get recipeFieldMealType => 'Meal type';
+
+  @override
+  String get recipeFieldTags => 'Tags';
+
+  @override
+  String get recipeTagsHint => 'e.g. Quick, Kids like';
+
+  @override
+  String get recipeFieldIngredients => 'Ingredients';
+
+  @override
+  String get recipeIngName => 'Ingredient';
+
+  @override
+  String get recipeIngQty => 'Qty';
+
+  @override
+  String get recipeIngUnit => 'Unit';
+
+  @override
+  String get recipeUnitNone => '(none)';
+
+  @override
+  String get recipeAddIngredient => '+ Add ingredient';
+
+  @override
+  String get recipeFieldSteps => 'Steps';
+
+  @override
+  String recipeStepLabel(int n) {
+    return 'Step $n';
+  }
+
+  @override
+  String get recipeAddStep => '+ Add step';
+
+  @override
+  String get recipeMoveUp => 'Move up';
+
+  @override
+  String get recipeMoveDown => 'Move down';
+
+  @override
+  String get recipeRemoveRow => 'Remove';
+
+  @override
+  String get recipeSave => 'Save';
+
+  @override
+  String get recipeSaved => 'Recipe saved';
+
+  @override
+  String get recipeErrName => 'Add a name.';
+
+  @override
+  String get recipeErrIngredients => 'Add at least one ingredient.';
+
+  @override
+  String get recipeErrSteps => 'Add at least one step.';
+
+  @override
+  String get recipeErrQty => 'Quantity must be more than 0.';
+
+  @override
+  String get recipeErrIngName => 'Add the ingredient’s name.';
+
+  @override
+  String get recipeErrTime => 'Time must be 1–600 minutes.';
+
+  @override
+  String get recipeErrServes => 'Serves must be 1–20.';
+
+  @override
+  String get recipeErrStepLong => 'A step can be at most 500 characters.';
+
+  @override
+  String get recipeDiscardTitle => 'Discard changes?';
+
+  @override
+  String get recipeKeepEditing => 'Keep editing';
+
+  @override
+  String get recipeDiscard => 'Discard';
+
+  @override
+  String get cookSub => 'Cook mode · screen stays on';
+
+  @override
+  String cookOf(int total) {
+    return '/$total';
+  }
+
+  @override
+  String cookStepSemantics(int n, int total, String text) {
+    return 'Step $n of $total: $text';
+  }
+
+  @override
+  String get cookBack => 'Back';
+
+  @override
+  String get cookNext => 'Next step';
+
+  @override
+  String get cookFinished => '✓ Finished';
+
+  @override
+  String get todayMenuTitle => 'On the menu';
+
+  @override
+  String get todayWeekPlan => 'Week plan';
+
+  @override
+  String get todayPlan => '+ Plan';
+
+  @override
+  String todayMissingToday(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '🛒 $count ingredients missing today',
+      one: '🛒 1 ingredient missing today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get todayAddToList => 'Add to list';
 }

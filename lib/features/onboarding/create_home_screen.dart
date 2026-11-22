@@ -28,6 +28,7 @@ class _CreateHomeScreenState extends ConsumerState<CreateHomeScreen> {
   String? _homeError;
   String _previewId = '';
   int _previewSeq = 0;
+  bool _addStarter = true;
 
   @override
   void initState() {
@@ -80,6 +81,7 @@ class _CreateHomeScreenState extends ConsumerState<CreateHomeScreen> {
           homeName: _home.text,
           createdAt: _createdAt,
           nonceB64: _nonceB64,
+          addStarter: _addStarter,
         );
   }
 
@@ -200,6 +202,31 @@ class _CreateHomeScreenState extends ConsumerState<CreateHomeScreen> {
                             fontFamily: NestText.sans,
                             fontSize: 12,
                             color: c.ink3,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(12),
+                  onTap: () => setState(() => _addStarter = !_addStarter),
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(minHeight: 48),
+                    child: Row(
+                      children: [
+                        NestCheckbox(
+                          value: _addStarter,
+                          semanticLabel: l10n.onboardingAddStarterRecipes,
+                          onChanged: (v) => setState(() => _addStarter = v),
+                        ),
+                        Expanded(
+                          child: Text(
+                            l10n.onboardingAddStarterRecipes,
+                            style: NestText.body15.copyWith(color: c.ink),
                           ),
                         ),
                       ],

@@ -6,6 +6,7 @@ import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/features/today/sections/due_today_section.dart';
 import 'package:nm_flat/features/today/sections/help_at_home_section.dart';
 import 'package:nm_flat/features/today/sections/hero_section.dart';
+import 'package:nm_flat/features/today/sections/menu_section.dart';
 import 'package:nm_flat/features/today/sections/month_so_far_section.dart';
 import 'package:nm_flat/features/today/sections/ready_to_order_section.dart';
 
@@ -23,7 +24,7 @@ class TodayScreen extends ConsumerWidget {
           children: const [
             HeroSection(),
             DueTodaySection(),
-            // MenuSection — P09
+            MenuSection(),
             ReadyToOrderSection(),
             HelpAtHomeSection(),
             MonthSoFarSection(),

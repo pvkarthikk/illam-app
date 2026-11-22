@@ -4006,6 +4006,798 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Set budget'**
   String get todaySetBudget;
+
+  /// No description provided for @recipeAPinch.
+  ///
+  /// In en, this message translates to:
+  /// **'a pinch'**
+  String get recipeAPinch;
+
+  /// No description provided for @onboardingAddStarterRecipes.
+  ///
+  /// In en, this message translates to:
+  /// **'Add 9 popular recipes'**
+  String get onboardingAddStarterRecipes;
+
+  /// No description provided for @mealsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Meals'**
+  String get mealsTitle;
+
+  /// No description provided for @mealsWeekOf.
+  ///
+  /// In en, this message translates to:
+  /// **'Week of {date}'**
+  String mealsWeekOf(String date);
+
+  /// No description provided for @mealsPrevWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous week'**
+  String get mealsPrevWeek;
+
+  /// No description provided for @mealsNextWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Next week'**
+  String get mealsNextWeek;
+
+  /// No description provided for @mealsThisWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get mealsThisWeek;
+
+  /// No description provided for @mealsDaySemantics.
+  ///
+  /// In en, this message translates to:
+  /// **'{weekday} {date}, {count} of 3 meals planned'**
+  String mealsDaySemantics(String weekday, String date, int count);
+
+  /// No description provided for @mealsMissingWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 ingredient missing for the rest of the week} other{{count} ingredients missing for the rest of the week}}'**
+  String mealsMissingWeek(int count);
+
+  /// No description provided for @mealsAddAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Add all'**
+  String get mealsAddAll;
+
+  /// No description provided for @mealsPastDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Past day'**
+  String get mealsPastDay;
+
+  /// No description provided for @mealsSlotTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{slot, select, breakfast{Breakfast} lunch{Lunch} other{Dinner}}'**
+  String mealsSlotTitle(String slot);
+
+  /// No description provided for @mealsSlotLower.
+  ///
+  /// In en, this message translates to:
+  /// **'{slot, select, breakfast{breakfast} lunch{lunch} other{dinner}}'**
+  String mealsSlotLower(String slot);
+
+  /// No description provided for @mealsPlanSlot.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan {slot}'**
+  String mealsPlanSlot(String slot);
+
+  /// No description provided for @mealsChangeSlot.
+  ///
+  /// In en, this message translates to:
+  /// **'Change {slot}'**
+  String mealsChangeSlot(String slot);
+
+  /// No description provided for @mealsPickFromBook.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick from your recipe book'**
+  String get mealsPickFromBook;
+
+  /// No description provided for @mealsMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{min} min'**
+  String mealsMinutes(int min);
+
+  /// No description provided for @mealsReadyToCook.
+  ///
+  /// In en, this message translates to:
+  /// **'ready to cook'**
+  String get mealsReadyToCook;
+
+  /// No description provided for @mealsMissingCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} missing'**
+  String mealsMissingCount(int count);
+
+  /// No description provided for @mealsEatingOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Eating out'**
+  String get mealsEatingOut;
+
+  /// No description provided for @mealsLeftovers.
+  ///
+  /// In en, this message translates to:
+  /// **'Leftovers'**
+  String get mealsLeftovers;
+
+  /// No description provided for @mealsRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} (removed)'**
+  String mealsRemoved(String name);
+
+  /// No description provided for @mealsRecipeBook.
+  ///
+  /// In en, this message translates to:
+  /// **'Recipe book'**
+  String get mealsRecipeBook;
+
+  /// No description provided for @mealsAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get mealsAdd;
+
+  /// No description provided for @mealsCardMeta.
+  ///
+  /// In en, this message translates to:
+  /// **'{min} min · {tag}'**
+  String mealsCardMeta(int min, String tag);
+
+  /// No description provided for @mealsEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No recipes yet'**
+  String get mealsEmptyTitle;
+
+  /// No description provided for @mealsEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your first, or add the 9 popular ones.'**
+  String get mealsEmptyBody;
+
+  /// No description provided for @mealsAddStarter.
+  ///
+  /// In en, this message translates to:
+  /// **'Add 9 popular recipes'**
+  String get mealsAddStarter;
+
+  /// No description provided for @mealsTypeRecipe.
+  ///
+  /// In en, this message translates to:
+  /// **'Type a recipe'**
+  String get mealsTypeRecipe;
+
+  /// No description provided for @mealsStarterAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Added 1 recipe} other{Added {count} recipes}}'**
+  String mealsStarterAdded(int count);
+
+  /// No description provided for @mealsPickerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{slot} · {day}'**
+  String mealsPickerTitle(String slot, String day);
+
+  /// No description provided for @mealsPickerLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggested for {slot} first. Missing ingredients flow into your grocery list.'**
+  String mealsPickerLead(String slot);
+
+  /// No description provided for @mealsOptEatingOut.
+  ///
+  /// In en, this message translates to:
+  /// **'🍽 Eating out'**
+  String get mealsOptEatingOut;
+
+  /// No description provided for @mealsOptLeftovers.
+  ///
+  /// In en, this message translates to:
+  /// **'♻ Leftovers'**
+  String get mealsOptLeftovers;
+
+  /// No description provided for @mealsOptNote.
+  ///
+  /// In en, this message translates to:
+  /// **'✎ Note…'**
+  String get mealsOptNote;
+
+  /// No description provided for @mealsNoteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Dosa from Amma'**
+  String get mealsNoteHint;
+
+  /// No description provided for @mealsNoteSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save note'**
+  String get mealsNoteSave;
+
+  /// No description provided for @mealsSearchRecipes.
+  ///
+  /// In en, this message translates to:
+  /// **'Search recipes'**
+  String get mealsSearchRecipes;
+
+  /// No description provided for @mealsClearSlot.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear {slot}'**
+  String mealsClearSlot(String slot);
+
+  /// No description provided for @mealsPlanned.
+  ///
+  /// In en, this message translates to:
+  /// **'{dish} planned'**
+  String mealsPlanned(String dish);
+
+  /// No description provided for @mealsPlannedMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'{dish} planned · {count, plural, =1{1 ingredient missing} other{{count} ingredients missing}}'**
+  String mealsPlannedMissing(String dish, int count);
+
+  /// No description provided for @mealsPlannedKind.
+  ///
+  /// In en, this message translates to:
+  /// **'{slot} · {what}'**
+  String mealsPlannedKind(String slot, String what);
+
+  /// No description provided for @mealsSlotCleared.
+  ///
+  /// In en, this message translates to:
+  /// **'Slot cleared'**
+  String get mealsSlotCleared;
+
+  /// No description provided for @mealsReviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to Grocery'**
+  String get mealsReviewTitle;
+
+  /// No description provided for @mealsReviewLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Untick anything you already have — we’ll remember it.'**
+  String get mealsReviewLead;
+
+  /// No description provided for @mealsReviewAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add {count}'**
+  String mealsReviewAdd(int count);
+
+  /// No description provided for @mealsAddedToGrocery.
+  ///
+  /// In en, this message translates to:
+  /// **'Added {count} to Grocery'**
+  String mealsAddedToGrocery(int count);
+
+  /// No description provided for @recipeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Recipe'**
+  String get recipeTitle;
+
+  /// No description provided for @recipeAddToPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to meal plan'**
+  String get recipeAddToPlan;
+
+  /// No description provided for @recipeMoreOptions.
+  ///
+  /// In en, this message translates to:
+  /// **'More options'**
+  String get recipeMoreOptions;
+
+  /// No description provided for @recipeEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get recipeEdit;
+
+  /// No description provided for @recipeDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get recipeDelete;
+
+  /// No description provided for @recipeServes.
+  ///
+  /// In en, this message translates to:
+  /// **'Serves {n}'**
+  String recipeServes(int n);
+
+  /// No description provided for @recipeIngredients.
+  ///
+  /// In en, this message translates to:
+  /// **'Ingredients'**
+  String get recipeIngredients;
+
+  /// No description provided for @recipeServings.
+  ///
+  /// In en, this message translates to:
+  /// **'Servings'**
+  String get recipeServings;
+
+  /// No description provided for @recipePpl.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} ppl'**
+  String recipePpl(int n);
+
+  /// No description provided for @recipeFewer.
+  ///
+  /// In en, this message translates to:
+  /// **'Fewer servings'**
+  String get recipeFewer;
+
+  /// No description provided for @recipeMoreServings.
+  ///
+  /// In en, this message translates to:
+  /// **'More servings'**
+  String get recipeMoreServings;
+
+  /// No description provided for @recipeInKitchen.
+  ///
+  /// In en, this message translates to:
+  /// **'In kitchen'**
+  String get recipeInKitchen;
+
+  /// No description provided for @recipeOnList.
+  ///
+  /// In en, this message translates to:
+  /// **'On list'**
+  String get recipeOnList;
+
+  /// No description provided for @recipeMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'Missing'**
+  String get recipeMissing;
+
+  /// No description provided for @recipeSrHave.
+  ///
+  /// In en, this message translates to:
+  /// **'in kitchen'**
+  String get recipeSrHave;
+
+  /// No description provided for @recipeSrOnList.
+  ///
+  /// In en, this message translates to:
+  /// **'already on grocery list'**
+  String get recipeSrOnList;
+
+  /// No description provided for @recipeSrMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'missing'**
+  String get recipeSrMissing;
+
+  /// No description provided for @recipeMarkedHave.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} marked as in kitchen'**
+  String recipeMarkedHave(String name);
+
+  /// No description provided for @recipeMarkedMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} marked as missing'**
+  String recipeMarkedMissing(String name);
+
+  /// No description provided for @recipeAddMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'🛒 Add {count} missing to Grocery'**
+  String recipeAddMissing(int count);
+
+  /// No description provided for @recipeAllThere.
+  ///
+  /// In en, this message translates to:
+  /// **'✓ Everything is in the kitchen or on the list'**
+  String get recipeAllThere;
+
+  /// No description provided for @recipeMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Method'**
+  String get recipeMethod;
+
+  /// No description provided for @recipeStartCook.
+  ///
+  /// In en, this message translates to:
+  /// **'🔥 Start cook mode'**
+  String get recipeStartCook;
+
+  /// No description provided for @recipePlanTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan {dish}'**
+  String recipePlanTitle(String dish);
+
+  /// No description provided for @recipePlanDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Day'**
+  String get recipePlanDay;
+
+  /// No description provided for @recipePlanMeal.
+  ///
+  /// In en, this message translates to:
+  /// **'Meal'**
+  String get recipePlanMeal;
+
+  /// No description provided for @recipePlanAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to plan'**
+  String get recipePlanAdd;
+
+  /// No description provided for @recipePlannedFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Planned for {day} {slot}'**
+  String recipePlannedFor(String day, String slot);
+
+  /// No description provided for @recipeDeletePlanned.
+  ///
+  /// In en, this message translates to:
+  /// **'{dish} is planned on {count, plural, =1{1 day} other{{count} days}}. Remove it from those days too?'**
+  String recipeDeletePlanned(String dish, int count);
+
+  /// No description provided for @recipeKeepPlans.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep on those days'**
+  String get recipeKeepPlans;
+
+  /// No description provided for @recipeRemoveToo.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove too'**
+  String get recipeRemoveToo;
+
+  /// No description provided for @recipeDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Recipe deleted'**
+  String get recipeDeleted;
+
+  /// No description provided for @recipeAddTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a recipe'**
+  String get recipeAddTitle;
+
+  /// No description provided for @recipeAddLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick the fastest way in — you can tidy it later.'**
+  String get recipeAddLead;
+
+  /// No description provided for @recipeTypeIt.
+  ///
+  /// In en, this message translates to:
+  /// **'Type it'**
+  String get recipeTypeIt;
+
+  /// No description provided for @recipeTypeItSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Name, ingredients, steps'**
+  String get recipeTypeItSub;
+
+  /// No description provided for @recipePasteLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste a link'**
+  String get recipePasteLink;
+
+  /// No description provided for @recipePasteLinkSub.
+  ///
+  /// In en, this message translates to:
+  /// **'YouTube, Instagram or a blog — ingredients are pulled out for you'**
+  String get recipePasteLinkSub;
+
+  /// No description provided for @recipeSnap.
+  ///
+  /// In en, this message translates to:
+  /// **'Snap a page'**
+  String get recipeSnap;
+
+  /// No description provided for @recipeSnapSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo of a cookbook or a handwritten card'**
+  String get recipeSnapSub;
+
+  /// No description provided for @recipeComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming soon'**
+  String get recipeComingSoon;
+
+  /// No description provided for @recipeFormNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New recipe'**
+  String get recipeFormNew;
+
+  /// No description provided for @recipeFormEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit recipe'**
+  String get recipeFormEdit;
+
+  /// No description provided for @recipeFieldName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get recipeFieldName;
+
+  /// No description provided for @recipeFieldTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Time in minutes'**
+  String get recipeFieldTime;
+
+  /// No description provided for @recipeFieldServes.
+  ///
+  /// In en, this message translates to:
+  /// **'Serves'**
+  String get recipeFieldServes;
+
+  /// No description provided for @recipeFieldMealType.
+  ///
+  /// In en, this message translates to:
+  /// **'Meal type'**
+  String get recipeFieldMealType;
+
+  /// No description provided for @recipeFieldTags.
+  ///
+  /// In en, this message translates to:
+  /// **'Tags'**
+  String get recipeFieldTags;
+
+  /// No description provided for @recipeTagsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Quick, Kids like'**
+  String get recipeTagsHint;
+
+  /// No description provided for @recipeFieldIngredients.
+  ///
+  /// In en, this message translates to:
+  /// **'Ingredients'**
+  String get recipeFieldIngredients;
+
+  /// No description provided for @recipeIngName.
+  ///
+  /// In en, this message translates to:
+  /// **'Ingredient'**
+  String get recipeIngName;
+
+  /// No description provided for @recipeIngQty.
+  ///
+  /// In en, this message translates to:
+  /// **'Qty'**
+  String get recipeIngQty;
+
+  /// No description provided for @recipeIngUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit'**
+  String get recipeIngUnit;
+
+  /// No description provided for @recipeUnitNone.
+  ///
+  /// In en, this message translates to:
+  /// **'(none)'**
+  String get recipeUnitNone;
+
+  /// No description provided for @recipeAddIngredient.
+  ///
+  /// In en, this message translates to:
+  /// **'+ Add ingredient'**
+  String get recipeAddIngredient;
+
+  /// No description provided for @recipeFieldSteps.
+  ///
+  /// In en, this message translates to:
+  /// **'Steps'**
+  String get recipeFieldSteps;
+
+  /// No description provided for @recipeStepLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Step {n}'**
+  String recipeStepLabel(int n);
+
+  /// No description provided for @recipeAddStep.
+  ///
+  /// In en, this message translates to:
+  /// **'+ Add step'**
+  String get recipeAddStep;
+
+  /// No description provided for @recipeMoveUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Move up'**
+  String get recipeMoveUp;
+
+  /// No description provided for @recipeMoveDown.
+  ///
+  /// In en, this message translates to:
+  /// **'Move down'**
+  String get recipeMoveDown;
+
+  /// No description provided for @recipeRemoveRow.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get recipeRemoveRow;
+
+  /// No description provided for @recipeSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get recipeSave;
+
+  /// No description provided for @recipeSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Recipe saved'**
+  String get recipeSaved;
+
+  /// No description provided for @recipeErrName.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a name.'**
+  String get recipeErrName;
+
+  /// No description provided for @recipeErrIngredients.
+  ///
+  /// In en, this message translates to:
+  /// **'Add at least one ingredient.'**
+  String get recipeErrIngredients;
+
+  /// No description provided for @recipeErrSteps.
+  ///
+  /// In en, this message translates to:
+  /// **'Add at least one step.'**
+  String get recipeErrSteps;
+
+  /// No description provided for @recipeErrQty.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity must be more than 0.'**
+  String get recipeErrQty;
+
+  /// No description provided for @recipeErrIngName.
+  ///
+  /// In en, this message translates to:
+  /// **'Add the ingredient’s name.'**
+  String get recipeErrIngName;
+
+  /// No description provided for @recipeErrTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Time must be 1–600 minutes.'**
+  String get recipeErrTime;
+
+  /// No description provided for @recipeErrServes.
+  ///
+  /// In en, this message translates to:
+  /// **'Serves must be 1–20.'**
+  String get recipeErrServes;
+
+  /// No description provided for @recipeErrStepLong.
+  ///
+  /// In en, this message translates to:
+  /// **'A step can be at most 500 characters.'**
+  String get recipeErrStepLong;
+
+  /// No description provided for @recipeDiscardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard changes?'**
+  String get recipeDiscardTitle;
+
+  /// No description provided for @recipeKeepEditing.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep editing'**
+  String get recipeKeepEditing;
+
+  /// No description provided for @recipeDiscard.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard'**
+  String get recipeDiscard;
+
+  /// No description provided for @cookSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Cook mode · screen stays on'**
+  String get cookSub;
+
+  /// No description provided for @cookOf.
+  ///
+  /// In en, this message translates to:
+  /// **'/{total}'**
+  String cookOf(int total);
+
+  /// No description provided for @cookStepSemantics.
+  ///
+  /// In en, this message translates to:
+  /// **'Step {n} of {total}: {text}'**
+  String cookStepSemantics(int n, int total, String text);
+
+  /// No description provided for @cookBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get cookBack;
+
+  /// No description provided for @cookNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next step'**
+  String get cookNext;
+
+  /// No description provided for @cookFinished.
+  ///
+  /// In en, this message translates to:
+  /// **'✓ Finished'**
+  String get cookFinished;
+
+  /// No description provided for @todayMenuTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'On the menu'**
+  String get todayMenuTitle;
+
+  /// No description provided for @todayWeekPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Week plan'**
+  String get todayWeekPlan;
+
+  /// No description provided for @todayPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'+ Plan'**
+  String get todayPlan;
+
+  /// No description provided for @todayMissingToday.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{🛒 1 ingredient missing today} other{🛒 {count} ingredients missing today}}'**
+  String todayMissingToday(int count);
+
+  /// No description provided for @todayAddToList.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to list'**
+  String get todayAddToList;
 }
 
 class _AppLocalizationsDelegate
