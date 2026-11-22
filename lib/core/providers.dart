@@ -10,7 +10,9 @@ import 'package:nm_flat/core/data/prefs/device_prefs.dart';
 import 'package:nm_flat/core/data/repo/expenses_repo.dart';
 import 'package:nm_flat/core/data/repo/home_repo.dart';
 import 'package:nm_flat/core/data/repo/lists_repo.dart';
+import 'package:nm_flat/core/data/repo/local_membership_service.dart';
 import 'package:nm_flat/core/data/repo/meals_repo.dart';
+import 'package:nm_flat/core/data/repo/membership_service.dart';
 import 'package:nm_flat/core/data/repo/money_repo.dart';
 import 'package:nm_flat/core/data/repo/recipes_repo.dart';
 import 'package:nm_flat/core/data/repo/salary_repo.dart';
@@ -18,6 +20,7 @@ import 'package:nm_flat/core/data/repo/staff_repo.dart';
 import 'package:nm_flat/core/data/repo/tasks_repo.dart';
 import 'package:nm_flat/core/data/secure/secure_store.dart';
 import 'package:nm_flat/core/data/seed/demo_seeder.dart';
+import 'package:nm_flat/core/data/wipe.dart';
 import 'package:nm_flat/core/design/nest_colors.dart';
 import 'package:nm_flat/core/domain/bills.dart';
 import 'package:nm_flat/core/domain/duplicate_hint.dart';
@@ -30,11 +33,14 @@ import 'package:nm_flat/core/time/clock.dart';
 import 'package:nm_flat/core/time/dates.dart';
 import 'package:nm_flat/core/time/hlc.dart';
 import 'package:nm_flat/core/ui/snackbar.dart';
+import 'package:nm_flat/features/account/appearance_controller.dart';
 import 'package:nm_flat/features/salary/salary_providers.dart';
 import 'package:nm_flat/features/staff/staff_providers.dart';
 
 final snackbarProvider = Provider((ref) => SnackbarService());
-final themeModeProvider = Provider<ThemeMode>((ref) => ThemeMode.system);
+final themeModeProvider = NotifierProvider<ThemeModeController, ThemeMode>(
+  ThemeModeController.new,
+);
 final tasksBadgeProvider = Provider<int>((ref) {
   final routines = ref.watch(routinesProvider).value ?? const <RoutineRow>[];
   final todos = ref.watch(todosProvider).value ?? const <TodoRow>[];
@@ -113,10 +119,22 @@ final currentHomeProvider = StreamProvider<Home?>((ref) {
   if (id == null) return Stream.value(null);
   return ref.watch(homeRepoProvider).watchHome(id);
 });
+final membershipServiceProvider = Provider<MembershipService>(
+  (ref) => LocalMembershipService(
+    ref.watch(dbProvider),
+    ref.watch(changesProvider),
+    ref.watch(tasksRepoProvider),
+    ref.watch(phoneWiperProvider),
+    ref.watch(currentHomeIdProvider).value ??
+        ref.watch(prefsProvider).currentHomeId ??
+        '',
+    ref.watch(myMemberIdProvider),
+  ),
+);
 final membersProvider = StreamProvider<List<Member>>((ref) {
   final id = ref.watch(currentHomeIdProvider).value;
   if (id == null) return Stream.value(const <Member>[]);
-  return ref.watch(homeRepoProvider).watchMembers(id);
+  return ref.watch(membershipServiceProvider).members();
 });
 final myMemberIdProvider = Provider<String>((ref) {
   ref.watch(currentHomeIdProvider);

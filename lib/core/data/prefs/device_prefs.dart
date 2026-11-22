@@ -101,6 +101,26 @@ class DevicePrefs {
   Future<void> setStaffMsgLang(String staffId, String lang) =>
       setText('staffMsgLang.$staffId', lang);
 
+  String get themeMode => getText('themeMode') ?? 'system';
+
+  Future<void> setThemeMode(String v) => setText('themeMode', v);
+
+  bool get notifArrival => getFlag('notifArrival', fallback: true);
+  bool get notifDigest => getFlag('notifDigest', fallback: true);
+  bool get notifBillDue => getFlag('notifBillDue', fallback: true);
+  bool get notifEvening => getFlag('notifEvening', fallback: false);
+  bool get notifBackup => getFlag('notifBackup', fallback: true);
+
+  Future<void> setNotif(String key, bool v) => setFlag(key, v);
+
+  /// Forgets the current home but keeps the device identity.
+  Future<void> clearHome() async {
+    await setCurrentHomeId(null);
+    await setMemberId(null);
+    await _s.remove('devViewAsMember');
+    await setPendingHandoffJson(null);
+  }
+
   /// Forgets home, member and sync counters (identity switch). Keeps flags.
   Future<void> resetIdentity() async {
     await _s.remove('currentHomeId');

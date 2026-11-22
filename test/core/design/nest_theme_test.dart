@@ -68,7 +68,7 @@ void main() {
             prefsProvider.overrideWithValue(prefs),
             dbProvider.overrideWithValue(db),
             secureStoreProvider.overrideWithValue(MemorySecureStore()),
-            themeModeProvider.overrideWithValue(ThemeMode.light),
+            themeModeProvider.overrideWithBuild((_, _) => ThemeMode.light),
           ],
           child: const NestApp(),
         ),
@@ -82,17 +82,9 @@ void main() {
       expect(Theme.of(todayContext).brightness, Brightness.light);
       expect(todayContext.nest.paper, const Color(0xFFF4ECDF));
 
-      await tester.pumpWidget(
-        ProviderScope(
-          overrides: [
-            prefsProvider.overrideWithValue(prefs),
-            dbProvider.overrideWithValue(db),
-            secureStoreProvider.overrideWithValue(MemorySecureStore()),
-            themeModeProvider.overrideWithValue(ThemeMode.dark),
-          ],
-          child: const NestApp(),
-        ),
-      );
+      await ProviderScope.containerOf(todayContext)
+          .read(themeModeProvider.notifier)
+          .set(ThemeMode.dark);
       await tester.pumpAndSettle();
 
       todayContext = tester.element(find.byType(TodayScreen));

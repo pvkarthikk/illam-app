@@ -43,4 +43,28 @@ void main() {
     await prefs.setFlag('x', true);
     expect(prefs.getFlag('x'), isTrue);
   });
+
+  test('fresh prefs expose default themeMode and notification switches', () async {
+    final prefs = await DevicePrefs.inMemory();
+    expect(prefs.themeMode, 'system');
+    expect(prefs.notifArrival, isTrue);
+    expect(prefs.notifEvening, isFalse);
+  });
+
+  test('clearHome forgets home, member and dev flag while keeping theme and deviceId', () async {
+    final prefs = await DevicePrefs.inMemory();
+    await prefs.setCurrentHomeId('NM-1');
+    await prefs.setMemberId('m1');
+    await prefs.setFlag('devViewAsMember', true);
+    await prefs.setThemeMode('dark');
+    final deviceId = prefs.deviceId;
+
+    await prefs.clearHome();
+
+    expect(prefs.currentHomeId, isNull);
+    expect(prefs.memberId, isNull);
+    expect(prefs.getFlag('devViewAsMember'), isFalse);
+    expect(prefs.themeMode, 'dark');
+    expect(prefs.deviceId, deviceId);
+  });
 }

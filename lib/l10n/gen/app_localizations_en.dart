@@ -2936,4 +2936,483 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get todayAddToList => 'Add to list';
+
+  @override
+  String get profileTitle => 'Profile';
+
+  @override
+  String profileRoleHome(String role, String home) {
+    return '$role · $home';
+  }
+
+  @override
+  String get roleAdmin => 'Admin';
+
+  @override
+  String get roleMember => 'Member';
+
+  @override
+  String get profileName => 'Name';
+
+  @override
+  String get profileNameSheetTitle => 'Your name';
+
+  @override
+  String get profileNameSheetLead =>
+      'Shown to everyone in your home. Syncs to their phones.';
+
+  @override
+  String get profileNameError => 'Add your name.';
+
+  @override
+  String get profileSave => 'Save';
+
+  @override
+  String get profileNameUpdated => 'Name updated';
+
+  @override
+  String get profileEditName => 'Edit name';
+
+  @override
+  String get profileThisPhone => 'This phone';
+
+  @override
+  String get profileOnlyThisPhone => 'Only this phone';
+
+  @override
+  String get profileDeviceKey => 'Device key';
+
+  @override
+  String get profileDeviceKeySub =>
+      'Others see this to know it’s really your phone';
+
+  @override
+  String get profileYourHomes => 'Your homes';
+
+  @override
+  String get profileCurrent => 'Current';
+
+  @override
+  String profileHomeSub(int family, int help, String role) {
+    String _temp0 = intl.Intl.pluralLogic(
+      family,
+      locale: localeName,
+      other: '$family family',
+      one: '1 family',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      help,
+      locale: localeName,
+      other: '$help house help',
+      one: '1 house help',
+    );
+    return '$_temp0 · $_temp1 · you’re $role';
+  }
+
+  @override
+  String get profileNotifications => 'Notifications';
+
+  @override
+  String get notifArrival => 'House help arrival';
+
+  @override
+  String get notifArrivalSub =>
+      'Reminds you to mark them in when they usually arrive';
+
+  @override
+  String get notifDigest => 'Morning task digest';
+
+  @override
+  String get notifDigestSub => '8 AM · what’s due today';
+
+  @override
+  String get notifBillDue => 'Bill due';
+
+  @override
+  String get notifBillDueSub => 'On the due day · “Electricity ₹1,980 — paid?”';
+
+  @override
+  String get notifEvening => 'Evening spend nudge';
+
+  @override
+  String get notifEveningSub => '9 PM, only if nothing was added that day';
+
+  @override
+  String get profileOnThisPhone => 'On this phone';
+
+  @override
+  String get profileBackup => 'Backup';
+
+  @override
+  String get profileBackupNotSetUp => 'Not set up';
+
+  @override
+  String get profileBackupArrives => 'Backups arrive in P18';
+
+  @override
+  String get profileLanguage => 'Language';
+
+  @override
+  String get profileEnglish => 'English';
+
+  @override
+  String get profileAppearance => 'Appearance';
+
+  @override
+  String get themeSystem => 'System';
+
+  @override
+  String get themeLight => 'Light';
+
+  @override
+  String get themeDark => 'Dark';
+
+  @override
+  String get profileDevTools => 'Developer tools';
+
+  @override
+  String profileRemoveHome(String home) {
+    return '🗑 Remove $home from this phone';
+  }
+
+  @override
+  String profileRemoveTitle(String home) {
+    return 'Remove $home from this phone?';
+  }
+
+  @override
+  String get profileRemoveLead =>
+      'This phone leaves the home and its copy of the data is erased. Everyone else keeps everything.';
+
+  @override
+  String get profileOnlyAdminLead =>
+      'You’re the only admin. Make someone else admin first, so the home isn’t left without one.';
+
+  @override
+  String get profileGoToMembers => 'Go to members';
+
+  @override
+  String get profileKeep => 'Keep';
+
+  @override
+  String get profileRemove => 'Remove';
+
+  @override
+  String get profileFinePrint =>
+      '🔒 No account, no cloud. Data syncs directly between your home’s phones, encrypted.';
+
+  @override
+  String get profilePrivacy => 'Privacy policy';
+
+  @override
+  String get profileHelp => 'Help';
+
+  @override
+  String get profileVersion => 'Version';
+
+  @override
+  String homeSubtitle(int count, String id) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count family',
+      one: '1 family',
+    );
+    return '$_temp0 · Home ID $id';
+  }
+
+  @override
+  String get homeRename => 'Rename home';
+
+  @override
+  String get homeSyncPlaceholderTitle => 'Only this phone so far';
+
+  @override
+  String get homeSyncPlaceholderSub =>
+      'Invite your family to sync their phones.';
+
+  @override
+  String homeYourPhone(String model) {
+    return 'Your $model';
+  }
+
+  @override
+  String get homeThisPhone => 'This phone';
+
+  @override
+  String get homeSyncFootnote =>
+      'ⓘ Phones sync directly on the same Wi-Fi, or over the internet when Nest Mojo : Flat is open on both.';
+
+  @override
+  String get homeBackupNone => 'No backups yet';
+
+  @override
+  String get homeBackupNotThisPhone =>
+      'Not backing up from this phone — add your own copy';
+
+  @override
+  String get homeInvite => '+ Invite someone';
+
+  @override
+  String get homeInviteArrives => 'Invites arrive in P14';
+
+  @override
+  String homeAskAdmins(String names) {
+    return '🔒 Only admins can invite or remove people. Ask $names.';
+  }
+
+  @override
+  String homeOr(String a, String b) {
+    return '$a or $b';
+  }
+
+  @override
+  String get homeFamily => 'Family · uses the app';
+
+  @override
+  String get homeYou => '(you)';
+
+  @override
+  String homeMemberSub(String model, String month) {
+    return '$model · joined $month';
+  }
+
+  @override
+  String get homeHouseHelp => 'House help · no app needed';
+
+  @override
+  String get homeNoHelp => 'No house help added yet.';
+
+  @override
+  String get homeAddHelp => '+ Add house help';
+
+  @override
+  String get homeRolesTitle => 'What can admins and members do?';
+
+  @override
+  String get homeRolesAdmin =>
+      'Everything a member can, plus: invite and remove people, change roles, set staff pay rules, pay salary, rename or delete the home.';
+
+  @override
+  String get homeRolesMember =>
+      'Lists, tasks and meals; mark house help in and out; add and review spends; see the budget and salary totals.';
+
+  @override
+  String get homeRolesFootnote =>
+      'Every phone checks these rules itself, so a change from someone without permission is ignored by everyone else.';
+
+  @override
+  String get homeLeaveDelete => 'Leave or delete';
+
+  @override
+  String homeLeave(String home) {
+    return 'Leave $home';
+  }
+
+  @override
+  String get homeDelete => '🗑 Delete this home on all phones';
+
+  @override
+  String memberJoined(String month, String how) {
+    return 'Joined $month · $how';
+  }
+
+  @override
+  String get memberHowCreated => 'Created the home';
+
+  @override
+  String memberHowInvited(String name) {
+    return 'Invited by $name';
+  }
+
+  @override
+  String get memberHowQr => 'Joined with a QR code';
+
+  @override
+  String get memberHowPhrase => 'Joined with a phrase';
+
+  @override
+  String memberDeviceKey(String fp) {
+    return 'Device key $fp';
+  }
+
+  @override
+  String get memberEditProfile => 'Edit profile';
+
+  @override
+  String get memberStepDown => 'Step down as admin';
+
+  @override
+  String get memberStepDownLead =>
+      'You’ll need another admin to make you admin again.';
+
+  @override
+  String get memberCancel => 'Cancel';
+
+  @override
+  String get memberStepDownConfirm => 'Step down';
+
+  @override
+  String get memberNowMemberSelf => 'You’re now a member.';
+
+  @override
+  String get homeLastAdmin => 'A home needs at least one admin.';
+
+  @override
+  String get memberMakeAdmin => '🛡 Make admin';
+
+  @override
+  String get memberRemoveAdmin => 'Remove admin rights';
+
+  @override
+  String get memberRemove => 'Remove';
+
+  @override
+  String memberNowAdmin(String name) {
+    return '$name is now an admin';
+  }
+
+  @override
+  String memberNowMember(String name) {
+    return '$name is now a member';
+  }
+
+  @override
+  String get homeOnlyAdminsRoles =>
+      'Only admins can change roles or remove people.';
+
+  @override
+  String get homeNameLength => 'Give your home a name.';
+
+  @override
+  String get homeChooseAdmin => 'Choose a new admin first';
+
+  @override
+  String memberRemoveTitle(String name) {
+    return 'Remove $name?';
+  }
+
+  @override
+  String memberRemoveLeadWork(String home, String work) {
+    return 'Their phone stops syncing with $home and gets no new changes. Their $work will move to you.';
+  }
+
+  @override
+  String memberRemoveLead(String home) {
+    return 'Their phone stops syncing with $home and gets no new changes.';
+  }
+
+  @override
+  String get memberRemoveInfo =>
+      'Their phone erases the home the next time it connects to one of yours. Until then — or if it never reconnects — it keeps what it already had. Everyone else switches to a new home key.';
+
+  @override
+  String memberRemoved(String name) {
+    return '$name removed';
+  }
+
+  @override
+  String workRoutines(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count routines',
+      one: '1 routine',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String workTodos(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count open to-dos',
+      one: '1 open to-do',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String workAnd(String a, String b) {
+    return '$a and $b';
+  }
+
+  @override
+  String get homeRenameLead =>
+      'Everyone sees the new name after their phone syncs.';
+
+  @override
+  String get homeRenamed => 'Home renamed';
+
+  @override
+  String get homeOnlyOneTitle => 'You’re the only one here';
+
+  @override
+  String homeOnlyOneLead(String home) {
+    return 'Leaving would leave $home with no phones, so it would be deleted.';
+  }
+
+  @override
+  String get homeStay => 'Stay';
+
+  @override
+  String get homeDeleteHome => 'Delete home';
+
+  @override
+  String homeLeaveTitle(String home) {
+    return 'Leave $home?';
+  }
+
+  @override
+  String homeLeaveLeadWork(String work, String admin) {
+    return 'This phone stops syncing and its copy is erased. Your $work will move to $admin. An admin can invite you back any time.';
+  }
+
+  @override
+  String get homeLeaveLead =>
+      'This phone stops syncing and its copy is erased. An admin can invite you back any time.';
+
+  @override
+  String get homeLeaveConfirm => 'Leave';
+
+  @override
+  String homeLeft(String home) {
+    return 'You left $home. Create or join a home to continue.';
+  }
+
+  @override
+  String homeDeleteTitle(String home) {
+    return 'Delete $home?';
+  }
+
+  @override
+  String get homeDeleteLead =>
+      'Every phone in the home erases its copy — lists, tasks, meals, attendance, salary and spends — as soon as it syncs. It can’t be undone.';
+
+  @override
+  String get homeDeleteInfo =>
+      'A phone that never syncs again keeps its copy until someone opens it.';
+
+  @override
+  String homeTypeToConfirm(String home) {
+    return 'Type $home to confirm';
+  }
+
+  @override
+  String get homeDeleteConfirm => 'Delete on all phones';
+
+  @override
+  String todayFamilyButton(String home, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count family members',
+      one: '1 family member',
+    );
+    return '$home: $_temp0. Manage home';
+  }
+
+  @override
+  String get todayYourProfile => 'Your profile';
 }

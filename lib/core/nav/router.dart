@@ -8,6 +8,8 @@ import 'package:material_ui/material_ui.dart';
 import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/nav/shell_scaffold.dart';
+import 'package:nm_flat/features/account/home_members_screen.dart';
+import 'package:nm_flat/features/account/profile_screen.dart';
 import 'package:nm_flat/features/debug/data_lab_screen.dart';
 import 'package:nm_flat/features/debug/debug_screen.dart';
 import 'package:nm_flat/features/debug/gallery_screen.dart';
@@ -167,6 +169,14 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: Routes.listsStore,
         builder: (_, _) => const StoreModeScreen(),
+      ),
+      GoRoute(
+        path: Routes.profile,
+        builder: (_, _) => const ProfileScreen(),
+      ),
+      GoRoute(
+        path: Routes.home,
+        builder: (_, _) => const HomeMembersScreen(),
       ),
     ],
   );

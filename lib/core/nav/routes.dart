@@ -16,6 +16,8 @@ abstract final class Routes {
   static String recipe(String id) => '/meals/recipe/$id';
   static String recipeEdit(String id) => '/meals/recipe-edit/$id';
   static String cook(String id) => '/meals/cook/$id';
+  static const profile = '/profile';
+  static const home = '/home';
 }
 
 enum NestTab { today, lists, tasks, meals, money }

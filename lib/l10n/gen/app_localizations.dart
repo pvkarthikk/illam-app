@@ -4798,6 +4798,738 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add to list'**
   String get todayAddToList;
+
+  /// No description provided for @profileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profileTitle;
+
+  /// No description provided for @profileRoleHome.
+  ///
+  /// In en, this message translates to:
+  /// **'{role} · {home}'**
+  String profileRoleHome(String role, String home);
+
+  /// No description provided for @roleAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin'**
+  String get roleAdmin;
+
+  /// No description provided for @roleMember.
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get roleMember;
+
+  /// No description provided for @profileName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get profileName;
+
+  /// No description provided for @profileNameSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your name'**
+  String get profileNameSheetTitle;
+
+  /// No description provided for @profileNameSheetLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Shown to everyone in your home. Syncs to their phones.'**
+  String get profileNameSheetLead;
+
+  /// No description provided for @profileNameError.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your name.'**
+  String get profileNameError;
+
+  /// No description provided for @profileSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get profileSave;
+
+  /// No description provided for @profileNameUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Name updated'**
+  String get profileNameUpdated;
+
+  /// No description provided for @profileEditName.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit name'**
+  String get profileEditName;
+
+  /// No description provided for @profileThisPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'This phone'**
+  String get profileThisPhone;
+
+  /// No description provided for @profileOnlyThisPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Only this phone'**
+  String get profileOnlyThisPhone;
+
+  /// No description provided for @profileDeviceKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Device key'**
+  String get profileDeviceKey;
+
+  /// No description provided for @profileDeviceKeySub.
+  ///
+  /// In en, this message translates to:
+  /// **'Others see this to know it’s really your phone'**
+  String get profileDeviceKeySub;
+
+  /// No description provided for @profileYourHomes.
+  ///
+  /// In en, this message translates to:
+  /// **'Your homes'**
+  String get profileYourHomes;
+
+  /// No description provided for @profileCurrent.
+  ///
+  /// In en, this message translates to:
+  /// **'Current'**
+  String get profileCurrent;
+
+  /// No description provided for @profileHomeSub.
+  ///
+  /// In en, this message translates to:
+  /// **'{family, plural, =1{1 family} other{{family} family}} · {help, plural, =1{1 house help} other{{help} house help}} · you’re {role}'**
+  String profileHomeSub(int family, int help, String role);
+
+  /// No description provided for @profileNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get profileNotifications;
+
+  /// No description provided for @notifArrival.
+  ///
+  /// In en, this message translates to:
+  /// **'House help arrival'**
+  String get notifArrival;
+
+  /// No description provided for @notifArrivalSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminds you to mark them in when they usually arrive'**
+  String get notifArrivalSub;
+
+  /// No description provided for @notifDigest.
+  ///
+  /// In en, this message translates to:
+  /// **'Morning task digest'**
+  String get notifDigest;
+
+  /// No description provided for @notifDigestSub.
+  ///
+  /// In en, this message translates to:
+  /// **'8 AM · what’s due today'**
+  String get notifDigestSub;
+
+  /// No description provided for @notifBillDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Bill due'**
+  String get notifBillDue;
+
+  /// No description provided for @notifBillDueSub.
+  ///
+  /// In en, this message translates to:
+  /// **'On the due day · “Electricity ₹1,980 — paid?”'**
+  String get notifBillDueSub;
+
+  /// No description provided for @notifEvening.
+  ///
+  /// In en, this message translates to:
+  /// **'Evening spend nudge'**
+  String get notifEvening;
+
+  /// No description provided for @notifEveningSub.
+  ///
+  /// In en, this message translates to:
+  /// **'9 PM, only if nothing was added that day'**
+  String get notifEveningSub;
+
+  /// No description provided for @profileOnThisPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'On this phone'**
+  String get profileOnThisPhone;
+
+  /// No description provided for @profileBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup'**
+  String get profileBackup;
+
+  /// No description provided for @profileBackupNotSetUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set up'**
+  String get profileBackupNotSetUp;
+
+  /// No description provided for @profileBackupArrives.
+  ///
+  /// In en, this message translates to:
+  /// **'Backups arrive in P18'**
+  String get profileBackupArrives;
+
+  /// No description provided for @profileLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get profileLanguage;
+
+  /// No description provided for @profileEnglish.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get profileEnglish;
+
+  /// No description provided for @profileAppearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get profileAppearance;
+
+  /// No description provided for @themeSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get themeSystem;
+
+  /// No description provided for @themeLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get themeLight;
+
+  /// No description provided for @themeDark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get themeDark;
+
+  /// No description provided for @profileDevTools.
+  ///
+  /// In en, this message translates to:
+  /// **'Developer tools'**
+  String get profileDevTools;
+
+  /// No description provided for @profileRemoveHome.
+  ///
+  /// In en, this message translates to:
+  /// **'🗑 Remove {home} from this phone'**
+  String profileRemoveHome(String home);
+
+  /// No description provided for @profileRemoveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {home} from this phone?'**
+  String profileRemoveTitle(String home);
+
+  /// No description provided for @profileRemoveLead.
+  ///
+  /// In en, this message translates to:
+  /// **'This phone leaves the home and its copy of the data is erased. Everyone else keeps everything.'**
+  String get profileRemoveLead;
+
+  /// No description provided for @profileOnlyAdminLead.
+  ///
+  /// In en, this message translates to:
+  /// **'You’re the only admin. Make someone else admin first, so the home isn’t left without one.'**
+  String get profileOnlyAdminLead;
+
+  /// No description provided for @profileGoToMembers.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to members'**
+  String get profileGoToMembers;
+
+  /// No description provided for @profileKeep.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep'**
+  String get profileKeep;
+
+  /// No description provided for @profileRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get profileRemove;
+
+  /// No description provided for @profileFinePrint.
+  ///
+  /// In en, this message translates to:
+  /// **'🔒 No account, no cloud. Data syncs directly between your home’s phones, encrypted.'**
+  String get profileFinePrint;
+
+  /// No description provided for @profilePrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy policy'**
+  String get profilePrivacy;
+
+  /// No description provided for @profileHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get profileHelp;
+
+  /// No description provided for @profileVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Version'**
+  String get profileVersion;
+
+  /// No description provided for @homeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 family} other{{count} family}} · Home ID {id}'**
+  String homeSubtitle(int count, String id);
+
+  /// No description provided for @homeRename.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename home'**
+  String get homeRename;
+
+  /// No description provided for @homeSyncPlaceholderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Only this phone so far'**
+  String get homeSyncPlaceholderTitle;
+
+  /// No description provided for @homeSyncPlaceholderSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite your family to sync their phones.'**
+  String get homeSyncPlaceholderSub;
+
+  /// No description provided for @homeYourPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Your {model}'**
+  String homeYourPhone(String model);
+
+  /// No description provided for @homeThisPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'This phone'**
+  String get homeThisPhone;
+
+  /// No description provided for @homeSyncFootnote.
+  ///
+  /// In en, this message translates to:
+  /// **'ⓘ Phones sync directly on the same Wi-Fi, or over the internet when Nest Mojo : Flat is open on both.'**
+  String get homeSyncFootnote;
+
+  /// No description provided for @homeBackupNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No backups yet'**
+  String get homeBackupNone;
+
+  /// No description provided for @homeBackupNotThisPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Not backing up from this phone — add your own copy'**
+  String get homeBackupNotThisPhone;
+
+  /// No description provided for @homeInvite.
+  ///
+  /// In en, this message translates to:
+  /// **'+ Invite someone'**
+  String get homeInvite;
+
+  /// No description provided for @homeInviteArrives.
+  ///
+  /// In en, this message translates to:
+  /// **'Invites arrive in P14'**
+  String get homeInviteArrives;
+
+  /// No description provided for @homeAskAdmins.
+  ///
+  /// In en, this message translates to:
+  /// **'🔒 Only admins can invite or remove people. Ask {names}.'**
+  String homeAskAdmins(String names);
+
+  /// No description provided for @homeOr.
+  ///
+  /// In en, this message translates to:
+  /// **'{a} or {b}'**
+  String homeOr(String a, String b);
+
+  /// No description provided for @homeFamily.
+  ///
+  /// In en, this message translates to:
+  /// **'Family · uses the app'**
+  String get homeFamily;
+
+  /// No description provided for @homeYou.
+  ///
+  /// In en, this message translates to:
+  /// **'(you)'**
+  String get homeYou;
+
+  /// No description provided for @homeMemberSub.
+  ///
+  /// In en, this message translates to:
+  /// **'{model} · joined {month}'**
+  String homeMemberSub(String model, String month);
+
+  /// No description provided for @homeHouseHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'House help · no app needed'**
+  String get homeHouseHelp;
+
+  /// No description provided for @homeNoHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'No house help added yet.'**
+  String get homeNoHelp;
+
+  /// No description provided for @homeAddHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'+ Add house help'**
+  String get homeAddHelp;
+
+  /// No description provided for @homeRolesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What can admins and members do?'**
+  String get homeRolesTitle;
+
+  /// No description provided for @homeRolesAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything a member can, plus: invite and remove people, change roles, set staff pay rules, pay salary, rename or delete the home.'**
+  String get homeRolesAdmin;
+
+  /// No description provided for @homeRolesMember.
+  ///
+  /// In en, this message translates to:
+  /// **'Lists, tasks and meals; mark house help in and out; add and review spends; see the budget and salary totals.'**
+  String get homeRolesMember;
+
+  /// No description provided for @homeRolesFootnote.
+  ///
+  /// In en, this message translates to:
+  /// **'Every phone checks these rules itself, so a change from someone without permission is ignored by everyone else.'**
+  String get homeRolesFootnote;
+
+  /// No description provided for @homeLeaveDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave or delete'**
+  String get homeLeaveDelete;
+
+  /// No description provided for @homeLeave.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave {home}'**
+  String homeLeave(String home);
+
+  /// No description provided for @homeDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'🗑 Delete this home on all phones'**
+  String get homeDelete;
+
+  /// No description provided for @memberJoined.
+  ///
+  /// In en, this message translates to:
+  /// **'Joined {month} · {how}'**
+  String memberJoined(String month, String how);
+
+  /// No description provided for @memberHowCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Created the home'**
+  String get memberHowCreated;
+
+  /// No description provided for @memberHowInvited.
+  ///
+  /// In en, this message translates to:
+  /// **'Invited by {name}'**
+  String memberHowInvited(String name);
+
+  /// No description provided for @memberHowQr.
+  ///
+  /// In en, this message translates to:
+  /// **'Joined with a QR code'**
+  String get memberHowQr;
+
+  /// No description provided for @memberHowPhrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Joined with a phrase'**
+  String get memberHowPhrase;
+
+  /// No description provided for @memberDeviceKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Device key {fp}'**
+  String memberDeviceKey(String fp);
+
+  /// No description provided for @memberEditProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit profile'**
+  String get memberEditProfile;
+
+  /// No description provided for @memberStepDown.
+  ///
+  /// In en, this message translates to:
+  /// **'Step down as admin'**
+  String get memberStepDown;
+
+  /// No description provided for @memberStepDownLead.
+  ///
+  /// In en, this message translates to:
+  /// **'You’ll need another admin to make you admin again.'**
+  String get memberStepDownLead;
+
+  /// No description provided for @memberCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get memberCancel;
+
+  /// No description provided for @memberStepDownConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Step down'**
+  String get memberStepDownConfirm;
+
+  /// No description provided for @memberNowMemberSelf.
+  ///
+  /// In en, this message translates to:
+  /// **'You’re now a member.'**
+  String get memberNowMemberSelf;
+
+  /// No description provided for @homeLastAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'A home needs at least one admin.'**
+  String get homeLastAdmin;
+
+  /// No description provided for @memberMakeAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'🛡 Make admin'**
+  String get memberMakeAdmin;
+
+  /// No description provided for @memberRemoveAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove admin rights'**
+  String get memberRemoveAdmin;
+
+  /// No description provided for @memberRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get memberRemove;
+
+  /// No description provided for @memberNowAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is now an admin'**
+  String memberNowAdmin(String name);
+
+  /// No description provided for @memberNowMember.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is now a member'**
+  String memberNowMember(String name);
+
+  /// No description provided for @homeOnlyAdminsRoles.
+  ///
+  /// In en, this message translates to:
+  /// **'Only admins can change roles or remove people.'**
+  String get homeOnlyAdminsRoles;
+
+  /// No description provided for @homeNameLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Give your home a name.'**
+  String get homeNameLength;
+
+  /// No description provided for @homeChooseAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a new admin first'**
+  String get homeChooseAdmin;
+
+  /// No description provided for @memberRemoveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {name}?'**
+  String memberRemoveTitle(String name);
+
+  /// No description provided for @memberRemoveLeadWork.
+  ///
+  /// In en, this message translates to:
+  /// **'Their phone stops syncing with {home} and gets no new changes. Their {work} will move to you.'**
+  String memberRemoveLeadWork(String home, String work);
+
+  /// No description provided for @memberRemoveLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Their phone stops syncing with {home} and gets no new changes.'**
+  String memberRemoveLead(String home);
+
+  /// No description provided for @memberRemoveInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Their phone erases the home the next time it connects to one of yours. Until then — or if it never reconnects — it keeps what it already had. Everyone else switches to a new home key.'**
+  String get memberRemoveInfo;
+
+  /// No description provided for @memberRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} removed'**
+  String memberRemoved(String name);
+
+  /// No description provided for @workRoutines.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 routine} other{{count} routines}}'**
+  String workRoutines(int count);
+
+  /// No description provided for @workTodos.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 open to-do} other{{count} open to-dos}}'**
+  String workTodos(int count);
+
+  /// No description provided for @workAnd.
+  ///
+  /// In en, this message translates to:
+  /// **'{a} and {b}'**
+  String workAnd(String a, String b);
+
+  /// No description provided for @homeRenameLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Everyone sees the new name after their phone syncs.'**
+  String get homeRenameLead;
+
+  /// No description provided for @homeRenamed.
+  ///
+  /// In en, this message translates to:
+  /// **'Home renamed'**
+  String get homeRenamed;
+
+  /// No description provided for @homeOnlyOneTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You’re the only one here'**
+  String get homeOnlyOneTitle;
+
+  /// No description provided for @homeOnlyOneLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Leaving would leave {home} with no phones, so it would be deleted.'**
+  String homeOnlyOneLead(String home);
+
+  /// No description provided for @homeStay.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay'**
+  String get homeStay;
+
+  /// No description provided for @homeDeleteHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete home'**
+  String get homeDeleteHome;
+
+  /// No description provided for @homeLeaveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave {home}?'**
+  String homeLeaveTitle(String home);
+
+  /// No description provided for @homeLeaveLeadWork.
+  ///
+  /// In en, this message translates to:
+  /// **'This phone stops syncing and its copy is erased. Your {work} will move to {admin}. An admin can invite you back any time.'**
+  String homeLeaveLeadWork(String work, String admin);
+
+  /// No description provided for @homeLeaveLead.
+  ///
+  /// In en, this message translates to:
+  /// **'This phone stops syncing and its copy is erased. An admin can invite you back any time.'**
+  String get homeLeaveLead;
+
+  /// No description provided for @homeLeaveConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave'**
+  String get homeLeaveConfirm;
+
+  /// No description provided for @homeLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'You left {home}. Create or join a home to continue.'**
+  String homeLeft(String home);
+
+  /// No description provided for @homeDeleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete {home}?'**
+  String homeDeleteTitle(String home);
+
+  /// No description provided for @homeDeleteLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Every phone in the home erases its copy — lists, tasks, meals, attendance, salary and spends — as soon as it syncs. It can’t be undone.'**
+  String get homeDeleteLead;
+
+  /// No description provided for @homeDeleteInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'A phone that never syncs again keeps its copy until someone opens it.'**
+  String get homeDeleteInfo;
+
+  /// No description provided for @homeTypeToConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Type {home} to confirm'**
+  String homeTypeToConfirm(String home);
+
+  /// No description provided for @homeDeleteConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete on all phones'**
+  String get homeDeleteConfirm;
+
+  /// No description provided for @todayFamilyButton.
+  ///
+  /// In en, this message translates to:
+  /// **'{home}: {count, plural, =1{1 family member} other{{count} family members}}. Manage home'**
+  String todayFamilyButton(String home, int count);
+
+  /// No description provided for @todayYourProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Your profile'**
+  String get todayYourProfile;
 }
 
 class _AppLocalizationsDelegate

@@ -2077,5 +2077,363 @@
       }
     }
   },
-  "todayAddToList": "Add to list"
+  "todayAddToList": "Add to list",
+  "profileTitle": "Profile",
+  "profileRoleHome": "{role} · {home}",
+  "@profileRoleHome": {
+    "placeholders": {
+      "role": {
+        "type": "String"
+      },
+      "home": {
+        "type": "String"
+      }
+    }
+  },
+  "roleAdmin": "Admin",
+  "roleMember": "Member",
+  "profileName": "Name",
+  "profileNameSheetTitle": "Your name",
+  "profileNameSheetLead": "Shown to everyone in your home. Syncs to their phones.",
+  "profileNameError": "Add your name.",
+  "profileSave": "Save",
+  "profileNameUpdated": "Name updated",
+  "profileEditName": "Edit name",
+  "profileThisPhone": "This phone",
+  "profileOnlyThisPhone": "Only this phone",
+  "profileDeviceKey": "Device key",
+  "profileDeviceKeySub": "Others see this to know it’s really your phone",
+  "profileYourHomes": "Your homes",
+  "profileCurrent": "Current",
+  "profileHomeSub": "{family, plural, =1{1 family} other{{family} family}} · {help, plural, =1{1 house help} other{{help} house help}} · you’re {role}",
+  "@profileHomeSub": {
+    "placeholders": {
+      "family": {
+        "type": "int"
+      },
+      "help": {
+        "type": "int"
+      },
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "profileNotifications": "Notifications",
+  "notifArrival": "House help arrival",
+  "notifArrivalSub": "Reminds you to mark them in when they usually arrive",
+  "notifDigest": "Morning task digest",
+  "notifDigestSub": "8 AM · what’s due today",
+  "notifBillDue": "Bill due",
+  "notifBillDueSub": "On the due day · “Electricity ₹1,980 — paid?”",
+  "notifEvening": "Evening spend nudge",
+  "notifEveningSub": "9 PM, only if nothing was added that day",
+  "profileOnThisPhone": "On this phone",
+  "profileBackup": "Backup",
+  "profileBackupNotSetUp": "Not set up",
+  "profileBackupArrives": "Backups arrive in P18",
+  "profileLanguage": "Language",
+  "profileEnglish": "English",
+  "profileAppearance": "Appearance",
+  "themeSystem": "System",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "profileDevTools": "Developer tools",
+  "profileRemoveHome": "🗑 Remove {home} from this phone",
+  "@profileRemoveHome": {
+    "placeholders": {
+      "home": {
+        "type": "String"
+      }
+    }
+  },
+  "profileRemoveTitle": "Remove {home} from this phone?",
+  "@profileRemoveTitle": {
+    "placeholders": {
+      "home": {
+        "type": "String"
+      }
+    }
+  },
+  "profileRemoveLead": "This phone leaves the home and its copy of the data is erased. Everyone else keeps everything.",
+  "profileOnlyAdminLead": "You’re the only admin. Make someone else admin first, so the home isn’t left without one.",
+  "profileGoToMembers": "Go to members",
+  "profileKeep": "Keep",
+  "profileRemove": "Remove",
+  "profileFinePrint": "🔒 No account, no cloud. Data syncs directly between your home’s phones, encrypted.",
+  "profilePrivacy": "Privacy policy",
+  "profileHelp": "Help",
+  "profileVersion": "Version",
+  "homeSubtitle": "{count, plural, =1{1 family} other{{count} family}} · Home ID {id}",
+  "@homeSubtitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "homeRename": "Rename home",
+  "homeSyncPlaceholderTitle": "Only this phone so far",
+  "homeSyncPlaceholderSub": "Invite your family to sync their phones.",
+  "homeYourPhone": "Your {model}",
+  "@homeYourPhone": {
+    "placeholders": {
+      "model": {
+        "type": "String"
+      }
+    }
+  },
+  "homeThisPhone": "This phone",
+  "homeSyncFootnote": "ⓘ Phones sync directly on the same Wi-Fi, or over the internet when Nest Mojo : Flat is open on both.",
+  "homeBackupNone": "No backups yet",
+  "homeBackupNotThisPhone": "Not backing up from this phone — add your own copy",
+  "homeInvite": "+ Invite someone",
+  "homeInviteArrives": "Invites arrive in P14",
+  "homeAskAdmins": "🔒 Only admins can invite or remove people. Ask {names}.",
+  "@homeAskAdmins": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "homeOr": "{a} or {b}",
+  "@homeOr": {
+    "placeholders": {
+      "a": {
+        "type": "String"
+      },
+      "b": {
+        "type": "String"
+      }
+    }
+  },
+  "homeFamily": "Family · uses the app",
+  "homeYou": "(you)",
+  "homeMemberSub": "{model} · joined {month}",
+  "@homeMemberSub": {
+    "placeholders": {
+      "model": {
+        "type": "String"
+      },
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "homeHouseHelp": "House help · no app needed",
+  "homeNoHelp": "No house help added yet.",
+  "homeAddHelp": "+ Add house help",
+  "homeRolesTitle": "What can admins and members do?",
+  "homeRolesAdmin": "Everything a member can, plus: invite and remove people, change roles, set staff pay rules, pay salary, rename or delete the home.",
+  "homeRolesMember": "Lists, tasks and meals; mark house help in and out; add and review spends; see the budget and salary totals.",
+  "homeRolesFootnote": "Every phone checks these rules itself, so a change from someone without permission is ignored by everyone else.",
+  "homeLeaveDelete": "Leave or delete",
+  "homeLeave": "Leave {home}",
+  "@homeLeave": {
+    "placeholders": {
+      "home": {
+        "type": "String"
+      }
+    }
+  },
+  "homeDelete": "🗑 Delete this home on all phones",
+  "memberJoined": "Joined {month} · {how}",
+  "@memberJoined": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "how": {
+        "type": "String"
+      }
+    }
+  },
+  "memberHowCreated": "Created the home",
+  "memberHowInvited": "Invited by {name}",
+  "@memberHowInvited": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "memberHowQr": "Joined with a QR code",
+  "memberHowPhrase": "Joined with a phrase",
+  "memberDeviceKey": "Device key {fp}",
+  "@memberDeviceKey": {
+    "placeholders": {
+      "fp": {
+        "type": "String"
+      }
+    }
+  },
+  "memberEditProfile": "Edit profile",
+  "memberStepDown": "Step down as admin",
+  "memberStepDownLead": "You’ll need another admin to make you admin again.",
+  "memberCancel": "Cancel",
+  "memberStepDownConfirm": "Step down",
+  "memberNowMemberSelf": "You’re now a member.",
+  "homeLastAdmin": "A home needs at least one admin.",
+  "memberMakeAdmin": "🛡 Make admin",
+  "memberRemoveAdmin": "Remove admin rights",
+  "memberRemove": "Remove",
+  "memberNowAdmin": "{name} is now an admin",
+  "@memberNowAdmin": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "memberNowMember": "{name} is now a member",
+  "@memberNowMember": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeOnlyAdminsRoles": "Only admins can change roles or remove people.",
+  "homeNameLength": "Give your home a name.",
+  "homeChooseAdmin": "Choose a new admin first",
+  "memberRemoveTitle": "Remove {name}?",
+  "@memberRemoveTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "memberRemoveLeadWork": "Their phone stops syncing with {home} and gets no new changes. Their {work} will move to you.",
+  "@memberRemoveLeadWork": {
+    "placeholders": {
+      "home": {
+        "type": "String"
+      },
+      "work": {
+        "type": "String"
+      }
+    }
+  },
+  "memberRemoveLead": "Their phone stops syncing with {home} and gets no new changes.",
+  "@memberRemoveLead": {
+    "placeholders": {
+      "home": {
+        "type": "String"
+      }
+    }
+  },
+  "memberRemoveInfo": "Their phone erases the home the next time it connects to one of yours. Until then — or if it never reconnects — it keeps what it already had. Everyone else switches to a new home key.",
+  "memberRemoved": "{name} removed",
+  "@memberRemoved": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "workRoutines": "{count, plural, =1{1 routine} other{{count} routines}}",
+  "@workRoutines": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "workTodos": "{count, plural, =1{1 open to-do} other{{count} open to-dos}}",
+  "@workTodos": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "workAnd": "{a} and {b}",
+  "@workAnd": {
+    "placeholders": {
+      "a": {
+        "type": "String"
+      },
+      "b": {
+        "type": "String"
+      }
+    }
+  },
+  "homeRenameLead": "Everyone sees the new name after their phone syncs.",
+  "homeRenamed": "Home renamed",
+  "homeOnlyOneTitle": "You’re the only one here",
+  "homeOnlyOneLead": "Leaving would leave {home} with no phones, so it would be deleted.",
+  "@homeOnlyOneLead": {
+    "placeholders": {
+      "home": {
+        "type": "String"
+      }
+    }
+  },
+  "homeStay": "Stay",
+  "homeDeleteHome": "Delete home",
+  "homeLeaveTitle": "Leave {home}?",
+  "@homeLeaveTitle": {
+    "placeholders": {
+      "home": {
+        "type": "String"
+      }
+    }
+  },
+  "homeLeaveLeadWork": "This phone stops syncing and its copy is erased. Your {work} will move to {admin}. An admin can invite you back any time.",
+  "@homeLeaveLeadWork": {
+    "placeholders": {
+      "work": {
+        "type": "String"
+      },
+      "admin": {
+        "type": "String"
+      }
+    }
+  },
+  "homeLeaveLead": "This phone stops syncing and its copy is erased. An admin can invite you back any time.",
+  "homeLeaveConfirm": "Leave",
+  "homeLeft": "You left {home}. Create or join a home to continue.",
+  "@homeLeft": {
+    "placeholders": {
+      "home": {
+        "type": "String"
+      }
+    }
+  },
+  "homeDeleteTitle": "Delete {home}?",
+  "@homeDeleteTitle": {
+    "placeholders": {
+      "home": {
+        "type": "String"
+      }
+    }
+  },
+  "homeDeleteLead": "Every phone in the home erases its copy — lists, tasks, meals, attendance, salary and spends — as soon as it syncs. It can’t be undone.",
+  "homeDeleteInfo": "A phone that never syncs again keeps its copy until someone opens it.",
+  "homeTypeToConfirm": "Type {home} to confirm",
+  "@homeTypeToConfirm": {
+    "placeholders": {
+      "home": {
+        "type": "String"
+      }
+    }
+  },
+  "homeDeleteConfirm": "Delete on all phones",
+  "todayFamilyButton": "{home}: {count, plural, =1{1 family member} other{{count} family members}}. Manage home",
+  "@todayFamilyButton": {
+    "placeholders": {
+      "home": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "todayYourProfile": "Your profile"
 }

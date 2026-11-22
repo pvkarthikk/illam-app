@@ -33,6 +33,8 @@ class AssignedWork {
   final List<String> routineIds;
   final List<String> todoIds;
 
+  int get routineCount => routineIds.length;
+  int get todoCount => todoIds.length;
   bool get isEmpty => routineIds.isEmpty && todoIds.isEmpty;
 }
 
@@ -120,23 +122,32 @@ class TasksRepo {
         c.set('todos', id, 'done_by', done ? _me : null);
       });
 
-  Future<AssignedWork> loadAssigned(String staffId) async {
+  Future<AssignedWork> loadAssigned(String staffId) =>
+      loadAssignedTo(staffId, assigneeType: 'staff');
+
+  Future<AssignedWork> loadAssignedTo(
+    String assigneeId, {
+    required String assigneeType,
+  }) async {
+    final homeId = prefs.currentHomeId;
     final routines =
-        await (db.select(db.routines)..where(
-              (r) =>
-                  r.assigneeType.equals('staff') &
-                  r.assignee.equals(staffId) &
-                  r.deleted.equals(false),
-            ))
+        await (db.select(db.routines)..where((r) {
+              final match =
+                  r.assigneeType.equals(assigneeType) &
+                  r.assignee.equals(assigneeId) &
+                  r.deleted.equals(false);
+              return homeId == null ? match : (match & r.homeId.equals(homeId));
+            }))
             .get();
     final todos =
-        await (db.select(db.todos)..where(
-              (t) =>
-                  t.assigneeType.equals('staff') &
-                  t.assignee.equals(staffId) &
+        await (db.select(db.todos)..where((t) {
+              final match =
+                  t.assigneeType.equals(assigneeType) &
+                  t.assignee.equals(assigneeId) &
                   t.deleted.equals(false) &
-                  t.done.equals(false),
-            ))
+                  t.done.equals(false);
+              return homeId == null ? match : (match & t.homeId.equals(homeId));
+            }))
             .get();
     return AssignedWork(
       [for (final r in routines) r.id],
