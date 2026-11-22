@@ -58,4 +58,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get debugDarkTheme => 'Dark theme';
+
+  @override
+  String get dayToday => 'Today';
+
+  @override
+  String get dayTomorrow => 'Tomorrow';
+
+  @override
+  String get dayYesterday => 'Yesterday';
 }

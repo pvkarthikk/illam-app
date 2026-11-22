@@ -189,6 +189,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Dark theme'**
   String get debugDarkTheme;
+
+  /// No description provided for @dayToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get dayToday;
+
+  /// No description provided for @dayTomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow'**
+  String get dayTomorrow;
+
+  /// No description provided for @dayYesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get dayYesterday;
 }
 
 class _AppLocalizationsDelegate

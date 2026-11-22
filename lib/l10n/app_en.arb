@@ -16,5 +16,8 @@
   "debugTitle": "Developer tools",
   "debugGallery": "Component gallery",
   "debugGallerySub": "Every shared component, light and dark",
-  "debugDarkTheme": "Dark theme"
+  "debugDarkTheme": "Dark theme",
+  "dayToday": "Today",
+  "dayTomorrow": "Tomorrow",
+  "dayYesterday": "Yesterday"
 }
