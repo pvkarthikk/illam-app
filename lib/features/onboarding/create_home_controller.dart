@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:nm_flat/core/nav/router.dart';
+import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/util/device_model.dart';
 
@@ -7,8 +9,6 @@ class CreateHomeController extends Notifier<bool> {
   @override
   bool build() => false;
 
-  /// No navigation here: the router redirect opens Today once the current
-  /// home is set.
   Future<void> create({
     required String name,
     required String homeName,
@@ -33,6 +33,7 @@ class CreateHomeController extends Notifier<bool> {
       if (addStarter) {
         await ref.read(recipesRepoProvider).addStarterPack();
       }
+      ref.read(routerProvider).go('${Routes.invite}?first=1');
     } finally {
       state = false;
     }

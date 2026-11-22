@@ -181,8 +181,7 @@ class HomeInviteSection extends ConsumerWidget {
               label: l10n.homeInvite,
               kind: NestButtonKind.primary,
               size: NestButtonSize.block,
-              onPressed: () =>
-                  ref.read(snackbarProvider).show(l10n.homeInviteArrives),
+              onPressed: () => context.push(Routes.invite),
             )
           : AlertLine(
               icon: Icons.lock_outline_rounded,

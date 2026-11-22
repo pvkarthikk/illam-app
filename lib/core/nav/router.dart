@@ -14,6 +14,7 @@ import 'package:nm_flat/features/debug/data_lab_screen.dart';
 import 'package:nm_flat/features/debug/debug_screen.dart';
 import 'package:nm_flat/features/debug/gallery_screen.dart';
 import 'package:nm_flat/features/debug/sync_lab_screen.dart';
+import 'package:nm_flat/features/invite/invite_screen.dart';
 import 'package:nm_flat/features/lists/lists_screen.dart';
 import 'package:nm_flat/features/meals/cook_screen.dart';
 import 'package:nm_flat/features/meals/meals_screen.dart';
@@ -182,6 +183,13 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: Routes.home,
         builder: (_, _) => const HomeMembersScreen(),
+      ),
+      GoRoute(
+        path: Routes.invite,
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (_, state) => InviteScreen(
+          firstRun: state.uri.queryParameters['first'] == '1',
+        ),
       ),
     ],
   );

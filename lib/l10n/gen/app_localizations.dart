@@ -6008,6 +6008,582 @@ abstract class AppLocalizations {
     int pending,
     int devices,
   );
+
+  /// No description provided for @inviteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite someone'**
+  String get inviteTitle;
+
+  /// No description provided for @inviteFirstRunTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{home} is ready'**
+  String inviteFirstRunTitle(String home);
+
+  /// No description provided for @inviteFirstRunSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Home ID {homeId}'**
+  String inviteFirstRunSub(String homeId);
+
+  /// No description provided for @inviteFirstRunLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Let your family scan this from their phone, or send them the phrase. You’ll approve each person here.'**
+  String get inviteFirstRunLead;
+
+  /// No description provided for @inviteQrLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'QR code to join {home}'**
+  String inviteQrLabel(String home);
+
+  /// No description provided for @inviteOrTypePhrase.
+  ///
+  /// In en, this message translates to:
+  /// **'OR TYPE THIS PHRASE'**
+  String get inviteOrTypePhrase;
+
+  /// No description provided for @inviteSendWhatsApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Send phrase on WhatsApp'**
+  String get inviteSendWhatsApp;
+
+  /// No description provided for @inviteWhatsAppText.
+  ///
+  /// In en, this message translates to:
+  /// **'Join \"{home}\" on Nest Mojo : Flat. Open the app → Join a home → type: {phrase}\n(works for 10 minutes)'**
+  String inviteWhatsAppText(String home, String phrase);
+
+  /// No description provided for @inviteCopyPhrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy phrase'**
+  String get inviteCopyPhrase;
+
+  /// No description provided for @invitePhraseCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Phrase copied — it works once, for 10 minutes'**
+  String get invitePhraseCopied;
+
+  /// No description provided for @inviteValidFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid for {time} · works once'**
+  String inviteValidFor(String time);
+
+  /// No description provided for @inviteExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'This code has expired.'**
+  String get inviteExpired;
+
+  /// No description provided for @inviteMakeNew.
+  ///
+  /// In en, this message translates to:
+  /// **'Make a new code'**
+  String get inviteMakeNew;
+
+  /// No description provided for @inviteVisibleWifi.
+  ///
+  /// In en, this message translates to:
+  /// **'Visible on this Wi-Fi'**
+  String get inviteVisibleWifi;
+
+  /// No description provided for @inviteVisibleWifiSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Phones on the same Wi-Fi connect directly'**
+  String get inviteVisibleWifiSub;
+
+  /// No description provided for @inviteNoWifi.
+  ///
+  /// In en, this message translates to:
+  /// **'Not on Wi-Fi — others can still join over the internet'**
+  String get inviteNoWifi;
+
+  /// No description provided for @inviteWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for someone to join…'**
+  String get inviteWaiting;
+
+  /// No description provided for @inviteWaitingSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep this screen open until they’re in'**
+  String get inviteWaitingSub;
+
+  /// No description provided for @inviteRequestEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'JOIN REQUEST'**
+  String get inviteRequestEyebrow;
+
+  /// No description provided for @inviteRequestVia.
+  ///
+  /// In en, this message translates to:
+  /// **'{model} · on this Wi-Fi'**
+  String inviteRequestVia(String model);
+
+  /// No description provided for @inviteRequestSas.
+  ///
+  /// In en, this message translates to:
+  /// **'Their phone should show {emojis}'**
+  String inviteRequestSas(String emojis);
+
+  /// No description provided for @inviteRequestSasHint.
+  ///
+  /// In en, this message translates to:
+  /// **'If it doesn’t, tap Deny.'**
+  String get inviteRequestSasHint;
+
+  /// No description provided for @inviteJoinsAs.
+  ///
+  /// In en, this message translates to:
+  /// **'Joins as'**
+  String get inviteJoinsAs;
+
+  /// No description provided for @inviteAdminNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Admins can invite and remove people and manage pay.'**
+  String get inviteAdminNote;
+
+  /// No description provided for @inviteDeny.
+  ///
+  /// In en, this message translates to:
+  /// **'Deny'**
+  String get inviteDeny;
+
+  /// No description provided for @inviteAllow.
+  ///
+  /// In en, this message translates to:
+  /// **'✓ Allow'**
+  String get inviteAllow;
+
+  /// No description provided for @inviteAdding.
+  ///
+  /// In en, this message translates to:
+  /// **'Adding {name}'**
+  String inviteAdding(String name);
+
+  /// No description provided for @inviteSending.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending the home’s data… {pct}%'**
+  String inviteSending(int pct);
+
+  /// No description provided for @inviteSendingSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Directly to their phone, encrypted. Keep this screen open.'**
+  String get inviteSendingSub;
+
+  /// No description provided for @inviteJoined.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} joined'**
+  String inviteJoined(String name);
+
+  /// No description provided for @inviteJoinedSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Their phone now syncs with this home.'**
+  String get inviteJoinedSub;
+
+  /// No description provided for @inviteAnother.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite someone else'**
+  String get inviteAnother;
+
+  /// No description provided for @inviteDeclinedSnack.
+  ///
+  /// In en, this message translates to:
+  /// **'Declined {name}. Made a new phrase so the old one can’t be reused.'**
+  String inviteDeclinedSnack(String name);
+
+  /// No description provided for @inviteSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip for now — invite later'**
+  String get inviteSkip;
+
+  /// No description provided for @inviteContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue to my home'**
+  String get inviteContinue;
+
+  /// No description provided for @inviteDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get inviteDone;
+
+  /// No description provided for @inviteWelcomeSnack.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to {home}'**
+  String inviteWelcomeSnack(String home);
+
+  /// No description provided for @inviteMembersOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Only admins can invite people. Ask {admins}.'**
+  String inviteMembersOnly(String admins);
+
+  /// No description provided for @debugInvitePort.
+  ///
+  /// In en, this message translates to:
+  /// **'Debug: listening on port {port}'**
+  String debugInvitePort(int port);
+
+  /// No description provided for @joinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Join a home'**
+  String get joinTitle;
+
+  /// No description provided for @joinSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask someone at home to open Invite on their phone. Then scan their QR code or type the phrase they share.'**
+  String get joinSub;
+
+  /// No description provided for @joinYourName.
+  ///
+  /// In en, this message translates to:
+  /// **'Your name'**
+  String get joinYourName;
+
+  /// No description provided for @joinNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your name first — it’s how your family will see you.'**
+  String get joinNameRequired;
+
+  /// No description provided for @joinScanTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan QR code'**
+  String get joinScanTitle;
+
+  /// No description provided for @joinScanSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Fastest when you’re next to them. Works on the same Wi-Fi or over the internet.'**
+  String get joinScanSub;
+
+  /// No description provided for @joinPhraseTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Type the join phrase'**
+  String get joinPhraseTitle;
+
+  /// No description provided for @joinPhraseSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Like 47-mango-river-tulip — good when they sent it on WhatsApp.'**
+  String get joinPhraseSub;
+
+  /// No description provided for @phraseSub.
+  ///
+  /// In en, this message translates to:
+  /// **'A number and three words, shown on the Invite screen of their phone.'**
+  String get phraseSub;
+
+  /// No description provided for @phraseField.
+  ///
+  /// In en, this message translates to:
+  /// **'Join phrase'**
+  String get phraseField;
+
+  /// No description provided for @phraseHint.
+  ///
+  /// In en, this message translates to:
+  /// **'47-mango-river-tulip'**
+  String get phraseHint;
+
+  /// No description provided for @phraseNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Spaces are fine too: ‘47 mango river tulip’. The phrase works once and expires after 10 minutes.'**
+  String get phraseNote;
+
+  /// No description provided for @phraseConnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect'**
+  String get phraseConnect;
+
+  /// No description provided for @phraseBadFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'That doesn’t look right. It’s a number and three words, like 47-mango-river-tulip.'**
+  String get phraseBadFormat;
+
+  /// No description provided for @phraseBadWord.
+  ///
+  /// In en, this message translates to:
+  /// **'One of the words isn’t in the phrase list — check the spelling.'**
+  String get phraseBadWord;
+
+  /// No description provided for @debugPort.
+  ///
+  /// In en, this message translates to:
+  /// **'Debug port'**
+  String get debugPort;
+
+  /// No description provided for @scanTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan the QR code'**
+  String get scanTitle;
+
+  /// No description provided for @scanHint.
+  ///
+  /// In en, this message translates to:
+  /// **'On their phone: Profile → Home → Invite someone'**
+  String get scanHint;
+
+  /// No description provided for @scanTypeInstead.
+  ///
+  /// In en, this message translates to:
+  /// **'Type the phrase instead'**
+  String get scanTypeInstead;
+
+  /// No description provided for @scanNote.
+  ///
+  /// In en, this message translates to:
+  /// **'🔒 The camera is used only to read the code. Nothing is recorded.'**
+  String get scanNote;
+
+  /// No description provided for @scanDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow camera to scan, or type the phrase instead.'**
+  String get scanDenied;
+
+  /// No description provided for @scanOpenSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open settings'**
+  String get scanOpenSettings;
+
+  /// No description provided for @scanTorch.
+  ///
+  /// In en, this message translates to:
+  /// **'Torch'**
+  String get scanTorch;
+
+  /// No description provided for @whoTheir.
+  ///
+  /// In en, this message translates to:
+  /// **'their'**
+  String get whoTheir;
+
+  /// No description provided for @whoName.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}’s'**
+  String whoName(String name);
+
+  /// No description provided for @connectEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Joining'**
+  String get connectEyebrow;
+
+  /// No description provided for @connectEyebrowHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Joining · {home}'**
+  String connectEyebrowHome(String home);
+
+  /// No description provided for @connectTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Connecting…'**
+  String get connectTitle;
+
+  /// No description provided for @connectWelcome.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to {home}'**
+  String connectWelcome(String home);
+
+  /// No description provided for @connectFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Something stopped the join'**
+  String get connectFailed;
+
+  /// No description provided for @stepFindActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Looking for {who} phone on this Wi-Fi…'**
+  String stepFindActive(String who);
+
+  /// No description provided for @stepFindDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Found {who} phone on this Wi-Fi'**
+  String stepFindDone(String who);
+
+  /// No description provided for @stepCodeActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking the code…'**
+  String get stepCodeActive;
+
+  /// No description provided for @stepCodeDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Code matched · connection encrypted'**
+  String get stepCodeDone;
+
+  /// No description provided for @stepApproveActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for {inviter} to approve…'**
+  String stepApproveActive(String inviter);
+
+  /// No description provided for @stepApproveSas.
+  ///
+  /// In en, this message translates to:
+  /// **'Check that {inviter}’s phone shows {emojis}'**
+  String stepApproveSas(String inviter, String emojis);
+
+  /// No description provided for @stepApproveDone.
+  ///
+  /// In en, this message translates to:
+  /// **'{inviter} approved you as {role, select, admin{an admin} other{a member}}'**
+  String stepApproveDone(String inviter, String role);
+
+  /// No description provided for @stepCopyActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Copying the home’s data… {pct}%'**
+  String stepCopyActive(int pct);
+
+  /// No description provided for @stepCopyDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied {n} items · you’re in sync'**
+  String stepCopyDone(int n);
+
+  /// No description provided for @successBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You’re in with {names}. Changes now sync between your phones.'**
+  String successBody(String names);
+
+  /// No description provided for @goHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to {home}'**
+  String goHome(String home);
+
+  /// No description provided for @tryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get tryAgain;
+
+  /// No description provided for @useDifferentCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Use a different code'**
+  String get useDifferentCode;
+
+  /// No description provided for @finishLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish later'**
+  String get finishLater;
+
+  /// No description provided for @finishLaterNote.
+  ///
+  /// In en, this message translates to:
+  /// **'You’re already in — the copy continues next time.'**
+  String get finishLaterNote;
+
+  /// No description provided for @stoppedSnack.
+  ///
+  /// In en, this message translates to:
+  /// **'Stopped. Nothing was shared.'**
+  String get stoppedSnack;
+
+  /// No description provided for @joinedSnack.
+  ///
+  /// In en, this message translates to:
+  /// **'You joined {home} as {role, select, admin{an admin} other{a member}}'**
+  String joinedSnack(String home, String role);
+
+  /// No description provided for @errNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn’t reach {who} phone'**
+  String errNotFound(String who);
+
+  /// No description provided for @errNotFoundHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Tips: keep the Invite screen open on {inviter}’s phone, and make sure both phones have Wi-Fi or mobile data on. The phrase is valid for 10 minutes.'**
+  String errNotFoundHelp(String inviter);
+
+  /// No description provided for @errWrongCode.
+  ///
+  /// In en, this message translates to:
+  /// **'The phrase didn’t match'**
+  String get errWrongCode;
+
+  /// No description provided for @errWrongCodeHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the phrase with {inviter} — after 3 wrong tries it stops working and they’ll need to make a new one.'**
+  String errWrongCodeHelp(String inviter);
+
+  /// No description provided for @errExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'This phrase has expired or was already used. Ask for a new one.'**
+  String get errExpired;
+
+  /// No description provided for @errDeclined.
+  ///
+  /// In en, this message translates to:
+  /// **'{inviter} declined the request'**
+  String errDeclined(String inviter);
+
+  /// No description provided for @errDeclinedHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask {inviter} to try again if this was a mistake.'**
+  String errDeclinedHelp(String inviter);
+
+  /// No description provided for @errVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'{inviter}’s Nest Mojo : Flat is a different version. Update both apps from the Play Store, then try again.'**
+  String errVersion(String inviter);
+
+  /// No description provided for @errCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy interrupted'**
+  String get errCopy;
+
+  /// No description provided for @setupBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'Finishing setup… {pct}% — keep Nest Mojo : Flat open on a family phone'**
+  String setupBanner(int pct);
 }
 
 class _AppLocalizationsDelegate

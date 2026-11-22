@@ -3728,4 +3728,385 @@ class AppLocalizationsEn extends AppLocalizations {
   ) {
     return '$applied applied · $ignored ignored · $pending waiting · $devices devices';
   }
+
+  @override
+  String get inviteTitle => 'Invite someone';
+
+  @override
+  String inviteFirstRunTitle(String home) {
+    return '$home is ready';
+  }
+
+  @override
+  String inviteFirstRunSub(String homeId) {
+    return 'Home ID $homeId';
+  }
+
+  @override
+  String get inviteFirstRunLead =>
+      'Let your family scan this from their phone, or send them the phrase. You’ll approve each person here.';
+
+  @override
+  String inviteQrLabel(String home) {
+    return 'QR code to join $home';
+  }
+
+  @override
+  String get inviteOrTypePhrase => 'OR TYPE THIS PHRASE';
+
+  @override
+  String get inviteSendWhatsApp => 'Send phrase on WhatsApp';
+
+  @override
+  String inviteWhatsAppText(String home, String phrase) {
+    return 'Join \"$home\" on Nest Mojo : Flat. Open the app → Join a home → type: $phrase\n(works for 10 minutes)';
+  }
+
+  @override
+  String get inviteCopyPhrase => 'Copy phrase';
+
+  @override
+  String get invitePhraseCopied =>
+      'Phrase copied — it works once, for 10 minutes';
+
+  @override
+  String inviteValidFor(String time) {
+    return 'Valid for $time · works once';
+  }
+
+  @override
+  String get inviteExpired => 'This code has expired.';
+
+  @override
+  String get inviteMakeNew => 'Make a new code';
+
+  @override
+  String get inviteVisibleWifi => 'Visible on this Wi-Fi';
+
+  @override
+  String get inviteVisibleWifiSub =>
+      'Phones on the same Wi-Fi connect directly';
+
+  @override
+  String get inviteNoWifi =>
+      'Not on Wi-Fi — others can still join over the internet';
+
+  @override
+  String get inviteWaiting => 'Waiting for someone to join…';
+
+  @override
+  String get inviteWaitingSub => 'Keep this screen open until they’re in';
+
+  @override
+  String get inviteRequestEyebrow => 'JOIN REQUEST';
+
+  @override
+  String inviteRequestVia(String model) {
+    return '$model · on this Wi-Fi';
+  }
+
+  @override
+  String inviteRequestSas(String emojis) {
+    return 'Their phone should show $emojis';
+  }
+
+  @override
+  String get inviteRequestSasHint => 'If it doesn’t, tap Deny.';
+
+  @override
+  String get inviteJoinsAs => 'Joins as';
+
+  @override
+  String get inviteAdminNote =>
+      'Admins can invite and remove people and manage pay.';
+
+  @override
+  String get inviteDeny => 'Deny';
+
+  @override
+  String get inviteAllow => '✓ Allow';
+
+  @override
+  String inviteAdding(String name) {
+    return 'Adding $name';
+  }
+
+  @override
+  String inviteSending(int pct) {
+    return 'Sending the home’s data… $pct%';
+  }
+
+  @override
+  String get inviteSendingSub =>
+      'Directly to their phone, encrypted. Keep this screen open.';
+
+  @override
+  String inviteJoined(String name) {
+    return '$name joined';
+  }
+
+  @override
+  String get inviteJoinedSub => 'Their phone now syncs with this home.';
+
+  @override
+  String get inviteAnother => 'Invite someone else';
+
+  @override
+  String inviteDeclinedSnack(String name) {
+    return 'Declined $name. Made a new phrase so the old one can’t be reused.';
+  }
+
+  @override
+  String get inviteSkip => 'Skip for now — invite later';
+
+  @override
+  String get inviteContinue => 'Continue to my home';
+
+  @override
+  String get inviteDone => 'Done';
+
+  @override
+  String inviteWelcomeSnack(String home) {
+    return 'Welcome to $home';
+  }
+
+  @override
+  String inviteMembersOnly(String admins) {
+    return 'Only admins can invite people. Ask $admins.';
+  }
+
+  @override
+  String debugInvitePort(int port) {
+    return 'Debug: listening on port $port';
+  }
+
+  @override
+  String get joinTitle => 'Join a home';
+
+  @override
+  String get joinSub =>
+      'Ask someone at home to open Invite on their phone. Then scan their QR code or type the phrase they share.';
+
+  @override
+  String get joinYourName => 'Your name';
+
+  @override
+  String get joinNameRequired =>
+      'Add your name first — it’s how your family will see you.';
+
+  @override
+  String get joinScanTitle => 'Scan QR code';
+
+  @override
+  String get joinScanSub =>
+      'Fastest when you’re next to them. Works on the same Wi-Fi or over the internet.';
+
+  @override
+  String get joinPhraseTitle => 'Type the join phrase';
+
+  @override
+  String get joinPhraseSub =>
+      'Like 47-mango-river-tulip — good when they sent it on WhatsApp.';
+
+  @override
+  String get phraseSub =>
+      'A number and three words, shown on the Invite screen of their phone.';
+
+  @override
+  String get phraseField => 'Join phrase';
+
+  @override
+  String get phraseHint => '47-mango-river-tulip';
+
+  @override
+  String get phraseNote =>
+      'Spaces are fine too: ‘47 mango river tulip’. The phrase works once and expires after 10 minutes.';
+
+  @override
+  String get phraseConnect => 'Connect';
+
+  @override
+  String get phraseBadFormat =>
+      'That doesn’t look right. It’s a number and three words, like 47-mango-river-tulip.';
+
+  @override
+  String get phraseBadWord =>
+      'One of the words isn’t in the phrase list — check the spelling.';
+
+  @override
+  String get debugPort => 'Debug port';
+
+  @override
+  String get scanTitle => 'Scan the QR code';
+
+  @override
+  String get scanHint => 'On their phone: Profile → Home → Invite someone';
+
+  @override
+  String get scanTypeInstead => 'Type the phrase instead';
+
+  @override
+  String get scanNote =>
+      '🔒 The camera is used only to read the code. Nothing is recorded.';
+
+  @override
+  String get scanDenied => 'Allow camera to scan, or type the phrase instead.';
+
+  @override
+  String get scanOpenSettings => 'Open settings';
+
+  @override
+  String get scanTorch => 'Torch';
+
+  @override
+  String get whoTheir => 'their';
+
+  @override
+  String whoName(String name) {
+    return '$name’s';
+  }
+
+  @override
+  String get connectEyebrow => 'Joining';
+
+  @override
+  String connectEyebrowHome(String home) {
+    return 'Joining · $home';
+  }
+
+  @override
+  String get connectTitle => 'Connecting…';
+
+  @override
+  String connectWelcome(String home) {
+    return 'Welcome to $home';
+  }
+
+  @override
+  String get connectFailed => 'Something stopped the join';
+
+  @override
+  String stepFindActive(String who) {
+    return 'Looking for $who phone on this Wi-Fi…';
+  }
+
+  @override
+  String stepFindDone(String who) {
+    return 'Found $who phone on this Wi-Fi';
+  }
+
+  @override
+  String get stepCodeActive => 'Checking the code…';
+
+  @override
+  String get stepCodeDone => 'Code matched · connection encrypted';
+
+  @override
+  String stepApproveActive(String inviter) {
+    return 'Waiting for $inviter to approve…';
+  }
+
+  @override
+  String stepApproveSas(String inviter, String emojis) {
+    return 'Check that $inviter’s phone shows $emojis';
+  }
+
+  @override
+  String stepApproveDone(String inviter, String role) {
+    String _temp0 = intl.Intl.selectLogic(role, {
+      'admin': 'an admin',
+      'other': 'a member',
+    });
+    return '$inviter approved you as $_temp0';
+  }
+
+  @override
+  String stepCopyActive(int pct) {
+    return 'Copying the home’s data… $pct%';
+  }
+
+  @override
+  String stepCopyDone(int n) {
+    return 'Copied $n items · you’re in sync';
+  }
+
+  @override
+  String successBody(String names) {
+    return 'You’re in with $names. Changes now sync between your phones.';
+  }
+
+  @override
+  String goHome(String home) {
+    return 'Go to $home';
+  }
+
+  @override
+  String get tryAgain => 'Try again';
+
+  @override
+  String get useDifferentCode => 'Use a different code';
+
+  @override
+  String get finishLater => 'Finish later';
+
+  @override
+  String get finishLaterNote =>
+      'You’re already in — the copy continues next time.';
+
+  @override
+  String get stoppedSnack => 'Stopped. Nothing was shared.';
+
+  @override
+  String joinedSnack(String home, String role) {
+    String _temp0 = intl.Intl.selectLogic(role, {
+      'admin': 'an admin',
+      'other': 'a member',
+    });
+    return 'You joined $home as $_temp0';
+  }
+
+  @override
+  String errNotFound(String who) {
+    return 'Couldn’t reach $who phone';
+  }
+
+  @override
+  String errNotFoundHelp(String inviter) {
+    return 'Tips: keep the Invite screen open on $inviter’s phone, and make sure both phones have Wi-Fi or mobile data on. The phrase is valid for 10 minutes.';
+  }
+
+  @override
+  String get errWrongCode => 'The phrase didn’t match';
+
+  @override
+  String errWrongCodeHelp(String inviter) {
+    return 'Check the phrase with $inviter — after 3 wrong tries it stops working and they’ll need to make a new one.';
+  }
+
+  @override
+  String get errExpired =>
+      'This phrase has expired or was already used. Ask for a new one.';
+
+  @override
+  String errDeclined(String inviter) {
+    return '$inviter declined the request';
+  }
+
+  @override
+  String errDeclinedHelp(String inviter) {
+    return 'Ask $inviter to try again if this was a mistake.';
+  }
+
+  @override
+  String errVersion(String inviter) {
+    return '$inviter’s Nest Mojo : Flat is a different version. Update both apps from the Play Store, then try again.';
+  }
+
+  @override
+  String get errCopy => 'Copy interrupted';
+
+  @override
+  String setupBanner(int pct) {
+    return 'Finishing setup… $pct% — keep Nest Mojo : Flat open on a family phone';
+  }
 }

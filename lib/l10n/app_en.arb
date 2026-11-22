@@ -2727,5 +2727,351 @@
         "type": "int"
       }
     }
+  },
+  "inviteTitle": "Invite someone",
+  "inviteFirstRunTitle": "{home} is ready",
+  "@inviteFirstRunTitle": {
+    "placeholders": {
+      "home": {
+        "type": "String"
+      }
+    }
+  },
+  "inviteFirstRunSub": "Home ID {homeId}",
+  "@inviteFirstRunSub": {
+    "placeholders": {
+      "homeId": {
+        "type": "String"
+      }
+    }
+  },
+  "inviteFirstRunLead": "Let your family scan this from their phone, or send them the phrase. You’ll approve each person here.",
+  "inviteQrLabel": "QR code to join {home}",
+  "@inviteQrLabel": {
+    "placeholders": {
+      "home": {
+        "type": "String"
+      }
+    }
+  },
+  "inviteOrTypePhrase": "OR TYPE THIS PHRASE",
+  "inviteSendWhatsApp": "Send phrase on WhatsApp",
+  "inviteWhatsAppText": "Join \"{home}\" on Nest Mojo : Flat. Open the app → Join a home → type: {phrase}\n(works for 10 minutes)",
+  "@inviteWhatsAppText": {
+    "placeholders": {
+      "home": {
+        "type": "String"
+      },
+      "phrase": {
+        "type": "String"
+      }
+    }
+  },
+  "inviteCopyPhrase": "Copy phrase",
+  "invitePhraseCopied": "Phrase copied — it works once, for 10 minutes",
+  "inviteValidFor": "Valid for {time} · works once",
+  "@inviteValidFor": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "inviteExpired": "This code has expired.",
+  "inviteMakeNew": "Make a new code",
+  "inviteVisibleWifi": "Visible on this Wi-Fi",
+  "inviteVisibleWifiSub": "Phones on the same Wi-Fi connect directly",
+  "inviteNoWifi": "Not on Wi-Fi — others can still join over the internet",
+  "inviteWaiting": "Waiting for someone to join…",
+  "inviteWaitingSub": "Keep this screen open until they’re in",
+  "inviteRequestEyebrow": "JOIN REQUEST",
+  "inviteRequestVia": "{model} · on this Wi-Fi",
+  "@inviteRequestVia": {
+    "placeholders": {
+      "model": {
+        "type": "String"
+      }
+    }
+  },
+  "inviteRequestSas": "Their phone should show {emojis}",
+  "@inviteRequestSas": {
+    "placeholders": {
+      "emojis": {
+        "type": "String"
+      }
+    }
+  },
+  "inviteRequestSasHint": "If it doesn’t, tap Deny.",
+  "inviteJoinsAs": "Joins as",
+  "inviteAdminNote": "Admins can invite and remove people and manage pay.",
+  "inviteDeny": "Deny",
+  "inviteAllow": "✓ Allow",
+  "inviteAdding": "Adding {name}",
+  "@inviteAdding": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "inviteSending": "Sending the home’s data… {pct}%",
+  "@inviteSending": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "inviteSendingSub": "Directly to their phone, encrypted. Keep this screen open.",
+  "inviteJoined": "{name} joined",
+  "@inviteJoined": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "inviteJoinedSub": "Their phone now syncs with this home.",
+  "inviteAnother": "Invite someone else",
+  "inviteDeclinedSnack": "Declined {name}. Made a new phrase so the old one can’t be reused.",
+  "@inviteDeclinedSnack": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "inviteSkip": "Skip for now — invite later",
+  "inviteContinue": "Continue to my home",
+  "inviteDone": "Done",
+  "inviteWelcomeSnack": "Welcome to {home}",
+  "@inviteWelcomeSnack": {
+    "placeholders": {
+      "home": {
+        "type": "String"
+      }
+    }
+  },
+  "inviteMembersOnly": "Only admins can invite people. Ask {admins}.",
+  "@inviteMembersOnly": {
+    "placeholders": {
+      "admins": {
+        "type": "String"
+      }
+    }
+  },
+  "debugInvitePort": "Debug: listening on port {port}",
+  "@debugInvitePort": {
+    "placeholders": {
+      "port": {
+        "type": "int"
+      }
+    }
+  },
+  "joinTitle": "Join a home",
+  "joinSub": "Ask someone at home to open Invite on their phone. Then scan their QR code or type the phrase they share.",
+  "joinYourName": "Your name",
+  "joinNameRequired": "Add your name first — it’s how your family will see you.",
+  "joinScanTitle": "Scan QR code",
+  "joinScanSub": "Fastest when you’re next to them. Works on the same Wi-Fi or over the internet.",
+  "joinPhraseTitle": "Type the join phrase",
+  "joinPhraseSub": "Like 47-mango-river-tulip — good when they sent it on WhatsApp.",
+  "phraseSub": "A number and three words, shown on the Invite screen of their phone.",
+  "phraseField": "Join phrase",
+  "phraseHint": "47-mango-river-tulip",
+  "phraseNote": "Spaces are fine too: ‘47 mango river tulip’. The phrase works once and expires after 10 minutes.",
+  "phraseConnect": "Connect",
+  "phraseBadFormat": "That doesn’t look right. It’s a number and three words, like 47-mango-river-tulip.",
+  "phraseBadWord": "One of the words isn’t in the phrase list — check the spelling.",
+  "debugPort": "Debug port",
+  "scanTitle": "Scan the QR code",
+  "scanHint": "On their phone: Profile → Home → Invite someone",
+  "scanTypeInstead": "Type the phrase instead",
+  "scanNote": "🔒 The camera is used only to read the code. Nothing is recorded.",
+  "scanDenied": "Allow camera to scan, or type the phrase instead.",
+  "scanOpenSettings": "Open settings",
+  "scanTorch": "Torch",
+  "whoTheir": "their",
+  "whoName": "{name}’s",
+  "@whoName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "connectEyebrow": "Joining",
+  "connectEyebrowHome": "Joining · {home}",
+  "@connectEyebrowHome": {
+    "placeholders": {
+      "home": {
+        "type": "String"
+      }
+    }
+  },
+  "connectTitle": "Connecting…",
+  "connectWelcome": "Welcome to {home}",
+  "@connectWelcome": {
+    "placeholders": {
+      "home": {
+        "type": "String"
+      }
+    }
+  },
+  "connectFailed": "Something stopped the join",
+  "stepFindActive": "Looking for {who} phone on this Wi-Fi…",
+  "@stepFindActive": {
+    "placeholders": {
+      "who": {
+        "type": "String"
+      }
+    }
+  },
+  "stepFindDone": "Found {who} phone on this Wi-Fi",
+  "@stepFindDone": {
+    "placeholders": {
+      "who": {
+        "type": "String"
+      }
+    }
+  },
+  "stepCodeActive": "Checking the code…",
+  "stepCodeDone": "Code matched · connection encrypted",
+  "stepApproveActive": "Waiting for {inviter} to approve…",
+  "@stepApproveActive": {
+    "placeholders": {
+      "inviter": {
+        "type": "String"
+      }
+    }
+  },
+  "stepApproveSas": "Check that {inviter}’s phone shows {emojis}",
+  "@stepApproveSas": {
+    "placeholders": {
+      "inviter": {
+        "type": "String"
+      },
+      "emojis": {
+        "type": "String"
+      }
+    }
+  },
+  "stepApproveDone": "{inviter} approved you as {role, select, admin{an admin} other{a member}}",
+  "@stepApproveDone": {
+    "placeholders": {
+      "inviter": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "stepCopyActive": "Copying the home’s data… {pct}%",
+  "@stepCopyActive": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "stepCopyDone": "Copied {n} items · you’re in sync",
+  "@stepCopyDone": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "successBody": "You’re in with {names}. Changes now sync between your phones.",
+  "@successBody": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "goHome": "Go to {home}",
+  "@goHome": {
+    "placeholders": {
+      "home": {
+        "type": "String"
+      }
+    }
+  },
+  "tryAgain": "Try again",
+  "useDifferentCode": "Use a different code",
+  "finishLater": "Finish later",
+  "finishLaterNote": "You’re already in — the copy continues next time.",
+  "stoppedSnack": "Stopped. Nothing was shared.",
+  "joinedSnack": "You joined {home} as {role, select, admin{an admin} other{a member}}",
+  "@joinedSnack": {
+    "placeholders": {
+      "home": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "errNotFound": "Couldn’t reach {who} phone",
+  "@errNotFound": {
+    "placeholders": {
+      "who": {
+        "type": "String"
+      }
+    }
+  },
+  "errNotFoundHelp": "Tips: keep the Invite screen open on {inviter}’s phone, and make sure both phones have Wi-Fi or mobile data on. The phrase is valid for 10 minutes.",
+  "@errNotFoundHelp": {
+    "placeholders": {
+      "inviter": {
+        "type": "String"
+      }
+    }
+  },
+  "errWrongCode": "The phrase didn’t match",
+  "errWrongCodeHelp": "Check the phrase with {inviter} — after 3 wrong tries it stops working and they’ll need to make a new one.",
+  "@errWrongCodeHelp": {
+    "placeholders": {
+      "inviter": {
+        "type": "String"
+      }
+    }
+  },
+  "errExpired": "This phrase has expired or was already used. Ask for a new one.",
+  "errDeclined": "{inviter} declined the request",
+  "@errDeclined": {
+    "placeholders": {
+      "inviter": {
+        "type": "String"
+      }
+    }
+  },
+  "errDeclinedHelp": "Ask {inviter} to try again if this was a mistake.",
+  "@errDeclinedHelp": {
+    "placeholders": {
+      "inviter": {
+        "type": "String"
+      }
+    }
+  },
+  "errVersion": "{inviter}’s Nest Mojo : Flat is a different version. Update both apps from the Play Store, then try again.",
+  "@errVersion": {
+    "placeholders": {
+      "inviter": {
+        "type": "String"
+      }
+    }
+  },
+  "errCopy": "Copy interrupted",
+  "setupBanner": "Finishing setup… {pct}% — keep Nest Mojo : Flat open on a family phone",
+  "@setupBanner": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
   }
 }

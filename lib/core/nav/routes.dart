@@ -19,6 +19,7 @@ abstract final class Routes {
   static String cook(String id) => '/meals/cook/$id';
   static const profile = '/profile';
   static const home = '/home';
+  static const invite = '/invite';
 }
 
 enum NestTab { today, lists, tasks, meals, money }

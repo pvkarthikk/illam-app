@@ -140,6 +140,15 @@ class DevicePrefs {
 
   Future<void> clearNotifShown() => setText('notifShown', null);
 
+  String? get setupIncompleteHomeId => getText('setupIncompleteHomeId');
+
+  Future<void> setSetupIncompleteHomeId(String? v) =>
+      setText('setupIncompleteHomeId', v);
+
+  int get setupPct => int.tryParse(getText('setupPct') ?? '') ?? 0;
+
+  Future<void> setSetupPct(int v) => setText('setupPct', '$v');
+
   /// Forgets the current home but keeps the device identity.
   Future<void> clearHome() async {
     await setCurrentHomeId(null);

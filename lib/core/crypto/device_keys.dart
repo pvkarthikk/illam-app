@@ -55,6 +55,11 @@ class DeviceKeys {
     return fromSeeds(sign, agree);
   }
 
+  static Future<String> deviceIdFor(List<int> signPub) async {
+    final h = (await Sha256().hash(signPub)).bytes;
+    return Base32.encode(h).toLowerCase().substring(0, 16);
+  }
+
   static Future<DeviceKeys> fromSeeds(
     List<int> signSeed,
     List<int> agreeSeed,

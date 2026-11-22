@@ -124,9 +124,7 @@ class WelcomeScreen extends ConsumerWidget {
                   tileFg: c.accentInk,
                   title: l10n.welcomeJoinTitle,
                   body: l10n.welcomeJoinBody,
-                  onTap: () => ref
-                      .read(snackbarProvider)
-                      .show(l10n.commonArrivesIn('P14')),
+                  onTap: () => context.go(Routes.onboardingStep('join')),
                 ),
                 const SizedBox(height: 12),
                 Row(
@@ -229,6 +227,8 @@ class WelcomeScreen extends ConsumerWidget {
     );
   }
 }
+
+typedef ChoiceCard = _ChoiceCard;
 
 class _ChoiceCard extends StatelessWidget {
   const _ChoiceCard({
