@@ -1,4 +1,4 @@
-package com.example.nm_flat
+package app.nestmojo
 
 import io.flutter.embedding.android.FlutterActivity
 
