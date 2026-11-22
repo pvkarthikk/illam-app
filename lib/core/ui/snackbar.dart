@@ -30,7 +30,7 @@ class SnackbarService {
 
     m.showSnackBar(
       SnackBar(
-        content: Text(text),
+        content: Semantics(liveRegion: true, child: Text(text)),
         duration: const Duration(seconds: 5),
         persist: false,
         action: action,

@@ -8,6 +8,7 @@ export 'nest_bars.dart';
 export 'nest_buttons.dart';
 export 'nest_checks.dart';
 export 'nest_chips.dart';
+export 'nest_fab.dart';
 export 'nest_feedback.dart';
 export 'nest_rows.dart';
 export 'nest_sheet.dart';

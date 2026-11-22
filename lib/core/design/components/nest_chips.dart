@@ -77,13 +77,20 @@ class NestChip extends StatelessWidget {
       ),
     );
 
+    final semanticLabel = count != null ? '$label, $count' : label;
+
     return Semantics(
       selected: selected,
       button: true,
+      enabled: onTap != null,
+      label: semanticLabel,
+      excludeSemantics: true,
+      onTap: onTap,
       child: ConstrainedBox(
         constraints: const BoxConstraints(minHeight: 48),
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
+          excludeFromSemantics: true,
           onTap: onTap,
           child: Center(widthFactor: 1.0, child: pill),
         ),
@@ -174,7 +181,7 @@ class _SegmentedItem extends StatelessWidget {
             customBorder: const StadiumBorder(),
             onTap: onTap,
             child: ConstrainedBox(
-              constraints: const BoxConstraints(minHeight: 40),
+              constraints: const BoxConstraints(minHeight: 48),
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 10,

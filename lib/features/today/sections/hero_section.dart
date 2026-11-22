@@ -11,6 +11,7 @@ import 'package:nm_flat/core/domain/names.dart';
 import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/ui/rich_text.dart';
+import 'package:nm_flat/features/today/sections/hero_tags.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
 class HeroSection extends ConsumerWidget {
@@ -47,6 +48,7 @@ class HeroSection extends ConsumerWidget {
       Greeting.evening => l10n.todayGreetingEvening,
     };
     final em = l10n.todayAllSetEm;
+    final n = ref.watch(tasksBadgeProvider);
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 8, 20, 4),
@@ -127,17 +129,28 @@ class HeroSection extends ConsumerWidget {
             child: Text.rich(
               TextSpan(
                 style: NestText.display38.copyWith(color: c.ink),
-                children: [
-                  TextSpan(text: '$greeting.\n'),
-                  emphasise(
-                    l10n.todayHeadlineAllSet(em),
-                    em,
-                    TextStyle(color: c.accent),
-                  ),
-                ],
+                children: n > 0
+                    ? [
+                        TextSpan(text: '$greeting.\n'),
+                        TextSpan(
+                          text: l10n.todayThingsCount(n),
+                          style: TextStyle(color: c.accent),
+                        ),
+                        TextSpan(text: l10n.todayThingsNeed(n)),
+                      ]
+                    : [
+                        TextSpan(text: '$greeting.\n'),
+                        emphasise(
+                          l10n.todayHeadlineAllSet(em),
+                          em,
+                          TextStyle(color: c.accent),
+                        ),
+                      ],
               ),
             ),
           ),
+          const SizedBox(height: 10),
+          const HeroTags(),
         ],
       ),
     );

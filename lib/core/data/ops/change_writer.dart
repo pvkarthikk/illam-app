@@ -91,6 +91,10 @@ class ChangeWriter {
     late final int nextSeq;
     await db.transaction(() async {
       inverse = await _inverseOf(ops);
+      final maxHlc = await _maxHlc();
+      if (maxHlc != null) {
+        await hlc.observe(maxHlc);
+      }
       var seq = await _nextSeq();
       for (final op in ops) {
         final opHlc = await hlc.next();
@@ -131,6 +135,16 @@ class ChangeWriter {
         )
         .getSingle();
     return (row.data['m'] as int) + 1;
+  }
+
+  Future<String?> _maxHlc() async {
+    final row = await db
+        .customSelect(
+          'SELECT MAX(hlc) AS h FROM ops WHERE device_id = ?',
+          variables: [Variable.withString(prefs.deviceId)],
+        )
+        .getSingle();
+    return row.data['h'] as String?;
   }
 
   Future<List<UndoEntry>> _inverseOf(List<PendingOp> ops) async {

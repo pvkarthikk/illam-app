@@ -1,8 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:workmanager/workmanager.dart';
 
 import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/data/prefs/device_prefs.dart';
 import 'package:nm_flat/core/data/secure/secure_store.dart';
+import 'package:nm_flat/core/notify/notifications.dart';
 import 'package:nm_flat/core/providers.dart';
 
 class PhoneWiper {
@@ -38,6 +40,11 @@ class PhoneWiper {
     }
 
     await prefs.clearHome();
+
+    try {
+      await Workmanager().cancelByTag('nm.show');
+      await plugin.cancelAll();
+    } catch (_) {}
   }
 }
 

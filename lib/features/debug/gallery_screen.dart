@@ -13,7 +13,7 @@ class GalleryScreen extends ConsumerStatefulWidget {
 }
 
 class _GalleryScreenState extends ConsumerState<GalleryScreen> {
-  bool dark = false;
+  bool? _dark;
   bool box = true;
   bool round = false;
   int qty = 2;
@@ -22,6 +22,7 @@ class _GalleryScreenState extends ConsumerState<GalleryScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final isDark = _dark ?? (Theme.of(context).brightness == Brightness.dark);
     return Scaffold(
       appBar: NestTopBar.sub(
         title: l10n.debugGallery,
@@ -29,14 +30,14 @@ class _GalleryScreenState extends ConsumerState<GalleryScreen> {
           Semantics(
             label: l10n.debugDarkTheme,
             child: Switch(
-              value: dark,
-              onChanged: (v) => setState(() => dark = v),
+              value: isDark,
+              onChanged: (v) => setState(() => _dark = v),
             ),
           ),
         ],
       ),
       body: Theme(
-        data: dark ? NestTheme.dark() : NestTheme.light(),
+        data: isDark ? NestTheme.dark() : NestTheme.light(),
         child: Builder(
           builder: (context) => ColoredBox(
             color: context.nest.paper,

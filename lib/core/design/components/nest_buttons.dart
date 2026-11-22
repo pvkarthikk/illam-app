@@ -131,6 +131,7 @@ class _NestButtonState extends State<NestButton> {
             constraints: const BoxConstraints(minHeight: 48),
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
+              excludeFromSemantics: true,
               onTap: widget.onPressed,
               child: Center(widthFactor: 1.0, child: pill),
             ),
@@ -139,7 +140,9 @@ class _NestButtonState extends State<NestButton> {
     return Semantics(
       button: true,
       enabled: enabled,
-      label: widget.semanticLabel,
+      label: widget.semanticLabel ?? widget.label,
+      excludeSemantics: true,
+      onTap: widget.onPressed,
       child: target,
     );
   }

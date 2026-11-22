@@ -3415,4 +3415,215 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get todayYourProfile => 'Your profile';
+
+  @override
+  String todayThingsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count things',
+      one: '1 thing',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String todayThingsNeed(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: ' need the house today.',
+      one: ' needs the house today.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String todayStaffAtHome(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count staff at home now',
+      one: '1 staff at home now',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get todayNoStaff => 'No staff at home';
+
+  @override
+  String todayBudgetLeft(String amount) {
+    return '$amount left in budget';
+  }
+
+  @override
+  String todayBudgetOver(String amount) {
+    return '$amount over budget';
+  }
+
+  @override
+  String get todaySetABudget => 'Set a budget';
+
+  @override
+  String get qaGrocery => 'Grocery';
+
+  @override
+  String get qaShopping => 'Shopping';
+
+  @override
+  String get qaTodo => 'To-do';
+
+  @override
+  String get qaSpend => 'Spend';
+
+  @override
+  String get qaEmpty => '✨ Start typing — we’ll pick the right place.';
+
+  @override
+  String qaPreviewTodo(String title, String day, String who) {
+    return 'To-do · “$title” · $day · $who';
+  }
+
+  @override
+  String qaPreviewSpend(String amount, String merchant, String category) {
+    return 'Spend · $amount · $merchant · $category';
+  }
+
+  @override
+  String get qaPreviewSpendNoAmount => 'Spend · add an amount, like “₹450”';
+
+  @override
+  String qaPreviewItem(String type, String name, String qty, String store) {
+    return '$type · $name $qty → $store';
+  }
+
+  @override
+  String get qaUsual => ' (usual)';
+
+  @override
+  String get qaNeedAmount => 'ⓘ Add an amount, like “₹450 Swiggy”';
+
+  @override
+  String get qaTitle => 'Quick add';
+
+  @override
+  String get qaLead => 'Type it the way you’d say it.';
+
+  @override
+  String get qaPlaceholder => 'Milk 2L · Pay water bill tomorrow · ₹450 Swiggy';
+
+  @override
+  String get qaAdd => 'Add';
+
+  @override
+  String get qaFabLabel => 'Add';
+
+  @override
+  String get qaFabTooltip => 'Quick add';
+
+  @override
+  String get qaTodoAddedToday => 'To-do added for today';
+
+  @override
+  String get qaTodoAddedTomorrow => 'To-do added for tomorrow';
+
+  @override
+  String qaTodoAddedOn(String day) {
+    return 'To-do added for $day';
+  }
+
+  @override
+  String qaSpendAdded(String amount) {
+    return '$amount added to spends';
+  }
+
+  @override
+  String get notifChannelStaff => 'House help';
+
+  @override
+  String get notifChannelTasks => 'Tasks & reminders';
+
+  @override
+  String get notifChannelMoney => 'Bills & spends';
+
+  @override
+  String get notifChannelBackup => 'Backup';
+
+  @override
+  String get notifChannelHome => 'Home & members';
+
+  @override
+  String get notifAppName => 'Nest Mojo : Flat';
+
+  @override
+  String notifArrivalBody(String name, String time) {
+    return '$name usually comes by $time — mark in?';
+  }
+
+  @override
+  String get notifMarkInNow => 'Mark in now';
+
+  @override
+  String get notifOnLeaveToday => 'On leave today';
+
+  @override
+  String notifDigestBody(int count, String titles) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count things today: $titles…',
+      one: '1 thing today: $titles',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String notifBillBody(String bill, String amount) {
+    return '$bill is due today · $amount last time';
+  }
+
+  @override
+  String notifPaidAmount(String amount) {
+    return 'Paid $amount';
+  }
+
+  @override
+  String get notifOpen => 'Open';
+
+  @override
+  String get notifEveningBody =>
+      'Spent anything today? Add it in a few seconds.';
+
+  @override
+  String get notifExplainerTitle => 'Turn on reminders?';
+
+  @override
+  String notifExplainerBody(String name) {
+    return 'Get a nudge when $name usually arrives, and a morning list of what’s due.';
+  }
+
+  @override
+  String get notifYourHelp => 'your house help';
+
+  @override
+  String get notifNotNow => 'Not now';
+
+  @override
+  String get notifContinue => 'Continue';
+
+  @override
+  String get notifOffBanner => 'Notifications are off for Nest Mojo : Flat';
+
+  @override
+  String get notifTurnOn => 'Turn on';
+
+  @override
+  String get debugRunJobs => 'Run background jobs now';
+
+  @override
+  String get debugPlanReminders => 'Plan reminders';
+
+  @override
+  String get debugRanJobs => 'Ran background jobs';
 }

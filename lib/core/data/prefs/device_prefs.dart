@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:nm_flat/core/data/prefs/key_value_store.dart';
 import 'package:nm_flat/core/util/ids.dart';
@@ -112,6 +113,32 @@ class DevicePrefs {
   bool get notifBackup => getFlag('notifBackup', fallback: true);
 
   Future<void> setNotif(String key, bool v) => setFlag(key, v);
+
+  Future<void> reload() => _s.reload();
+
+  bool get notifAsked => getFlag('notifAsked');
+
+  Future<void> setNotifAsked(bool v) => setFlag('notifAsked', v);
+
+  List<String> _shownKeys() {
+    final raw = getText('notifShown');
+    if (raw == null || raw.isEmpty) return [];
+    final decoded = jsonDecode(raw) as List<dynamic>;
+    return [for (final x in decoded) x as String];
+  }
+
+  bool wasNotifShown(String key) => _shownKeys().contains(key);
+
+  Future<void> markNotifShown(String key, String today) async {
+    final kept = <String>[
+      for (final k in _shownKeys())
+        if (k.contains(today)) k,
+    ];
+    if (!kept.contains(key)) kept.add(key);
+    await setText('notifShown', jsonEncode(kept));
+  }
+
+  Future<void> clearNotifShown() => setText('notifShown', null);
 
   /// Forgets the current home but keeps the device identity.
   Future<void> clearHome() async {

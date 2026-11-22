@@ -67,4 +67,17 @@ void main() {
     expect(prefs.themeMode, 'dark');
     expect(prefs.deviceId, deviceId);
   });
+
+  test('notifShown keeps only today keys and notifAsked persists', () async {
+    final prefs = await DevicePrefs.inMemory();
+    await prefs.markNotifShown('digest:2026-11-23', '2026-11-23');
+    expect(prefs.wasNotifShown('digest:2026-11-23'), isTrue);
+
+    await prefs.markNotifShown('digest:2026-11-24', '2026-11-24');
+    expect(prefs.wasNotifShown('digest:2026-11-23'), isFalse);
+    expect(prefs.wasNotifShown('digest:2026-11-24'), isTrue);
+
+    await prefs.setNotifAsked(true);
+    expect(prefs.notifAsked, isTrue);
+  });
 }

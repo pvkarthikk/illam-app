@@ -5530,6 +5530,318 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your profile'**
   String get todayYourProfile;
+
+  /// No description provided for @todayThingsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 thing} other{{count} things}}'**
+  String todayThingsCount(int count);
+
+  /// No description provided for @todayThingsNeed.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{ needs the house today.} other{ need the house today.}}'**
+  String todayThingsNeed(int count);
+
+  /// No description provided for @todayStaffAtHome.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 staff at home now} other{{count} staff at home now}}'**
+  String todayStaffAtHome(int count);
+
+  /// No description provided for @todayNoStaff.
+  ///
+  /// In en, this message translates to:
+  /// **'No staff at home'**
+  String get todayNoStaff;
+
+  /// No description provided for @todayBudgetLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} left in budget'**
+  String todayBudgetLeft(String amount);
+
+  /// No description provided for @todayBudgetOver.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} over budget'**
+  String todayBudgetOver(String amount);
+
+  /// No description provided for @todaySetABudget.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a budget'**
+  String get todaySetABudget;
+
+  /// No description provided for @qaGrocery.
+  ///
+  /// In en, this message translates to:
+  /// **'Grocery'**
+  String get qaGrocery;
+
+  /// No description provided for @qaShopping.
+  ///
+  /// In en, this message translates to:
+  /// **'Shopping'**
+  String get qaShopping;
+
+  /// No description provided for @qaTodo.
+  ///
+  /// In en, this message translates to:
+  /// **'To-do'**
+  String get qaTodo;
+
+  /// No description provided for @qaSpend.
+  ///
+  /// In en, this message translates to:
+  /// **'Spend'**
+  String get qaSpend;
+
+  /// No description provided for @qaEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'✨ Start typing — we’ll pick the right place.'**
+  String get qaEmpty;
+
+  /// No description provided for @qaPreviewTodo.
+  ///
+  /// In en, this message translates to:
+  /// **'To-do · “{title}” · {day} · {who}'**
+  String qaPreviewTodo(String title, String day, String who);
+
+  /// No description provided for @qaPreviewSpend.
+  ///
+  /// In en, this message translates to:
+  /// **'Spend · {amount} · {merchant} · {category}'**
+  String qaPreviewSpend(String amount, String merchant, String category);
+
+  /// No description provided for @qaPreviewSpendNoAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Spend · add an amount, like “₹450”'**
+  String get qaPreviewSpendNoAmount;
+
+  /// No description provided for @qaPreviewItem.
+  ///
+  /// In en, this message translates to:
+  /// **'{type} · {name} {qty} → {store}'**
+  String qaPreviewItem(String type, String name, String qty, String store);
+
+  /// No description provided for @qaUsual.
+  ///
+  /// In en, this message translates to:
+  /// **' (usual)'**
+  String get qaUsual;
+
+  /// No description provided for @qaNeedAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'ⓘ Add an amount, like “₹450 Swiggy”'**
+  String get qaNeedAmount;
+
+  /// No description provided for @qaTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick add'**
+  String get qaTitle;
+
+  /// No description provided for @qaLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Type it the way you’d say it.'**
+  String get qaLead;
+
+  /// No description provided for @qaPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Milk 2L · Pay water bill tomorrow · ₹450 Swiggy'**
+  String get qaPlaceholder;
+
+  /// No description provided for @qaAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get qaAdd;
+
+  /// No description provided for @qaFabLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get qaFabLabel;
+
+  /// No description provided for @qaFabTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick add'**
+  String get qaFabTooltip;
+
+  /// No description provided for @qaTodoAddedToday.
+  ///
+  /// In en, this message translates to:
+  /// **'To-do added for today'**
+  String get qaTodoAddedToday;
+
+  /// No description provided for @qaTodoAddedTomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'To-do added for tomorrow'**
+  String get qaTodoAddedTomorrow;
+
+  /// No description provided for @qaTodoAddedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'To-do added for {day}'**
+  String qaTodoAddedOn(String day);
+
+  /// No description provided for @qaSpendAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} added to spends'**
+  String qaSpendAdded(String amount);
+
+  /// No description provided for @notifChannelStaff.
+  ///
+  /// In en, this message translates to:
+  /// **'House help'**
+  String get notifChannelStaff;
+
+  /// No description provided for @notifChannelTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'Tasks & reminders'**
+  String get notifChannelTasks;
+
+  /// No description provided for @notifChannelMoney.
+  ///
+  /// In en, this message translates to:
+  /// **'Bills & spends'**
+  String get notifChannelMoney;
+
+  /// No description provided for @notifChannelBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup'**
+  String get notifChannelBackup;
+
+  /// No description provided for @notifChannelHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Home & members'**
+  String get notifChannelHome;
+
+  /// No description provided for @notifAppName.
+  ///
+  /// In en, this message translates to:
+  /// **'Nest Mojo : Flat'**
+  String get notifAppName;
+
+  /// No description provided for @notifArrivalBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} usually comes by {time} — mark in?'**
+  String notifArrivalBody(String name, String time);
+
+  /// No description provided for @notifMarkInNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark in now'**
+  String get notifMarkInNow;
+
+  /// No description provided for @notifOnLeaveToday.
+  ///
+  /// In en, this message translates to:
+  /// **'On leave today'**
+  String get notifOnLeaveToday;
+
+  /// No description provided for @notifDigestBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 thing today: {titles}} other{{count} things today: {titles}…}}'**
+  String notifDigestBody(int count, String titles);
+
+  /// No description provided for @notifBillBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{bill} is due today · {amount} last time'**
+  String notifBillBody(String bill, String amount);
+
+  /// No description provided for @notifPaidAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid {amount}'**
+  String notifPaidAmount(String amount);
+
+  /// No description provided for @notifOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get notifOpen;
+
+  /// No description provided for @notifEveningBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Spent anything today? Add it in a few seconds.'**
+  String get notifEveningBody;
+
+  /// No description provided for @notifExplainerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on reminders?'**
+  String get notifExplainerTitle;
+
+  /// No description provided for @notifExplainerBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Get a nudge when {name} usually arrives, and a morning list of what’s due.'**
+  String notifExplainerBody(String name);
+
+  /// No description provided for @notifYourHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'your house help'**
+  String get notifYourHelp;
+
+  /// No description provided for @notifNotNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get notifNotNow;
+
+  /// No description provided for @notifContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get notifContinue;
+
+  /// No description provided for @notifOffBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are off for Nest Mojo : Flat'**
+  String get notifOffBanner;
+
+  /// No description provided for @notifTurnOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on'**
+  String get notifTurnOn;
+
+  /// No description provided for @debugRunJobs.
+  ///
+  /// In en, this message translates to:
+  /// **'Run background jobs now'**
+  String get debugRunJobs;
+
+  /// No description provided for @debugPlanReminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan reminders'**
+  String get debugPlanReminders;
+
+  /// No description provided for @debugRanJobs.
+  ///
+  /// In en, this message translates to:
+  /// **'Ran background jobs'**
+  String get debugRanJobs;
 }
 
 class _AppLocalizationsDelegate

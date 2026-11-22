@@ -4,6 +4,7 @@ import 'package:material_ui/material_ui.dart';
 
 import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/providers.dart';
+import 'package:nm_flat/features/quickadd/quick_add_sheet.dart';
 import 'package:nm_flat/features/store/handoff_watcher.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
@@ -35,6 +36,12 @@ class ShellScaffold extends ConsumerWidget {
       },
       child: Scaffold(
         body: HandoffWatcher(child: shell),
+        floatingActionButton: shell.currentIndex <= 3
+            ? NestFab(
+                onPressed: () =>
+                    showQuickAdd(context, ref, origin: shell.currentIndex),
+              )
+            : null,
         bottomNavigationBar: NavigationBar(
           selectedIndex: shell.currentIndex,
           onDestinationSelected: (i) {

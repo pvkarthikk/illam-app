@@ -133,14 +133,14 @@ class QtyStepper extends StatelessWidget {
     final c = context.nest;
     final l10n = AppLocalizations.of(context);
     final btnStyle = IconButton.styleFrom(
-      fixedSize: const Size(38, 38),
-      minimumSize: const Size(38, 38),
+      fixedSize: const Size(48, 48),
+      minimumSize: const Size(48, 48),
       padding: EdgeInsets.zero,
-      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      tapTargetSize: MaterialTapTargetSize.padded,
     );
 
     return Container(
-      constraints: const BoxConstraints(minHeight: 40),
+      constraints: const BoxConstraints(minHeight: 48),
       decoration: ShapeDecoration(
         shape: StadiumBorder(
           side: BorderSide(color: c.line2, width: 1.5),

@@ -1,12 +1,20 @@
+import 'dart:async';
+
+import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:nm_flat/core/data/prefs/notification_prefs.dart';
 import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/nav/routes.dart';
+import 'package:nm_flat/core/notify/background_tasks.dart';
+import 'package:nm_flat/core/notify/notification_permission.dart';
+import 'package:nm_flat/core/notify/notifications.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/features/account/appearance_controller.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
@@ -14,15 +22,78 @@ import 'package:nm_flat/l10n/gen/app_localizations.dart';
 const kPrivacyUrl = 'https://nestmojo.app/privacy';
 const kHelpUrl = 'https://nestmojo.app/help';
 
-class ProfileNotificationsSection extends ConsumerWidget {
+class ProfileNotificationsSection extends ConsumerStatefulWidget {
   const ProfileNotificationsSection({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ProfileNotificationsSection> createState() =>
+      _ProfileNotificationsSectionState();
+}
+
+class _ProfileNotificationsSectionState
+    extends ConsumerState<ProfileNotificationsSection> {
+  late final AppLifecycleListener _lifecycle;
+  bool _osEnabled = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _lifecycle = AppLifecycleListener(
+      onResume: () => unawaited(_refreshOsStatus()),
+    );
+    unawaited(_refreshOsStatus());
+  }
+
+  @override
+  void dispose() {
+    _lifecycle.dispose();
+    super.dispose();
+  }
+
+  Future<void> _refreshOsStatus() async {
+    final android = androidNotificationsPlugin();
+    if (android == null) return;
+    bool enabled = true;
+    try {
+      enabled = (await android.areNotificationsEnabled()) ?? true;
+    } on MissingPluginException {
+      enabled = true;
+    }
+    if (mounted && _osEnabled != enabled) {
+      setState(() => _osEnabled = enabled);
+    }
+  }
+
+  Future<void> _openOsSettings() async {
+    try {
+      final info = await PackageInfo.fromPlatform();
+      final intent = AndroidIntent(
+        action: 'android.settings.APP_NOTIFICATION_SETTINGS',
+        arguments: {'android.provider.extra.APP_PACKAGE': info.packageName},
+      );
+      await intent.launch();
+    } catch (_) {}
+  }
+
+  Future<void> _toggle(String kind, bool value) async {
+    if (value) {
+      await ensureNotificationPermission(context, ref);
+      if (!mounted) return;
+    }
+    await ref.read(notificationPrefsProvider.notifier).set(kind, value);
+    if (value) {
+      try {
+        await planAndEnqueue(ref.read);
+      } catch (_) {}
+    }
+    await _refreshOsStatus();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final c = context.nest;
     final prefs = ref.watch(notificationPrefsProvider);
-    final ctrl = ref.read(notificationPrefsProvider.notifier);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -30,6 +101,18 @@ class ProfileNotificationsSection extends ConsumerWidget {
         const SizedBox(height: 20),
         SectionHeader(title: l10n.profileNotifications),
         const SizedBox(height: 8),
+        if (!_osEnabled) ...[
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: InfoBanner(
+              icon: Icons.notifications_off_outlined,
+              title: l10n.notifOffBanner,
+              subtitle: l10n.notifTurnOn,
+              onTap: _openOsSettings,
+            ),
+          ),
+          const SizedBox(height: 12),
+        ],
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: NestCard(
@@ -39,28 +122,28 @@ class ProfileNotificationsSection extends ConsumerWidget {
                   title: l10n.notifArrival,
                   subtitle: l10n.notifArrivalSub,
                   value: prefs.arrival,
-                  onChanged: (v) => ctrl.set('notifArrival', v),
+                  onChanged: (v) => _toggle('notifArrival', v),
                 ),
                 Divider(height: 1, color: c.line),
                 SwitchRow(
                   title: l10n.notifDigest,
                   subtitle: l10n.notifDigestSub,
                   value: prefs.digest,
-                  onChanged: (v) => ctrl.set('notifDigest', v),
+                  onChanged: (v) => _toggle('notifDigest', v),
                 ),
                 Divider(height: 1, color: c.line),
                 SwitchRow(
                   title: l10n.notifBillDue,
                   subtitle: l10n.notifBillDueSub,
                   value: prefs.billDue,
-                  onChanged: (v) => ctrl.set('notifBillDue', v),
+                  onChanged: (v) => _toggle('notifBillDue', v),
                 ),
                 Divider(height: 1, color: c.line),
                 SwitchRow(
                   title: l10n.notifEvening,
                   subtitle: l10n.notifEveningSub,
                   value: prefs.evening,
-                  onChanged: (v) => ctrl.set('notifEvening', v),
+                  onChanged: (v) => _toggle('notifEvening', v),
                 ),
               ],
             ),

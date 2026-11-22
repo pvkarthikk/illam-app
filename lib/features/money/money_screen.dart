@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'package:nm_flat/core/data/db/database.dart';
@@ -13,11 +14,33 @@ import 'package:nm_flat/features/money/spend_sheet.dart';
 import 'package:nm_flat/features/staff/staff_providers.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
-class MoneyScreen extends ConsumerWidget {
+class MoneyScreen extends ConsumerStatefulWidget {
   const MoneyScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<MoneyScreen> createState() => _MoneyScreenState();
+}
+
+class _MoneyScreenState extends ConsumerState<MoneyScreen> {
+  bool _openingAdd = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_openingAdd &&
+        GoRouterState.of(context).uri.queryParameters['add'] == '1') {
+      _openingAdd = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        if (!mounted) return;
+        await showSpendSheet(context, ref);
+        if (mounted) context.go(Routes.money);
+        _openingAdd = false;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final c = context.nest;
     final today = ref.watch(todayDateProvider);

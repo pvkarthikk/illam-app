@@ -9,6 +9,7 @@ abstract class KeyValueStore {
   Future<void> setBool(String k, bool v);
   Future<void> remove(String k);
   Future<void> clear();
+  Future<void> reload();
 }
 
 class SharedPrefsStore implements KeyValueStore {
@@ -44,6 +45,9 @@ class SharedPrefsStore implements KeyValueStore {
 
   @override
   Future<void> clear() => _prefs.clear();
+
+  @override
+  Future<void> reload() => _prefs.reloadCache();
 }
 
 class MemoryStore implements KeyValueStore {
@@ -82,4 +86,7 @@ class MemoryStore implements KeyValueStore {
   Future<void> clear() async {
     _map.clear();
   }
+
+  @override
+  Future<void> reload() async {}
 }

@@ -2435,5 +2435,192 @@
       }
     }
   },
-  "todayYourProfile": "Your profile"
+  "todayYourProfile": "Your profile",
+  "todayThingsCount": "{count, plural, =1{1 thing} other{{count} things}}",
+  "@todayThingsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "todayThingsNeed": "{count, plural, =1{ needs the house today.} other{ need the house today.}}",
+  "@todayThingsNeed": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "todayStaffAtHome": "{count, plural, =1{1 staff at home now} other{{count} staff at home now}}",
+  "@todayStaffAtHome": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "todayNoStaff": "No staff at home",
+  "todayBudgetLeft": "{amount} left in budget",
+  "@todayBudgetLeft": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "todayBudgetOver": "{amount} over budget",
+  "@todayBudgetOver": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "todaySetABudget": "Set a budget",
+  "qaGrocery": "Grocery",
+  "qaShopping": "Shopping",
+  "qaTodo": "To-do",
+  "qaSpend": "Spend",
+  "qaEmpty": "✨ Start typing — we’ll pick the right place.",
+  "qaPreviewTodo": "To-do · “{title}” · {day} · {who}",
+  "@qaPreviewTodo": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "day": {
+        "type": "String"
+      },
+      "who": {
+        "type": "String"
+      }
+    }
+  },
+  "qaPreviewSpend": "Spend · {amount} · {merchant} · {category}",
+  "@qaPreviewSpend": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "merchant": {
+        "type": "String"
+      },
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "qaPreviewSpendNoAmount": "Spend · add an amount, like “₹450”",
+  "qaPreviewItem": "{type} · {name} {qty} → {store}",
+  "@qaPreviewItem": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      },
+      "store": {
+        "type": "String"
+      }
+    }
+  },
+  "qaUsual": " (usual)",
+  "qaNeedAmount": "ⓘ Add an amount, like “₹450 Swiggy”",
+  "qaTitle": "Quick add",
+  "qaLead": "Type it the way you’d say it.",
+  "qaPlaceholder": "Milk 2L · Pay water bill tomorrow · ₹450 Swiggy",
+  "qaAdd": "Add",
+  "qaFabLabel": "Add",
+  "qaFabTooltip": "Quick add",
+  "qaTodoAddedToday": "To-do added for today",
+  "qaTodoAddedTomorrow": "To-do added for tomorrow",
+  "qaTodoAddedOn": "To-do added for {day}",
+  "@qaTodoAddedOn": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "qaSpendAdded": "{amount} added to spends",
+  "@qaSpendAdded": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "notifChannelStaff": "House help",
+  "notifChannelTasks": "Tasks & reminders",
+  "notifChannelMoney": "Bills & spends",
+  "notifChannelBackup": "Backup",
+  "notifChannelHome": "Home & members",
+  "notifAppName": "Nest Mojo : Flat",
+  "notifArrivalBody": "{name} usually comes by {time} — mark in?",
+  "@notifArrivalBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "notifMarkInNow": "Mark in now",
+  "notifOnLeaveToday": "On leave today",
+  "notifDigestBody": "{count, plural, =1{1 thing today: {titles}} other{{count} things today: {titles}…}}",
+  "@notifDigestBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "titles": {
+        "type": "String"
+      }
+    }
+  },
+  "notifBillBody": "{bill} is due today · {amount} last time",
+  "@notifBillBody": {
+    "placeholders": {
+      "bill": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "notifPaidAmount": "Paid {amount}",
+  "@notifPaidAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "notifOpen": "Open",
+  "notifEveningBody": "Spent anything today? Add it in a few seconds.",
+  "notifExplainerTitle": "Turn on reminders?",
+  "notifExplainerBody": "Get a nudge when {name} usually arrives, and a morning list of what’s due.",
+  "@notifExplainerBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "notifYourHelp": "your house help",
+  "notifNotNow": "Not now",
+  "notifContinue": "Continue",
+  "notifOffBanner": "Notifications are off for Nest Mojo : Flat",
+  "notifTurnOn": "Turn on",
+  "debugRunJobs": "Run background jobs now",
+  "debugPlanReminders": "Plan reminders",
+  "debugRanJobs": "Ran background jobs"
 }

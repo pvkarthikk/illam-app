@@ -5,6 +5,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:nm_flat/core/data/bootstrap.dart';
 import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/nav/routes.dart';
+import 'package:nm_flat/core/notify/background_tasks.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/features/debug/data_lab_controller.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
@@ -101,6 +102,21 @@ class DebugScreen extends ConsumerWidget {
                     await ref.read(demoSeederProvider).load();
                     ref.read(snackbarProvider).show(l10n.debugDemoLoaded);
                   },
+                ),
+                Divider(height: 1, color: c.line),
+                SettingsRow(
+                  label: l10n.debugRunJobs,
+                  value: '',
+                  onTap: () async {
+                    await runRemindersNow(ref.read);
+                    ref.read(snackbarProvider).show(l10n.debugRanJobs);
+                  },
+                ),
+                Divider(height: 1, color: c.line),
+                SettingsRow(
+                  label: l10n.debugPlanReminders,
+                  value: '',
+                  onTap: () => planAndEnqueue(ref.read),
                 ),
                 Divider(height: 1, color: c.line),
                 SettingsRow(

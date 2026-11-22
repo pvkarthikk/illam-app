@@ -50,8 +50,12 @@ part 'database.g.dart';
 class NestDatabase extends _$NestDatabase {
   NestDatabase(super.e);
 
-  factory NestDatabase.open() =>
-      NestDatabase(driftDatabase(name: 'nestmojo'));
+  factory NestDatabase.open() => NestDatabase(
+    driftDatabase(
+      name: 'nestmojo',
+      native: const DriftNativeOptions(shareAcrossIsolates: true),
+    ),
+  );
 
   NestDatabase.forTesting(QueryExecutor e)
     : super(DatabaseConnection(e, closeStreamsSynchronously: true));
