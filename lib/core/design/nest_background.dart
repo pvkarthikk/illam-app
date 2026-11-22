@@ -2,8 +2,7 @@ import 'package:material_ui/material_ui.dart';
 
 import 'package:nm_flat/core/design/nest_colors.dart';
 
-/// Deep green (`#12201A`) brand background with warm radial accents and a
-/// subtle dotted grid pattern matching the Nest Mojo - Flat visual identity.
+/// Deep green brand background with warm radial accents and a dotted grid.
 class NestPatternBackground extends StatelessWidget {
   const NestPatternBackground({
     super.key,
@@ -20,13 +19,13 @@ class NestPatternBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final NestColors colors = context.nest;
-    final Widget painted = CustomPaint(
+    final colors = context.nest;
+    final painted = CustomPaint(
       painter: _NestPatternPainter(
-        baseColor: colors.brandCanvas,
-        emeraldGlow: colors.brandCanvasGlowGreen,
-        warmGlow: colors.brandCanvasGlowWarm,
-        dotColor: colors.brandCanvasDot,
+        baseColor: NestPalette.immersiveBg,
+        emeraldGlow: colors.primary,
+        warmGlow: colors.accent,
+        dotColor: NestPalette.immersiveText,
         dotSpacing: dotSpacing,
         dotRadius: dotRadius,
       ),
@@ -62,13 +61,11 @@ class _NestPatternPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final Rect bounds = Offset.zero & size;
+    final bounds = Offset.zero & size;
 
-    // 1. Deep green base (#12201A).
     canvas.drawRect(bounds, Paint()..color = baseColor);
 
-    // 2. Soft emerald radial glow near the top right.
-    final Paint emeraldPaint = Paint()
+    final emeraldPaint = Paint()
       ..shader = RadialGradient(
         center: const Alignment(0.75, -0.75),
         radius: 1.15,
@@ -79,8 +76,7 @@ class _NestPatternPainter extends CustomPainter {
       ).createShader(bounds);
     canvas.drawRect(bounds, emeraldPaint);
 
-    // 3. Subtle warm amber radial accents (top-left & bottom-right).
-    final Paint topWarmPaint = Paint()
+    final topWarmPaint = Paint()
       ..shader = RadialGradient(
         center: const Alignment(-0.85, -0.8),
         radius: 0.95,
@@ -91,7 +87,7 @@ class _NestPatternPainter extends CustomPainter {
       ).createShader(bounds);
     canvas.drawRect(bounds, topWarmPaint);
 
-    final Paint bottomWarmPaint = Paint()
+    final bottomWarmPaint = Paint()
       ..shader = RadialGradient(
         center: const Alignment(0.8, 0.95),
         radius: 0.9,
@@ -102,12 +98,11 @@ class _NestPatternPainter extends CustomPainter {
       ).createShader(bounds);
     canvas.drawRect(bounds, bottomWarmPaint);
 
-    // 4. Subtle dotted pattern grid.
-    final Paint dotPaint = Paint()
+    final dotPaint = Paint()
       ..color = dotColor.withValues(alpha: 0.11)
       ..isAntiAlias = true;
 
-    final double offset = dotSpacing / 2;
+    final offset = dotSpacing / 2;
     for (double y = offset; y < size.height; y += dotSpacing) {
       for (double x = offset; x < size.width; x += dotSpacing) {
         canvas.drawCircle(Offset(x, y), dotRadius, dotPaint);

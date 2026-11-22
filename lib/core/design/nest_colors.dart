@@ -1,249 +1,249 @@
 import 'package:material_ui/material_ui.dart';
 
-/// Raw palette constants derived from the Nest Mojo - Flat visual design.
-///
-/// Screens should read colors from `context.nest` ([NestColors]) or
-/// `Theme.of(context).colorScheme` rather than referencing hex literals.
-abstract final class NestPalette {
-  // Brand / hero patterned background (deep green with warm radial accents).
-  static const Color brandCanvas = Color(0xFF12201A);
-  static const Color brandCanvasGlowGreen = Color(0xFF23503A);
-  static const Color brandCanvasGlowWarm = Color(0xFFD98F1C);
-  static const Color brandCanvasDot = Color(0xFFEFE7D8);
-  static const Color brandCard = Color(0xFF1C3327);
-  static const Color brandCardBorder = Color(0x33EFE7D8);
-  static const Color brandText = Color(0xFFEFE7D8);
-  static const Color brandTextMuted = Color(0xFFC7D1C9);
-  static const Color brandBadgeGreen = Color(0xFF2E8B5F);
-  static const Color brandBadgeAmber = Color(0xFFB88337);
-  static const Color brandLogoSurface = Color(0xFFF4CC49);
-  static const Color brandLogoInk = Color(0xFF1D2A21);
-
-  // Light app theme tokens.
-  static const Color lightBackground = Color(0xFFF4ECDF);
-  static const Color lightCard = Color(0xFFFFFDF8);
-  static const Color lightCardSubtle = Color(0xFFFAF3E6);
-  static const Color lightCardHigh = Color(0xFFEDE3D2);
-  static const Color lightBorder = Color(0xFFD9CEBC);
-  static const Color lightText = Color(0xFF1D2A21);
-  static const Color lightTextMuted = Color(0xFF4F6054);
-  static const Color lightPrimary = Color(0xFF23503A);
-  static const Color lightPrimaryContainer = Color(0xFFD7E7DD);
-  static const Color lightAccent = Color(0xFFD98F1C);
-  static const Color lightAccentContainer = Color(0xFFFBE9C8);
-  static const Color lightDanger = Color(0xFFB0412A);
-  static const Color lightDangerContainer = Color(0xFFFADCD5);
-
-  // Dark app theme tokens.
-  static const Color darkBackground = Color(0xFF0F1612);
-  static const Color darkCard = Color(0xFF16221C);
-  static const Color darkCardSubtle = Color(0xFF1C2C24);
-  static const Color darkCardHigh = Color(0xFF24372E);
-  static const Color darkBorder = Color(0xFF2D4237);
-  static const Color darkText = Color(0xFFEFE7D8);
-  static const Color darkTextMuted = Color(0xFFB1BEB4);
-  static const Color darkPrimary = Color(0xFF8FD0A8);
-  static const Color darkPrimaryContainer = Color(0xFF23503A);
-  static const Color darkAccent = Color(0xFFF0B44E);
-  static const Color darkAccentContainer = Color(0xFF4D3611);
-  static const Color darkDanger = Color(0xFFF08C72);
-  static const Color darkDangerContainer = Color(0xFF5D2316);
-}
-
-/// Semantic Nest Mojo - Flat color tokens attached to [ThemeData].
+/// Semantic colour tokens for Nest Mojo : Flat, attached via [ThemeExtension].
 @immutable
 class NestColors extends ThemeExtension<NestColors> {
   const NestColors({
-    required this.background,
+    required this.paper,
+    required this.paper2,
     required this.card,
-    required this.cardSubtle,
-    required this.cardBorder,
-    required this.textPrimary,
-    required this.textMuted,
+    required this.card2,
+    required this.ink,
+    required this.ink2,
+    required this.ink3,
+    required this.line,
+    required this.line2,
     required this.primary,
+    required this.onPrimary,
+    required this.primarySoft,
     required this.accent,
+    required this.accentInk,
+    required this.accentSoft,
     required this.danger,
-    required this.brandCanvas,
-    required this.brandCanvasGlowGreen,
-    required this.brandCanvasGlowWarm,
-    required this.brandCanvasDot,
-    required this.brandCard,
-    required this.brandCardBorder,
-    required this.brandText,
-    required this.brandTextMuted,
-    required this.brandBadgeGreen,
-    required this.brandBadgeAmber,
-    required this.brandLogoSurface,
-    required this.brandLogoInk,
+    required this.dangerSoft,
+    required this.info,
+    required this.infoSoft,
+    required this.ok,
+    required this.dot,
+    required this.scrim,
+    required this.onAccent,
+    required this.onDanger,
   });
 
-  final Color background;
+  final Color paper;
+  final Color paper2;
   final Color card;
-  final Color cardSubtle;
-  final Color cardBorder;
-  final Color textPrimary;
-  final Color textMuted;
+  final Color card2;
+  final Color ink;
+  final Color ink2;
+  final Color ink3;
+  final Color line;
+  final Color line2;
   final Color primary;
+  final Color onPrimary;
+  final Color primarySoft;
   final Color accent;
+  final Color accentInk;
+  final Color accentSoft;
   final Color danger;
-  final Color brandCanvas;
-  final Color brandCanvasGlowGreen;
-  final Color brandCanvasGlowWarm;
-  final Color brandCanvasDot;
-  final Color brandCard;
-  final Color brandCardBorder;
-  final Color brandText;
-  final Color brandTextMuted;
-  final Color brandBadgeGreen;
-  final Color brandBadgeAmber;
-  final Color brandLogoSurface;
-  final Color brandLogoInk;
+  final Color dangerSoft;
+  final Color info;
+  final Color infoSoft;
+  final Color ok;
+  final Color dot;
+  final Color scrim;
+  final Color onAccent;
+  final Color onDanger;
 
-  static const NestColors light = NestColors(
-    background: NestPalette.lightBackground,
-    card: NestPalette.lightCard,
-    cardSubtle: NestPalette.lightCardSubtle,
-    cardBorder: NestPalette.lightBorder,
-    textPrimary: NestPalette.lightText,
-    textMuted: NestPalette.lightTextMuted,
-    primary: NestPalette.lightPrimary,
-    accent: NestPalette.lightAccent,
-    danger: NestPalette.lightDanger,
-    brandCanvas: NestPalette.brandCanvas,
-    brandCanvasGlowGreen: NestPalette.brandCanvasGlowGreen,
-    brandCanvasGlowWarm: NestPalette.brandCanvasGlowWarm,
-    brandCanvasDot: NestPalette.brandCanvasDot,
-    brandCard: NestPalette.brandCard,
-    brandCardBorder: NestPalette.brandCardBorder,
-    brandText: NestPalette.brandText,
-    brandTextMuted: NestPalette.brandTextMuted,
-    brandBadgeGreen: NestPalette.brandBadgeGreen,
-    brandBadgeAmber: NestPalette.brandBadgeAmber,
-    brandLogoSurface: NestPalette.brandLogoSurface,
-    brandLogoInk: NestPalette.brandLogoInk,
+  static const light = NestColors(
+    paper: Color(0xFFF4ECDF),
+    paper2: Color(0xFFEBE0CE),
+    card: Color(0xFFFFFAF2),
+    card2: Color(0xFFF7EFE2),
+    ink: Color(0xFF1D2A21),
+    ink2: Color(0xFF47544A),
+    ink3: Color(0xFF6A756B),
+    line: Color(0x1F1D2A21),
+    line2: Color(0x3D1D2A21),
+    primary: Color(0xFF23503A),
+    onPrimary: Color(0xFFFFF8EC),
+    primarySoft: Color(0xFFDCE8DA),
+    accent: Color(0xFFD98F1C),
+    accentInk: Color(0xFF6B4307),
+    accentSoft: Color(0xFFF7E3BC),
+    danger: Color(0xFFB0412A),
+    dangerSoft: Color(0xFFF6DACF),
+    info: Color(0xFF34508A),
+    infoSoft: Color(0xFFDDE3F2),
+    ok: Color(0xFF2E7A4F),
+    dot: Color(0x2623503A),
+    scrim: Color(0x73121A14),
+    onAccent: Color(0xFF241603),
+    onDanger: Color(0xFFFFFFFF),
   );
 
-  static const NestColors dark = NestColors(
-    background: NestPalette.darkBackground,
-    card: NestPalette.darkCard,
-    cardSubtle: NestPalette.darkCardSubtle,
-    cardBorder: NestPalette.darkBorder,
-    textPrimary: NestPalette.darkText,
-    textMuted: NestPalette.darkTextMuted,
-    primary: NestPalette.darkPrimary,
-    accent: NestPalette.darkAccent,
-    danger: NestPalette.darkDanger,
-    brandCanvas: NestPalette.brandCanvas,
-    brandCanvasGlowGreen: NestPalette.brandCanvasGlowGreen,
-    brandCanvasGlowWarm: NestPalette.brandCanvasGlowWarm,
-    brandCanvasDot: NestPalette.brandCanvasDot,
-    brandCard: NestPalette.brandCard,
-    brandCardBorder: NestPalette.brandCardBorder,
-    brandText: NestPalette.brandText,
-    brandTextMuted: NestPalette.brandTextMuted,
-    brandBadgeGreen: NestPalette.brandBadgeGreen,
-    brandBadgeAmber: NestPalette.brandBadgeAmber,
-    brandLogoSurface: NestPalette.brandLogoSurface,
-    brandLogoInk: NestPalette.brandLogoInk,
+  static const dark = NestColors(
+    paper: Color(0xFF0F1612),
+    paper2: Color(0xFF18231C),
+    card: Color(0xFF19241D),
+    card2: Color(0xFF1F2C23),
+    ink: Color(0xFFEFE7D8),
+    ink2: Color(0xFFC3CABF),
+    ink3: Color(0xFF9AA498),
+    line: Color(0x1AEFE7D8),
+    line2: Color(0x38EFE7D8),
+    primary: Color(0xFF8FD0A8),
+    onPrimary: Color(0xFF0D1A12),
+    primarySoft: Color(0xFF203828),
+    accent: Color(0xFFF0B44E),
+    accentInk: Color(0xFFF6D9A2),
+    accentSoft: Color(0xFF3A2E17),
+    danger: Color(0xFFF08C72),
+    dangerSoft: Color(0xFF3B211A),
+    info: Color(0xFFA3B8EC),
+    infoSoft: Color(0xFF1E2841),
+    ok: Color(0xFF8FD0A8),
+    dot: Color(0x1A8FD0A8),
+    scrim: Color(0x99000000),
+    onAccent: Color(0xFF241603),
+    onDanger: Color(0xFF1B140A),
   );
 
   @override
   NestColors copyWith({
-    Color? background,
+    Color? paper,
+    Color? paper2,
     Color? card,
-    Color? cardSubtle,
-    Color? cardBorder,
-    Color? textPrimary,
-    Color? textMuted,
+    Color? card2,
+    Color? ink,
+    Color? ink2,
+    Color? ink3,
+    Color? line,
+    Color? line2,
     Color? primary,
+    Color? onPrimary,
+    Color? primarySoft,
     Color? accent,
+    Color? accentInk,
+    Color? accentSoft,
     Color? danger,
-    Color? brandCanvas,
-    Color? brandCanvasGlowGreen,
-    Color? brandCanvasGlowWarm,
-    Color? brandCanvasDot,
-    Color? brandCard,
-    Color? brandCardBorder,
-    Color? brandText,
-    Color? brandTextMuted,
-    Color? brandBadgeGreen,
-    Color? brandBadgeAmber,
-    Color? brandLogoSurface,
-    Color? brandLogoInk,
+    Color? dangerSoft,
+    Color? info,
+    Color? infoSoft,
+    Color? ok,
+    Color? dot,
+    Color? scrim,
+    Color? onAccent,
+    Color? onDanger,
   }) {
     return NestColors(
-      background: background ?? this.background,
+      paper: paper ?? this.paper,
+      paper2: paper2 ?? this.paper2,
       card: card ?? this.card,
-      cardSubtle: cardSubtle ?? this.cardSubtle,
-      cardBorder: cardBorder ?? this.cardBorder,
-      textPrimary: textPrimary ?? this.textPrimary,
-      textMuted: textMuted ?? this.textMuted,
+      card2: card2 ?? this.card2,
+      ink: ink ?? this.ink,
+      ink2: ink2 ?? this.ink2,
+      ink3: ink3 ?? this.ink3,
+      line: line ?? this.line,
+      line2: line2 ?? this.line2,
       primary: primary ?? this.primary,
+      onPrimary: onPrimary ?? this.onPrimary,
+      primarySoft: primarySoft ?? this.primarySoft,
       accent: accent ?? this.accent,
+      accentInk: accentInk ?? this.accentInk,
+      accentSoft: accentSoft ?? this.accentSoft,
       danger: danger ?? this.danger,
-      brandCanvas: brandCanvas ?? this.brandCanvas,
-      brandCanvasGlowGreen: brandCanvasGlowGreen ?? this.brandCanvasGlowGreen,
-      brandCanvasGlowWarm: brandCanvasGlowWarm ?? this.brandCanvasGlowWarm,
-      brandCanvasDot: brandCanvasDot ?? this.brandCanvasDot,
-      brandCard: brandCard ?? this.brandCard,
-      brandCardBorder: brandCardBorder ?? this.brandCardBorder,
-      brandText: brandText ?? this.brandText,
-      brandTextMuted: brandTextMuted ?? this.brandTextMuted,
-      brandBadgeGreen: brandBadgeGreen ?? this.brandBadgeGreen,
-      brandBadgeAmber: brandBadgeAmber ?? this.brandBadgeAmber,
-      brandLogoSurface: brandLogoSurface ?? this.brandLogoSurface,
-      brandLogoInk: brandLogoInk ?? this.brandLogoInk,
+      dangerSoft: dangerSoft ?? this.dangerSoft,
+      info: info ?? this.info,
+      infoSoft: infoSoft ?? this.infoSoft,
+      ok: ok ?? this.ok,
+      dot: dot ?? this.dot,
+      scrim: scrim ?? this.scrim,
+      onAccent: onAccent ?? this.onAccent,
+      onDanger: onDanger ?? this.onDanger,
     );
   }
 
   @override
   NestColors lerp(ThemeExtension<NestColors>? other, double t) {
-    if (other is! NestColors) {
-      return this;
-    }
+    if (other is! NestColors) return this;
     return NestColors(
-      background: Color.lerp(background, other.background, t)!,
+      paper: Color.lerp(paper, other.paper, t)!,
+      paper2: Color.lerp(paper2, other.paper2, t)!,
       card: Color.lerp(card, other.card, t)!,
-      cardSubtle: Color.lerp(cardSubtle, other.cardSubtle, t)!,
-      cardBorder: Color.lerp(cardBorder, other.cardBorder, t)!,
-      textPrimary: Color.lerp(textPrimary, other.textPrimary, t)!,
-      textMuted: Color.lerp(textMuted, other.textMuted, t)!,
+      card2: Color.lerp(card2, other.card2, t)!,
+      ink: Color.lerp(ink, other.ink, t)!,
+      ink2: Color.lerp(ink2, other.ink2, t)!,
+      ink3: Color.lerp(ink3, other.ink3, t)!,
+      line: Color.lerp(line, other.line, t)!,
+      line2: Color.lerp(line2, other.line2, t)!,
       primary: Color.lerp(primary, other.primary, t)!,
+      onPrimary: Color.lerp(onPrimary, other.onPrimary, t)!,
+      primarySoft: Color.lerp(primarySoft, other.primarySoft, t)!,
       accent: Color.lerp(accent, other.accent, t)!,
+      accentInk: Color.lerp(accentInk, other.accentInk, t)!,
+      accentSoft: Color.lerp(accentSoft, other.accentSoft, t)!,
       danger: Color.lerp(danger, other.danger, t)!,
-      brandCanvas: Color.lerp(brandCanvas, other.brandCanvas, t)!,
-      brandCanvasGlowGreen: Color.lerp(
-        brandCanvasGlowGreen,
-        other.brandCanvasGlowGreen,
-        t,
-      )!,
-      brandCanvasGlowWarm: Color.lerp(
-        brandCanvasGlowWarm,
-        other.brandCanvasGlowWarm,
-        t,
-      )!,
-      brandCanvasDot: Color.lerp(brandCanvasDot, other.brandCanvasDot, t)!,
-      brandCard: Color.lerp(brandCard, other.brandCard, t)!,
-      brandCardBorder: Color.lerp(brandCardBorder, other.brandCardBorder, t)!,
-      brandText: Color.lerp(brandText, other.brandText, t)!,
-      brandTextMuted: Color.lerp(brandTextMuted, other.brandTextMuted, t)!,
-      brandBadgeGreen: Color.lerp(brandBadgeGreen, other.brandBadgeGreen, t)!,
-      brandBadgeAmber: Color.lerp(brandBadgeAmber, other.brandBadgeAmber, t)!,
-      brandLogoSurface: Color.lerp(
-        brandLogoSurface,
-        other.brandLogoSurface,
-        t,
-      )!,
-      brandLogoInk: Color.lerp(brandLogoInk, other.brandLogoInk, t)!,
+      dangerSoft: Color.lerp(dangerSoft, other.dangerSoft, t)!,
+      info: Color.lerp(info, other.info, t)!,
+      infoSoft: Color.lerp(infoSoft, other.infoSoft, t)!,
+      ok: Color.lerp(ok, other.ok, t)!,
+      dot: Color.lerp(dot, other.dot, t)!,
+      scrim: Color.lerp(scrim, other.scrim, t)!,
+      onAccent: Color.lerp(onAccent, other.onAccent, t)!,
+      onDanger: Color.lerp(onDanger, other.onDanger, t)!,
     );
   }
 }
 
-/// Convenience accessor for [NestColors] from any [BuildContext].
-extension NestColorsContext on BuildContext {
+class NestPalette {
+  static const immersiveBg = Color(0xFF0F1612),
+      immersiveRow = Color(0xFF1A251D),
+      immersiveText = Color(0xFFF3EBDD),
+      immersiveMuted = Color(0xFFA9B4A7),
+      immersiveAccent = Color(0xFFE9A93C),
+      immersiveChecked = Color(0xFF8FD0A8),
+      immersiveBox = Color(0xFF6E7B70);
+  static const categories = <String, Color>{
+    'Groceries': Color(0xFF2E7A4F),
+    'Shopping': Color(0xFF34508A),
+    'Staff': Color(0xFFD98F1C),
+    'Utilities': Color(0xFF7A5AA8),
+    'Eating out': Color(0xFFB0412A),
+    'Home care': Color(0xFF4F8A8B),
+    'Other': Color(0xFF8E998C),
+  };
+  static const avatars = <Color>[
+    Color(0xFF23503A),
+    Color(0xFF34508A),
+    Color(0xFFB0412A),
+    Color(0xFFB07A1A),
+    Color(0xFF7A5AA8),
+    Color(0xFF4F8A8B),
+    Color(0xFF8A5A2B),
+    Color(0xFF5E8A2B),
+    Color(0xFFA8362A),
+  ];
+  // Store badges: background, letters, foreground (contrast-checked; Flipkart darkened)
+  static const channels = <String, ChannelStyle>{
+    'zepto': ChannelStyle(Color(0xFF5B1E8C), 'Z', Color(0xFFFFFFFF)),
+    'blinkit': ChannelStyle(Color(0xFFF2C21B), 'b', Color(0xFF2B2205)),
+    'bigbasket': ChannelStyle(Color(0xFF5E9A1C), 'bb', Color(0xFF1B140A)),
+    'amazon': ChannelStyle(Color(0xFFE58A00), 'a', Color(0xFF1B140A)),
+    'flipkart': ChannelStyle(Color(0xFF2468D8), 'F', Color(0xFFFFFFFF)),
+    'meesho': ChannelStyle(Color(0xFFC81E65), 'M', Color(0xFFFFFFFF)),
+  }; // 'offline' is drawn by ChannelBadge
+  static Color fromHex(String hex) =>
+      Color(int.parse('FF${hex.replaceFirst('#', '')}', radix: 16));
+}
+
+class ChannelStyle {
+  const ChannelStyle(this.bg, this.letters, this.fg);
+  final Color bg, fg;
+  final String letters;
+}
+
+extension NestContext on BuildContext {
   NestColors get nest =>
-      Theme.of(this).extension<NestColors>() ??
-      (Theme.of(this).brightness == Brightness.dark
-          ? NestColors.dark
-          : NestColors.light);
+      Theme.of(this).extension<NestColors>() ?? NestColors.light;
 }

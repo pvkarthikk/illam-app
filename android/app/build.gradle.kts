@@ -29,6 +29,22 @@ android {
         versionName = flutter.versionName
     }
 
+    buildFeatures {
+        resValues = true
+    }
+    flavorDimensions += "copy"
+    productFlavors {
+        create("dev") {
+            dimension = "copy"
+            resValue("string", "app_name", "Nest Mojo : Flat")
+        }
+        create("peer2") {
+            dimension = "copy"
+            applicationIdSuffix = ".peer2"
+            resValue("string", "app_name", "Nest Mojo : Flat · P2")
+        }
+    }
+
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.

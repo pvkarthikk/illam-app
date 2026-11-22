@@ -1,0 +1,20 @@
+{
+  "@@locale": "en",
+  "appName": "Nest Mojo : Flat",
+  "tabToday": "Today",
+  "tabLists": "Lists",
+  "tabTasks": "Tasks",
+  "tabMeals": "Meals",
+  "tabMoney": "Money",
+  "commonUndo": "Undo",
+  "commonBack": "Back",
+  "commonClose": "Close",
+  "commonDecrease": "Decrease",
+  "commonIncrease": "Increase",
+  "commonArrivesIn": "Arrives in {phase}",
+  "@commonArrivesIn": {"placeholders": {"phase": {}}},
+  "debugTitle": "Developer tools",
+  "debugGallery": "Component gallery",
+  "debugGallerySub": "Every shared component, light and dark",
+  "debugDarkTheme": "Dark theme"
+}

@@ -2,6 +2,7 @@ import 'package:material_ui/material_ui.dart';
 
 import 'package:nm_flat/core/design/nest_background.dart';
 import 'package:nm_flat/core/design/nest_colors.dart';
+import 'package:nm_flat/core/design/nest_text.dart';
 import 'package:nm_flat/core/design/nest_theme.dart';
 
 const String kAppTitle = 'Nest Mojo - Flat';
@@ -13,7 +14,7 @@ void main() {
 class MyApp extends StatefulWidget {
   const MyApp({
     super.key,
-    this.initialThemeMode = ThemeMode.light,
+    this.initialThemeMode = ThemeMode.system,
   });
 
   final ThemeMode initialThemeMode;
@@ -61,7 +62,7 @@ class MyHomePage extends StatefulWidget {
   const MyHomePage({
     super.key,
     required this.title,
-    this.themeMode = ThemeMode.light,
+    this.themeMode = ThemeMode.system,
     this.onThemeModeChanged,
   });
 
@@ -83,27 +84,27 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _toggleTheme() {
-    final ThemeMode nextMode = widget.themeMode == ThemeMode.dark
-        ? ThemeMode.light
-        : ThemeMode.dark;
-    widget.onThemeModeChanged?.call(nextMode);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    widget.onThemeModeChanged?.call(isDark ? ThemeMode.light : ThemeMode.dark);
   }
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    final ColorScheme colorScheme = theme.colorScheme;
-    final NestColors nest = context.nest;
-    final bool isDark = theme.brightness == Brightness.dark;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final nest = context.nest;
+    final isDark = theme.brightness == Brightness.dark;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.title, style: NestText.cardTitle20),
         actions: <Widget>[
           IconButton(
             onPressed: _toggleTheme,
             tooltip: isDark ? 'Switch to light theme' : 'Switch to dark theme',
-            icon: Icon(isDark ? Icons.light_mode_outlined : Icons.dark_mode_outlined),
+            icon: Icon(
+              isDark ? Icons.light_mode_outlined : Icons.dark_mode_outlined,
+            ),
           ),
         ],
       ),
@@ -130,13 +131,13 @@ class _MyHomePageState extends State<MyHomePage> {
                             height: 44,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
-                              color: nest.brandLogoSurface,
+                              color: NestPalette.immersiveAccent,
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Text(
                               'N',
-                              style: theme.textTheme.headlineSmall?.copyWith(
-                                color: nest.brandLogoInk,
+                              style: NestText.cardTitle20.copyWith(
+                                color: nest.onAccent,
                               ),
                             ),
                           ),
@@ -145,14 +146,14 @@ class _MyHomePageState extends State<MyHomePage> {
                               children: <InlineSpan>[
                                 TextSpan(
                                   text: 'Nest Mojo ',
-                                  style: theme.textTheme.titleLarge?.copyWith(
-                                    color: nest.brandText,
+                                  style: NestText.cardTitle20.copyWith(
+                                    color: NestPalette.immersiveText,
                                   ),
                                 ),
                                 TextSpan(
                                   text: '- Flat',
-                                  style: theme.textTheme.titleLarge?.copyWith(
-                                    color: nest.brandLogoSurface,
+                                  style: NestText.cardTitle20.copyWith(
+                                    color: NestPalette.immersiveAccent,
                                   ),
                                 ),
                               ],
@@ -163,21 +164,21 @@ class _MyHomePageState extends State<MyHomePage> {
                       const SizedBox(height: 18),
                       Text(
                         'Run your home,',
-                        style: theme.textTheme.displaySmall?.copyWith(
-                          color: nest.brandText,
+                        style: NestText.display30.copyWith(
+                          color: NestPalette.immersiveText,
                         ),
                       ),
                       Text(
                         'together.',
-                        style: theme.textTheme.displaySmall?.copyWith(
-                          color: nest.brandLogoSurface,
+                        style: NestText.display30.copyWith(
+                          color: NestPalette.immersiveAccent,
                         ),
                       ),
                       const SizedBox(height: 10),
                       Text(
                         'House help, groceries, chores, meals and spends — shared between the phones in your home.',
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: nest.brandTextMuted,
+                        style: NestText.body15.copyWith(
+                          color: NestPalette.immersiveMuted,
                         ),
                       ),
                     ],
@@ -191,16 +192,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(
-                        'Appearance',
-                        style: theme.textTheme.headlineSmall,
-                      ),
+                      Text('Appearance', style: NestText.cardTitle20),
                       const SizedBox(height: 6),
                       Text(
                         'Switch between warm cream paper light mode and near-black green dark mode.',
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: nest.textMuted,
-                        ),
+                        style: NestText.body15.copyWith(color: nest.ink2),
                       ),
                       const SizedBox(height: 16),
                       SegmentedButton<ThemeMode>(
@@ -218,9 +214,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                         ],
                         selected: <ThemeMode>{
-                          widget.themeMode == ThemeMode.dark
-                              ? ThemeMode.dark
-                              : ThemeMode.light,
+                          isDark ? ThemeMode.dark : ThemeMode.light,
                         },
                         onSelectionChanged: (Set<ThemeMode> selection) {
                           if (selection.isNotEmpty) {
@@ -263,15 +257,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: <Widget>[
                       Text(
                         'You have pushed the button this many times:',
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: nest.textMuted,
-                        ),
+                        style: NestText.body15.copyWith(color: nest.ink2),
                       ),
                       const SizedBox(height: 8),
-                      Text(
-                        '$_counter',
-                        style: theme.textTheme.headlineMedium,
-                      ),
+                      Text('$_counter', style: NestText.bigNumber30),
                     ],
                   ),
                 ),
@@ -310,9 +299,7 @@ class _ColorBadge extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: Theme.of(context).textTheme.labelMedium?.copyWith(
-          color: foregroundColor,
-        ),
+        style: NestText.tag12.copyWith(color: foregroundColor),
       ),
     );
   }
