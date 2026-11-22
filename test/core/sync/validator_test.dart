@@ -19,6 +19,14 @@ class FakeView implements ValidationView {
     'visits': {'in_at', 'out_at', 'staff_id', 'deleted'},
     'expenses': {'amount_paise', 'source', 'added_by', 'deleted'},
     'bills': {'name', 'deleted'},
+    'backup_status': {
+      'member_id',
+      'frequency',
+      'recovery_capable',
+      'off_phone',
+      'dests_json',
+      'deleted',
+    },
   };
 
   @override
@@ -301,5 +309,22 @@ void main() {
     expect(before.verdict, Verdict.accept);
     expect(after.verdict, Verdict.quarantine);
     expect(after.reason, 'notMember');
+  });
+
+  test('18: device writes another device backup_status row -> quarantine ownOnly', () async {
+    final d = await _check(
+      _makeView(),
+      _op('dA', 'A', 'backup_status', 'dB', 'frequency', 'daily'),
+    );
+    expect(d.verdict, Verdict.quarantine);
+    expect(d.reason, 'ownOnly');
+  });
+
+  test('19: plain member writes own device backup_status row -> accept', () async {
+    final d = await _check(
+      _makeView(),
+      _op('dM', 'M', 'backup_status', 'dM', 'frequency', 'daily'),
+    );
+    expect(d.verdict, Verdict.accept);
   });
 }

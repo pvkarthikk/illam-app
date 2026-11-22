@@ -9,6 +9,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'package:nm_flat/core/backup/backup_schedule.dart';
 import 'package:nm_flat/core/data/prefs/notification_prefs.dart';
 import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/nav/routes.dart';
@@ -17,6 +18,9 @@ import 'package:nm_flat/core/notify/notification_permission.dart';
 import 'package:nm_flat/core/notify/notifications.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/features/account/appearance_controller.dart';
+import 'package:nm_flat/features/backup/backup_controller.dart';
+import 'package:nm_flat/features/backup/backup_texts.dart';
+import 'package:nm_flat/features/staff/staff_providers.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
 const kPrivacyUrl = 'https://nestmojo.app/privacy';
@@ -145,6 +149,13 @@ class _ProfileNotificationsSectionState
                   value: prefs.evening,
                   onChanged: (v) => _toggle('notifEvening', v),
                 ),
+                Divider(height: 1, color: c.line),
+                SwitchRow(
+                  title: l10n.notifBackupAttention,
+                  subtitle: l10n.notifBackupAttentionSub,
+                  value: prefs.backup,
+                  onChanged: (v) => _toggle('notifBackup', v),
+                ),
               ],
             ),
           ),
@@ -207,6 +218,35 @@ class ProfileOnThisPhoneSection extends ConsumerWidget {
       ThemeMode.dark => l10n.themeDark,
       ThemeMode.system => l10n.themeSystem,
     };
+    ref.watch(minuteTickProvider);
+    final nowMs = ref.read(clockProvider).nowMs;
+    final cfg = ref.watch(backupConfigProvider).value;
+    final String backupLabel;
+    final String? backupErr;
+    if (cfg == null || cfg.destinations.isEmpty) {
+      backupLabel = l10n.backupProfileNotSetUp;
+      backupErr = null;
+    } else {
+      final firstKind = cfg.destinations.first.kind;
+      final provider = providerShort(l10n, firstKind);
+      final freq = switch (cfg.frequency) {
+        'daily' => l10n.backupDaily,
+        'monthly' => l10n.backupMonthly,
+        _ => l10n.backupWeekly,
+      };
+      int? newestSuccess;
+      for (final d in cfg.destinations) {
+        final s = d.lastSuccessAt;
+        if (s != null && (newestSuccess == null || s > newestSuccess)) {
+          newestSuccess = s;
+        }
+      }
+      final ago = newestSuccess == null
+          ? '—'
+          : backupAgo(l10n, nowMs, newestSuccess);
+      backupLabel = l10n.backupProfileRow(provider, freq, ago);
+      backupErr = backupAttentionReason(l10n, cfg, nowMs);
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -219,12 +259,51 @@ class ProfileOnThisPhoneSection extends ConsumerWidget {
           child: NestCard(
             child: Column(
               children: [
-                SettingsRow(
-                  label: l10n.profileBackup,
-                  value: l10n.profileBackupNotSetUp,
-                  onTap: () => ref
-                      .read(snackbarProvider)
-                      .show(l10n.profileBackupArrives),
+                InkWell(
+                  onTap: () => context.push(Routes.backup),
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(minHeight: 64),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  l10n.profileBackup,
+                                  style: NestText.meta13.copyWith(color: c.ink3),
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  backupLabel,
+                                  style: NestText.itemTitle16.copyWith(
+                                    color: c.ink,
+                                  ),
+                                ),
+                                if (backupErr != null) ...[
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    backupErr,
+                                    style: NestText.meta13.copyWith(
+                                      color: c.danger,
+                                    ),
+                                  ),
+                                ],
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Icon(Icons.chevron_right_rounded, color: c.ink3),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
                 Divider(height: 1, color: c.line),
                 SettingsRow(

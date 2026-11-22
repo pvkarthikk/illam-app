@@ -6,6 +6,7 @@ import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/notify/notification_permission.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/features/onboarding/join_controller.dart';
+import 'package:nm_flat/features/today/restore_banner.dart';
 import 'package:nm_flat/features/today/sections/due_today_section.dart';
 import 'package:nm_flat/features/today/sections/help_at_home_section.dart';
 import 'package:nm_flat/features/today/sections/hero_section.dart';
@@ -62,6 +63,7 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
           padding: const EdgeInsets.only(bottom: 96),
           children: [
             const OfflineIndicator(),
+            const RestoreBanner(),
             if (showSetupBanner)
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),

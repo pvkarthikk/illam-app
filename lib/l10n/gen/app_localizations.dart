@@ -6806,6 +6806,1452 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Connect to 127.0.0.1'**
   String get syncLabConnectLocal;
+
+  /// No description provided for @homeGoneRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'You’re no longer in {home}'**
+  String homeGoneRemoved(String home);
+
+  /// No description provided for @homeGoneDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'{home} was deleted by {name}'**
+  String homeGoneDeleted(String home, String name);
+
+  /// No description provided for @homeGoneOk.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get homeGoneOk;
+
+  /// No description provided for @memberRemovedNewKey.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} removed · new home key shared with the others'**
+  String memberRemovedNewKey(String name);
+
+  /// No description provided for @leaveChooseAdminLead.
+  ///
+  /// In en, this message translates to:
+  /// **'You’re the only admin. Pick someone to look after {home} after you leave.'**
+  String leaveChooseAdminLead(String home);
+
+  /// No description provided for @leaveWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Leaving… waiting for a family phone'**
+  String get leaveWaiting;
+
+  /// No description provided for @leaveRemoveNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from this phone now — we’ll tell your family the next time this phone reaches one of theirs'**
+  String get leaveRemoveNow;
+
+  /// No description provided for @deleteDone.
+  ///
+  /// In en, this message translates to:
+  /// **'{home} deleted. Other phones erase it when they sync.'**
+  String deleteDone(String home);
+
+  /// No description provided for @opIgnoredRoleChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'Someone changed your role first.'**
+  String get opIgnoredRoleChanged;
+
+  /// No description provided for @inviteTipSecondAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Tip: make a second admin, so the home is never stuck without one.'**
+  String get inviteTipSecondAdmin;
+
+  /// No description provided for @inviteBackupNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Back up {home} now'**
+  String inviteBackupNow(String home);
+
+  /// No description provided for @backupHealthOk.
+  ///
+  /// In en, this message translates to:
+  /// **'Backed up {ago} to {provider} · by {name}'**
+  String backupHealthOk(Object ago, Object provider, Object name);
+
+  /// No description provided for @backupOnlyOnPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Only on this phone — add another place'**
+  String get backupOnlyOnPhone;
+
+  /// No description provided for @backupNoRecoveryReady.
+  ///
+  /// In en, this message translates to:
+  /// **'No recovery-ready backup'**
+  String get backupNoRecoveryReady;
+
+  /// No description provided for @backupNoBackupDays.
+  ///
+  /// In en, this message translates to:
+  /// **'No backup in {n} days'**
+  String backupNoBackupDays(int n);
+
+  /// No description provided for @backupThisPhoneOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Backing up from this phone · {provider}'**
+  String backupThisPhoneOn(Object provider);
+
+  /// No description provided for @backupAlso.
+  ///
+  /// In en, this message translates to:
+  /// **'Also: {name} backs up to {provider} ({ago})'**
+  String backupAlso(Object name, Object provider, Object ago);
+
+  /// No description provided for @backupNoAdminHint.
+  ///
+  /// In en, this message translates to:
+  /// **'No admin has a backup yet — if every admin phone is lost, a restore brings people back as members.'**
+  String get backupNoAdminHint;
+
+  /// No description provided for @backupProviderFolderShort.
+  ///
+  /// In en, this message translates to:
+  /// **'a folder'**
+  String get backupProviderFolderShort;
+
+  /// No description provided for @backupJustNow.
+  ///
+  /// In en, this message translates to:
+  /// **'just now'**
+  String get backupJustNow;
+
+  /// No description provided for @backupAttention.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup needs attention — {reason}'**
+  String backupAttention(Object reason);
+
+  /// No description provided for @backupReasonAuth.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to {provider} again to keep backups running.'**
+  String backupReasonAuth(Object provider);
+
+  /// No description provided for @backupReasonFull.
+  ///
+  /// In en, this message translates to:
+  /// **'{provider} is full — free space or choose another place.'**
+  String backupReasonFull(Object provider);
+
+  /// No description provided for @backupErrNoPermission.
+  ///
+  /// In en, this message translates to:
+  /// **'No permission to write to that folder'**
+  String get backupErrNoPermission;
+
+  /// No description provided for @backupStatusStale.
+  ///
+  /// In en, this message translates to:
+  /// **'Not backed up for {n} days'**
+  String backupStatusStale(int n);
+
+  /// No description provided for @backupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup'**
+  String get backupTitle;
+
+  /// No description provided for @backupProfileRow.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup — {provider} · {frequency} · last {ago}'**
+  String backupProfileRow(Object provider, Object frequency, Object ago);
+
+  /// No description provided for @backupProfileNotSetUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup — not set up'**
+  String get backupProfileNotSetUp;
+
+  /// No description provided for @backupDaily.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily'**
+  String get backupDaily;
+
+  /// No description provided for @backupWeekly.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly'**
+  String get backupWeekly;
+
+  /// No description provided for @backupMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get backupMonthly;
+
+  /// No description provided for @notifBackupAttention.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup needs attention'**
+  String get notifBackupAttention;
+
+  /// No description provided for @notifBackupAttentionSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Only when backups stop working'**
+  String get notifBackupAttentionSub;
+
+  /// No description provided for @backupHeroTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep {home} safe'**
+  String backupHeroTitle(Object home);
+
+  /// No description provided for @backupHeroLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Nest Mojo : Flat has no cloud of its own. If every phone in the home is lost, a backup is the only way back.'**
+  String get backupHeroLead;
+
+  /// No description provided for @backupPromise1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Locked before it leaves this phone'**
+  String get backupPromise1Title;
+
+  /// No description provided for @backupPromise1.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted with a password only you know. Your cloud sees just a locked file.'**
+  String get backupPromise1;
+
+  /// No description provided for @backupPromise2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Runs by itself'**
+  String get backupPromise2Title;
+
+  /// No description provided for @backupPromise2.
+  ///
+  /// In en, this message translates to:
+  /// **'Every week on Wi-Fi while charging. You’ll hear from us only if it stops working.'**
+  String get backupPromise2;
+
+  /// No description provided for @backupPromise3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Brings everything back'**
+  String get backupPromise3Title;
+
+  /// No description provided for @backupPromise3.
+  ///
+  /// In en, this message translates to:
+  /// **'Lists, staff, attendance, salary, meals and spends, plus your own recovery key, so a new phone gets you back in with the same role you have now.'**
+  String get backupPromise3;
+
+  /// No description provided for @backupWhere.
+  ///
+  /// In en, this message translates to:
+  /// **'Where should backups go?'**
+  String get backupWhere;
+
+  /// No description provided for @backupGroupSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get backupGroupSignIn;
+
+  /// No description provided for @backupGroupServer.
+  ///
+  /// In en, this message translates to:
+  /// **'Your own server'**
+  String get backupGroupServer;
+
+  /// No description provided for @backupGroupDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'On this phone'**
+  String get backupGroupDevice;
+
+  /// No description provided for @backupDontSee.
+  ///
+  /// In en, this message translates to:
+  /// **'Don’t see yours?'**
+  String get backupDontSee;
+
+  /// No description provided for @backupDontSeeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Don’t see yours? Proton Drive and MEGA are coming later. iCloud, Box, Terabox and JioCloud can’t be connected from Android apps — use WebDAV if your provider offers it, or a folder on this phone.'**
+  String get backupDontSeeBody;
+
+  /// No description provided for @backupAlsoIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Also in {home}: {name} backs up to {provider} ({ago}).'**
+  String backupAlsoIn(Object home, Object name, Object provider, Object ago);
+
+  /// No description provided for @backupArrivesP19.
+  ///
+  /// In en, this message translates to:
+  /// **'Arrives in P19'**
+  String get backupArrivesP19;
+
+  /// No description provided for @backupArrivesP20.
+  ///
+  /// In en, this message translates to:
+  /// **'Arrives in P20'**
+  String get backupArrivesP20;
+
+  /// No description provided for @backupProvFolder.
+  ///
+  /// In en, this message translates to:
+  /// **'Folder on this phone or another app'**
+  String get backupProvFolder;
+
+  /// No description provided for @backupProvFolderSub.
+  ///
+  /// In en, this message translates to:
+  /// **'SD card, USB drive, or a cloud app that offers folders'**
+  String get backupProvFolderSub;
+
+  /// No description provided for @backupProvGdrive.
+  ///
+  /// In en, this message translates to:
+  /// **'Google Drive'**
+  String get backupProvGdrive;
+
+  /// No description provided for @backupProvGdriveSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in · Hidden app folder in your Drive'**
+  String get backupProvGdriveSub;
+
+  /// No description provided for @backupProvOnedrive.
+  ///
+  /// In en, this message translates to:
+  /// **'OneDrive'**
+  String get backupProvOnedrive;
+
+  /// No description provided for @backupProvOnedriveSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in · Apps › Nest Mojo Flat'**
+  String get backupProvOnedriveSub;
+
+  /// No description provided for @backupProvDropbox.
+  ///
+  /// In en, this message translates to:
+  /// **'Dropbox'**
+  String get backupProvDropbox;
+
+  /// No description provided for @backupProvDropboxSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in · Apps › Nest Mojo Flat'**
+  String get backupProvDropboxSub;
+
+  /// No description provided for @backupProvPcloud.
+  ///
+  /// In en, this message translates to:
+  /// **'pCloud'**
+  String get backupProvPcloud;
+
+  /// No description provided for @backupProvPcloudSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in · App folder · EU or US region'**
+  String get backupProvPcloudSub;
+
+  /// No description provided for @backupProvNextcloud.
+  ///
+  /// In en, this message translates to:
+  /// **'Nextcloud'**
+  String get backupProvNextcloud;
+
+  /// No description provided for @backupProvNextcloudSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Your own or a hosted Nextcloud'**
+  String get backupProvNextcloudSub;
+
+  /// No description provided for @backupProvWebdav.
+  ///
+  /// In en, this message translates to:
+  /// **'WebDAV'**
+  String get backupProvWebdav;
+
+  /// No description provided for @backupProvWebdavSub.
+  ///
+  /// In en, this message translates to:
+  /// **'ownCloud, Synology, QNAP, Koofr, Yandex Disk, any WebDAV'**
+  String get backupProvWebdavSub;
+
+  /// No description provided for @backupProvS3.
+  ///
+  /// In en, this message translates to:
+  /// **'S3-compatible'**
+  String get backupProvS3;
+
+  /// No description provided for @backupProvS3Sub.
+  ///
+  /// In en, this message translates to:
+  /// **'AWS S3, Backblaze B2, Wasabi, Cloudflare R2, MinIO'**
+  String get backupProvS3Sub;
+
+  /// No description provided for @backupProvSftp.
+  ///
+  /// In en, this message translates to:
+  /// **'SFTP'**
+  String get backupProvSftp;
+
+  /// No description provided for @backupProvSftpSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Home NAS or your own server'**
+  String get backupProvSftpSub;
+
+  /// No description provided for @backupChecking.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking… wrote a test file'**
+  String get backupChecking;
+
+  /// No description provided for @backupErrUnreachable.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn’t reach that server'**
+  String get backupErrUnreachable;
+
+  /// No description provided for @backupLocalCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Local copy — lost with the phone'**
+  String get backupLocalCopy;
+
+  /// No description provided for @backupPwTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a backup password'**
+  String get backupPwTitle;
+
+  /// No description provided for @backupPwField.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup password'**
+  String get backupPwField;
+
+  /// No description provided for @backupPwConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm password'**
+  String get backupPwConfirm;
+
+  /// No description provided for @backupPwTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Too short'**
+  String get backupPwTooShort;
+
+  /// No description provided for @backupPwOkay.
+  ///
+  /// In en, this message translates to:
+  /// **'Okay'**
+  String get backupPwOkay;
+
+  /// No description provided for @backupPwStrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Strong'**
+  String get backupPwStrong;
+
+  /// No description provided for @backupPwSuggest.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggest one'**
+  String get backupPwSuggest;
+
+  /// No description provided for @backupPwWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'We can’t reset this password. Without it, backups can’t be opened. Save it in your password manager or write it down.'**
+  String get backupPwWarning;
+
+  /// No description provided for @backupPwSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'I’ve saved this password somewhere safe'**
+  String get backupPwSaved;
+
+  /// No description provided for @backupPwSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save password & back up'**
+  String get backupPwSave;
+
+  /// No description provided for @backupPwMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'The two passwords don’t match.'**
+  String get backupPwMismatch;
+
+  /// No description provided for @backupStatusOk.
+  ///
+  /// In en, this message translates to:
+  /// **'Backed up {ago}'**
+  String backupStatusOk(Object ago);
+
+  /// No description provided for @backupStatusRunning.
+  ///
+  /// In en, this message translates to:
+  /// **'Backing up… {pct}%'**
+  String backupStatusRunning(int pct);
+
+  /// No description provided for @backupStatusFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Last backup failed — {reason}'**
+  String backupStatusFailed(Object reason);
+
+  /// No description provided for @backupStatusUnchanged.
+  ///
+  /// In en, this message translates to:
+  /// **'No changes since last backup'**
+  String get backupStatusUnchanged;
+
+  /// No description provided for @backupNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {when} · {conditions}'**
+  String backupNext(Object when, Object conditions);
+
+  /// No description provided for @backupOnWifi.
+  ///
+  /// In en, this message translates to:
+  /// **'on Wi-Fi'**
+  String get backupOnWifi;
+
+  /// No description provided for @backupWhileCharging.
+  ///
+  /// In en, this message translates to:
+  /// **'while charging'**
+  String get backupWhileCharging;
+
+  /// No description provided for @backupNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Back up now'**
+  String get backupNow;
+
+  /// No description provided for @backupWhereGo.
+  ///
+  /// In en, this message translates to:
+  /// **'Where backups go'**
+  String get backupWhereGo;
+
+  /// No description provided for @backupPlacesCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{k} of 3'**
+  String backupPlacesCount(int k);
+
+  /// No description provided for @backupDestLast.
+  ///
+  /// In en, this message translates to:
+  /// **'Last: {ago} · {k} kept'**
+  String backupDestLast(Object ago, int k);
+
+  /// No description provided for @backupDisconnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect'**
+  String get backupDisconnect;
+
+  /// No description provided for @backupStayThere.
+  ///
+  /// In en, this message translates to:
+  /// **'Backups already there stay there.'**
+  String get backupStayThere;
+
+  /// No description provided for @backupAddPlace.
+  ///
+  /// In en, this message translates to:
+  /// **'＋ Add another place'**
+  String get backupAddPlace;
+
+  /// No description provided for @backupSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule'**
+  String get backupSchedule;
+
+  /// No description provided for @backupHowOften.
+  ///
+  /// In en, this message translates to:
+  /// **'How often'**
+  String get backupHowOften;
+
+  /// No description provided for @backupWifiOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Only on Wi-Fi'**
+  String get backupWifiOnly;
+
+  /// No description provided for @backupWifiOnlySub.
+  ///
+  /// In en, this message translates to:
+  /// **'Never uses mobile data'**
+  String get backupWifiOnlySub;
+
+  /// No description provided for @backupCharging.
+  ///
+  /// In en, this message translates to:
+  /// **'Only while charging'**
+  String get backupCharging;
+
+  /// No description provided for @backupChargingSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Usually overnight'**
+  String get backupChargingSub;
+
+  /// No description provided for @backupKeep.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep the most recent'**
+  String get backupKeep;
+
+  /// No description provided for @backupKeepN.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} backups'**
+  String backupKeepN(int n);
+
+  /// No description provided for @backupKeepSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Older ones are deleted from that place after a successful backup.'**
+  String get backupKeepSub;
+
+  /// No description provided for @backupProgressNotif.
+  ///
+  /// In en, this message translates to:
+  /// **'Backing up {home}…'**
+  String backupProgressNotif(Object home);
+
+  /// No description provided for @backupLocalTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Local copy'**
+  String get backupLocalTag;
+
+  /// No description provided for @backupPwRow.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup password'**
+  String get backupPwRow;
+
+  /// No description provided for @backupPwRowSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Set {date} · saved on this phone'**
+  String backupPwRowSub(Object date);
+
+  /// No description provided for @backupPwChangeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Change backup password'**
+  String get backupPwChangeTitle;
+
+  /// No description provided for @backupPwChangeNote.
+  ///
+  /// In en, this message translates to:
+  /// **'New backups use the new password. Older backups still need the old one.'**
+  String get backupPwChangeNote;
+
+  /// No description provided for @backupPwChangeSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save new password'**
+  String get backupPwChangeSave;
+
+  /// No description provided for @backupCheck.
+  ///
+  /// In en, this message translates to:
+  /// **'Check a backup'**
+  String get backupCheck;
+
+  /// No description provided for @backupCheckSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Opens the latest backup to make sure it works'**
+  String get backupCheckSub;
+
+  /// No description provided for @backupCheckOk.
+  ///
+  /// In en, this message translates to:
+  /// **'Latest backup opens fine · {n} items · {size}'**
+  String backupCheckOk(int n, Object size);
+
+  /// No description provided for @backupDamaged.
+  ///
+  /// In en, this message translates to:
+  /// **'This backup is damaged — try an older one.'**
+  String get backupDamaged;
+
+  /// No description provided for @backupRecent.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent backups'**
+  String get backupRecent;
+
+  /// No description provided for @backupRecentRow.
+  ///
+  /// In en, this message translates to:
+  /// **'{ago} · {size} · {place}'**
+  String backupRecentRow(Object ago, Object size, Object place);
+
+  /// No description provided for @backupRecentEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No backups yet.'**
+  String get backupRecentEmpty;
+
+  /// No description provided for @backupKits.
+  ///
+  /// In en, this message translates to:
+  /// **'Recovery keys'**
+  String get backupKits;
+
+  /// No description provided for @backupKitRow.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}’s {model}'**
+  String backupKitRow(Object name, Object model);
+
+  /// No description provided for @backupKitThisPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'This phone'**
+  String get backupKitThisPhone;
+
+  /// No description provided for @backupKitSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Made {date} · restores {name} as {role, select, admin{an admin} other{a member}}'**
+  String backupKitSub(Object date, Object name, String role);
+
+  /// No description provided for @backupKitTurnOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn off'**
+  String get backupKitTurnOff;
+
+  /// No description provided for @backupKitOffTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn off {name}’s recovery key?'**
+  String backupKitOffTitle(Object name);
+
+  /// No description provided for @backupKitOffLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Backups made with it can still be opened, but only as a separate copy — they can’t bring {name} back into {home}. {name}’s phone makes a new key at its next backup.'**
+  String backupKitOffLead(Object name, Object home);
+
+  /// No description provided for @backupKitKeep.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep'**
+  String get backupKitKeep;
+
+  /// No description provided for @backupKitDead.
+  ///
+  /// In en, this message translates to:
+  /// **'Make a new backup — the old recovery kit no longer works.'**
+  String get backupKitDead;
+
+  /// No description provided for @backupFinePrint.
+  ///
+  /// In en, this message translates to:
+  /// **'Backups include your recovery key. Anyone with the file and the password can restore {home} as {role, select, admin{an admin} other{a member}} — keep the password private.'**
+  String backupFinePrint(Object home, String role);
+
+  /// No description provided for @debugDamageBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a damaged copy of the latest backup'**
+  String get debugDamageBackup;
+
+  /// No description provided for @debugFolderOffPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Count folders as off-phone'**
+  String get debugFolderOffPhone;
+
+  /// No description provided for @restoreTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore from a backup'**
+  String get restoreTitle;
+
+  /// No description provided for @restoreSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose where your backup is.'**
+  String get restoreSub;
+
+  /// No description provided for @restoreNote.
+  ///
+  /// In en, this message translates to:
+  /// **'🔒 Your backup is opened on this phone. Nothing is sent to Nest Mojo : Flat.'**
+  String get restoreNote;
+
+  /// No description provided for @restorePickTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a backup'**
+  String get restorePickTitle;
+
+  /// No description provided for @restoreFoundIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Found in {provider} · {account}'**
+  String restoreFoundIn(Object provider, Object account);
+
+  /// No description provided for @restoreVault.
+  ///
+  /// In en, this message translates to:
+  /// **'Home backup · {vault}'**
+  String restoreVault(Object vault);
+
+  /// No description provided for @restoreRow.
+  ///
+  /// In en, this message translates to:
+  /// **'{date} · {size}'**
+  String restoreRow(Object date, Object size);
+
+  /// No description provided for @restoreTagKit.
+  ///
+  /// In en, this message translates to:
+  /// **'Recovery key'**
+  String get restoreTagKit;
+
+  /// No description provided for @restoreTagData.
+  ///
+  /// In en, this message translates to:
+  /// **'Data only'**
+  String get restoreTagData;
+
+  /// No description provided for @restoreOlder.
+  ///
+  /// In en, this message translates to:
+  /// **'Older backups ({n})'**
+  String restoreOlder(int n);
+
+  /// No description provided for @restoreEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No Nest Mojo : Flat backups here — check you picked the right account or folder.'**
+  String get restoreEmpty;
+
+  /// No description provided for @restoreChooseAnother.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose another place'**
+  String get restoreChooseAnother;
+
+  /// No description provided for @restoreUnlockTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock this backup'**
+  String get restoreUnlockTitle;
+
+  /// No description provided for @restoreUnlocking.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlocking…'**
+  String get restoreUnlocking;
+
+  /// No description provided for @restoreWrongPw.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong password — passwords are case-sensitive.'**
+  String get restoreWrongPw;
+
+  /// No description provided for @restoreHeaderCard.
+  ///
+  /// In en, this message translates to:
+  /// **'{home} · {homeId} · {date} · from {model} ({name})'**
+  String restoreHeaderCard(
+    Object home,
+    Object homeId,
+    Object date,
+    Object model,
+    Object name,
+  );
+
+  /// No description provided for @restoreStepDownload.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading'**
+  String get restoreStepDownload;
+
+  /// No description provided for @restoreStepUnlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlocking'**
+  String get restoreStepUnlock;
+
+  /// No description provided for @restoreStepCheck.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking the home’s history'**
+  String get restoreStepCheck;
+
+  /// No description provided for @restoreStepSetup.
+  ///
+  /// In en, this message translates to:
+  /// **'Setting up this phone'**
+  String get restoreStepSetup;
+
+  /// No description provided for @restoreWelcome.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back to {home}'**
+  String restoreWelcome(Object home);
+
+  /// No description provided for @restoreOthersNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Phones still in {home} will show that you restored on a new phone.'**
+  String restoreOthersNote(Object home);
+
+  /// No description provided for @restoreKeepBackingUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep backing up to {provider}'**
+  String restoreKeepBackingUp(Object provider);
+
+  /// No description provided for @restoreGo.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to {home}'**
+  String restoreGo(Object home);
+
+  /// No description provided for @restoreAlreadyHere.
+  ///
+  /// In en, this message translates to:
+  /// **'{home} is already on this phone.'**
+  String restoreAlreadyHere(Object home);
+
+  /// No description provided for @restoreOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get restoreOpen;
+
+  /// No description provided for @restoreDownloadFail.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn’t download — check your connection and try again.'**
+  String get restoreDownloadFail;
+
+  /// No description provided for @restoreBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'Restored from a backup made {date}. Connecting to the rest of {home}…'**
+  String restoreBanner(Object date, Object home);
+
+  /// No description provided for @restoreDeadKit.
+  ///
+  /// In en, this message translates to:
+  /// **'This backup’s recovery key was turned off on {date}. Ask an admin in {home} to invite you.'**
+  String restoreDeadKit(Object date, Object home);
+
+  /// No description provided for @restoreSeparateCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep as a separate copy'**
+  String get restoreSeparateCopy;
+
+  /// No description provided for @restoreRemoveFromPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from this phone'**
+  String get restoreRemoveFromPhone;
+
+  /// No description provided for @restoreSeparateName.
+  ///
+  /// In en, this message translates to:
+  /// **'{home} (restored {date})'**
+  String restoreSeparateName(Object home, Object date);
+
+  /// No description provided for @restoreOtherAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} restored {home} on a new phone from a backup'**
+  String restoreOtherAdmin(Object name, Object home);
+
+  /// No description provided for @restoreKeep.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep'**
+  String get restoreKeep;
+
+  /// No description provided for @restoreRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get restoreRemove;
+
+  /// No description provided for @bkSrvErrAuth.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong username or app password'**
+  String get bkSrvErrAuth;
+
+  /// No description provided for @bkSrvErrBucket.
+  ///
+  /// In en, this message translates to:
+  /// **'Bucket not found'**
+  String get bkSrvErrBucket;
+
+  /// No description provided for @bkSrvErrOther.
+  ///
+  /// In en, this message translates to:
+  /// **'That didn’t work — check the details and try again.'**
+  String get bkSrvErrOther;
+
+  /// No description provided for @bkSrvErrHttps.
+  ///
+  /// In en, this message translates to:
+  /// **'Use an address that starts with https://'**
+  String get bkSrvErrHttps;
+
+  /// No description provided for @bkSrvErrHostKeyChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'This server’s fingerprint changed. If you didn’t change the server, don’t connect.'**
+  String get bkSrvErrHostKeyChanged;
+
+  /// No description provided for @bkSrvConnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect'**
+  String get bkSrvConnect;
+
+  /// No description provided for @bkSrvTrustTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Trust this server?'**
+  String get bkSrvTrustTitle;
+
+  /// No description provided for @bkSrvTrustLead.
+  ///
+  /// In en, this message translates to:
+  /// **'First time connecting to {host}. Check that this fingerprint matches the one on your server.'**
+  String bkSrvTrustLead(Object host);
+
+  /// No description provided for @bkSrvTrust.
+  ///
+  /// In en, this message translates to:
+  /// **'Trust'**
+  String get bkSrvTrust;
+
+  /// No description provided for @bkSrvWebdavTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'WebDAV'**
+  String get bkSrvWebdavTitle;
+
+  /// No description provided for @bkSrvServerAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Server address'**
+  String get bkSrvServerAddress;
+
+  /// No description provided for @bkSrvUsername.
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get bkSrvUsername;
+
+  /// No description provided for @bkSrvAppPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'App password'**
+  String get bkSrvAppPassword;
+
+  /// No description provided for @bkSrvWebdavHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Works with ownCloud, Synology, QNAP, Koofr, Yandex Disk, pCloud and any WebDAV server. Use an app password, not your main one.'**
+  String get bkSrvWebdavHint;
+
+  /// No description provided for @bkSrvAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'{user} @ {host}'**
+  String bkSrvAccount(Object user, Object host);
+
+  /// No description provided for @bkSrvNextcloudTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Nextcloud'**
+  String get bkSrvNextcloudTitle;
+
+  /// No description provided for @bkSrvNextcloudHint.
+  ///
+  /// In en, this message translates to:
+  /// **'We’ll open your Nextcloud login in the browser. Approve Nest Mojo : Flat there — it gets its own app password you can revoke any time.'**
+  String get bkSrvNextcloudHint;
+
+  /// No description provided for @bkSrvNextcloudAccessNote.
+  ///
+  /// In en, this message translates to:
+  /// **'This app password can reach your whole Nextcloud account. A separate Nextcloud user just for backups is safer.'**
+  String get bkSrvNextcloudAccessNote;
+
+  /// No description provided for @bkSrvContinueInBrowser.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue in browser'**
+  String get bkSrvContinueInBrowser;
+
+  /// No description provided for @bkSrvOpeningLogin.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening your Nextcloud login…'**
+  String get bkSrvOpeningLogin;
+
+  /// No description provided for @bkSrvApproveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve in your browser'**
+  String get bkSrvApproveTitle;
+
+  /// No description provided for @bkSrvApproveLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Log in to {host} and tap Grant access for Nest Mojo : Flat. Then come back here.'**
+  String bkSrvApproveLead(Object host);
+
+  /// No description provided for @bkSrvWaitingApproval.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for approval…'**
+  String get bkSrvWaitingApproval;
+
+  /// No description provided for @bkSrvS3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'S3-compatible'**
+  String get bkSrvS3Title;
+
+  /// No description provided for @bkSrvService.
+  ///
+  /// In en, this message translates to:
+  /// **'Service'**
+  String get bkSrvService;
+
+  /// No description provided for @bkSrvPresetAws.
+  ///
+  /// In en, this message translates to:
+  /// **'AWS'**
+  String get bkSrvPresetAws;
+
+  /// No description provided for @bkSrvPresetB2.
+  ///
+  /// In en, this message translates to:
+  /// **'Backblaze B2'**
+  String get bkSrvPresetB2;
+
+  /// No description provided for @bkSrvPresetWasabi.
+  ///
+  /// In en, this message translates to:
+  /// **'Wasabi'**
+  String get bkSrvPresetWasabi;
+
+  /// No description provided for @bkSrvPresetR2.
+  ///
+  /// In en, this message translates to:
+  /// **'Cloudflare R2'**
+  String get bkSrvPresetR2;
+
+  /// No description provided for @bkSrvPresetMinio.
+  ///
+  /// In en, this message translates to:
+  /// **'MinIO'**
+  String get bkSrvPresetMinio;
+
+  /// No description provided for @bkSrvPresetOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get bkSrvPresetOther;
+
+  /// No description provided for @bkSrvRegion.
+  ///
+  /// In en, this message translates to:
+  /// **'Region'**
+  String get bkSrvRegion;
+
+  /// No description provided for @bkSrvEndpoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Endpoint'**
+  String get bkSrvEndpoint;
+
+  /// No description provided for @bkSrvBucket.
+  ///
+  /// In en, this message translates to:
+  /// **'Bucket'**
+  String get bkSrvBucket;
+
+  /// No description provided for @bkSrvAccessKeyId.
+  ///
+  /// In en, this message translates to:
+  /// **'Access key ID'**
+  String get bkSrvAccessKeyId;
+
+  /// No description provided for @bkSrvSecretKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Secret access key'**
+  String get bkSrvSecretKey;
+
+  /// No description provided for @bkSrvS3Hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a key that can only write to this bucket. Files go under nestmojo/.'**
+  String get bkSrvS3Hint;
+
+  /// No description provided for @bkSrvS3Account.
+  ///
+  /// In en, this message translates to:
+  /// **'{bucket} · {service}'**
+  String bkSrvS3Account(Object bucket, Object service);
+
+  /// No description provided for @bkSrvSftpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'SFTP'**
+  String get bkSrvSftpTitle;
+
+  /// No description provided for @bkSrvHost.
+  ///
+  /// In en, this message translates to:
+  /// **'Host'**
+  String get bkSrvHost;
+
+  /// No description provided for @bkSrvPort.
+  ///
+  /// In en, this message translates to:
+  /// **'Port'**
+  String get bkSrvPort;
+
+  /// No description provided for @bkSrvPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get bkSrvPassword;
+
+  /// No description provided for @bkSrvFolder.
+  ///
+  /// In en, this message translates to:
+  /// **'Folder'**
+  String get bkSrvFolder;
+
+  /// No description provided for @bkSrvSignInWith.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with'**
+  String get bkSrvSignInWith;
+
+  /// No description provided for @bkSrvAuthPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get bkSrvAuthPassword;
+
+  /// No description provided for @bkSrvAuthKey.
+  ///
+  /// In en, this message translates to:
+  /// **'A key made on this phone'**
+  String get bkSrvAuthKey;
+
+  /// No description provided for @bkSrvKeyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add this key to the server’s authorized_keys file for this user, then tap Connect.'**
+  String get bkSrvKeyHint;
+
+  /// No description provided for @bkSrvCopyKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy key'**
+  String get bkSrvCopyKey;
+
+  /// No description provided for @bkSrvKeyCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Key copied'**
+  String get bkSrvKeyCopied;
+
+  /// No description provided for @bkSrvSftpAccessNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Tip: a server user that can only see its own folder is safer.'**
+  String get bkSrvSftpAccessNote;
+
+  /// No description provided for @bkSrvSftpAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'{user}@{host}:{port}'**
+  String bkSrvSftpAccount(Object user, Object host, Object port);
+
+  /// No description provided for @bkSrvSignInAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in again'**
+  String get bkSrvSignInAgain;
+
+  /// No description provided for @bkCloudGdriveAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'See, create and delete its own data in your Google Drive — a hidden app folder. It can’t see your other files.'**
+  String get bkCloudGdriveAccess;
+
+  /// No description provided for @bkCloudGdriveWhere.
+  ///
+  /// In en, this message translates to:
+  /// **'Hidden app folder in your Drive'**
+  String get bkCloudGdriveWhere;
+
+  /// No description provided for @bkCloudConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected to {provider}'**
+  String bkCloudConnected(Object provider);
+
+  /// No description provided for @bkCloudSignedInAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Signed in to {provider} again'**
+  String bkCloudSignedInAgain(Object provider);
+
+  /// No description provided for @bkCloudSignInAgainSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Use this if backups say the sign-in expired'**
+  String get bkCloudSignInAgainSub;
+
+  /// No description provided for @bkCloudExpiredRow.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign-in expired — Sign in again'**
+  String get bkCloudExpiredRow;
+
+  /// No description provided for @bkCloudNotConfigured.
+  ///
+  /// In en, this message translates to:
+  /// **'This build isn’t set up for {provider} yet.'**
+  String bkCloudNotConfigured(Object provider);
+
+  /// No description provided for @bkCloudSignInFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn’t sign in to {provider} — try again.'**
+  String bkCloudSignInFailed(Object provider);
+
+  /// No description provided for @bkCloudDropboxAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Read and write files in Apps › Nest Mojo Flat only. It can’t see your other files.'**
+  String get bkCloudDropboxAccess;
+
+  /// No description provided for @bkCloudOnedriveAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Read and write files in its own folder, Apps › Nest Mojo Flat. It can’t see your other files.'**
+  String get bkCloudOnedriveAccess;
+
+  /// No description provided for @bkCloudAppsFolder.
+  ///
+  /// In en, this message translates to:
+  /// **'Apps › Nest Mojo Flat'**
+  String get bkCloudAppsFolder;
+
+  /// No description provided for @bkCloudOrgApproval.
+  ///
+  /// In en, this message translates to:
+  /// **'Your organisation must approve Nest Mojo : Flat before it can use this OneDrive. Ask your IT admin, or choose another place.'**
+  String get bkCloudOrgApproval;
+
+  /// No description provided for @bkCloudPcloudAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Read and write files in its own app folder only.'**
+  String get bkCloudPcloudAccess;
+
+  /// No description provided for @bkCloudPcloudWhere.
+  ///
+  /// In en, this message translates to:
+  /// **'App folder · EU or US region'**
+  String get bkCloudPcloudWhere;
+
+  /// No description provided for @bkCloudPcloudAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'{email} · {region}'**
+  String bkCloudPcloudAccount(Object email, Object region);
+
+  /// No description provided for @debugBackupLab.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup lab'**
+  String get debugBackupLab;
+
+  /// No description provided for @debugGoogleSilent.
+  ///
+  /// In en, this message translates to:
+  /// **'Google silent sign-in now'**
+  String get debugGoogleSilent;
+
+  /// No description provided for @debugExpireTokens.
+  ///
+  /// In en, this message translates to:
+  /// **'Expire Dropbox/OneDrive tokens'**
+  String get debugExpireTokens;
+
+  /// No description provided for @debugBreakTokens.
+  ///
+  /// In en, this message translates to:
+  /// **'Break Dropbox/OneDrive refresh token'**
+  String get debugBreakTokens;
+
+  /// No description provided for @debugResultOk.
+  ///
+  /// In en, this message translates to:
+  /// **'ok'**
+  String get debugResultOk;
+
+  /// No description provided for @debugResultNeedsSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'needs sign-in'**
+  String get debugResultNeedsSignIn;
+
+  /// No description provided for @debugAdd200Items.
+  ///
+  /// In en, this message translates to:
+  /// **'Add 200 test items'**
+  String get debugAdd200Items;
 }
 
 class _AppLocalizationsDelegate

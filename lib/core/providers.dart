@@ -2,18 +2,24 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:drift/drift.dart' show Variable;
+import 'package:drift/drift.dart' show BooleanExpressionOperators, Variable;
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
+import 'package:nm_flat/core/backup/backup_config.dart';
+import 'package:nm_flat/core/backup/backup_health.dart' as bh;
+import 'package:nm_flat/core/backup/recovery_kits.dart';
+import 'package:nm_flat/core/backup/snapshot.dart';
 import 'package:nm_flat/core/crypto/device_keys.dart';
+import 'package:nm_flat/core/crypto/home_key_ring.dart';
 import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/data/ops/change_writer.dart';
 import 'package:nm_flat/core/data/ops/collection_registry.dart';
 import 'package:nm_flat/core/data/ops/op_applier.dart';
 import 'package:nm_flat/core/data/prefs/device_prefs.dart';
 import 'package:nm_flat/core/data/repo/expenses_repo.dart';
+import 'package:nm_flat/core/data/repo/home_eraser.dart';
 import 'package:nm_flat/core/data/repo/home_repo.dart';
 import 'package:nm_flat/core/data/repo/lists_repo.dart';
 import 'package:nm_flat/core/data/repo/local_membership_service.dart';
@@ -37,8 +43,11 @@ import 'package:nm_flat/core/domain/routine_state.dart';
 import 'package:nm_flat/core/domain/salary_months.dart';
 import 'package:nm_flat/core/domain/sync_status.dart';
 import 'package:nm_flat/core/nav/routes.dart';
+import 'package:nm_flat/core/sync/control_store.dart';
 import 'package:nm_flat/core/sync/incoming.dart';
+import 'package:nm_flat/core/sync/key_rotation.dart';
 import 'package:nm_flat/core/sync/membership_log.dart';
+import 'package:nm_flat/core/sync/op_ignored_notifier.dart';
 import 'package:nm_flat/core/sync/protocol/op_wire.dart';
 import 'package:nm_flat/core/sync/sync_engine.dart';
 import 'package:nm_flat/core/sync/sync_reactions.dart';
@@ -142,14 +151,47 @@ final deviceKeysProvider = FutureProvider<DeviceKeys>(
 final opSignerProvider = Provider(
   (ref) => OpSigner(ref.watch(deviceKeysProvider.future)),
 );
-final membershipLogProvider = Provider(
-  (ref) => MembershipLog(
+final controlStoreProvider = Provider<ControlStore>((ref) {
+  final store = ControlStore(
+    ref.watch(secureStoreProvider),
+    now: () => ref.watch(clockProvider).nowMs,
+  );
+  ref.onDispose(() => unawaited(store.dispose()));
+  return store;
+});
+final homeEraserProvider = Provider<HomeEraser>(
+  (ref) => HomeEraser(
+    ref.watch(dbProvider),
+    ref.watch(registryProvider),
+    ref.watch(prefsProvider),
+    ref.watch(homeKeyRingProvider),
+    ref.watch(controlStoreProvider),
+    ref.watch(clockProvider),
+  ),
+);
+final homeGoneProvider = StreamProvider<Tombstone?>((ref) async* {
+  final store = ref.watch(controlStoreProvider);
+  yield (await store.unshownTombstones()).firstOrNull;
+  await for (final _ in store.changes) {
+    yield (await store.unshownTombstones()).firstOrNull;
+  }
+});
+final Provider<MembershipLog> membershipLogProvider = Provider<MembershipLog>((ref) {
+  final log = MembershipLog(
     ref.watch(dbProvider),
     ref.watch(deviceKeysProvider.future),
     ref.watch(hlcProvider),
     ref.watch(clockProvider),
-  ),
-);
+  );
+  log.onReplayed = (s) async {
+    final homeId = log.lastReplayedHomeId;
+    if (homeId == null) return;
+    final me = (await ref.read(deviceKeysProvider.future)).deviceId;
+    await ref.read(opIgnoredProvider).check(s, me);
+    await ref.read(keyRotationProvider).afterReplay(s, me: me, homeId: homeId);
+  };
+  return log;
+});
 final syncStoreProvider = Provider((ref) => SyncStore(ref.watch(dbProvider)));
 final syncReactionsProvider = Provider((ref) {
   final reactions = SyncReactions(
@@ -186,6 +228,8 @@ final syncEngineProvider = Provider((ref) {
     incoming: ref.watch(incomingProvider),
     clock: ref.watch(clockProvider),
     homeId: homeId,
+    controlStore: ref.watch(controlStoreProvider),
+    homeEraser: ref.watch(homeEraserProvider),
   );
   membership.onAppended = engine.onLocalChange;
   ref.onDispose(() => unawaited(engine.dispose()));
@@ -342,6 +386,13 @@ final membershipServiceProvider = Provider<MembershipService>((ref) {
     tasks,
     homeId,
     myMemberId,
+    keyRotation: ref.watch(keyRotationProvider),
+    keyRing: ref.watch(homeKeyRingProvider),
+    controlStore: ref.watch(controlStoreProvider),
+    homeEraser: ref.watch(homeEraserProvider),
+    closeSessionsWith: (ids) =>
+        ref.read(syncEngineProvider).closeSessionsWith(ids),
+    clock: ref.watch(clockProvider),
   );
 });
 final membersProvider = StreamProvider<List<Member>>((ref) {
@@ -641,3 +692,71 @@ final pantryKeysProvider = StreamProvider<Set<String>>(
 final openGroceryKeysProvider = StreamProvider<Set<String>>(
   (ref) => ref.watch(mealsRepoProvider).watchOpenGroceryKeys(),
 );
+
+final backupConfigStoreProvider = Provider<BackupConfigStore>(
+  (ref) => BackupConfigStore(ref.watch(secureStoreProvider)),
+);
+
+final recoveryKitsProvider = Provider<RecoveryKits>(
+  (ref) => RecoveryKits(
+    ref.watch(backupConfigStoreProvider),
+    ref.watch(membershipLogProvider),
+    ref.watch(deviceKeysProvider.future),
+    ref.watch(prefsProvider),
+  ),
+);
+
+final snapshotBuilderProvider = Provider<SnapshotBuilder>(
+  (ref) => SnapshotBuilder(
+    ref.watch(dbProvider),
+    ref.watch(membershipLogProvider),
+    ref.watch(homeKeyRingProvider),
+    ref.watch(prefsProvider),
+    ref.watch(deviceKeysProvider.future),
+    ref.watch(backupConfigStoreProvider),
+    ref.watch(recoveryKitsProvider),
+  ),
+);
+
+final snapshotImporterProvider = Provider<SnapshotImporter>(
+  (ref) => SnapshotImporter(
+    ref.watch(membershipLogProvider),
+    ref.watch(incomingProvider),
+    ref.watch(homeKeyRingProvider),
+    ref.watch(homeEraserProvider),
+  ),
+);
+
+final backupHealthProvider = StreamProvider<bh.BackupHealth>((ref) {
+  final home = ref.watch(currentHomeIdProvider).value;
+  if (home == null) {
+    return Stream.value(const bh.BackupHealth(state: bh.HealthState.none));
+  }
+  final db = ref.watch(dbProvider);
+  final prefs = ref.watch(prefsProvider);
+  final clock = ref.watch(clockProvider);
+  final members = ref.watch(membersProvider).value ?? const <Member>[];
+  ref.watch(minuteTickProvider);
+  final activeMembers = <String, bh.MemberInfo>{
+    for (final m in members)
+      if (m.status == 'active')
+        m.id: bh.MemberInfo(
+          (m.firstName != null && m.firstName!.isNotEmpty)
+              ? m.firstName!
+              : (m.fullName ?? ''),
+          m.role == 'admin',
+        ),
+  };
+  return (db.select(
+        db.backupStatus,
+      )..where((b) => b.homeId.equals(home) & b.deleted.equals(false)))
+      .watch()
+      .map(
+        (rows) => bh.BackupHealth.compute(
+          rows,
+          activeMembers,
+          prefs.deviceId,
+          clock.nowMs,
+        ),
+      );
+});

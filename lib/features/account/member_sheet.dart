@@ -1,8 +1,11 @@
+import 'package:drift/drift.dart' hide Column;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:material_ui/material_ui.dart';
 
+import 'package:nm_flat/core/crypto/bytes.dart';
+import 'package:nm_flat/core/crypto/fingerprint.dart';
 import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/domain/names.dart';
@@ -11,6 +14,27 @@ import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/features/account/appearance_controller.dart';
 import 'package:nm_flat/features/account/home_sheets.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
+
+final _memberKeyProvider =
+    FutureProvider.family<String, ({String homeId, String memberId})>((
+      ref,
+      args,
+    ) async {
+      final db = ref.watch(dbProvider);
+      final row =
+          await (db.select(db.memberDevices)
+                ..where(
+                  (d) =>
+                      d.homeId.equals(args.homeId) &
+                      d.memberId.equals(args.memberId) &
+                      d.active.equals(true),
+                )
+                ..orderBy([(d) => OrderingTerm.asc(d.addedAt)])
+                ..limit(1))
+              .getSingleOrNull();
+      if (row == null || row.signPub.isEmpty) return '';
+      return fingerprintOf(decodeKey(row.signPub));
+    });
 
 Future<void> showMemberSheet(BuildContext context, Member m) =>
     showNestSheet<void>(
@@ -131,7 +155,18 @@ class _MemberSheetBody extends ConsumerWidget {
     final meId = ref.watch(myMemberIdProvider);
     final isMe = live.id == meId;
     final isAdmin = ref.watch(isAdminProvider);
-    final fp = ref.watch(myFingerprintProvider).value ?? '';
+    final homeId =
+        ref.watch(currentHomeIdProvider).value ??
+        ref.watch(prefsProvider).currentHomeId ??
+        '';
+    final devFp =
+        ref
+            .watch(_memberKeyProvider((homeId: homeId, memberId: live.id)))
+            .value ??
+        '';
+    final fp = devFp.isNotEmpty
+        ? devFp
+        : (isMe ? (ref.watch(myFingerprintProvider).value ?? '') : '');
 
     final fullName = live.fullName ?? '';
     final firstName = live.firstName ?? Names.firstName(fullName);
@@ -173,7 +208,7 @@ class _MemberSheetBody extends ConsumerWidget {
           textAlign: TextAlign.center,
           style: NestText.body15.copyWith(color: c.ink2),
         ),
-        if (isMe) ...[
+        if (fp.isNotEmpty) ...[
           const SizedBox(height: 6),
           Text(
             l10n.memberDeviceKey(fp),

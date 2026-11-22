@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:drift/drift.dart' show Variable;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:nm_flat/core/data/word_list.dart';
@@ -27,6 +28,7 @@ class InviteUi {
     this.joinedName,
     this.port,
     this.ip,
+    this.showSecondAdminTip = false,
   });
 
   final ActiveInvite? invite;
@@ -37,6 +39,7 @@ class InviteUi {
   final String? joinedName;
   final int? port;
   final String? ip;
+  final bool showSecondAdminTip;
 
   InviteUi copyWith({
     ActiveInvite? invite,
@@ -48,6 +51,7 @@ class InviteUi {
     String? joinedName,
     int? port,
     String? ip,
+    bool? showSecondAdminTip,
   }) => InviteUi(
     invite: invite ?? this.invite,
     stage: stage ?? this.stage,
@@ -57,6 +61,7 @@ class InviteUi {
     joinedName: joinedName ?? this.joinedName,
     port: port ?? this.port,
     ip: ip ?? this.ip,
+    showSecondAdminTip: showSecondAdminTip ?? this.showSecondAdminTip,
   );
 }
 
@@ -150,9 +155,25 @@ class InviteController extends Notifier<InviteUi> {
     if (_disposed) return;
 
     if (res != null) {
+      var showTip = false;
+      final adminRow = await db
+          .customSelect(
+            "SELECT COUNT(*) AS n FROM members WHERE home_id = ? AND deleted = 0 AND status = 'active' AND role = 'admin'",
+            variables: [Variable.withString(homeId)],
+          )
+          .getSingle();
+      final adminCount = adminRow.data['n'] as int;
+      final prefs = ref.read(prefsProvider);
+      final tipKey = 'inviteTipsShown_$homeId';
+      if (adminCount == 1 && !prefs.getFlag(tipKey)) {
+        await prefs.setFlag(tipKey, true);
+        showTip = true;
+      }
+      if (_disposed) return;
       state = state.copyWith(
         stage: InviteStage.done,
         joinedName: res.name,
+        showSecondAdminTip: showTip,
       );
     } else {
       final currentInv = state.invite;

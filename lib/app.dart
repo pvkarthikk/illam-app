@@ -8,10 +8,15 @@ import 'package:workmanager/workmanager.dart';
 
 import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/nav/router.dart';
+import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/notify/background_tasks.dart';
 import 'package:nm_flat/core/notify/notifications.dart';
 import 'package:nm_flat/core/providers.dart';
+import 'package:nm_flat/core/sync/control_dialer.dart';
+import 'package:nm_flat/core/sync/control_store.dart';
+import 'package:nm_flat/core/sync/op_ignored_notifier.dart';
 import 'package:nm_flat/core/sync/sync_engine.dart';
+import 'package:nm_flat/features/account/home_gone_dialog.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
 class NestApp extends ConsumerStatefulWidget {
@@ -23,18 +28,57 @@ class NestApp extends ConsumerStatefulWidget {
 
 class _NestAppState extends ConsumerState<NestApp> {
   late final AppLifecycleListener _lifecycle;
+  StreamSubscription<String>? _ignoredSub;
+  StreamSubscription<void>? _controlSub;
+  Timer? _dialTimer;
+  String? _handlingTombstoneHomeId;
 
   @override
   void initState() {
     super.initState();
     _lifecycle = AppLifecycleListener(onResume: _schedulePlan);
+    _ignoredSub = ref.read(opIgnoredProvider).reasons.listen(_onIgnoredReason);
+    _controlSub = ref.read(controlStoreProvider).changes.listen(
+      (_) => unawaited(_syncDialTimer()),
+    );
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       _schedulePlan();
+      unawaited(_syncDialTimer());
     });
   }
 
-  void _schedulePlan() => unawaited(_runPlan());
+  void _onIgnoredReason(String reason) {
+    final l = lookupAppLocalizations(const Locale('en'));
+    final text = reason == 'lastAdmin'
+        ? l.syncReasonLastAdmin
+        : l.opIgnoredRoleChanged;
+    ref.read(snackbarProvider).show(l.syncChangeNotApplied(text));
+  }
+
+  Future<void> _syncDialTimer() async {
+    try {
+      final cs = ref.read(controlStoreProvider);
+      final hasPending =
+          (await cs.allPendingOutbox()).isNotEmpty ||
+          (await cs.tombstonesToPass()).isNotEmpty;
+      if (!mounted) return;
+      if (hasPending) {
+        _dialTimer ??= Timer.periodic(
+          const Duration(seconds: 30),
+          (_) => unawaited(ref.read(controlDialerProvider).runOnce()),
+        );
+      } else {
+        _dialTimer?.cancel();
+        _dialTimer = null;
+      }
+    } catch (_) {}
+  }
+
+  void _schedulePlan() {
+    unawaited(_runPlan());
+    unawaited(_syncDialTimer());
+  }
 
   Future<void> _runPlan() async {
     try {
@@ -46,6 +90,9 @@ class _NestAppState extends ConsumerState<NestApp> {
 
   @override
   void dispose() {
+    _dialTimer?.cancel();
+    _controlSub?.cancel();
+    _ignoredSub?.cancel();
     _lifecycle.dispose();
     super.dispose();
   }
@@ -53,6 +100,37 @@ class _NestAppState extends ConsumerState<NestApp> {
   @override
   Widget build(BuildContext context) {
     ref.watch(startupProvider);
+    ref.listen<AsyncValue<Tombstone?>>(homeGoneProvider, (_, next) {
+      final t = next.value;
+      if (t == null || _handlingTombstoneHomeId == t.homeId) return;
+      _handlingTombstoneHomeId = t.homeId;
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        if (!mounted) {
+          _handlingTombstoneHomeId = null;
+          return;
+        }
+        try {
+          final store = ref.read(controlStoreProvider);
+          final stillUnshown = (await store.unshownTombstones()).any(
+            (u) => u.homeId == t.homeId,
+          );
+          if (!stillUnshown) return;
+          if (t.reason == 'left') {
+            await store.markShown(t.homeId);
+            final l = lookupAppLocalizations(const Locale('en'));
+            ref.read(snackbarProvider).show(l.homeLeft(t.homeName));
+            ref.read(routerProvider).go(Routes.onboardingStep('welcome'));
+          } else {
+            final navCtx = rootNavigatorKey.currentContext;
+            if (navCtx != null && navCtx.mounted) {
+              await showHomeGoneDialog(navCtx, t);
+            }
+          }
+        } finally {
+          _handlingTombstoneHomeId = null;
+        }
+      });
+    });
     final router = ref.watch(routerProvider);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {

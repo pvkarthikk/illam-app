@@ -1,10 +1,9 @@
-import 'dart:convert';
-
 import 'package:drift/drift.dart';
 
 import 'package:nm_flat/core/crypto/aead.dart';
 import 'package:nm_flat/core/crypto/bytes.dart';
 import 'package:nm_flat/core/crypto/device_keys.dart';
+import 'package:nm_flat/core/crypto/home_key_ring.dart';
 import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/data/prefs/device_prefs.dart';
 import 'package:nm_flat/core/data/secure/secure_store.dart';
@@ -42,14 +41,10 @@ class HostAdmitter implements JoinAdmitter {
     String via,
     void Function(int sent, int total) progress,
   ) async {
-    final home = await (db.select(
-      db.homes,
-    )..where((h) => h.id.equals(homeId))).getSingle();
-    final keyId = home.homeKeyId ?? 'genesis';
-    final rawKey = await secure.read(SecureKeys.homeKey(homeId, keyId));
-    if (rawKey == null) throw StateError('no home key');
-    final homeKey = base64Decode(rawKey);
-    final wrapped = await SealedBox.seal(unb64(r.agreePub), homeKey);
+    final currentKey = await HomeKeyRing(secure).current(homeId);
+    if (currentKey == null) throw StateError('no home key');
+    final keyId = currentKey.keyId;
+    final wrapped = await SealedBox.seal(unb64(r.agreePub), currentKey.bytes);
 
     final activeMembers =
         await (db.select(db.members)..where(
@@ -167,10 +162,7 @@ class GuestReceiver implements JoinReceiver {
       unb64(myPayload['wrappedKey'] as String),
     );
     final keyId = (myPayload['keyId'] as String?) ?? 'genesis';
-    await secure.write(
-      SecureKeys.homeKey(homeId, keyId),
-      base64Encode(homeKey),
-    );
+    await HomeKeyRing(secure).add(homeId, keyId, homeKey);
 
     await prefs.setMemberId(keys.deviceId);
     await prefs.setSetupIncompleteHomeId(homeId);

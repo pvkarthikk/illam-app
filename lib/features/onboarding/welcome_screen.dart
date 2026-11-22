@@ -5,7 +5,6 @@ import 'package:material_ui/material_ui.dart';
 
 import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/nav/routes.dart';
-import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/ui/rich_text.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
@@ -150,9 +149,8 @@ class WelcomeScreen extends ConsumerWidget {
                   child: Column(
                     children: [
                       TextButton.icon(
-                        onPressed: () => ref
-                            .read(snackbarProvider)
-                            .show(l10n.commonArrivesIn('P18')),
+                        onPressed: () =>
+                            context.go(Routes.onboardingStep('restore')),
                         icon: Icon(Icons.restore_rounded, color: c.ink2),
                         label: Text(
                           l10n.welcomeRestore,

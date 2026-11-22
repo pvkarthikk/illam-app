@@ -6,13 +6,23 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'package:nm_flat/core/notify/notifications.dart';
 import 'package:nm_flat/core/providers.dart';
+import 'package:nm_flat/core/sync/control_dialer.dart';
 import 'package:nm_flat/core/sync/sync_store.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
 const _threeDaysMs = 3 * 24 * 60 * 60 * 1000;
 
-/// Runs one background sync pass and nudges the user if the home hasn't synced in 3 days.
+/// Runs one background sync pass, nudges after 3 days offline, and dials queued control ops.
 Future<void> runBackgroundSync(Reader read) async {
+  await _syncHomeAndNudge(read);
+  try {
+    await read(controlDialerProvider).runOnce();
+  } on Object {
+    // Retry next run.
+  }
+}
+
+Future<void> _syncHomeAndNudge(Reader read) async {
   try {
     await read(syncEngineProvider).runOnce(budget: const Duration(seconds: 30));
 

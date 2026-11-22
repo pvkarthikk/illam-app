@@ -1,10 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/domain/names.dart';
+import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/providers.dart';
+import 'package:nm_flat/features/account/leaving_sheet.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
 String reasonText(AppLocalizations l10n, String? key) => switch (key) {
@@ -81,7 +84,7 @@ Future<void> showRemoveMemberSheet(
   final res = await ref.read(membershipServiceProvider).removeMember(m.id);
   if (res.applied) {
     onRemoved?.call();
-    ref.read(snackbarProvider).show(l10n.memberRemoved(firstName));
+    ref.read(snackbarProvider).show(l10n.memberRemovedNewKey(firstName));
   } else {
     ref.read(snackbarProvider).show(reasonText(l10n, res.reasonKey));
   }
@@ -172,7 +175,10 @@ Future<void> showLeaveSheet(BuildContext context, WidgetRef ref) async {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          NestSheetHeader(title: l10n.homeChooseAdmin),
+          NestSheetHeader(
+            title: l10n.homeChooseAdmin,
+            lead: l10n.leaveChooseAdminLead(homeName),
+          ),
           for (var i = 0; i < others.length; i++) ...[
             if (i > 0) const SizedBox(height: 10),
             Row(
@@ -306,11 +312,16 @@ Future<void> showLeaveSheet(BuildContext context, WidgetRef ref) async {
     ),
   );
   if (leaveConfirmed == true) {
+    final homeId =
+        ref.read(currentHomeIdProvider).value ??
+        ref.read(prefsProvider).currentHomeId ??
+        '';
     final r = await ref.read(membershipServiceProvider).leaveHome();
+    if (!context.mounted) return;
     if (!r.applied) {
       ref.read(snackbarProvider).show(reasonText(l10n, r.reasonKey));
     } else {
-      ref.read(snackbarProvider).show(l10n.homeLeft(homeName));
+      await showLeavingSheet(context, homeId: homeId, homeName: homeName);
     }
   }
 }
@@ -370,5 +381,10 @@ Future<void> showDeleteHomeSheet(
   final r = await ref.read(membershipServiceProvider).deleteHome();
   if (!r.applied) {
     ref.read(snackbarProvider).show(reasonText(l10n, r.reasonKey));
+  } else {
+    if (context.mounted) {
+      context.go(Routes.onboardingStep('welcome'));
+    }
+    ref.read(snackbarProvider).show(l10n.deleteDone(homeName));
   }
 }

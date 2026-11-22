@@ -21,6 +21,8 @@ class Staff extends Table with SyncedColumns {
 }
 
 @DataClassName('Visit')
+@TableIndex(name: 'visits_staff_date', columns: {#staffId, #date})
+@TableIndex(name: 'visits_staff_out', columns: {#staffId, #outAt})
 class Visits extends Table with SyncedColumns {
   TextColumn get staffId => text().nullable()();
   TextColumn get date => text().nullable()();

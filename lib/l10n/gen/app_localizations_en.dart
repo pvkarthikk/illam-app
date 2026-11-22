@@ -4283,4 +4283,884 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get syncLabConnectLocal => 'Connect to 127.0.0.1';
+
+  @override
+  String homeGoneRemoved(String home) {
+    return 'You’re no longer in $home';
+  }
+
+  @override
+  String homeGoneDeleted(String home, String name) {
+    return '$home was deleted by $name';
+  }
+
+  @override
+  String get homeGoneOk => 'OK';
+
+  @override
+  String memberRemovedNewKey(String name) {
+    return '$name removed · new home key shared with the others';
+  }
+
+  @override
+  String leaveChooseAdminLead(String home) {
+    return 'You’re the only admin. Pick someone to look after $home after you leave.';
+  }
+
+  @override
+  String get leaveWaiting => 'Leaving… waiting for a family phone';
+
+  @override
+  String get leaveRemoveNow =>
+      'Remove from this phone now — we’ll tell your family the next time this phone reaches one of theirs';
+
+  @override
+  String deleteDone(String home) {
+    return '$home deleted. Other phones erase it when they sync.';
+  }
+
+  @override
+  String get opIgnoredRoleChanged => 'Someone changed your role first.';
+
+  @override
+  String get inviteTipSecondAdmin =>
+      'Tip: make a second admin, so the home is never stuck without one.';
+
+  @override
+  String inviteBackupNow(String home) {
+    return 'Back up $home now';
+  }
+
+  @override
+  String backupHealthOk(Object ago, Object provider, Object name) {
+    return 'Backed up $ago to $provider · by $name';
+  }
+
+  @override
+  String get backupOnlyOnPhone => 'Only on this phone — add another place';
+
+  @override
+  String get backupNoRecoveryReady => 'No recovery-ready backup';
+
+  @override
+  String backupNoBackupDays(int n) {
+    return 'No backup in $n days';
+  }
+
+  @override
+  String backupThisPhoneOn(Object provider) {
+    return 'Backing up from this phone · $provider';
+  }
+
+  @override
+  String backupAlso(Object name, Object provider, Object ago) {
+    return 'Also: $name backs up to $provider ($ago)';
+  }
+
+  @override
+  String get backupNoAdminHint =>
+      'No admin has a backup yet — if every admin phone is lost, a restore brings people back as members.';
+
+  @override
+  String get backupProviderFolderShort => 'a folder';
+
+  @override
+  String get backupJustNow => 'just now';
+
+  @override
+  String backupAttention(Object reason) {
+    return 'Backup needs attention — $reason';
+  }
+
+  @override
+  String backupReasonAuth(Object provider) {
+    return 'Sign in to $provider again to keep backups running.';
+  }
+
+  @override
+  String backupReasonFull(Object provider) {
+    return '$provider is full — free space or choose another place.';
+  }
+
+  @override
+  String get backupErrNoPermission => 'No permission to write to that folder';
+
+  @override
+  String backupStatusStale(int n) {
+    return 'Not backed up for $n days';
+  }
+
+  @override
+  String get backupTitle => 'Backup';
+
+  @override
+  String backupProfileRow(Object provider, Object frequency, Object ago) {
+    return 'Backup — $provider · $frequency · last $ago';
+  }
+
+  @override
+  String get backupProfileNotSetUp => 'Backup — not set up';
+
+  @override
+  String get backupDaily => 'Daily';
+
+  @override
+  String get backupWeekly => 'Weekly';
+
+  @override
+  String get backupMonthly => 'Monthly';
+
+  @override
+  String get notifBackupAttention => 'Backup needs attention';
+
+  @override
+  String get notifBackupAttentionSub => 'Only when backups stop working';
+
+  @override
+  String backupHeroTitle(Object home) {
+    return 'Keep $home safe';
+  }
+
+  @override
+  String get backupHeroLead =>
+      'Nest Mojo : Flat has no cloud of its own. If every phone in the home is lost, a backup is the only way back.';
+
+  @override
+  String get backupPromise1Title => 'Locked before it leaves this phone';
+
+  @override
+  String get backupPromise1 =>
+      'Encrypted with a password only you know. Your cloud sees just a locked file.';
+
+  @override
+  String get backupPromise2Title => 'Runs by itself';
+
+  @override
+  String get backupPromise2 =>
+      'Every week on Wi-Fi while charging. You’ll hear from us only if it stops working.';
+
+  @override
+  String get backupPromise3Title => 'Brings everything back';
+
+  @override
+  String get backupPromise3 =>
+      'Lists, staff, attendance, salary, meals and spends, plus your own recovery key, so a new phone gets you back in with the same role you have now.';
+
+  @override
+  String get backupWhere => 'Where should backups go?';
+
+  @override
+  String get backupGroupSignIn => 'Sign in';
+
+  @override
+  String get backupGroupServer => 'Your own server';
+
+  @override
+  String get backupGroupDevice => 'On this phone';
+
+  @override
+  String get backupDontSee => 'Don’t see yours?';
+
+  @override
+  String get backupDontSeeBody =>
+      'Don’t see yours? Proton Drive and MEGA are coming later. iCloud, Box, Terabox and JioCloud can’t be connected from Android apps — use WebDAV if your provider offers it, or a folder on this phone.';
+
+  @override
+  String backupAlsoIn(Object home, Object name, Object provider, Object ago) {
+    return 'Also in $home: $name backs up to $provider ($ago).';
+  }
+
+  @override
+  String get backupArrivesP19 => 'Arrives in P19';
+
+  @override
+  String get backupArrivesP20 => 'Arrives in P20';
+
+  @override
+  String get backupProvFolder => 'Folder on this phone or another app';
+
+  @override
+  String get backupProvFolderSub =>
+      'SD card, USB drive, or a cloud app that offers folders';
+
+  @override
+  String get backupProvGdrive => 'Google Drive';
+
+  @override
+  String get backupProvGdriveSub => 'Sign in · Hidden app folder in your Drive';
+
+  @override
+  String get backupProvOnedrive => 'OneDrive';
+
+  @override
+  String get backupProvOnedriveSub => 'Sign in · Apps › Nest Mojo Flat';
+
+  @override
+  String get backupProvDropbox => 'Dropbox';
+
+  @override
+  String get backupProvDropboxSub => 'Sign in · Apps › Nest Mojo Flat';
+
+  @override
+  String get backupProvPcloud => 'pCloud';
+
+  @override
+  String get backupProvPcloudSub => 'Sign in · App folder · EU or US region';
+
+  @override
+  String get backupProvNextcloud => 'Nextcloud';
+
+  @override
+  String get backupProvNextcloudSub => 'Your own or a hosted Nextcloud';
+
+  @override
+  String get backupProvWebdav => 'WebDAV';
+
+  @override
+  String get backupProvWebdavSub =>
+      'ownCloud, Synology, QNAP, Koofr, Yandex Disk, any WebDAV';
+
+  @override
+  String get backupProvS3 => 'S3-compatible';
+
+  @override
+  String get backupProvS3Sub =>
+      'AWS S3, Backblaze B2, Wasabi, Cloudflare R2, MinIO';
+
+  @override
+  String get backupProvSftp => 'SFTP';
+
+  @override
+  String get backupProvSftpSub => 'Home NAS or your own server';
+
+  @override
+  String get backupChecking => 'Checking… wrote a test file';
+
+  @override
+  String get backupErrUnreachable => 'Couldn’t reach that server';
+
+  @override
+  String get backupLocalCopy => 'Local copy — lost with the phone';
+
+  @override
+  String get backupPwTitle => 'Set a backup password';
+
+  @override
+  String get backupPwField => 'Backup password';
+
+  @override
+  String get backupPwConfirm => 'Confirm password';
+
+  @override
+  String get backupPwTooShort => 'Too short';
+
+  @override
+  String get backupPwOkay => 'Okay';
+
+  @override
+  String get backupPwStrong => 'Strong';
+
+  @override
+  String get backupPwSuggest => 'Suggest one';
+
+  @override
+  String get backupPwWarning =>
+      'We can’t reset this password. Without it, backups can’t be opened. Save it in your password manager or write it down.';
+
+  @override
+  String get backupPwSaved => 'I’ve saved this password somewhere safe';
+
+  @override
+  String get backupPwSave => 'Save password & back up';
+
+  @override
+  String get backupPwMismatch => 'The two passwords don’t match.';
+
+  @override
+  String backupStatusOk(Object ago) {
+    return 'Backed up $ago';
+  }
+
+  @override
+  String backupStatusRunning(int pct) {
+    return 'Backing up… $pct%';
+  }
+
+  @override
+  String backupStatusFailed(Object reason) {
+    return 'Last backup failed — $reason';
+  }
+
+  @override
+  String get backupStatusUnchanged => 'No changes since last backup';
+
+  @override
+  String backupNext(Object when, Object conditions) {
+    return 'Next: $when · $conditions';
+  }
+
+  @override
+  String get backupOnWifi => 'on Wi-Fi';
+
+  @override
+  String get backupWhileCharging => 'while charging';
+
+  @override
+  String get backupNow => 'Back up now';
+
+  @override
+  String get backupWhereGo => 'Where backups go';
+
+  @override
+  String backupPlacesCount(int k) {
+    return '$k of 3';
+  }
+
+  @override
+  String backupDestLast(Object ago, int k) {
+    return 'Last: $ago · $k kept';
+  }
+
+  @override
+  String get backupDisconnect => 'Disconnect';
+
+  @override
+  String get backupStayThere => 'Backups already there stay there.';
+
+  @override
+  String get backupAddPlace => '＋ Add another place';
+
+  @override
+  String get backupSchedule => 'Schedule';
+
+  @override
+  String get backupHowOften => 'How often';
+
+  @override
+  String get backupWifiOnly => 'Only on Wi-Fi';
+
+  @override
+  String get backupWifiOnlySub => 'Never uses mobile data';
+
+  @override
+  String get backupCharging => 'Only while charging';
+
+  @override
+  String get backupChargingSub => 'Usually overnight';
+
+  @override
+  String get backupKeep => 'Keep the most recent';
+
+  @override
+  String backupKeepN(int n) {
+    return '$n backups';
+  }
+
+  @override
+  String get backupKeepSub =>
+      'Older ones are deleted from that place after a successful backup.';
+
+  @override
+  String backupProgressNotif(Object home) {
+    return 'Backing up $home…';
+  }
+
+  @override
+  String get backupLocalTag => 'Local copy';
+
+  @override
+  String get backupPwRow => 'Backup password';
+
+  @override
+  String backupPwRowSub(Object date) {
+    return 'Set $date · saved on this phone';
+  }
+
+  @override
+  String get backupPwChangeTitle => 'Change backup password';
+
+  @override
+  String get backupPwChangeNote =>
+      'New backups use the new password. Older backups still need the old one.';
+
+  @override
+  String get backupPwChangeSave => 'Save new password';
+
+  @override
+  String get backupCheck => 'Check a backup';
+
+  @override
+  String get backupCheckSub => 'Opens the latest backup to make sure it works';
+
+  @override
+  String backupCheckOk(int n, Object size) {
+    return 'Latest backup opens fine · $n items · $size';
+  }
+
+  @override
+  String get backupDamaged => 'This backup is damaged — try an older one.';
+
+  @override
+  String get backupRecent => 'Recent backups';
+
+  @override
+  String backupRecentRow(Object ago, Object size, Object place) {
+    return '$ago · $size · $place';
+  }
+
+  @override
+  String get backupRecentEmpty => 'No backups yet.';
+
+  @override
+  String get backupKits => 'Recovery keys';
+
+  @override
+  String backupKitRow(Object name, Object model) {
+    return '$name’s $model';
+  }
+
+  @override
+  String get backupKitThisPhone => 'This phone';
+
+  @override
+  String backupKitSub(Object date, Object name, String role) {
+    String _temp0 = intl.Intl.selectLogic(role, {
+      'admin': 'an admin',
+      'other': 'a member',
+    });
+    return 'Made $date · restores $name as $_temp0';
+  }
+
+  @override
+  String get backupKitTurnOff => 'Turn off';
+
+  @override
+  String backupKitOffTitle(Object name) {
+    return 'Turn off $name’s recovery key?';
+  }
+
+  @override
+  String backupKitOffLead(Object name, Object home) {
+    return 'Backups made with it can still be opened, but only as a separate copy — they can’t bring $name back into $home. $name’s phone makes a new key at its next backup.';
+  }
+
+  @override
+  String get backupKitKeep => 'Keep';
+
+  @override
+  String get backupKitDead =>
+      'Make a new backup — the old recovery kit no longer works.';
+
+  @override
+  String backupFinePrint(Object home, String role) {
+    String _temp0 = intl.Intl.selectLogic(role, {
+      'admin': 'an admin',
+      'other': 'a member',
+    });
+    return 'Backups include your recovery key. Anyone with the file and the password can restore $home as $_temp0 — keep the password private.';
+  }
+
+  @override
+  String get debugDamageBackup => 'Write a damaged copy of the latest backup';
+
+  @override
+  String get debugFolderOffPhone => 'Count folders as off-phone';
+
+  @override
+  String get restoreTitle => 'Restore from a backup';
+
+  @override
+  String get restoreSub => 'Choose where your backup is.';
+
+  @override
+  String get restoreNote =>
+      '🔒 Your backup is opened on this phone. Nothing is sent to Nest Mojo : Flat.';
+
+  @override
+  String get restorePickTitle => 'Pick a backup';
+
+  @override
+  String restoreFoundIn(Object provider, Object account) {
+    return 'Found in $provider · $account';
+  }
+
+  @override
+  String restoreVault(Object vault) {
+    return 'Home backup · $vault';
+  }
+
+  @override
+  String restoreRow(Object date, Object size) {
+    return '$date · $size';
+  }
+
+  @override
+  String get restoreTagKit => 'Recovery key';
+
+  @override
+  String get restoreTagData => 'Data only';
+
+  @override
+  String restoreOlder(int n) {
+    return 'Older backups ($n)';
+  }
+
+  @override
+  String get restoreEmpty =>
+      'No Nest Mojo : Flat backups here — check you picked the right account or folder.';
+
+  @override
+  String get restoreChooseAnother => 'Choose another place';
+
+  @override
+  String get restoreUnlockTitle => 'Unlock this backup';
+
+  @override
+  String get restoreUnlocking => 'Unlocking…';
+
+  @override
+  String get restoreWrongPw => 'Wrong password — passwords are case-sensitive.';
+
+  @override
+  String restoreHeaderCard(
+    Object home,
+    Object homeId,
+    Object date,
+    Object model,
+    Object name,
+  ) {
+    return '$home · $homeId · $date · from $model ($name)';
+  }
+
+  @override
+  String get restoreStepDownload => 'Downloading';
+
+  @override
+  String get restoreStepUnlock => 'Unlocking';
+
+  @override
+  String get restoreStepCheck => 'Checking the home’s history';
+
+  @override
+  String get restoreStepSetup => 'Setting up this phone';
+
+  @override
+  String restoreWelcome(Object home) {
+    return 'Welcome back to $home';
+  }
+
+  @override
+  String restoreOthersNote(Object home) {
+    return 'Phones still in $home will show that you restored on a new phone.';
+  }
+
+  @override
+  String restoreKeepBackingUp(Object provider) {
+    return 'Keep backing up to $provider';
+  }
+
+  @override
+  String restoreGo(Object home) {
+    return 'Go to $home';
+  }
+
+  @override
+  String restoreAlreadyHere(Object home) {
+    return '$home is already on this phone.';
+  }
+
+  @override
+  String get restoreOpen => 'Open';
+
+  @override
+  String get restoreDownloadFail =>
+      'Couldn’t download — check your connection and try again.';
+
+  @override
+  String restoreBanner(Object date, Object home) {
+    return 'Restored from a backup made $date. Connecting to the rest of $home…';
+  }
+
+  @override
+  String restoreDeadKit(Object date, Object home) {
+    return 'This backup’s recovery key was turned off on $date. Ask an admin in $home to invite you.';
+  }
+
+  @override
+  String get restoreSeparateCopy => 'Keep as a separate copy';
+
+  @override
+  String get restoreRemoveFromPhone => 'Remove from this phone';
+
+  @override
+  String restoreSeparateName(Object home, Object date) {
+    return '$home (restored $date)';
+  }
+
+  @override
+  String restoreOtherAdmin(Object name, Object home) {
+    return '$name restored $home on a new phone from a backup';
+  }
+
+  @override
+  String get restoreKeep => 'Keep';
+
+  @override
+  String get restoreRemove => 'Remove';
+
+  @override
+  String get bkSrvErrAuth => 'Wrong username or app password';
+
+  @override
+  String get bkSrvErrBucket => 'Bucket not found';
+
+  @override
+  String get bkSrvErrOther =>
+      'That didn’t work — check the details and try again.';
+
+  @override
+  String get bkSrvErrHttps => 'Use an address that starts with https://';
+
+  @override
+  String get bkSrvErrHostKeyChanged =>
+      'This server’s fingerprint changed. If you didn’t change the server, don’t connect.';
+
+  @override
+  String get bkSrvConnect => 'Connect';
+
+  @override
+  String get bkSrvTrustTitle => 'Trust this server?';
+
+  @override
+  String bkSrvTrustLead(Object host) {
+    return 'First time connecting to $host. Check that this fingerprint matches the one on your server.';
+  }
+
+  @override
+  String get bkSrvTrust => 'Trust';
+
+  @override
+  String get bkSrvWebdavTitle => 'WebDAV';
+
+  @override
+  String get bkSrvServerAddress => 'Server address';
+
+  @override
+  String get bkSrvUsername => 'Username';
+
+  @override
+  String get bkSrvAppPassword => 'App password';
+
+  @override
+  String get bkSrvWebdavHint =>
+      'Works with ownCloud, Synology, QNAP, Koofr, Yandex Disk, pCloud and any WebDAV server. Use an app password, not your main one.';
+
+  @override
+  String bkSrvAccount(Object user, Object host) {
+    return '$user @ $host';
+  }
+
+  @override
+  String get bkSrvNextcloudTitle => 'Nextcloud';
+
+  @override
+  String get bkSrvNextcloudHint =>
+      'We’ll open your Nextcloud login in the browser. Approve Nest Mojo : Flat there — it gets its own app password you can revoke any time.';
+
+  @override
+  String get bkSrvNextcloudAccessNote =>
+      'This app password can reach your whole Nextcloud account. A separate Nextcloud user just for backups is safer.';
+
+  @override
+  String get bkSrvContinueInBrowser => 'Continue in browser';
+
+  @override
+  String get bkSrvOpeningLogin => 'Opening your Nextcloud login…';
+
+  @override
+  String get bkSrvApproveTitle => 'Approve in your browser';
+
+  @override
+  String bkSrvApproveLead(Object host) {
+    return 'Log in to $host and tap Grant access for Nest Mojo : Flat. Then come back here.';
+  }
+
+  @override
+  String get bkSrvWaitingApproval => 'Waiting for approval…';
+
+  @override
+  String get bkSrvS3Title => 'S3-compatible';
+
+  @override
+  String get bkSrvService => 'Service';
+
+  @override
+  String get bkSrvPresetAws => 'AWS';
+
+  @override
+  String get bkSrvPresetB2 => 'Backblaze B2';
+
+  @override
+  String get bkSrvPresetWasabi => 'Wasabi';
+
+  @override
+  String get bkSrvPresetR2 => 'Cloudflare R2';
+
+  @override
+  String get bkSrvPresetMinio => 'MinIO';
+
+  @override
+  String get bkSrvPresetOther => 'Other';
+
+  @override
+  String get bkSrvRegion => 'Region';
+
+  @override
+  String get bkSrvEndpoint => 'Endpoint';
+
+  @override
+  String get bkSrvBucket => 'Bucket';
+
+  @override
+  String get bkSrvAccessKeyId => 'Access key ID';
+
+  @override
+  String get bkSrvSecretKey => 'Secret access key';
+
+  @override
+  String get bkSrvS3Hint =>
+      'Create a key that can only write to this bucket. Files go under nestmojo/.';
+
+  @override
+  String bkSrvS3Account(Object bucket, Object service) {
+    return '$bucket · $service';
+  }
+
+  @override
+  String get bkSrvSftpTitle => 'SFTP';
+
+  @override
+  String get bkSrvHost => 'Host';
+
+  @override
+  String get bkSrvPort => 'Port';
+
+  @override
+  String get bkSrvPassword => 'Password';
+
+  @override
+  String get bkSrvFolder => 'Folder';
+
+  @override
+  String get bkSrvSignInWith => 'Sign in with';
+
+  @override
+  String get bkSrvAuthPassword => 'Password';
+
+  @override
+  String get bkSrvAuthKey => 'A key made on this phone';
+
+  @override
+  String get bkSrvKeyHint =>
+      'Add this key to the server’s authorized_keys file for this user, then tap Connect.';
+
+  @override
+  String get bkSrvCopyKey => 'Copy key';
+
+  @override
+  String get bkSrvKeyCopied => 'Key copied';
+
+  @override
+  String get bkSrvSftpAccessNote =>
+      'Tip: a server user that can only see its own folder is safer.';
+
+  @override
+  String bkSrvSftpAccount(Object user, Object host, Object port) {
+    return '$user@$host:$port';
+  }
+
+  @override
+  String get bkSrvSignInAgain => 'Sign in again';
+
+  @override
+  String get bkCloudGdriveAccess =>
+      'See, create and delete its own data in your Google Drive — a hidden app folder. It can’t see your other files.';
+
+  @override
+  String get bkCloudGdriveWhere => 'Hidden app folder in your Drive';
+
+  @override
+  String bkCloudConnected(Object provider) {
+    return 'Connected to $provider';
+  }
+
+  @override
+  String bkCloudSignedInAgain(Object provider) {
+    return 'Signed in to $provider again';
+  }
+
+  @override
+  String get bkCloudSignInAgainSub =>
+      'Use this if backups say the sign-in expired';
+
+  @override
+  String get bkCloudExpiredRow => 'Sign-in expired — Sign in again';
+
+  @override
+  String bkCloudNotConfigured(Object provider) {
+    return 'This build isn’t set up for $provider yet.';
+  }
+
+  @override
+  String bkCloudSignInFailed(Object provider) {
+    return 'Couldn’t sign in to $provider — try again.';
+  }
+
+  @override
+  String get bkCloudDropboxAccess =>
+      'Read and write files in Apps › Nest Mojo Flat only. It can’t see your other files.';
+
+  @override
+  String get bkCloudOnedriveAccess =>
+      'Read and write files in its own folder, Apps › Nest Mojo Flat. It can’t see your other files.';
+
+  @override
+  String get bkCloudAppsFolder => 'Apps › Nest Mojo Flat';
+
+  @override
+  String get bkCloudOrgApproval =>
+      'Your organisation must approve Nest Mojo : Flat before it can use this OneDrive. Ask your IT admin, or choose another place.';
+
+  @override
+  String get bkCloudPcloudAccess =>
+      'Read and write files in its own app folder only.';
+
+  @override
+  String get bkCloudPcloudWhere => 'App folder · EU or US region';
+
+  @override
+  String bkCloudPcloudAccount(Object email, Object region) {
+    return '$email · $region';
+  }
+
+  @override
+  String get debugBackupLab => 'Backup lab';
+
+  @override
+  String get debugGoogleSilent => 'Google silent sign-in now';
+
+  @override
+  String get debugExpireTokens => 'Expire Dropbox/OneDrive tokens';
+
+  @override
+  String get debugBreakTokens => 'Break Dropbox/OneDrive refresh token';
+
+  @override
+  String get debugResultOk => 'ok';
+
+  @override
+  String get debugResultNeedsSignIn => 'needs sign-in';
+
+  @override
+  String get debugAdd200Items => 'Add 200 test items';
 }

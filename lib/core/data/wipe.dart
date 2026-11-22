@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:workmanager/workmanager.dart';
 
+import 'package:nm_flat/core/crypto/home_key_ring.dart';
 import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/data/prefs/device_prefs.dart';
 import 'package:nm_flat/core/data/secure/secure_store.dart';
@@ -37,6 +38,7 @@ class PhoneWiper {
       if (homeKeyId != null && homeKeyId != 'genesis') {
         await secureStore.delete(SecureKeys.homeKey(homeId, homeKeyId));
       }
+      await HomeKeyRing(secureStore).clear(homeId);
     }
 
     await prefs.clearHome();

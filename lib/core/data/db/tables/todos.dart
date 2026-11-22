@@ -3,6 +3,7 @@ import 'package:drift/drift.dart';
 import 'package:nm_flat/core/data/db/tables/synced_columns.dart';
 
 @DataClassName('TodoRow')
+@TableIndex(name: 'todos_done_due', columns: {#done, #due})
 class Todos extends Table with SyncedColumns {
   TextColumn get title => text().withDefault(const Constant(''))();
   TextColumn get due => text().withDefault(const Constant(''))();

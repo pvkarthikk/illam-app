@@ -6,6 +6,7 @@ import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/providers.dart';
+import 'package:nm_flat/features/account/leaving_sheet.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
 enum _RemoveChoice { cancel, remove, goMembers }
@@ -70,9 +71,12 @@ Future<void> showRemoveHomeSheet(BuildContext context, WidgetRef ref) async {
   }
   if (choice != _RemoveChoice.remove) return;
 
+  final homeId = home?.id ?? ref.read(prefsProvider).currentHomeId ?? '';
   final res = await ref.read(membershipServiceProvider).leaveHome();
   if (!context.mounted) return;
   if (!res.applied) {
     ref.read(snackbarProvider).show(l10n.profileOnlyAdminLead);
+  } else {
+    await showLeavingSheet(context, homeId: homeId, homeName: homeName);
   }
 }

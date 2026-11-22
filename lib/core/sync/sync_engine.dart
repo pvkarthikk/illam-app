@@ -1,19 +1,23 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:drift/drift.dart';
 
 import 'package:nm_flat/core/crypto/device_keys.dart';
+import 'package:nm_flat/core/crypto/home_key_ring.dart';
 import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/data/prefs/device_prefs.dart';
+import 'package:nm_flat/core/data/repo/home_eraser.dart';
 import 'package:nm_flat/core/data/secure/secure_store.dart';
+import 'package:nm_flat/core/sync/control_store.dart';
 import 'package:nm_flat/core/sync/incoming.dart';
 import 'package:nm_flat/core/sync/membership_log.dart';
+import 'package:nm_flat/core/sync/net/byte_link.dart';
 import 'package:nm_flat/core/sync/net/framed_connection.dart';
 import 'package:nm_flat/core/sync/net/lan_sync.dart';
 import 'package:nm_flat/core/sync/net/local_ip.dart';
 import 'package:nm_flat/core/sync/net/secure_channel.dart';
+import 'package:nm_flat/core/sync/net/tcp_byte_link.dart';
 import 'package:nm_flat/core/sync/session/sync_context.dart';
 import 'package:nm_flat/core/sync/session/sync_session.dart';
 import 'package:nm_flat/core/sync/sync_store.dart';
@@ -57,6 +61,8 @@ class SyncEngine {
     required this.incoming,
     required this.clock,
     required this.homeId,
+    this.controlStore,
+    this.homeEraser,
   });
 
   final NestDatabase db;
@@ -67,6 +73,8 @@ class SyncEngine {
   final IncomingPipeline incoming;
   final Clock clock;
   final String? homeId;
+  final ControlStore? controlStore;
+  final HomeEraser? homeEraser;
 
   final List<SyncSession> _sessions = [];
   final Set<SyncSession> _authed = {};
@@ -81,12 +89,22 @@ class SyncEngine {
   bool _disposed = false;
   Timer? _wifiTipTimer;
   Timer? _pushTimer;
-  Uint8List? _homeKey;
   DeviceKeys? _resolvedKeys;
 
   Stream<SyncEngineState> get states => _states.stream;
   Stream<void> get synced => _synced.stream;
   SyncEngineState get state => _state;
+
+  HomeKeyRing get _ring => HomeKeyRing(secure);
+
+  Future<Set<String>> _allLanTags(String hId, DateTime nowUtc) async {
+    final keys = await _ring.all(hId);
+    final tags = <String>{};
+    for (final k in keys) {
+      tags.addAll(await lanTagsFor(k.bytes, nowUtc));
+    }
+    return tags;
+  }
 
   void _emit(SyncEngineState next) {
     if (_disposed || _states.isClosed) return;
@@ -102,27 +120,26 @@ class SyncEngine {
     )..where((h) => h.id.equals(hId))).getSingleOrNull();
     if (home == null) return;
 
-    final rawKey = await secure.read(
-      SecureKeys.homeKey(hId, home.homeKeyId ?? 'genesis'),
-    );
-    if (rawKey == null) return;
+    final currentKey = await _ring.current(hId);
+    if (currentKey == null) return;
 
-    _homeKey = base64Decode(rawKey);
     _resolvedKeys = await keys;
     _started = true;
 
-    final p = await _lan.startServer((s) => unawaited(_acceptSocket(s)));
+    final p = await _lan.startServer(
+      (s) => unawaited(runSession(TcpByteLink(s), initiator: false)),
+    );
     _emit(_state.copyWith(port: p));
 
     final nowUtc = clock.now().toUtc();
     try {
-      await _lan.advertise(await lanTag(_homeKey!, nowUtc), p);
+      await _lan.advertise(await lanTag(currentKey.bytes, nowUtc), p);
     } on Object {
       // mDNS advertisement unavailable in headless environments.
     }
     try {
       await _lan.discover(
-        await lanTagsFor(_homeKey!, nowUtc),
+        await _allLanTags(hId, nowUtc),
         (host, port) => unawaited(_dial(host, port)),
       );
     } on Object {
@@ -151,18 +168,6 @@ class SyncEngine {
     });
   }
 
-  Future<void> _acceptSocket(Socket s) async {
-    try {
-      final ch = await SecureChannel.handshake(
-        FramedConnection.socket(s),
-        initiator: false,
-      );
-      await _runSession(ch, dialled: false);
-    } on Object {
-      s.destroy();
-    }
-  }
-
   Future<void> dialForDebug(String host, int port) => _dial(host, port);
 
   Future<void> _dial(String host, int port) async {
@@ -184,11 +189,12 @@ class SyncEngine {
         port,
         timeout: const Duration(seconds: 5),
       );
-      final ch = await SecureChannel.handshake(
-        FramedConnection.socket(sock),
+      await runSession(
+        TcpByteLink(sock),
         initiator: true,
+        host: host,
+        port: port,
       );
-      await _runSession(ch, dialled: true, host: host, port: port);
     } on Object {
       // Peer unreachable on this candidate address.
     } finally {
@@ -196,55 +202,70 @@ class SyncEngine {
     }
   }
 
-  Future<void> _runSession(
-    SecureChannel ch, {
-    required bool dialled,
+  /// Runs a full encrypted sync session over any bidirectional [ByteLink].
+  Future<void> runSession(
+    ByteLink link, {
+    required bool initiator,
     String? host,
     int? port,
   }) async {
-    final hId = homeId;
-    if (hId == null || _disposed) {
-      await ch.close();
-      return;
-    }
-    final k = _resolvedKeys ?? await keys;
-    final ctx = DbSyncContext(
-      db: db,
-      homeId: hId,
-      keys: k,
-      membership: membership,
-      incoming: incoming,
-      clock: clock,
-      onIngested: onLocalChange,
-    );
-    late final SyncSession session;
-    session = SyncSession(
-      ch,
-      ctx,
-      dialled: dialled,
-      onAuthed: (s) => _onAuthed(s, host: host, port: port),
-    );
-    _sessions.add(session);
-
-    unawaited(
-      session.ready.future
-          .then((_) async {
-            if (_disposed) return;
-            if (!_synced.isClosed) _synced.add(null);
-            if (prefs.setupIncompleteHomeId == hId) {
-              await prefs.setSetupIncompleteHomeId(null);
-            }
-            await incoming.retryPending(hId, IngestReport());
-          })
-          .catchError((_) {}),
-    );
-
+    FramedConnection? conn;
+    SyncSession? session;
     try {
-      await session.run();
+      final hId = homeId;
+      if (hId == null || _disposed) return;
+      conn = FramedConnection.link(link);
+      final ch = await SecureChannel.handshake(conn, initiator: initiator);
+      if (_disposed) return;
+      final k = _resolvedKeys ?? await keys;
+      final ctx = DbSyncContext(
+        db: db,
+        homeId: hId,
+        keys: k,
+        membership: membership,
+        incoming: incoming,
+        clock: clock,
+        prefs: prefs,
+        controlStore: controlStore,
+        homeEraser: homeEraser,
+        onIngested: onLocalChange,
+      );
+      final created = SyncSession(
+        ch,
+        ctx,
+        dialled: initiator,
+        onAuthed: (s) => _onAuthed(s, host: host, port: port),
+      );
+      session = created;
+      _sessions.add(created);
+
+      unawaited(
+        created.ready.future
+            .then((_) async {
+              if (_disposed) return;
+              if (!_synced.isClosed) _synced.add(null);
+              if (prefs.setupIncompleteHomeId == hId) {
+                await prefs.setSetupIncompleteHomeId(null);
+              }
+              await incoming.retryPending(hId, IngestReport());
+            })
+            .catchError((_) {}),
+      );
+
+      await created.run();
+    } on Object {
+      // Handshake or session transport error.
     } finally {
-      _sessions.remove(session);
-      _authed.remove(session);
-      _refreshConnected();
+      if (session != null) {
+        _sessions.remove(session);
+        _authed.remove(session);
+        _refreshConnected();
+      }
+      if (conn != null) {
+        await conn.close();
+      } else {
+        await link.close();
+      }
     }
   }
 
@@ -312,15 +333,14 @@ class SyncEngine {
 
   Future<int> syncNow() async {
     if (homeId == null || _disposed) return 0;
+    final hId = homeId!;
     _emit(_state.copyWith(syncing: true));
     try {
       await startForeground();
-      if (_homeKey != null) {
+      final tags = await _allLanTags(hId, clock.now().toUtc());
+      if (tags.isNotEmpty) {
         try {
-          await _lan.discover(
-            await lanTagsFor(_homeKey!, clock.now().toUtc()),
-            (h, p) => unawaited(_dial(h, p)),
-          );
+          await _lan.discover(tags, (h, p) => unawaited(_dial(h, p)));
         } on Object {
           // Ignore mDNS errors.
         }
@@ -350,11 +370,8 @@ class SyncEngine {
     )..where((h) => h.id.equals(hId))).getSingleOrNull();
     if (home == null) return;
 
-    final rawKey = await secure.read(
-      SecureKeys.homeKey(hId, home.homeKeyId ?? 'genesis'),
-    );
-    if (rawKey == null) return;
-    _homeKey = base64Decode(rawKey);
+    final tags = await _allLanTags(hId, clock.now().toUtc());
+    if (tags.isEmpty) return;
     _resolvedKeys = await keys;
 
     for (final peer in await SyncStore(db).peers(hId)) {
@@ -363,10 +380,7 @@ class SyncEngine {
       }
     }
     try {
-      await _lan.discover(
-        await lanTagsFor(_homeKey!, clock.now().toUtc()),
-        (h, p) => unawaited(_dial(h, p)),
-      );
+      await _lan.discover(tags, (h, p) => unawaited(_dial(h, p)));
     } on Object {
       // Background isolate may not support mDNS platform channels.
     }
@@ -384,6 +398,17 @@ class SyncEngine {
       await s.close();
     }
     await _lan.stop();
+  }
+
+  /// Sends `bye` to and closes every open session whose peer device id is in [deviceIds].
+  void closeSessionsWith(Set<String> deviceIds) {
+    if (deviceIds.isEmpty) return;
+    for (final s in [..._sessions]) {
+      final peer = s.peerDeviceId;
+      if (peer != null && deviceIds.contains(peer)) {
+        unawaited(s.close());
+      }
+    }
   }
 
   Future<void> stopForeground() async {

@@ -43,6 +43,7 @@ class CollectionRegistry {
       db.pantry,
       db.routines,
       db.todos,
+      db.backupStatus,
       // … one line per synced table
     ])
       t.actualTableName: _specOf(t),
@@ -60,6 +61,8 @@ class CollectionRegistry {
   });
 
   bool has(String tbl) => _specs.containsKey(tbl);
+
+  Iterable<TableInfo> get tables => _specs.values.map((s) => s.table);
 
   CollectionSpec spec(String tbl) =>
       _specs[tbl] ?? (throw ArgumentError('Unknown table $tbl'));

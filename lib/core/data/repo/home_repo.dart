@@ -1,8 +1,7 @@
-import 'dart:convert';
-
 import 'package:drift/drift.dart';
 
 import 'package:nm_flat/core/crypto/device_keys.dart';
+import 'package:nm_flat/core/crypto/home_key_ring.dart';
 import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/data/ops/change_writer.dart';
 import 'package:nm_flat/core/data/prefs/device_prefs.dart';
@@ -78,10 +77,7 @@ class HomeRepo {
     final homeId = await HomeIds.fromGenesis(genesis);
     final memberId = keys.deviceId;
 
-    await secure.write(
-      SecureKeys.homeKey(homeId, 'genesis'),
-      base64.encode(Ids.randomBytes(32)),
-    );
+    await HomeKeyRing(secure).add(homeId, 'genesis', Ids.randomBytes(32));
 
     if (prefs.deviceId != keys.deviceId) {
       await prefs.setDeviceId(keys.deviceId, kind: 'key');

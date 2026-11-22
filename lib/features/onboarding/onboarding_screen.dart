@@ -4,6 +4,8 @@ import 'package:nm_flat/features/onboarding/connect_step.dart';
 import 'package:nm_flat/features/onboarding/create_home_screen.dart';
 import 'package:nm_flat/features/onboarding/join_step.dart';
 import 'package:nm_flat/features/onboarding/phrase_step.dart';
+import 'package:nm_flat/features/onboarding/restore_pick_screen.dart';
+import 'package:nm_flat/features/onboarding/restore_screen.dart';
 import 'package:nm_flat/features/onboarding/scan_step.dart';
 import 'package:nm_flat/features/onboarding/welcome_screen.dart';
 
@@ -19,6 +21,8 @@ class OnboardingScreen extends StatelessWidget {
     'phrase' => const PhraseStep(),
     'scan' => const ScanStep(),
     'connect' => const ConnectStep(),
+    'restore' => const RestoreScreen(),
+    'restore-pick' => const RestorePickScreen(),
     _ => const WelcomeScreen(),
   };
 }

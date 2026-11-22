@@ -1,14 +1,23 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:workmanager/workmanager.dart';
 
 import 'package:nm_flat/app.dart';
+import 'package:nm_flat/core/backup/backup_config.dart';
+import 'package:nm_flat/core/backup/backup_schedule.dart';
+import 'package:nm_flat/core/backup/cloud/pcloud_auth.dart';
+import 'package:nm_flat/core/backup/destination_secrets.dart';
 import 'package:nm_flat/core/data/bootstrap.dart';
 import 'package:nm_flat/core/data/db/database.dart';
+import 'package:nm_flat/core/data/db/db_key.dart';
+import 'package:nm_flat/core/data/db/encrypt_existing.dart';
 import 'package:nm_flat/core/data/prefs/device_prefs.dart';
+import 'package:nm_flat/core/data/repo/home_eraser.dart';
 import 'package:nm_flat/core/data/secure/secure_store.dart';
 import 'package:nm_flat/core/notify/background_tasks.dart';
 import 'package:nm_flat/core/notify/notifications.dart';
@@ -16,9 +25,44 @@ import 'package:nm_flat/core/providers.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding.instance.addObserver(PcloudRedirectCatcher());
   final prefs = await DevicePrefs.open();
-  final db = NestDatabase.open();
   final secure = FlutterSecureStore();
+  final keyHex = await DbKey.loadOrCreate(secure);
+  await encryptExistingDatabase(keyHex);
+  var db = NestDatabase.open(keyHex: keyHex);
+  try {
+    await db.customSelect('SELECT COUNT(*) FROM sqlite_master').get();
+  } on Object catch (e) {
+    if (!e.toString().contains('file is not a database')) rethrow;
+    try {
+      await db.close();
+    } on Object {
+      // Ignore close error on unreadable database file.
+    }
+    final docs = await getApplicationDocumentsDirectory();
+    for (final name in const [
+      'nestmojo.sqlite',
+      'nestmojo.sqlite-wal',
+      'nestmojo.sqlite-shm',
+    ]) {
+      final f = File('${docs.path}${Platform.pathSeparator}$name');
+      if (await f.exists()) await f.delete();
+    }
+    await prefs.clearAll();
+    db = NestDatabase.open(keyHex: keyHex);
+  }
+  HomeEraser.onErase.add((homeId) async {
+    final cfg = await BackupConfigStore(secure).load(homeId);
+    final secrets = DestinationSecrets(secure);
+    for (final d in cfg.destinations) {
+      await secrets.delete(d.destId);
+    }
+  });
+  HomeEraser.onErase.add((homeId) async {
+    await cancelBackup(homeId);
+    await BackupConfigStore(secure).delete(homeId);
+  });
   try {
     await Bootstrap.ensureIdentity(secure: secure, prefs: prefs, db: db);
   } catch (_) {

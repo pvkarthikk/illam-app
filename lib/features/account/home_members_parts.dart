@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:material_ui/material_ui.dart';
 
+import 'package:nm_flat/core/backup/backup_health.dart';
 import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/domain/staff_text.dart';
@@ -10,6 +11,7 @@ import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/features/account/home_sheets.dart';
 import 'package:nm_flat/features/account/member_sheet.dart';
+import 'package:nm_flat/features/backup/backup_texts.dart';
 import 'package:nm_flat/features/staff/add_staff_sheet.dart';
 import 'package:nm_flat/features/staff/former_staff_section.dart';
 import 'package:nm_flat/features/staff/staff_providers.dart';
@@ -93,15 +95,60 @@ class HomeBackupCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final c = context.nest;
+    ref.watch(minuteTickProvider);
+    final nowMs = ref.read(clockProvider).nowMs;
+    final health =
+        ref.watch(backupHealthProvider).value ??
+        const BackupHealth(state: HealthState.none);
+    final texts = healthTexts(l10n, health, nowMs);
+
     return _pad(
       NestCard(
-        onTap: () => ref.read(snackbarProvider).show(l10n.profileBackupArrives),
-        child: _cardRow(
-          context,
-          leading: _iconTile(Icons.cloud_outlined, c.paper2, c.ink2),
-          title: l10n.homeBackupNone,
-          sub: l10n.homeBackupNotThisPhone,
-          trailing: Icon(Icons.chevron_right_rounded, color: c.ink3),
+        onTap: () => context.push(Routes.backup),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _iconTile(Icons.cloud_outlined, c.paper2, c.ink2),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      texts.title,
+                      style: NestText.itemTitle16.copyWith(
+                        color: texts.ok ? c.ink : c.accentInk,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      texts.thisPhone,
+                      style: NestText.meta13.copyWith(color: c.ink3),
+                    ),
+                    for (final other in texts.others) ...[
+                      const SizedBox(height: 2),
+                      Text(
+                        other,
+                        style: NestText.meta13.copyWith(color: c.ink2),
+                      ),
+                    ],
+                    if (texts.hint != null) ...[
+                      const SizedBox(height: 4),
+                      Text(
+                        texts.hint!,
+                        style: NestText.small12.copyWith(color: c.ink3),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+              const SizedBox(width: 8),
+              Icon(Icons.chevron_right_rounded, color: c.ink3),
+            ],
+          ),
         ),
       ),
     );

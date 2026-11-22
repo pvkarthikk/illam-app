@@ -13,6 +13,8 @@ abstract final class SecureKeys {
 
   static String homeKey(String homeId, String keyId) =>
       'home.$homeId.key.$keyId';
+
+  static String homeKeyIds(String homeId) => 'home.$homeId.keyids';
 }
 
 class FlutterSecureStore implements SecureStore {

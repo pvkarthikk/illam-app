@@ -141,6 +141,9 @@ class LocalMembershipService implements MembershipService {
   }
 
   @override
+  Future<MembershipResult> removeFromThisPhoneNow() => leaveHome();
+
+  @override
   Future<MembershipResult> deleteHome() async {
     final active = await _active();
     if (!_isActiveAdmin(active)) {

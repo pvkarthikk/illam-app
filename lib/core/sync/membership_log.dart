@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:drift/drift.dart';
+import 'package:flutter/foundation.dart' show debugPrint;
 
+import 'package:nm_flat/core/backup/recovery_kits.dart';
 import 'package:nm_flat/core/crypto/bytes.dart';
 import 'package:nm_flat/core/crypto/device_keys.dart';
 import 'package:nm_flat/core/crypto/kdf.dart';
@@ -40,6 +42,8 @@ class MembershipLog {
 
   void Function()? onAppended;
   void Function(String memberId, String name)? onMemberJoined;
+  Future<void> Function(ReplayResult result)? onReplayed;
+  String? lastReplayedHomeId;
 
   MemberOp _fromRow(MemberOpRow r) => MemberOp(
     opId: r.opId,
@@ -116,7 +120,7 @@ class MembershipLog {
             final key = g['signPub'] as String?;
             if (key != null) known[r.authorDeviceId] = key;
           }
-        } else if (r.opType == 'addMember') {
+        } else if (r.opType == 'addMember' || r.opType == 'recover') {
           final dev = payload['device'] as Map?;
           final devId = dev?['deviceId'] as String?;
           final key = dev?['signPub'] as String?;
@@ -126,6 +130,18 @@ class MembershipLog {
 
       for (final r in rows) {
         if (r.sigOk != null) continue;
+        final op = _fromRow(r);
+        if (r.opType == 'recover') {
+          final dev = op.payload['device'] as Map?;
+          final key = dev?['signPub'] as String?;
+          if (key == null) continue;
+          final okOp = await MemberOpCodec.verify(op, decodeKey(key));
+          final okRec = okOp && await verifyRecover(op.payload);
+          await (db.update(db.memberOps)..where((t) => t.opId.equals(r.opId)))
+              .write(MemberOpsCompanion(sigOk: Value(okRec)));
+          changed = true;
+          continue;
+        }
         String? key;
         if (r.opType == 'genesis') {
           final payload = jsonDecode(r.payloadJson) as Map<String, Object?>;
@@ -139,7 +155,7 @@ class MembershipLog {
         }
         if (key == null) continue;
 
-        final ok = await MemberOpCodec.verify(_fromRow(r), decodeKey(key));
+        final ok = await MemberOpCodec.verify(op, decodeKey(key));
         await (db.update(db.memberOps)..where((t) => t.opId.equals(r.opId)))
             .write(MemberOpsCompanion(sigOk: Value(ok)));
         changed = true;
@@ -323,7 +339,51 @@ class MembershipLog {
       }
     }
 
+    lastReplayedHomeId = homeId;
+    final replayedCb = onReplayed;
+    if (replayedCb != null) {
+      try {
+        await replayedCb(r);
+      } on Object catch (e) {
+        debugPrint('onReplayed failed: $e');
+      }
+    }
+
     return r;
+  }
+
+  /// Computes replay state from verified membership ops for [homeId] without mutating DB projection.
+  Future<ReplayResult> replayState(String homeId) async {
+    final rows = await (db.select(
+      db.memberOps,
+    )..where((t) => t.homeId.equals(homeId) & t.sigOk.equals(true))).get();
+    return replayMembership([for (final r in rows) _fromRow(r)]);
+  }
+
+  /// Returns stored `recover` membership ops for [homeId] whose effect is `'applied'`.
+  Future<List<MemberOp>> effectiveRecovers(String homeId) async {
+    final rows =
+        await (db.select(db.memberOps)
+              ..where(
+                (t) =>
+                    t.homeId.equals(homeId) &
+                    t.opType.equals('recover') &
+                    t.effect.equals('applied'),
+              )
+              ..orderBy([
+                (t) => OrderingTerm.desc(t.hlc),
+                (t) => OrderingTerm.desc(t.opId),
+              ]))
+            .get();
+    return [for (final r in rows) _fromRow(r)];
+  }
+
+  /// Returns wire map for a single stored [opId], if present.
+  Future<Map<String, Object?>?> wireForOp(String opId) async {
+    final row = await (db.select(
+      db.memberOps,
+    )..where((t) => t.opId.equals(opId))).getSingleOrNull();
+    return row == null ? null : MemberOpCodec.toWire(_fromRow(row));
   }
 
   /// Appends a signed `genesis` op if this creator phone does not yet have one for [homeId].

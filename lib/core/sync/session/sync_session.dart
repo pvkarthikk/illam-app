@@ -26,12 +26,24 @@ class SyncSession {
   String? peerDeviceId;
   int skewMs = 0;
   int peerVersion = kSyncProtocolVersion;
+  NoticeMsg? receivedNotice;
   final Completer<void> ready = Completer<void>();
 
   VersionVector? _sent;
+  VersionVector? _theirsLastHave;
+  bool _sentDataOps = false;
   final Set<String> _theirMemberOps = <String>{};
+  final List<String> _receivedMemberOpIds = <String>[];
+  bool _controlOnly = false;
+  ({String reason, String? byName})? _pendingErase;
   bool _closed = false;
   Future<void> _sendChain = Future<void>.value();
+
+  ControlSyncContext? get _ctrl =>
+      ctx is ControlSyncContext ? ctx as ControlSyncContext : null;
+
+  RestoreSyncContext? get _restore =>
+      ctx is RestoreSyncContext ? ctx as RestoreSyncContext : null;
 
   Future<void> run() async {
     try {
@@ -62,7 +74,13 @@ class SyncSession {
       final sig = await ctx.signAuth(
         concatBytes([ch.transcript, utf8.encode(mine)]),
       );
-      await ch.send(AuthMsg(deviceId: ctx.myDeviceId, sig: sig).toJson());
+      await ch.send(
+        AuthMsg(
+          deviceId: ctx.myDeviceId,
+          sig: sig,
+          signPub: _restore?.mySignPubB64,
+        ).toJson(),
+      );
 
       final authRaw = await ch.receive(timeout: const Duration(seconds: 10));
       if (authRaw['t'] != 'auth') {
@@ -72,11 +90,16 @@ class SyncSession {
       final auth = AuthMsg.fromJson(authRaw);
       peerDeviceId = auth.deviceId;
 
-      final ok = await ctx.verifyPeer(
-        auth.deviceId,
-        concatBytes([ch.transcript, utf8.encode(theirs)]),
-        auth.sig,
-      );
+      final restore = _restore;
+      final authBody = concatBytes([ch.transcript, utf8.encode(theirs)]);
+      final ok = restore != null
+          ? await restore.verifyPeerWithPub(
+              auth.deviceId,
+              authBody,
+              auth.sig,
+              auth.signPub,
+            )
+          : await ctx.verifyPeer(auth.deviceId, authBody, auth.sig);
       if (!ok) {
         await _bye('auth');
         return;
@@ -104,6 +127,12 @@ class SyncSession {
       await _closeQuietly();
     } on Object {
       await _closeQuietly();
+    } finally {
+      final erase = _pendingErase;
+      final ctrl = _ctrl;
+      if (erase != null && ctrl != null) {
+        await ctrl.eraseMyHome(erase.reason, byName: erase.byName);
+      }
     }
   }
 
@@ -113,30 +142,86 @@ class SyncSession {
       switch (msg['t']) {
         case 'have':
           final h = HaveMsg.fromJson(msg);
+          _theirsLastHave = VersionVector.fromJson(h.vector);
           _theirMemberOps
             ..clear()
             ..addAll(h.memberOpIds);
-          await _sendMissing(VersionVector.fromJson(h.vector));
+          await _sendMissing(_theirsLastHave!);
 
         case 'memberOps':
           final m = MemberOpsMsg.fromJson(msg);
+          for (final op in m.ops) {
+            final opId = op['opId'] as String?;
+            if (opId != null && !_receivedMemberOpIds.contains(opId)) {
+              _receivedMemberOpIds.add(opId);
+            }
+          }
+          final wasControl = _controlOnly;
           await ctx.ingest(memberOps: m.ops);
+          final sit = await _refreshSituation();
+          if (wasControl && !_controlOnly && !_sentDataOps && sit != null && sit.isFull) {
+            await _sendMissing(_theirsLastHave ?? const VersionVector({}));
+          }
 
         case 'ops':
           final o = OpsMsg.fromJson(msg);
+          final ctrl = _ctrl;
+          if (ctrl != null && (await ctrl.isHomeErased() || !_shouldAcceptOps())) {
+            continue;
+          }
           await ctx.ingest(ops: o.batch);
 
         case 'opsDone':
+          await _sendChain;
+          if (_closed) return;
+          final sit = await _refreshSituation();
+          if (sit != null &&
+              !sit.peerActive &&
+              sit.peerNoticeKind == 'recoverDead') {
+            await _trySend(
+              NoticeMsg(
+                kind: 'recoverDead',
+                opId: sit.peerNoticeOpId ?? '',
+                reason: sit.peerNoticeReason,
+                at: sit.peerNoticeAt,
+              ).toJson(),
+            );
+            await _bye('control');
+            return;
+          }
           final vec = await ctx.myVector();
           final count = (await ctx.memberOpIds()).length;
-          await ch.send(
-            AckMsg(vector: vec.toJson(), memberOps: count).toJson(),
+          await _trySend(
+            AckMsg(
+              vector: vec.toJson(),
+              memberOps: count,
+              memberOpIds: List<String>.from(_receivedMemberOpIds),
+            ).toJson(),
           );
+          if (sit != null && !sit.peerActive) {
+            await _trySend(
+              NoticeMsg(
+                kind: sit.peerNoticeKind ?? 'removed',
+                opId: sit.peerNoticeOpId ?? '',
+                reason: sit.peerNoticeReason,
+                at: sit.peerNoticeAt,
+              ).toJson(),
+            );
+            await _bye('control');
+            return;
+          }
 
         case 'ack':
           final a = AckMsg.fromJson(msg);
           final v = VersionVector.fromJson(a.vector);
           _sent = (_sent ?? v).merge(v);
+          final ctrl = _ctrl;
+          if (ctrl != null) {
+            final leftAcked = await ctrl.onAckMemberOpIds(a.memberOpIds);
+            if (leftAcked) {
+              _pendingErase = (reason: 'left', byName: null);
+            }
+          }
           await ctx.saveAck(
             peerDeviceId!,
             v,
@@ -144,7 +229,20 @@ class SyncSession {
             skewMs,
             peerVersion,
           );
+          if (!_controlOnly) {
+            await _restore?.onFullAck();
+          }
           if (!ready.isCompleted) ready.complete();
+
+        case 'notice':
+          receivedNotice = NoticeMsg.fromJson(msg);
+          if (receivedNotice!.kind == 'recoverDead') {
+            await _restore?.onRecoverDead(
+              receivedNotice!.reason ?? 'revoked',
+              receivedNotice!.at ?? ctx.nowMs(),
+            );
+          }
+          await _refreshSituation();
 
         case 'bye':
           _closed = true;
@@ -154,10 +252,36 @@ class SyncSession {
     }
   }
 
+  bool _shouldAcceptOps() => !_controlOnly && _pendingErase == null;
+
+  Future<PeerSituation?> _refreshSituation() async {
+    final ctrl = _ctrl;
+    final peer = peerDeviceId;
+    if (ctrl == null || peer == null) return null;
+    if (await ctrl.isHomeErased()) {
+      _controlOnly = true;
+      return null;
+    }
+    final sit = await ctrl.evaluateSituation(peer);
+    _controlOnly = !sit.isFull;
+    if (!sit.meActive && sit.myEraseReason != null) {
+      _pendingErase ??= (reason: sit.myEraseReason!, byName: sit.myEraseByName);
+    }
+    return sit;
+  }
+
   Future<void> push() async {
     final sent = _sent;
-    if (sent == null || _closed) return;
+    if (sent == null || _closed || _controlOnly) return;
     await _sendMissing(sent);
+  }
+
+  Future<void> _trySend(Map<String, Object?> msg) async {
+    try {
+      await ch.send(msg);
+    } on ConnectionClosed {
+      // Peer already sent bye and closed its stream; keep draining buffered incoming frames.
+    }
   }
 
   Future<void> _sendMissing(VersionVector theirs) {
@@ -166,22 +290,26 @@ class SyncSession {
       final mo = await ctx.memberOpsWire(except: _theirMemberOps);
       if (mo.isNotEmpty) {
         if (_closed) return;
-        await ch.send(MemberOpsMsg(ops: mo).toJson());
+        await _trySend(MemberOpsMsg(ops: mo).toJson());
         for (final m in mo) {
           _theirMemberOps.add((m['opId'] as String?) ?? '');
         }
       }
 
-      final ops = await ctx.opsAfter(theirs);
-      for (var i = 0; i < ops.length; i += 200) {
-        if (_closed) return;
-        final end = (i + 200 < ops.length) ? i + 200 : ops.length;
-        await ch.send(OpsMsg(batch: ops.sublist(i, end)).toJson());
+      final sit = await _refreshSituation();
+      if (sit == null || sit.isFull) {
+        _sentDataOps = true;
+        final ops = await ctx.opsAfter(theirs);
+        for (var i = 0; i < ops.length; i += 200) {
+          if (_closed || _controlOnly) break;
+          final end = (i + 200 < ops.length) ? i + 200 : ops.length;
+          await _trySend(OpsMsg(batch: ops.sublist(i, end)).toJson());
+        }
+        _sent = theirs.merge(await ctx.myVector());
       }
 
       if (_closed) return;
-      await ch.send(const OpsDoneMsg().toJson());
-      _sent = theirs.merge(await ctx.myVector());
+      await _trySend(const OpsDoneMsg().toJson());
     });
     _sendChain = op.catchError((_) {});
     return op;

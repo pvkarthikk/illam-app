@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:nm_flat/core/crypto/bytes.dart';
+import 'package:nm_flat/core/sync/net/byte_link.dart';
 
 const maxFrame = 1 << 20;
 
@@ -89,6 +90,13 @@ class FramedConnection {
       }
       s.destroy();
     },
+  );
+
+  /// Wraps a portable [ByteLink] in 4-byte big-endian length framing.
+  factory FramedConnection.link(ByteLink l) => FramedConnection(
+    l.input,
+    (bytes) => l.send(Uint8List.fromList(bytes)),
+    l.close,
   );
 
   /// In-memory connected pair for unit tests.

@@ -3245,5 +3245,599 @@
   },
   "syncLabPeers": "Peers",
   "syncLabVector": "My version vector",
-  "syncLabConnectLocal": "Connect to 127.0.0.1"
+  "syncLabConnectLocal": "Connect to 127.0.0.1",
+  "homeGoneRemoved": "You’re no longer in {home}",
+  "@homeGoneRemoved": {
+    "placeholders": {
+      "home": {
+        "type": "String"
+      }
+    }
+  },
+  "homeGoneDeleted": "{home} was deleted by {name}",
+  "@homeGoneDeleted": {
+    "placeholders": {
+      "home": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeGoneOk": "OK",
+  "memberRemovedNewKey": "{name} removed · new home key shared with the others",
+  "@memberRemovedNewKey": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "leaveChooseAdminLead": "You’re the only admin. Pick someone to look after {home} after you leave.",
+  "@leaveChooseAdminLead": {
+    "placeholders": {
+      "home": {
+        "type": "String"
+      }
+    }
+  },
+  "leaveWaiting": "Leaving… waiting for a family phone",
+  "leaveRemoveNow": "Remove from this phone now — we’ll tell your family the next time this phone reaches one of theirs",
+  "deleteDone": "{home} deleted. Other phones erase it when they sync.",
+  "@deleteDone": {
+    "placeholders": {
+      "home": {
+        "type": "String"
+      }
+    }
+  },
+  "opIgnoredRoleChanged": "Someone changed your role first.",
+  "inviteTipSecondAdmin": "Tip: make a second admin, so the home is never stuck without one.",
+  "inviteBackupNow": "Back up {home} now",
+  "@inviteBackupNow": {
+    "placeholders": {
+      "home": {
+        "type": "String"
+      }
+    }
+  },
+  "backupHealthOk": "Backed up {ago} to {provider} · by {name}",
+  "@backupHealthOk": {
+    "placeholders": {
+      "ago": {},
+      "provider": {},
+      "name": {}
+    }
+  },
+  "backupOnlyOnPhone": "Only on this phone — add another place",
+  "backupNoRecoveryReady": "No recovery-ready backup",
+  "backupNoBackupDays": "No backup in {n} days",
+  "@backupNoBackupDays": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "backupThisPhoneOn": "Backing up from this phone · {provider}",
+  "@backupThisPhoneOn": {
+    "placeholders": {
+      "provider": {}
+    }
+  },
+  "backupAlso": "Also: {name} backs up to {provider} ({ago})",
+  "@backupAlso": {
+    "placeholders": {
+      "name": {},
+      "provider": {},
+      "ago": {}
+    }
+  },
+  "backupNoAdminHint": "No admin has a backup yet — if every admin phone is lost, a restore brings people back as members.",
+  "backupProviderFolderShort": "a folder",
+  "backupJustNow": "just now",
+  "backupAttention": "Backup needs attention — {reason}",
+  "@backupAttention": {
+    "placeholders": {
+      "reason": {}
+    }
+  },
+  "backupReasonAuth": "Sign in to {provider} again to keep backups running.",
+  "@backupReasonAuth": {
+    "placeholders": {
+      "provider": {}
+    }
+  },
+  "backupReasonFull": "{provider} is full — free space or choose another place.",
+  "@backupReasonFull": {
+    "placeholders": {
+      "provider": {}
+    }
+  },
+  "backupErrNoPermission": "No permission to write to that folder",
+  "backupStatusStale": "Not backed up for {n} days",
+  "@backupStatusStale": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "backupTitle": "Backup",
+  "backupProfileRow": "Backup — {provider} · {frequency} · last {ago}",
+  "@backupProfileRow": {
+    "placeholders": {
+      "provider": {},
+      "frequency": {},
+      "ago": {}
+    }
+  },
+  "backupProfileNotSetUp": "Backup — not set up",
+  "backupDaily": "Daily",
+  "backupWeekly": "Weekly",
+  "backupMonthly": "Monthly",
+  "notifBackupAttention": "Backup needs attention",
+  "notifBackupAttentionSub": "Only when backups stop working",
+  "backupHeroTitle": "Keep {home} safe",
+  "@backupHeroTitle": {
+    "placeholders": {
+      "home": {}
+    }
+  },
+  "backupHeroLead": "Nest Mojo : Flat has no cloud of its own. If every phone in the home is lost, a backup is the only way back.",
+  "backupPromise1Title": "Locked before it leaves this phone",
+  "backupPromise1": "Encrypted with a password only you know. Your cloud sees just a locked file.",
+  "backupPromise2Title": "Runs by itself",
+  "backupPromise2": "Every week on Wi-Fi while charging. You’ll hear from us only if it stops working.",
+  "backupPromise3Title": "Brings everything back",
+  "backupPromise3": "Lists, staff, attendance, salary, meals and spends, plus your own recovery key, so a new phone gets you back in with the same role you have now.",
+  "backupWhere": "Where should backups go?",
+  "backupGroupSignIn": "Sign in",
+  "backupGroupServer": "Your own server",
+  "backupGroupDevice": "On this phone",
+  "backupDontSee": "Don’t see yours?",
+  "backupDontSeeBody": "Don’t see yours? Proton Drive and MEGA are coming later. iCloud, Box, Terabox and JioCloud can’t be connected from Android apps — use WebDAV if your provider offers it, or a folder on this phone.",
+  "backupAlsoIn": "Also in {home}: {name} backs up to {provider} ({ago}).",
+  "@backupAlsoIn": {
+    "placeholders": {
+      "home": {},
+      "name": {},
+      "provider": {},
+      "ago": {}
+    }
+  },
+  "backupArrivesP19": "Arrives in P19",
+  "backupArrivesP20": "Arrives in P20",
+  "backupProvFolder": "Folder on this phone or another app",
+  "backupProvFolderSub": "SD card, USB drive, or a cloud app that offers folders",
+  "backupProvGdrive": "Google Drive",
+  "backupProvGdriveSub": "Sign in · Hidden app folder in your Drive",
+  "backupProvOnedrive": "OneDrive",
+  "backupProvOnedriveSub": "Sign in · Apps › Nest Mojo Flat",
+  "backupProvDropbox": "Dropbox",
+  "backupProvDropboxSub": "Sign in · Apps › Nest Mojo Flat",
+  "backupProvPcloud": "pCloud",
+  "backupProvPcloudSub": "Sign in · App folder · EU or US region",
+  "backupProvNextcloud": "Nextcloud",
+  "backupProvNextcloudSub": "Your own or a hosted Nextcloud",
+  "backupProvWebdav": "WebDAV",
+  "backupProvWebdavSub": "ownCloud, Synology, QNAP, Koofr, Yandex Disk, any WebDAV",
+  "backupProvS3": "S3-compatible",
+  "backupProvS3Sub": "AWS S3, Backblaze B2, Wasabi, Cloudflare R2, MinIO",
+  "backupProvSftp": "SFTP",
+  "backupProvSftpSub": "Home NAS or your own server",
+  "backupChecking": "Checking… wrote a test file",
+  "backupErrUnreachable": "Couldn’t reach that server",
+  "backupLocalCopy": "Local copy — lost with the phone",
+  "backupPwTitle": "Set a backup password",
+  "backupPwField": "Backup password",
+  "backupPwConfirm": "Confirm password",
+  "backupPwTooShort": "Too short",
+  "backupPwOkay": "Okay",
+  "backupPwStrong": "Strong",
+  "backupPwSuggest": "Suggest one",
+  "backupPwWarning": "We can’t reset this password. Without it, backups can’t be opened. Save it in your password manager or write it down.",
+  "backupPwSaved": "I’ve saved this password somewhere safe",
+  "backupPwSave": "Save password & back up",
+  "backupPwMismatch": "The two passwords don’t match.",
+  "backupStatusOk": "Backed up {ago}",
+  "@backupStatusOk": {
+    "placeholders": {
+      "ago": {}
+    }
+  },
+  "backupStatusRunning": "Backing up… {pct}%",
+  "@backupStatusRunning": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "backupStatusFailed": "Last backup failed — {reason}",
+  "@backupStatusFailed": {
+    "placeholders": {
+      "reason": {}
+    }
+  },
+  "backupStatusUnchanged": "No changes since last backup",
+  "backupNext": "Next: {when} · {conditions}",
+  "@backupNext": {
+    "placeholders": {
+      "when": {},
+      "conditions": {}
+    }
+  },
+  "backupOnWifi": "on Wi-Fi",
+  "backupWhileCharging": "while charging",
+  "backupNow": "Back up now",
+  "backupWhereGo": "Where backups go",
+  "backupPlacesCount": "{k} of 3",
+  "@backupPlacesCount": {
+    "placeholders": {
+      "k": {
+        "type": "int"
+      }
+    }
+  },
+  "backupDestLast": "Last: {ago} · {k} kept",
+  "@backupDestLast": {
+    "placeholders": {
+      "ago": {},
+      "k": {
+        "type": "int"
+      }
+    }
+  },
+  "backupDisconnect": "Disconnect",
+  "backupStayThere": "Backups already there stay there.",
+  "backupAddPlace": "＋ Add another place",
+  "backupSchedule": "Schedule",
+  "backupHowOften": "How often",
+  "backupWifiOnly": "Only on Wi-Fi",
+  "backupWifiOnlySub": "Never uses mobile data",
+  "backupCharging": "Only while charging",
+  "backupChargingSub": "Usually overnight",
+  "backupKeep": "Keep the most recent",
+  "backupKeepN": "{n} backups",
+  "@backupKeepN": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "backupKeepSub": "Older ones are deleted from that place after a successful backup.",
+  "backupProgressNotif": "Backing up {home}…",
+  "@backupProgressNotif": {
+    "placeholders": {
+      "home": {}
+    }
+  },
+  "backupLocalTag": "Local copy",
+  "backupPwRow": "Backup password",
+  "backupPwRowSub": "Set {date} · saved on this phone",
+  "@backupPwRowSub": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "backupPwChangeTitle": "Change backup password",
+  "backupPwChangeNote": "New backups use the new password. Older backups still need the old one.",
+  "backupPwChangeSave": "Save new password",
+  "backupCheck": "Check a backup",
+  "backupCheckSub": "Opens the latest backup to make sure it works",
+  "backupCheckOk": "Latest backup opens fine · {n} items · {size}",
+  "@backupCheckOk": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "size": {}
+    }
+  },
+  "backupDamaged": "This backup is damaged — try an older one.",
+  "backupRecent": "Recent backups",
+  "backupRecentRow": "{ago} · {size} · {place}",
+  "@backupRecentRow": {
+    "placeholders": {
+      "ago": {},
+      "size": {},
+      "place": {}
+    }
+  },
+  "backupRecentEmpty": "No backups yet.",
+  "backupKits": "Recovery keys",
+  "backupKitRow": "{name}’s {model}",
+  "@backupKitRow": {
+    "placeholders": {
+      "name": {},
+      "model": {}
+    }
+  },
+  "backupKitThisPhone": "This phone",
+  "backupKitSub": "Made {date} · restores {name} as {role, select, admin{an admin} other{a member}}",
+  "@backupKitSub": {
+    "placeholders": {
+      "date": {},
+      "name": {},
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "backupKitTurnOff": "Turn off",
+  "backupKitOffTitle": "Turn off {name}’s recovery key?",
+  "@backupKitOffTitle": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "backupKitOffLead": "Backups made with it can still be opened, but only as a separate copy — they can’t bring {name} back into {home}. {name}’s phone makes a new key at its next backup.",
+  "@backupKitOffLead": {
+    "placeholders": {
+      "name": {},
+      "home": {}
+    }
+  },
+  "backupKitKeep": "Keep",
+  "backupKitDead": "Make a new backup — the old recovery kit no longer works.",
+  "backupFinePrint": "Backups include your recovery key. Anyone with the file and the password can restore {home} as {role, select, admin{an admin} other{a member}} — keep the password private.",
+  "@backupFinePrint": {
+    "placeholders": {
+      "home": {},
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "debugDamageBackup": "Write a damaged copy of the latest backup",
+  "debugFolderOffPhone": "Count folders as off-phone",
+  "restoreTitle": "Restore from a backup",
+  "restoreSub": "Choose where your backup is.",
+  "restoreNote": "🔒 Your backup is opened on this phone. Nothing is sent to Nest Mojo : Flat.",
+  "restorePickTitle": "Pick a backup",
+  "restoreFoundIn": "Found in {provider} · {account}",
+  "@restoreFoundIn": {
+    "placeholders": {
+      "provider": {},
+      "account": {}
+    }
+  },
+  "restoreVault": "Home backup · {vault}",
+  "@restoreVault": {
+    "placeholders": {
+      "vault": {}
+    }
+  },
+  "restoreRow": "{date} · {size}",
+  "@restoreRow": {
+    "placeholders": {
+      "date": {},
+      "size": {}
+    }
+  },
+  "restoreTagKit": "Recovery key",
+  "restoreTagData": "Data only",
+  "restoreOlder": "Older backups ({n})",
+  "@restoreOlder": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "restoreEmpty": "No Nest Mojo : Flat backups here — check you picked the right account or folder.",
+  "restoreChooseAnother": "Choose another place",
+  "restoreUnlockTitle": "Unlock this backup",
+  "restoreUnlocking": "Unlocking…",
+  "restoreWrongPw": "Wrong password — passwords are case-sensitive.",
+  "restoreHeaderCard": "{home} · {homeId} · {date} · from {model} ({name})",
+  "@restoreHeaderCard": {
+    "placeholders": {
+      "home": {},
+      "homeId": {},
+      "date": {},
+      "model": {},
+      "name": {}
+    }
+  },
+  "restoreStepDownload": "Downloading",
+  "restoreStepUnlock": "Unlocking",
+  "restoreStepCheck": "Checking the home’s history",
+  "restoreStepSetup": "Setting up this phone",
+  "restoreWelcome": "Welcome back to {home}",
+  "@restoreWelcome": {
+    "placeholders": {
+      "home": {}
+    }
+  },
+  "restoreOthersNote": "Phones still in {home} will show that you restored on a new phone.",
+  "@restoreOthersNote": {
+    "placeholders": {
+      "home": {}
+    }
+  },
+  "restoreKeepBackingUp": "Keep backing up to {provider}",
+  "@restoreKeepBackingUp": {
+    "placeholders": {
+      "provider": {}
+    }
+  },
+  "restoreGo": "Go to {home}",
+  "@restoreGo": {
+    "placeholders": {
+      "home": {}
+    }
+  },
+  "restoreAlreadyHere": "{home} is already on this phone.",
+  "@restoreAlreadyHere": {
+    "placeholders": {
+      "home": {}
+    }
+  },
+  "restoreOpen": "Open",
+  "restoreDownloadFail": "Couldn’t download — check your connection and try again.",
+  "restoreBanner": "Restored from a backup made {date}. Connecting to the rest of {home}…",
+  "@restoreBanner": {
+    "placeholders": {
+      "date": {},
+      "home": {}
+    }
+  },
+  "restoreDeadKit": "This backup’s recovery key was turned off on {date}. Ask an admin in {home} to invite you.",
+  "@restoreDeadKit": {
+    "placeholders": {
+      "date": {},
+      "home": {}
+    }
+  },
+  "restoreSeparateCopy": "Keep as a separate copy",
+  "restoreRemoveFromPhone": "Remove from this phone",
+  "restoreSeparateName": "{home} (restored {date})",
+  "@restoreSeparateName": {
+    "placeholders": {
+      "home": {},
+      "date": {}
+    }
+  },
+  "restoreOtherAdmin": "{name} restored {home} on a new phone from a backup",
+  "@restoreOtherAdmin": {
+    "placeholders": {
+      "name": {},
+      "home": {}
+    }
+  },
+  "restoreKeep": "Keep",
+  "restoreRemove": "Remove",
+  "bkSrvErrAuth": "Wrong username or app password",
+  "bkSrvErrBucket": "Bucket not found",
+  "bkSrvErrOther": "That didn’t work — check the details and try again.",
+  "bkSrvErrHttps": "Use an address that starts with https://",
+  "bkSrvErrHostKeyChanged": "This server’s fingerprint changed. If you didn’t change the server, don’t connect.",
+  "bkSrvConnect": "Connect",
+  "bkSrvTrustTitle": "Trust this server?",
+  "bkSrvTrustLead": "First time connecting to {host}. Check that this fingerprint matches the one on your server.",
+  "@bkSrvTrustLead": {
+    "placeholders": {
+      "host": {}
+    }
+  },
+  "bkSrvTrust": "Trust",
+  "bkSrvWebdavTitle": "WebDAV",
+  "bkSrvServerAddress": "Server address",
+  "bkSrvUsername": "Username",
+  "bkSrvAppPassword": "App password",
+  "bkSrvWebdavHint": "Works with ownCloud, Synology, QNAP, Koofr, Yandex Disk, pCloud and any WebDAV server. Use an app password, not your main one.",
+  "bkSrvAccount": "{user} @ {host}",
+  "@bkSrvAccount": {
+    "placeholders": {
+      "user": {},
+      "host": {}
+    }
+  },
+  "bkSrvNextcloudTitle": "Nextcloud",
+  "bkSrvNextcloudHint": "We’ll open your Nextcloud login in the browser. Approve Nest Mojo : Flat there — it gets its own app password you can revoke any time.",
+  "bkSrvNextcloudAccessNote": "This app password can reach your whole Nextcloud account. A separate Nextcloud user just for backups is safer.",
+  "bkSrvContinueInBrowser": "Continue in browser",
+  "bkSrvOpeningLogin": "Opening your Nextcloud login…",
+  "bkSrvApproveTitle": "Approve in your browser",
+  "bkSrvApproveLead": "Log in to {host} and tap Grant access for Nest Mojo : Flat. Then come back here.",
+  "@bkSrvApproveLead": {
+    "placeholders": {
+      "host": {}
+    }
+  },
+  "bkSrvWaitingApproval": "Waiting for approval…",
+  "bkSrvS3Title": "S3-compatible",
+  "bkSrvService": "Service",
+  "bkSrvPresetAws": "AWS",
+  "bkSrvPresetB2": "Backblaze B2",
+  "bkSrvPresetWasabi": "Wasabi",
+  "bkSrvPresetR2": "Cloudflare R2",
+  "bkSrvPresetMinio": "MinIO",
+  "bkSrvPresetOther": "Other",
+  "bkSrvRegion": "Region",
+  "bkSrvEndpoint": "Endpoint",
+  "bkSrvBucket": "Bucket",
+  "bkSrvAccessKeyId": "Access key ID",
+  "bkSrvSecretKey": "Secret access key",
+  "bkSrvS3Hint": "Create a key that can only write to this bucket. Files go under nestmojo/.",
+  "bkSrvS3Account": "{bucket} · {service}",
+  "@bkSrvS3Account": {
+    "placeholders": {
+      "bucket": {},
+      "service": {}
+    }
+  },
+  "bkSrvSftpTitle": "SFTP",
+  "bkSrvHost": "Host",
+  "bkSrvPort": "Port",
+  "bkSrvPassword": "Password",
+  "bkSrvFolder": "Folder",
+  "bkSrvSignInWith": "Sign in with",
+  "bkSrvAuthPassword": "Password",
+  "bkSrvAuthKey": "A key made on this phone",
+  "bkSrvKeyHint": "Add this key to the server’s authorized_keys file for this user, then tap Connect.",
+  "bkSrvCopyKey": "Copy key",
+  "bkSrvKeyCopied": "Key copied",
+  "bkSrvSftpAccessNote": "Tip: a server user that can only see its own folder is safer.",
+  "bkSrvSftpAccount": "{user}@{host}:{port}",
+  "@bkSrvSftpAccount": {
+    "placeholders": {
+      "user": {},
+      "host": {},
+      "port": {}
+    }
+  },
+  "bkSrvSignInAgain": "Sign in again",
+  "bkCloudGdriveAccess": "See, create and delete its own data in your Google Drive — a hidden app folder. It can’t see your other files.",
+  "bkCloudGdriveWhere": "Hidden app folder in your Drive",
+  "bkCloudConnected": "Connected to {provider}",
+  "@bkCloudConnected": {
+    "placeholders": {
+      "provider": {}
+    }
+  },
+  "bkCloudSignedInAgain": "Signed in to {provider} again",
+  "@bkCloudSignedInAgain": {
+    "placeholders": {
+      "provider": {}
+    }
+  },
+  "bkCloudSignInAgainSub": "Use this if backups say the sign-in expired",
+  "bkCloudExpiredRow": "Sign-in expired — Sign in again",
+  "bkCloudNotConfigured": "This build isn’t set up for {provider} yet.",
+  "@bkCloudNotConfigured": {
+    "placeholders": {
+      "provider": {}
+    }
+  },
+  "bkCloudSignInFailed": "Couldn’t sign in to {provider} — try again.",
+  "@bkCloudSignInFailed": {
+    "placeholders": {
+      "provider": {}
+    }
+  },
+  "bkCloudDropboxAccess": "Read and write files in Apps › Nest Mojo Flat only. It can’t see your other files.",
+  "bkCloudOnedriveAccess": "Read and write files in its own folder, Apps › Nest Mojo Flat. It can’t see your other files.",
+  "bkCloudAppsFolder": "Apps › Nest Mojo Flat",
+  "bkCloudOrgApproval": "Your organisation must approve Nest Mojo : Flat before it can use this OneDrive. Ask your IT admin, or choose another place.",
+  "bkCloudPcloudAccess": "Read and write files in its own app folder only.",
+  "bkCloudPcloudWhere": "App folder · EU or US region",
+  "bkCloudPcloudAccount": "{email} · {region}",
+  "@bkCloudPcloudAccount": {
+    "placeholders": {
+      "email": {},
+      "region": {}
+    }
+  },
+  "debugBackupLab": "Backup lab",
+  "debugGoogleSilent": "Google silent sign-in now",
+  "debugExpireTokens": "Expire Dropbox/OneDrive tokens",
+  "debugBreakTokens": "Break Dropbox/OneDrive refresh token",
+  "debugResultOk": "ok",
+  "debugResultNeedsSignIn": "needs sign-in",
+  "debugAdd200Items": "Add 200 test items"
 }

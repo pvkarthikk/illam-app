@@ -10,6 +10,8 @@ import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/nav/shell_scaffold.dart';
 import 'package:nm_flat/features/account/home_members_screen.dart';
 import 'package:nm_flat/features/account/profile_screen.dart';
+import 'package:nm_flat/features/backup/backup_screen.dart';
+import 'package:nm_flat/features/debug/backup_lab_screen.dart';
 import 'package:nm_flat/features/debug/data_lab_screen.dart';
 import 'package:nm_flat/features/debug/debug_screen.dart';
 import 'package:nm_flat/features/debug/gallery_screen.dart';
@@ -65,10 +67,13 @@ final routerProvider = Provider<GoRouter>((ref) {
     navigatorKey: rootNavigatorKey,
     initialLocation: Routes.today,
     refreshListenable: refresh,
-    redirect: (context, state) => startRedirect(
-      hasHome: prefs.currentHomeId != null,
-      location: state.matchedLocation,
-    ),
+    redirect: (context, state) {
+      if (state.uri.path == '/oauth-pcloud') return Routes.today;
+      return startRedirect(
+        hasHome: prefs.currentHomeId != null,
+        location: state.matchedLocation,
+      );
+    },
     routes: [
       StatefulShellRoute.indexedStack(
         builder: (context, state, shell) => ShellScaffold(shell: shell),
@@ -132,6 +137,10 @@ final routerProvider = Provider<GoRouter>((ref) {
               path: 'sync-lab',
               builder: (_, _) => const SyncLabScreen(),
             ),
+            GoRoute(
+              path: 'backup-lab',
+              builder: (_, _) => const BackupLabScreen(),
+            ),
           ],
         ),
       GoRoute(
@@ -183,6 +192,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: Routes.home,
         builder: (_, _) => const HomeMembersScreen(),
+      ),
+      GoRoute(
+        path: Routes.backup,
+        builder: (_, _) => const BackupScreen(),
       ),
       GoRoute(
         path: Routes.invite,

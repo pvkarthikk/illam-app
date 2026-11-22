@@ -18640,6 +18640,702 @@ class SyncPeersCompanion extends UpdateCompanion<SyncPeerRow> {
   }
 }
 
+class $BackupStatusTable extends BackupStatus
+    with TableInfo<$BackupStatusTable, BackupStatusRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $BackupStatusTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _homeIdMeta = const VerificationMeta('homeId');
+  @override
+  late final GeneratedColumn<String> homeId = GeneratedColumn<String>(
+    'home_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _deletedMeta = const VerificationMeta(
+    'deleted',
+  );
+  @override
+  late final GeneratedColumn<bool> deleted = GeneratedColumn<bool>(
+    'deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _createdByMeta = const VerificationMeta(
+    'createdBy',
+  );
+  @override
+  late final GeneratedColumn<String> createdBy = GeneratedColumn<String>(
+    'created_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _updatedByMeta = const VerificationMeta(
+    'updatedBy',
+  );
+  @override
+  late final GeneratedColumn<String> updatedBy = GeneratedColumn<String>(
+    'updated_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _memberIdMeta = const VerificationMeta(
+    'memberId',
+  );
+  @override
+  late final GeneratedColumn<String> memberId = GeneratedColumn<String>(
+    'member_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _frequencyMeta = const VerificationMeta(
+    'frequency',
+  );
+  @override
+  late final GeneratedColumn<String> frequency = GeneratedColumn<String>(
+    'frequency',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('weekly'),
+  );
+  static const VerificationMeta _recoveryCapableMeta = const VerificationMeta(
+    'recoveryCapable',
+  );
+  @override
+  late final GeneratedColumn<bool> recoveryCapable = GeneratedColumn<bool>(
+    'recovery_capable',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("recovery_capable" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _offPhoneMeta = const VerificationMeta(
+    'offPhone',
+  );
+  @override
+  late final GeneratedColumn<bool> offPhone = GeneratedColumn<bool>(
+    'off_phone',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("off_phone" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _destsJsonMeta = const VerificationMeta(
+    'destsJson',
+  );
+  @override
+  late final GeneratedColumn<String> destsJson = GeneratedColumn<String>(
+    'dests_json',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('[]'),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    homeId,
+    deleted,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    memberId,
+    frequency,
+    recoveryCapable,
+    offPhone,
+    destsJson,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'backup_status';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<BackupStatusRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('home_id')) {
+      context.handle(
+        _homeIdMeta,
+        homeId.isAcceptableOrUnknown(data['home_id']!, _homeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_homeIdMeta);
+    }
+    if (data.containsKey('deleted')) {
+      context.handle(
+        _deletedMeta,
+        deleted.isAcceptableOrUnknown(data['deleted']!, _deletedMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('created_by')) {
+      context.handle(
+        _createdByMeta,
+        createdBy.isAcceptableOrUnknown(data['created_by']!, _createdByMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('updated_by')) {
+      context.handle(
+        _updatedByMeta,
+        updatedBy.isAcceptableOrUnknown(data['updated_by']!, _updatedByMeta),
+      );
+    }
+    if (data.containsKey('member_id')) {
+      context.handle(
+        _memberIdMeta,
+        memberId.isAcceptableOrUnknown(data['member_id']!, _memberIdMeta),
+      );
+    }
+    if (data.containsKey('frequency')) {
+      context.handle(
+        _frequencyMeta,
+        frequency.isAcceptableOrUnknown(data['frequency']!, _frequencyMeta),
+      );
+    }
+    if (data.containsKey('recovery_capable')) {
+      context.handle(
+        _recoveryCapableMeta,
+        recoveryCapable.isAcceptableOrUnknown(
+          data['recovery_capable']!,
+          _recoveryCapableMeta,
+        ),
+      );
+    }
+    if (data.containsKey('off_phone')) {
+      context.handle(
+        _offPhoneMeta,
+        offPhone.isAcceptableOrUnknown(data['off_phone']!, _offPhoneMeta),
+      );
+    }
+    if (data.containsKey('dests_json')) {
+      context.handle(
+        _destsJsonMeta,
+        destsJson.isAcceptableOrUnknown(data['dests_json']!, _destsJsonMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  BackupStatusRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return BackupStatusRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      homeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}home_id'],
+      )!,
+      deleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}deleted'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}created_at'],
+      )!,
+      createdBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_by'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      updatedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by'],
+      )!,
+      memberId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}member_id'],
+      )!,
+      frequency: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}frequency'],
+      )!,
+      recoveryCapable: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}recovery_capable'],
+      )!,
+      offPhone: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}off_phone'],
+      )!,
+      destsJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}dests_json'],
+      )!,
+    );
+  }
+
+  @override
+  $BackupStatusTable createAlias(String alias) {
+    return $BackupStatusTable(attachedDatabase, alias);
+  }
+}
+
+class BackupStatusRow extends DataClass implements Insertable<BackupStatusRow> {
+  final String id;
+  final String homeId;
+  final bool deleted;
+  final int createdAt;
+  final String createdBy;
+  final int updatedAt;
+  final String updatedBy;
+  final String memberId;
+  final String frequency;
+  final bool recoveryCapable;
+  final bool offPhone;
+  final String destsJson;
+  const BackupStatusRow({
+    required this.id,
+    required this.homeId,
+    required this.deleted,
+    required this.createdAt,
+    required this.createdBy,
+    required this.updatedAt,
+    required this.updatedBy,
+    required this.memberId,
+    required this.frequency,
+    required this.recoveryCapable,
+    required this.offPhone,
+    required this.destsJson,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['home_id'] = Variable<String>(homeId);
+    map['deleted'] = Variable<bool>(deleted);
+    map['created_at'] = Variable<int>(createdAt);
+    map['created_by'] = Variable<String>(createdBy);
+    map['updated_at'] = Variable<int>(updatedAt);
+    map['updated_by'] = Variable<String>(updatedBy);
+    map['member_id'] = Variable<String>(memberId);
+    map['frequency'] = Variable<String>(frequency);
+    map['recovery_capable'] = Variable<bool>(recoveryCapable);
+    map['off_phone'] = Variable<bool>(offPhone);
+    map['dests_json'] = Variable<String>(destsJson);
+    return map;
+  }
+
+  BackupStatusCompanion toCompanion(bool nullToAbsent) {
+    return BackupStatusCompanion(
+      id: Value(id),
+      homeId: Value(homeId),
+      deleted: Value(deleted),
+      createdAt: Value(createdAt),
+      createdBy: Value(createdBy),
+      updatedAt: Value(updatedAt),
+      updatedBy: Value(updatedBy),
+      memberId: Value(memberId),
+      frequency: Value(frequency),
+      recoveryCapable: Value(recoveryCapable),
+      offPhone: Value(offPhone),
+      destsJson: Value(destsJson),
+    );
+  }
+
+  factory BackupStatusRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return BackupStatusRow(
+      id: serializer.fromJson<String>(json['id']),
+      homeId: serializer.fromJson<String>(json['homeId']),
+      deleted: serializer.fromJson<bool>(json['deleted']),
+      createdAt: serializer.fromJson<int>(json['createdAt']),
+      createdBy: serializer.fromJson<String>(json['createdBy']),
+      updatedAt: serializer.fromJson<int>(json['updatedAt']),
+      updatedBy: serializer.fromJson<String>(json['updatedBy']),
+      memberId: serializer.fromJson<String>(json['memberId']),
+      frequency: serializer.fromJson<String>(json['frequency']),
+      recoveryCapable: serializer.fromJson<bool>(json['recoveryCapable']),
+      offPhone: serializer.fromJson<bool>(json['offPhone']),
+      destsJson: serializer.fromJson<String>(json['destsJson']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'homeId': serializer.toJson<String>(homeId),
+      'deleted': serializer.toJson<bool>(deleted),
+      'createdAt': serializer.toJson<int>(createdAt),
+      'createdBy': serializer.toJson<String>(createdBy),
+      'updatedAt': serializer.toJson<int>(updatedAt),
+      'updatedBy': serializer.toJson<String>(updatedBy),
+      'memberId': serializer.toJson<String>(memberId),
+      'frequency': serializer.toJson<String>(frequency),
+      'recoveryCapable': serializer.toJson<bool>(recoveryCapable),
+      'offPhone': serializer.toJson<bool>(offPhone),
+      'destsJson': serializer.toJson<String>(destsJson),
+    };
+  }
+
+  BackupStatusRow copyWith({
+    String? id,
+    String? homeId,
+    bool? deleted,
+    int? createdAt,
+    String? createdBy,
+    int? updatedAt,
+    String? updatedBy,
+    String? memberId,
+    String? frequency,
+    bool? recoveryCapable,
+    bool? offPhone,
+    String? destsJson,
+  }) => BackupStatusRow(
+    id: id ?? this.id,
+    homeId: homeId ?? this.homeId,
+    deleted: deleted ?? this.deleted,
+    createdAt: createdAt ?? this.createdAt,
+    createdBy: createdBy ?? this.createdBy,
+    updatedAt: updatedAt ?? this.updatedAt,
+    updatedBy: updatedBy ?? this.updatedBy,
+    memberId: memberId ?? this.memberId,
+    frequency: frequency ?? this.frequency,
+    recoveryCapable: recoveryCapable ?? this.recoveryCapable,
+    offPhone: offPhone ?? this.offPhone,
+    destsJson: destsJson ?? this.destsJson,
+  );
+  BackupStatusRow copyWithCompanion(BackupStatusCompanion data) {
+    return BackupStatusRow(
+      id: data.id.present ? data.id.value : this.id,
+      homeId: data.homeId.present ? data.homeId.value : this.homeId,
+      deleted: data.deleted.present ? data.deleted.value : this.deleted,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      createdBy: data.createdBy.present ? data.createdBy.value : this.createdBy,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      updatedBy: data.updatedBy.present ? data.updatedBy.value : this.updatedBy,
+      memberId: data.memberId.present ? data.memberId.value : this.memberId,
+      frequency: data.frequency.present ? data.frequency.value : this.frequency,
+      recoveryCapable: data.recoveryCapable.present
+          ? data.recoveryCapable.value
+          : this.recoveryCapable,
+      offPhone: data.offPhone.present ? data.offPhone.value : this.offPhone,
+      destsJson: data.destsJson.present ? data.destsJson.value : this.destsJson,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BackupStatusRow(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('deleted: $deleted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('memberId: $memberId, ')
+          ..write('frequency: $frequency, ')
+          ..write('recoveryCapable: $recoveryCapable, ')
+          ..write('offPhone: $offPhone, ')
+          ..write('destsJson: $destsJson')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    homeId,
+    deleted,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    memberId,
+    frequency,
+    recoveryCapable,
+    offPhone,
+    destsJson,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is BackupStatusRow &&
+          other.id == this.id &&
+          other.homeId == this.homeId &&
+          other.deleted == this.deleted &&
+          other.createdAt == this.createdAt &&
+          other.createdBy == this.createdBy &&
+          other.updatedAt == this.updatedAt &&
+          other.updatedBy == this.updatedBy &&
+          other.memberId == this.memberId &&
+          other.frequency == this.frequency &&
+          other.recoveryCapable == this.recoveryCapable &&
+          other.offPhone == this.offPhone &&
+          other.destsJson == this.destsJson);
+}
+
+class BackupStatusCompanion extends UpdateCompanion<BackupStatusRow> {
+  final Value<String> id;
+  final Value<String> homeId;
+  final Value<bool> deleted;
+  final Value<int> createdAt;
+  final Value<String> createdBy;
+  final Value<int> updatedAt;
+  final Value<String> updatedBy;
+  final Value<String> memberId;
+  final Value<String> frequency;
+  final Value<bool> recoveryCapable;
+  final Value<bool> offPhone;
+  final Value<String> destsJson;
+  final Value<int> rowid;
+  const BackupStatusCompanion({
+    this.id = const Value.absent(),
+    this.homeId = const Value.absent(),
+    this.deleted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.memberId = const Value.absent(),
+    this.frequency = const Value.absent(),
+    this.recoveryCapable = const Value.absent(),
+    this.offPhone = const Value.absent(),
+    this.destsJson = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  BackupStatusCompanion.insert({
+    required String id,
+    required String homeId,
+    this.deleted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.memberId = const Value.absent(),
+    this.frequency = const Value.absent(),
+    this.recoveryCapable = const Value.absent(),
+    this.offPhone = const Value.absent(),
+    this.destsJson = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       homeId = Value(homeId);
+  static Insertable<BackupStatusRow> custom({
+    Expression<String>? id,
+    Expression<String>? homeId,
+    Expression<bool>? deleted,
+    Expression<int>? createdAt,
+    Expression<String>? createdBy,
+    Expression<int>? updatedAt,
+    Expression<String>? updatedBy,
+    Expression<String>? memberId,
+    Expression<String>? frequency,
+    Expression<bool>? recoveryCapable,
+    Expression<bool>? offPhone,
+    Expression<String>? destsJson,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (homeId != null) 'home_id': homeId,
+      if (deleted != null) 'deleted': deleted,
+      if (createdAt != null) 'created_at': createdAt,
+      if (createdBy != null) 'created_by': createdBy,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (updatedBy != null) 'updated_by': updatedBy,
+      if (memberId != null) 'member_id': memberId,
+      if (frequency != null) 'frequency': frequency,
+      if (recoveryCapable != null) 'recovery_capable': recoveryCapable,
+      if (offPhone != null) 'off_phone': offPhone,
+      if (destsJson != null) 'dests_json': destsJson,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  BackupStatusCompanion copyWith({
+    Value<String>? id,
+    Value<String>? homeId,
+    Value<bool>? deleted,
+    Value<int>? createdAt,
+    Value<String>? createdBy,
+    Value<int>? updatedAt,
+    Value<String>? updatedBy,
+    Value<String>? memberId,
+    Value<String>? frequency,
+    Value<bool>? recoveryCapable,
+    Value<bool>? offPhone,
+    Value<String>? destsJson,
+    Value<int>? rowid,
+  }) {
+    return BackupStatusCompanion(
+      id: id ?? this.id,
+      homeId: homeId ?? this.homeId,
+      deleted: deleted ?? this.deleted,
+      createdAt: createdAt ?? this.createdAt,
+      createdBy: createdBy ?? this.createdBy,
+      updatedAt: updatedAt ?? this.updatedAt,
+      updatedBy: updatedBy ?? this.updatedBy,
+      memberId: memberId ?? this.memberId,
+      frequency: frequency ?? this.frequency,
+      recoveryCapable: recoveryCapable ?? this.recoveryCapable,
+      offPhone: offPhone ?? this.offPhone,
+      destsJson: destsJson ?? this.destsJson,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (homeId.present) {
+      map['home_id'] = Variable<String>(homeId.value);
+    }
+    if (deleted.present) {
+      map['deleted'] = Variable<bool>(deleted.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (createdBy.present) {
+      map['created_by'] = Variable<String>(createdBy.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (updatedBy.present) {
+      map['updated_by'] = Variable<String>(updatedBy.value);
+    }
+    if (memberId.present) {
+      map['member_id'] = Variable<String>(memberId.value);
+    }
+    if (frequency.present) {
+      map['frequency'] = Variable<String>(frequency.value);
+    }
+    if (recoveryCapable.present) {
+      map['recovery_capable'] = Variable<bool>(recoveryCapable.value);
+    }
+    if (offPhone.present) {
+      map['off_phone'] = Variable<bool>(offPhone.value);
+    }
+    if (destsJson.present) {
+      map['dests_json'] = Variable<String>(destsJson.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BackupStatusCompanion(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('deleted: $deleted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('memberId: $memberId, ')
+          ..write('frequency: $frequency, ')
+          ..write('recoveryCapable: $recoveryCapable, ')
+          ..write('offPhone: $offPhone, ')
+          ..write('destsJson: $destsJson, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$NestDatabase extends GeneratedDatabase {
   _$NestDatabase(QueryExecutor e) : super(e);
   $NestDatabaseManager get managers => $NestDatabaseManager(this);
@@ -18668,6 +19364,51 @@ abstract class _$NestDatabase extends GeneratedDatabase {
   late final $MemberOpsTable memberOps = $MemberOpsTable(this);
   late final $MemberDevicesTable memberDevices = $MemberDevicesTable(this);
   late final $SyncPeersTable syncPeers = $SyncPeersTable(this);
+  late final $BackupStatusTable backupStatus = $BackupStatusTable(this);
+  late final Index visitsStaffDate = Index(
+    'visits_staff_date',
+    'CREATE INDEX visits_staff_date ON visits (staff_id, date)',
+  );
+  late final Index visitsStaffOut = Index(
+    'visits_staff_out',
+    'CREATE INDEX visits_staff_out ON visits (staff_id, out_at)',
+  );
+  late final Index payAdjustmentsStaffMonth = Index(
+    'pay_adjustments_staff_month',
+    'CREATE INDEX pay_adjustments_staff_month ON pay_adjustments (staff_id, month)',
+  );
+  late final Index settlementAttemptsStaffMonth = Index(
+    'settlement_attempts_staff_month',
+    'CREATE INDEX settlement_attempts_staff_month ON settlement_attempts (staff_id, month)',
+  );
+  late final Index expensesDateCreated = Index(
+    'expenses_date_created',
+    'CREATE INDEX expenses_date_created ON expenses (date, created_at)',
+  );
+  late final Index expensesSourcePaidBy = Index(
+    'expenses_source_paid_by',
+    'CREATE INDEX expenses_source_paid_by ON expenses (source, paid_by)',
+  );
+  late final Index billsActiveDueDay = Index(
+    'bills_active_due_day',
+    'CREATE INDEX bills_active_due_day ON bills (active, due_day)',
+  );
+  late final Index itemsListDone = Index(
+    'items_list_done',
+    'CREATE INDEX items_list_done ON items (list, done)',
+  );
+  late final Index itemsListNameDone = Index(
+    'items_list_name_done',
+    'CREATE INDEX items_list_name_done ON items (list, name_key, done)',
+  );
+  late final Index itemHistoryListLast = Index(
+    'item_history_list_last',
+    'CREATE INDEX item_history_list_last ON item_history (list, last_bought_at)',
+  );
+  late final Index todosDoneDue = Index(
+    'todos_done_due',
+    'CREATE INDEX todos_done_due ON todos (done, due)',
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -18697,6 +19438,18 @@ abstract class _$NestDatabase extends GeneratedDatabase {
     memberOps,
     memberDevices,
     syncPeers,
+    backupStatus,
+    visitsStaffDate,
+    visitsStaffOut,
+    payAdjustmentsStaffMonth,
+    settlementAttemptsStaffMonth,
+    expensesDateCreated,
+    expensesSourcePaidBy,
+    billsActiveDueDay,
+    itemsListDone,
+    itemsListNameDone,
+    itemHistoryListLast,
+    todosDoneDue,
   ];
 }
 
@@ -27676,6 +28429,350 @@ typedef $$SyncPeersTableProcessedTableManager =
       SyncPeerRow,
       PrefetchHooks Function()
     >;
+typedef $$BackupStatusTableCreateCompanionBuilder =
+    BackupStatusCompanion Function({
+      required String id,
+      required String homeId,
+      Value<bool> deleted,
+      Value<int> createdAt,
+      Value<String> createdBy,
+      Value<int> updatedAt,
+      Value<String> updatedBy,
+      Value<String> memberId,
+      Value<String> frequency,
+      Value<bool> recoveryCapable,
+      Value<bool> offPhone,
+      Value<String> destsJson,
+      Value<int> rowid,
+    });
+typedef $$BackupStatusTableUpdateCompanionBuilder =
+    BackupStatusCompanion Function({
+      Value<String> id,
+      Value<String> homeId,
+      Value<bool> deleted,
+      Value<int> createdAt,
+      Value<String> createdBy,
+      Value<int> updatedAt,
+      Value<String> updatedBy,
+      Value<String> memberId,
+      Value<String> frequency,
+      Value<bool> recoveryCapable,
+      Value<bool> offPhone,
+      Value<String> destsJson,
+      Value<int> rowid,
+    });
+
+class $$BackupStatusTableFilterComposer
+    extends Composer<_$NestDatabase, $BackupStatusTable> {
+  $$BackupStatusTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get memberId => $composableBuilder(
+    column: $table.memberId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get frequency => $composableBuilder(
+    column: $table.frequency,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get recoveryCapable => $composableBuilder(
+    column: $table.recoveryCapable,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get offPhone => $composableBuilder(
+    column: $table.offPhone,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get destsJson => $composableBuilder(
+    column: $table.destsJson,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$BackupStatusTableOrderingComposer
+    extends Composer<_$NestDatabase, $BackupStatusTable> {
+  $$BackupStatusTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get memberId => $composableBuilder(
+    column: $table.memberId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get frequency => $composableBuilder(
+    column: $table.frequency,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get recoveryCapable => $composableBuilder(
+    column: $table.recoveryCapable,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get offPhone => $composableBuilder(
+    column: $table.offPhone,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get destsJson => $composableBuilder(
+    column: $table.destsJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$BackupStatusTableAnnotationComposer
+    extends Composer<_$NestDatabase, $BackupStatusTable> {
+  $$BackupStatusTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get homeId =>
+      $composableBuilder(column: $table.homeId, builder: (column) => column);
+
+  GeneratedColumn<bool> get deleted =>
+      $composableBuilder(column: $table.deleted, builder: (column) => column);
+
+  GeneratedColumn<int> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<String> get createdBy =>
+      $composableBuilder(column: $table.createdBy, builder: (column) => column);
+
+  GeneratedColumn<int> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get updatedBy =>
+      $composableBuilder(column: $table.updatedBy, builder: (column) => column);
+
+  GeneratedColumn<String> get memberId =>
+      $composableBuilder(column: $table.memberId, builder: (column) => column);
+
+  GeneratedColumn<String> get frequency =>
+      $composableBuilder(column: $table.frequency, builder: (column) => column);
+
+  GeneratedColumn<bool> get recoveryCapable => $composableBuilder(
+    column: $table.recoveryCapable,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get offPhone =>
+      $composableBuilder(column: $table.offPhone, builder: (column) => column);
+
+  GeneratedColumn<String> get destsJson =>
+      $composableBuilder(column: $table.destsJson, builder: (column) => column);
+}
+
+class $$BackupStatusTableTableManager
+    extends
+        RootTableManager<
+          _$NestDatabase,
+          $BackupStatusTable,
+          BackupStatusRow,
+          $$BackupStatusTableFilterComposer,
+          $$BackupStatusTableOrderingComposer,
+          $$BackupStatusTableAnnotationComposer,
+          $$BackupStatusTableCreateCompanionBuilder,
+          $$BackupStatusTableUpdateCompanionBuilder,
+          (
+            BackupStatusRow,
+            BaseReferences<_$NestDatabase, $BackupStatusTable, BackupStatusRow>,
+          ),
+          BackupStatusRow,
+          PrefetchHooks Function()
+        > {
+  $$BackupStatusTableTableManager(_$NestDatabase db, $BackupStatusTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$BackupStatusTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$BackupStatusTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$BackupStatusTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> homeId = const Value.absent(),
+                Value<bool> deleted = const Value.absent(),
+                Value<int> createdAt = const Value.absent(),
+                Value<String> createdBy = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> updatedBy = const Value.absent(),
+                Value<String> memberId = const Value.absent(),
+                Value<String> frequency = const Value.absent(),
+                Value<bool> recoveryCapable = const Value.absent(),
+                Value<bool> offPhone = const Value.absent(),
+                Value<String> destsJson = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => BackupStatusCompanion(
+                id: id,
+                homeId: homeId,
+                deleted: deleted,
+                createdAt: createdAt,
+                createdBy: createdBy,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy,
+                memberId: memberId,
+                frequency: frequency,
+                recoveryCapable: recoveryCapable,
+                offPhone: offPhone,
+                destsJson: destsJson,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String homeId,
+                Value<bool> deleted = const Value.absent(),
+                Value<int> createdAt = const Value.absent(),
+                Value<String> createdBy = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> updatedBy = const Value.absent(),
+                Value<String> memberId = const Value.absent(),
+                Value<String> frequency = const Value.absent(),
+                Value<bool> recoveryCapable = const Value.absent(),
+                Value<bool> offPhone = const Value.absent(),
+                Value<String> destsJson = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => BackupStatusCompanion.insert(
+                id: id,
+                homeId: homeId,
+                deleted: deleted,
+                createdAt: createdAt,
+                createdBy: createdBy,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy,
+                memberId: memberId,
+                frequency: frequency,
+                recoveryCapable: recoveryCapable,
+                offPhone: offPhone,
+                destsJson: destsJson,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$BackupStatusTable, BackupStatusRow>(table),
+                  BaseReferences<
+                    _$NestDatabase,
+                    $BackupStatusTable,
+                    BackupStatusRow
+                  >(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$BackupStatusTableProcessedTableManager =
+    ProcessedTableManager<
+      _$NestDatabase,
+      $BackupStatusTable,
+      BackupStatusRow,
+      $$BackupStatusTableFilterComposer,
+      $$BackupStatusTableOrderingComposer,
+      $$BackupStatusTableAnnotationComposer,
+      $$BackupStatusTableCreateCompanionBuilder,
+      $$BackupStatusTableUpdateCompanionBuilder,
+      (
+        BackupStatusRow,
+        BaseReferences<_$NestDatabase, $BackupStatusTable, BackupStatusRow>,
+      ),
+      BackupStatusRow,
+      PrefetchHooks Function()
+    >;
 
 class $NestDatabaseManager {
   final _$NestDatabase _db;
@@ -27727,4 +28824,6 @@ class $NestDatabaseManager {
       $$MemberDevicesTableTableManager(_db, _db.memberDevices);
   $$SyncPeersTableTableManager get syncPeers =>
       $$SyncPeersTableTableManager(_db, _db.syncPeers);
+  $$BackupStatusTableTableManager get backupStatus =>
+      $$BackupStatusTableTableManager(_db, _db.backupStatus);
 }

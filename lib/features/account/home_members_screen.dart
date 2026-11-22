@@ -9,6 +9,7 @@ import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/features/account/home_members_parts.dart';
 import 'package:nm_flat/features/account/home_sheets.dart';
 import 'package:nm_flat/features/account/home_sync_card.dart';
+import 'package:nm_flat/features/today/restore_banner.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
 class HomeMembersScreen extends ConsumerWidget {
@@ -49,6 +50,12 @@ class HomeMembersScreen extends ConsumerWidget {
           : ListView(
               children: [
                 const SizedBox(height: 16),
+                HomeRestoreNotices(
+                  homeId: home.id,
+                  homeName: homeName,
+                  members: members,
+                  isAdmin: isAdmin,
+                ),
                 const HomeSyncCard(),
                 const SizedBox(height: 12),
                 const HomeBackupCard(),

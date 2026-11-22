@@ -46,15 +46,71 @@ class DeviceRec {
   String? endedHlc;
 }
 
+class IgnoredOp {
+  const IgnoredOp(this.opId, this.authorDeviceId, this.reason);
+
+  final String opId;
+  final String authorDeviceId;
+  final String reason;
+}
+
+class KitRec {
+  KitRec(this.pub, this.memberId, this.deviceId, this.addedHlc);
+
+  final String pub;
+  final String memberId;
+  final String deviceId;
+  final String addedHlc;
+}
+
+class DeadKit {
+  const DeadKit(this.reason, this.hlc);
+
+  final String reason;
+  final String hlc;
+}
+
 class ReplayResult {
   final Map<String, MemberRec> members = {};
   final Map<String, DeviceRec> devices = {};
   final Map<String, String> effects = {};
+  final Map<String, Set<String>> keyHolders = {};
+  final Map<String, Map<String, String>> wraps = {};
+  final List<IgnoredOp> ignored = [];
+  final Map<String, KitRec> kits = {};
+  final Map<String, DeadKit> dead = {};
   String? currentKeyId;
   bool deleted = false;
+  String? deletedByMemberId;
 
   int get activeAdmins =>
       members.values.where((m) => m.status == 'active' && m.role == 'admin').length;
+
+  Map<String, KitRec> get liveKits => {
+    for (final e in kits.entries)
+      if (!dead.containsKey(e.key)) e.key: e.value,
+  };
+
+  DeadKit? deadReason(String pub) => dead[pub];
+
+  bool isActiveDevice(String deviceId) {
+    if (deleted) return false;
+    final d = devices[deviceId];
+    if (d == null || !d.active) return false;
+    return members[d.memberId]?.status == 'active';
+  }
+
+  Set<String> activeDeviceIds() => {
+    for (final id in devices.keys)
+      if (isActiveDevice(id)) id,
+  };
+
+  bool activeAt(String memberId, String hlc) {
+    final end = members[memberId]?.endedHlc;
+    return end == null || hlc.compareTo(end) < 0;
+  }
+
+  String? wrapFor(String keyId, String deviceId) => wraps[keyId]?[deviceId];
 }
 
 /// Extracts the 13-digit epoch-ms wall clock prefix from an HLC string.
@@ -80,11 +136,52 @@ void _end(ReplayResult r, MemberRec m, String status, String hlc) {
       d.endedHlc = hlc;
     }
   }
+  for (final k in r.kits.values) {
+    if (k.memberId == m.memberId) {
+      r.dead.putIfAbsent(k.pub, () => DeadKit('memberGone', hlc));
+    }
+  }
 }
 
-/// Replays [input] deterministically to derive member/device state and per-op effects.
+/// Replays [input] with monotonic recovery-kit invalidation across all ops.
 ReplayResult replayMembership(List<MemberOp> input) {
+  final first = _replayOnce(input, const {});
+  final dead = Map<String, DeadKit>.from(first.dead);
+
+  final byDevice = <String, List<MemberOp>>{};
+  for (final op in input) {
+    if (op.type != 'addRecoveryKey' || first.effects[op.opId] != 'applied') {
+      continue;
+    }
+    final devId = op.payload['deviceId'];
+    if (devId is String) {
+      (byDevice[devId] ??= []).add(op);
+    }
+  }
+  for (final group in byDevice.values) {
+    if (group.length <= 1) continue;
+    group.sort(compareMemberOps);
+    for (var i = 0; i < group.length - 1; i++) {
+      final pub = group[i].payload['pub'];
+      if (pub is String) {
+        dead.putIfAbsent(pub, () => DeadKit('replaced', group[i + 1].hlc));
+      }
+    }
+  }
+
+  for (final k in first.kits.values) {
+    final m = first.members[k.memberId];
+    if (m == null || m.status != 'active') {
+      dead.putIfAbsent(k.pub, () => DeadKit('memberGone', m?.endedHlc ?? ''));
+    }
+  }
+
+  return _replayOnce(input, dead);
+}
+
+ReplayResult _replayOnce(List<MemberOp> input, Map<String, DeadKit> preDead) {
   final r = ReplayResult();
+  r.dead.addAll(preDead);
   final known = <String, MemberOp>{for (final op in input) op.opId: op};
   final sorted = [...input]..sort(compareMemberOps);
 
@@ -109,11 +206,17 @@ ReplayResult replayMembership(List<MemberOp> input) {
     }
     if (hasClockViolation) {
       r.effects[op.opId] = 'ignored:clock';
+      r.ignored.add(IgnoredOp(op.opId, op.authorDeviceId, 'clock'));
       continue;
     }
 
     final why = _apply(op, r);
-    r.effects[op.opId] = why == null ? 'applied' : 'ignored:$why';
+    if (why == null) {
+      r.effects[op.opId] = 'applied';
+    } else {
+      r.effects[op.opId] = 'ignored:$why';
+      r.ignored.add(IgnoredOp(op.opId, op.authorDeviceId, why));
+    }
   }
 
   return r;
@@ -146,6 +249,37 @@ String? _apply(MemberOp op, ReplayResult r) {
       wall,
     );
     r.currentKeyId = 'genesis';
+    r.keyHolders['genesis'] = {creatorDeviceId};
+    return null;
+  }
+
+  if (op.type == 'recover') {
+    final kitPub = op.payload['kitPub'] as String?;
+    final memberId = op.payload['memberId'] as String?;
+    final kit = kitPub == null ? null : r.kits[kitPub];
+    if (kit == null ||
+        r.dead.containsKey(kitPub) ||
+        memberId == null ||
+        kit.memberId != memberId) {
+      return 'deadKit';
+    }
+    final targetMember = r.members[memberId];
+    if (targetMember == null || targetMember.status != 'active') {
+      return 'notMember';
+    }
+    final device = Map<String, Object?>.from(op.payload['device'] as Map);
+    final devId = device['deviceId'] as String;
+    if (devId != op.authorDeviceId) return 'notOwnDevice';
+    final wall = hlcWall(op.hlc);
+    final devModel = (device['model'] as String?) ?? '';
+    r.devices[devId] = DeviceRec(
+      devId,
+      memberId,
+      (device['signPub'] as String?) ?? '',
+      (device['agreePub'] as String?) ?? '',
+      devModel,
+      wall,
+    );
     return null;
   }
 
@@ -186,6 +320,10 @@ String? _apply(MemberOp op, ReplayResult r) {
         devModel,
         wall,
       );
+      final keyId = (op.payload['keyId'] as String?) ?? r.currentKeyId;
+      if (keyId != null) {
+        (r.keyHolders[keyId] ??= <String>{}).add(devId);
+      }
       return null;
 
     case 'setRole':
@@ -226,11 +364,40 @@ String? _apply(MemberOp op, ReplayResult r) {
     case 'rotateKey':
       if (author.role != 'admin') return 'notAdmin';
       r.currentKeyId = op.opId;
+      final wrapped = <String, String>{};
+      final rawWrapped = op.payload['wrapped'];
+      if (rawWrapped is Map) {
+        for (final e in rawWrapped.entries) {
+          if (e.key is String && e.value is String) {
+            wrapped[e.key as String] = e.value as String;
+          }
+        }
+      }
+      r.wraps[op.opId] = wrapped;
+      r.keyHolders[op.opId] = wrapped.keys.toSet();
       return null;
 
     case 'deleteHome':
       if (author.role != 'admin') return 'notAdmin';
       r.deleted = true;
+      r.deletedByMemberId = dev.memberId;
+      return null;
+
+    case 'addRecoveryKey':
+      final pub = op.payload['pub'] as String;
+      final devId = op.payload['deviceId'] as String;
+      if (devId != op.authorDeviceId) return 'notOwnDevice';
+      r.kits[pub] = KitRec(pub, author.memberId, devId, op.hlc);
+      return null;
+
+    case 'revokeRecoveryKey':
+      final pub = op.payload['pub'] as String;
+      final kit = r.kits[pub];
+      if (kit == null) return 'unknownKit';
+      if (author.memberId != kit.memberId && author.role != 'admin') {
+        return 'notAdmin';
+      }
+      r.dead.putIfAbsent(pub, () => DeadKit('revoked', op.hlc));
       return null;
 
     default:

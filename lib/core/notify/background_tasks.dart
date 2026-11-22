@@ -5,7 +5,9 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:workmanager/workmanager.dart';
 
+import 'package:nm_flat/core/backup/backup_schedule.dart';
 import 'package:nm_flat/core/data/db/database.dart';
+import 'package:nm_flat/core/data/db/db_key.dart';
 import 'package:nm_flat/core/data/prefs/device_prefs.dart';
 import 'package:nm_flat/core/data/prefs/notification_prefs.dart';
 import 'package:nm_flat/core/data/secure/secure_store.dart';
@@ -51,6 +53,11 @@ void callbackDispatcher() {
           );
         case 'nm.sync':
           await runBackgroundSync(container.read);
+        case backupTaskName:
+          return await runBackupTask(
+            container.read,
+            inputData ?? const <String, dynamic>{},
+          );
       }
       return true;
     } finally {
@@ -64,11 +71,13 @@ Future<ProviderContainer> openBackgroundContainer() async {
   await initTimeZone();
   final prefs = await DevicePrefs.open();
   await prefs.reload();
+  final secure = FlutterSecureStore();
+  final keyHex = await DbKey.loadOrCreate(secure);
   final container = ProviderContainer(
     overrides: [
       prefsProvider.overrideWithValue(prefs),
-      dbProvider.overrideWithValue(NestDatabase.open()),
-      secureStoreProvider.overrideWithValue(FlutterSecureStore()),
+      dbProvider.overrideWithValue(NestDatabase.open(keyHex: keyHex)),
+      secureStoreProvider.overrideWithValue(secure),
     ],
   );
   await container.read(currentHomeIdProvider.future);

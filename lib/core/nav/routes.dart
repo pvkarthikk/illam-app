@@ -7,7 +7,8 @@ abstract final class Routes {
   static const debug = '/debug',
       debugGallery = '/debug/gallery',
       debugDataLab = '/debug/data-lab',
-      debugSyncLab = '/debug/sync-lab';
+      debugSyncLab = '/debug/sync-lab',
+      debugBackupLab = '/debug/backup-lab';
   static const onboarding = '/onboarding';
   static String onboardingStep(String step) => '/onboarding/$step';
   static String staff(String id) => '/staff/$id';
@@ -20,6 +21,7 @@ abstract final class Routes {
   static const profile = '/profile';
   static const home = '/home';
   static const invite = '/invite';
+  static const backup = '/backup';
 }
 
 enum NestTab { today, lists, tasks, meals, money }

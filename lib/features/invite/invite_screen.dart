@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
+import 'package:nm_flat/core/backup/backup_health.dart';
 import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/domain/home_ids.dart';
 import 'package:nm_flat/core/nav/routes.dart';
@@ -125,6 +126,25 @@ class _InviteScreenState extends ConsumerState<InviteScreen> {
             ui.stage == InviteStage.copying ||
             ui.stage == InviteStage.done)
           JoinRequestCard(ui: ui),
+        if (ui.stage == InviteStage.done && ui.showSecondAdminTip) ...[
+          const SizedBox(height: 12),
+          InfoBanner(
+            icon: Icons.admin_panel_settings_outlined,
+            title: l.inviteTipSecondAdmin,
+            subtitle: '',
+            info: true,
+          ),
+          const SizedBox(height: 10),
+          if ((ref.watch(backupHealthProvider).value?.state ??
+                  HealthState.none) ==
+              HealthState.none)
+            NestButton(
+              label: l.inviteBackupNow(homeName),
+              kind: NestButtonKind.tonal,
+              size: NestButtonSize.block,
+              onPressed: () => context.push(Routes.backup),
+            ),
+        ],
         if (!hideNetwork) ...[
           const SizedBox(height: 12),
           InviteNetworkCard(port: ui.port),

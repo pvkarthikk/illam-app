@@ -3,6 +3,7 @@ import 'package:drift/drift.dart';
 import 'package:nm_flat/core/data/db/tables/synced_columns.dart';
 
 @DataClassName('Bill')
+@TableIndex(name: 'bills_active_due_day', columns: {#active, #dueDay})
 class Bills extends Table with SyncedColumns {
   TextColumn get name => text().withDefault(const Constant(''))();
   TextColumn get category => text().withDefault(const Constant('Other'))();

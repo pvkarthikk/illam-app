@@ -21,6 +21,7 @@ abstract class MembershipService {
   Future<MembershipResult> setRole(String memberId, String role);
   Future<MembershipResult> removeMember(String memberId);
   Future<MembershipResult> leaveHome();
+  Future<MembershipResult> removeFromThisPhoneNow();
   Future<MembershipResult> deleteHome();
   Future<MembershipResult> renameHome(String name);
 }
