@@ -46,6 +46,12 @@ void main() {
     expect(attempts.length, 2);
     final expenses = await db.select(db.expenses).get();
     expect(expenses.length, 2);
+    final items = await db.select(db.items).get();
+    expect(items.length, 15);
+    expect(items.where((i) => i.list == 'grocery' && !i.done).length, 9);
+    expect(items.where((i) => i.list == 'shopping' && !i.done).length, 5);
+    final history = await db.select(db.itemHistory).get();
+    expect(history.length, 11);
     expect(
       notes.map((n) => n.title).toSet(),
       {'Milk 2L', 'Call plumber', 'Pay rent'},

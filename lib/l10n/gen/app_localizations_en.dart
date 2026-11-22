@@ -1210,4 +1210,250 @@ class AppLocalizationsEn extends AppLocalizations {
   String salaryStaffButton(Object month, Object amount) {
     return '$month salary · $amount';
   }
+
+  @override
+  String get listsChannelZepto => 'Zepto';
+
+  @override
+  String get listsChannelBlinkit => 'Blinkit';
+
+  @override
+  String get listsChannelBigbasket => 'BigBasket';
+
+  @override
+  String get listsChannelAmazon => 'Amazon';
+
+  @override
+  String get listsChannelFlipkart => 'Flipkart';
+
+  @override
+  String get listsChannelMeesho => 'Meesho';
+
+  @override
+  String get listsChannelOffline => 'Offline';
+
+  @override
+  String get listsEtaZepto => '~10 min';
+
+  @override
+  String get listsEtaBlinkit => '~10 min';
+
+  @override
+  String get listsEtaBigbasket => 'Tomorrow 7–9 AM';
+
+  @override
+  String get listsEtaAmazon => '1–2 days';
+
+  @override
+  String get listsEtaFlipkart => '2–3 days';
+
+  @override
+  String get listsEtaMeesho => '4–6 days';
+
+  @override
+  String get listsEtaOffline => 'Local store / D-Mart';
+
+  @override
+  String get listsEyebrow => 'BUY';
+
+  @override
+  String get listsTitle => 'Lists';
+
+  @override
+  String get listsStoreMode => 'Store mode';
+
+  @override
+  String get listsGrocery => 'Grocery';
+
+  @override
+  String get listsShopping => 'Shopping';
+
+  @override
+  String get listsPlaceholderGrocery => 'Add “Milk 2L”, “Onions 1kg”…';
+
+  @override
+  String get listsPlaceholderShopping => 'Add “Phone charger”…';
+
+  @override
+  String listsStoreButton(Object store) {
+    return 'Buy from $store. Change';
+  }
+
+  @override
+  String get listsAddTooltip => 'Add';
+
+  @override
+  String get listsHintIdle => 'Tip: quantities are understood — “Rice 5kg”.';
+
+  @override
+  String listsHint(Object item, Object store, Object usual) {
+    return '$item → $store$usual';
+  }
+
+  @override
+  String listsHintItemQty(Object name, Object qty) {
+    return '$name · $qty';
+  }
+
+  @override
+  String get listsHintUsual => ' (where you usually buy it)';
+
+  @override
+  String listsAdded(Object name, Object store) {
+    return 'Added $name → $store';
+  }
+
+  @override
+  String listsMerged(Object name, Object qty) {
+    return '$name was already on the list — now $qty';
+  }
+
+  @override
+  String listsAlready(Object name, Object qty) {
+    return '$name is already on the list ($qty)';
+  }
+
+  @override
+  String get listsPickerTitle => 'Where will you buy it?';
+
+  @override
+  String get listsPickerLead =>
+      'New items go here. Items you’ve bought before go to their usual store automatically.';
+
+  @override
+  String get listsStoreModeStub => 'Store mode arrives in P07';
+
+  @override
+  String get listsAll => 'All';
+
+  @override
+  String listsToBuy(int n, Object eta) {
+    return '$n to buy · $eta';
+  }
+
+  @override
+  String get listsOrder => 'Order';
+
+  @override
+  String get listsShop => 'Shop';
+
+  @override
+  String get listsOrderStub => 'Opening the store arrives in P07';
+
+  @override
+  String listsGotSemantics(Object name) {
+    return 'Got $name';
+  }
+
+  @override
+  String get listsLess => 'Less';
+
+  @override
+  String get listsMore => 'More';
+
+  @override
+  String get listsCheckQty => 'Check quantity';
+
+  @override
+  String listsGot(Object name) {
+    return 'Got $name';
+  }
+
+  @override
+  String listsAllBought(Object store) {
+    return 'All bought from $store.';
+  }
+
+  @override
+  String listsGotFooter(Object names) {
+    return 'Got: $names';
+  }
+
+  @override
+  String get listsClear => 'Clear';
+
+  @override
+  String listsCleared(int n) {
+    return 'Cleared $n · they’re in Buy again';
+  }
+
+  @override
+  String listsItemLead(Object qty, Object category, String list) {
+    String _temp0 = intl.Intl.selectLogic(list, {
+      'grocery': 'grocery',
+      'other': 'shopping',
+    });
+    return '$qty · $category · on $_temp0 list';
+  }
+
+  @override
+  String get listsName => 'Name';
+
+  @override
+  String get listsQuantity => 'Quantity';
+
+  @override
+  String get listsUnit => 'Unit';
+
+  @override
+  String get listsCategory => 'Category';
+
+  @override
+  String get listsMoveTo => 'Move to';
+
+  @override
+  String get listsRemove => 'Remove';
+
+  @override
+  String get listsRemoved => 'Removed';
+
+  @override
+  String get listsSave => 'Save';
+
+  @override
+  String get listsSaved => 'Saved';
+
+  @override
+  String listsMoved(Object name, Object store) {
+    return '$name → $store. We’ll remember that.';
+  }
+
+  @override
+  String listsMergeAsk(Object name, Object qty) {
+    return 'Merge with $name ($qty)?';
+  }
+
+  @override
+  String get listsMerge => 'Merge';
+
+  @override
+  String get listsCancel => 'Cancel';
+
+  @override
+  String get listsBuyAgain => 'Buy again';
+
+  @override
+  String listsBuyAgainChip(Object name) {
+    return '+ $name';
+  }
+
+  @override
+  String get todayReadyToOrder => 'Ready to order';
+
+  @override
+  String get todayListsLink => 'Lists';
+
+  @override
+  String todayPillCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n items',
+      one: '1 item',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get todayStoreRun => 'store run';
 }

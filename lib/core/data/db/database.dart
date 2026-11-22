@@ -4,6 +4,8 @@ import 'package:drift_flutter/drift_flutter.dart';
 import 'package:nm_flat/core/data/db/tables/dev_notes.dart';
 import 'package:nm_flat/core/data/db/tables/expenses.dart';
 import 'package:nm_flat/core/data/db/tables/homes.dart';
+import 'package:nm_flat/core/data/db/tables/item_history.dart';
+import 'package:nm_flat/core/data/db/tables/items.dart';
 import 'package:nm_flat/core/data/db/tables/members.dart';
 import 'package:nm_flat/core/data/db/tables/ops.dart';
 import 'package:nm_flat/core/data/db/tables/pay_adjustments.dart';
@@ -27,6 +29,8 @@ part 'database.g.dart';
     PayAdjustments,
     SettlementAttempts,
     Expenses,
+    Items,
+    ItemHistory,
   ],
 )
 class NestDatabase extends _$NestDatabase {
@@ -39,7 +43,7 @@ class NestDatabase extends _$NestDatabase {
     : super(DatabaseConnection(e, closeStreamsSynchronously: true));
 
   @override
-  int get schemaVersion => 4; // raise by 1 for every table change
+  int get schemaVersion => 5; // raise by 1 for every table change
 
   @override
   MigrationStrategy get migration => MigrationStrategy(

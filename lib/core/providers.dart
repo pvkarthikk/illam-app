@@ -9,6 +9,7 @@ import 'package:nm_flat/core/data/ops/collection_registry.dart';
 import 'package:nm_flat/core/data/prefs/device_prefs.dart';
 import 'package:nm_flat/core/data/repo/expenses_repo.dart';
 import 'package:nm_flat/core/data/repo/home_repo.dart';
+import 'package:nm_flat/core/data/repo/lists_repo.dart';
 import 'package:nm_flat/core/data/repo/salary_repo.dart';
 import 'package:nm_flat/core/data/repo/staff_repo.dart';
 import 'package:nm_flat/core/data/secure/secure_store.dart';
@@ -140,4 +141,47 @@ final adminNamesProvider = Provider<List<String>>((ref) {
       if (m.role == 'admin' && m.status == 'active')
         m.id == me ? 'you' : (m.firstName ?? ''),
   ];
+});
+final listsRepoProvider = Provider(
+  (ref) => ListsRepo(
+    ref.watch(dbProvider),
+    ref.watch(changesProvider),
+    ref.watch(prefsProvider),
+    ref.watch(clockProvider),
+  ),
+);
+final listItemsProvider = StreamProvider.family<List<ItemRow>, String>((
+  ref,
+  list,
+) {
+  final home = ref.watch(currentHomeIdProvider).value;
+  if (home == null) return Stream.value(const <ItemRow>[]);
+  return ref.watch(listsRepoProvider).watchItems(home, list);
+});
+final openItemsProvider = StreamProvider<List<ItemRow>>((ref) {
+  final home = ref.watch(currentHomeIdProvider).value;
+  if (home == null) return Stream.value(const <ItemRow>[]);
+  return ref.watch(listsRepoProvider).watchOpenItems(home);
+});
+final listHistoryProvider =
+    StreamProvider.family<List<ItemHistoryRow>, String>((ref, list) {
+      final home = ref.watch(currentHomeIdProvider).value;
+      if (home == null) return Stream.value(const <ItemHistoryRow>[]);
+      return ref.watch(listsRepoProvider).watchHistory(home, list);
+    });
+final _usualRowsProvider =
+    StreamProvider.family<List<ItemHistoryRow>, String>((ref, list) {
+      final home = ref.watch(currentHomeIdProvider).value;
+      if (home == null) return Stream.value(const <ItemHistoryRow>[]);
+      return ref.watch(listsRepoProvider).watchUsual(home, list);
+    });
+final usualMapProvider = Provider.family<Map<String, String>, String>((
+  ref,
+  list,
+) {
+  final rows = ref.watch(_usualRowsProvider(list)).value ?? const [];
+  return {
+    for (final h in rows)
+      if (h.usualChannel != null) h.nameKey: h.usualChannel!,
+  };
 });

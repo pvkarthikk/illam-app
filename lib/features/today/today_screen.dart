@@ -5,6 +5,7 @@ import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/features/today/sections/help_at_home_section.dart';
 import 'package:nm_flat/features/today/sections/hero_section.dart';
+import 'package:nm_flat/features/today/sections/ready_to_order_section.dart';
 
 class TodayScreen extends ConsumerWidget {
   const TodayScreen({super.key});
@@ -21,7 +22,7 @@ class TodayScreen extends ConsumerWidget {
             HeroSection(),
             // DueTodaySection — P08
             // MenuSection — P09
-            // ReadyToOrderSection — P06
+            ReadyToOrderSection(),
             HelpAtHomeSection(),
             // MonthSoFarSection — P10
           ],

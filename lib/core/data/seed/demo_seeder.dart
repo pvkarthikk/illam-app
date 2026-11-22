@@ -5,11 +5,13 @@ import 'package:drift/drift.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:nm_flat/core/data/db/database.dart';
+import 'package:nm_flat/core/domain/item_parse.dart';
 import 'package:nm_flat/core/domain/payroll.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/time/dates.dart';
 import 'package:nm_flat/core/ui/formatters.dart';
 import 'package:nm_flat/core/util/device_model.dart';
+import 'package:nm_flat/core/util/hash_id.dart';
 import 'package:nm_flat/core/util/ids.dart';
 import 'package:nm_flat/features/debug/data_lab_controller.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
@@ -23,7 +25,7 @@ class DemoSeeder {
     await _seedHomeAndMembers(); // must stay first (creates the home if missing)
     await _seedStaff();
     await _seedPay();
-    // P06: await _seedItems();
+    await _seedItems();
     // P08: await _seedTasks();
     // P09: await _seedMeals();
     // P10: await _seedMoney();
@@ -372,6 +374,134 @@ class DemoSeeder {
       today: today,
       date: Dates.monthStart(thisMonth),
     );
+  }
+
+  Future<void> _seedItems() async {
+    final prefs = ref.read(prefsProvider);
+    final homeId = prefs.currentHomeId;
+    if (homeId == null) return;
+
+    final db = ref.read(dbProvider);
+    final existing =
+        await (db.select(db.items)
+              ..where(
+                (i) =>
+                    i.homeId.equals(homeId) &
+                    i.name.equals('Milk') &
+                    i.done.equals(false) &
+                    i.deleted.equals(false),
+              )
+              ..limit(1))
+            .getSingleOrNull();
+    if (existing != null) return;
+
+    final now = ref.read(clockProvider).nowMs;
+    final me = prefs.memberId ?? prefs.deviceId;
+    const hour = 3600000;
+    final changes = ref.read(changesProvider);
+
+    const grocery = [
+      ('Milk', 2000, 'L', 'zepto', 'Dairy', false),
+      ('Curd', 400000, 'g', 'zepto', 'Dairy', false),
+      ('Coriander', 1000, 'bunch', 'zepto', 'Vegetables', false),
+      ('Paneer', 200000, 'g', 'zepto', 'Dairy', true),
+      ('Tomatoes', 1000, 'kg', 'offline', 'Vegetables', false),
+      ('Onions', 2000, 'kg', 'offline', 'Vegetables', false),
+      ('Bananas', 1000, 'dozen', 'offline', 'Fruits', false),
+      ('Toor dal', 1000, 'kg', 'bigbasket', 'Staples', false),
+      ('Basmati rice', 5000, 'kg', 'bigbasket', 'Staples', false),
+      ('Dishwash liquid', 1000, '', 'blinkit', 'Cleaning', false),
+    ];
+    const groceryBought = [
+      ('Eggs', 'zepto'),
+      ('Bread', 'blinkit'),
+      ('Atta 5kg', 'bigbasket'),
+      ('Ghee', 'bigbasket'),
+      ('Detergent', 'amazon'),
+      ('Green chillies', 'offline'),
+    ];
+    const groceryUsual = [('Milk', 'zepto'), ('Curd', 'zepto')];
+
+    await changes.write('Demo data', (c) {
+      for (final (name, qtyMilli, unit, ch, cat, done) in grocery) {
+        final id = c.create('items', {
+          'list': 'grocery',
+          'name': name,
+          'name_key': itemNameKey(name),
+          'unit': unit,
+          'channel': ch,
+          'category': cat,
+          if (done) ...{'done': true, 'done_at': now, 'done_by': me},
+        });
+        c.inc('items', id, 'qty_milli', qtyMilli);
+      }
+      for (var i = 0; i < groceryBought.length; i++) {
+        final (name, ch) = groceryBought[i];
+        final key = itemNameKey(name);
+        final histId = itemHistoryId('grocery', key);
+        c.setAll('item_history', histId, {
+          'deleted': false,
+          'list': 'grocery',
+          'name': name,
+          'name_key': key,
+          'usual_channel': ch,
+          'last_bought_at': now - i * hour,
+        });
+        c.inc('item_history', histId, 'times_bought', 1);
+      }
+      for (final (name, ch) in groceryUsual) {
+        final key = itemNameKey(name);
+        final histId = itemHistoryId('grocery', key);
+        c.setAll('item_history', histId, {
+          'deleted': false,
+          'list': 'grocery',
+          'name': name,
+          'name_key': key,
+          'usual_channel': ch,
+        });
+      }
+    }, homeId: homeId);
+
+    const shopping = [
+      ('Arjun’s school shoes', 1000, 'flipkart', 'Kids'),
+      ('Water purifier filter', 1000, 'amazon', 'Home'),
+      ('HDMI cable 2m', 1000, 'amazon', 'Electronics'),
+      ('Cotton bedsheet set', 2000, 'meesho', 'Home'),
+      ('LED bulbs 9W', 4000, 'offline', 'Hardware'),
+    ];
+    const shoppingBought = [
+      ('AA batteries', 'amazon'),
+      ('Phone charger', 'amazon'),
+      ('Kitchen towels', 'amazon'),
+    ];
+
+    await changes.write('Demo data', (c) {
+      for (final (name, qtyMilli, ch, cat) in shopping) {
+        final id = c.create('items', {
+          'list': 'shopping',
+          'name': name,
+          'name_key': itemNameKey(name),
+          'unit': '',
+          'channel': ch,
+          'category': cat,
+        });
+        c.inc('items', id, 'qty_milli', qtyMilli);
+      }
+      for (var i = 0; i < shoppingBought.length; i++) {
+        final (name, ch) = shoppingBought[i];
+        final key = itemNameKey(name);
+        final histId = itemHistoryId('shopping', key);
+        c.setAll('item_history', histId, {
+          'deleted': false,
+          'list': 'shopping',
+          'name': name,
+          'name_key': key,
+          'usual_channel': ch,
+          'last_bought_at': now - i * hour,
+        });
+        c.inc('item_history', histId, 'times_bought', 1);
+      }
+    }, homeId: homeId);
   }
 
   Future<void> _seedDevNotes() async {

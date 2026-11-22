@@ -85,6 +85,11 @@ class DevicePrefs {
     }
   }
 
+  String? lastStore(String list) => _s.getString('lastStore.$list');
+
+  Future<void> setLastStore(String list, String channel) =>
+      _s.setString('lastStore.$list', channel);
+
   /// Forgets home, member and sync counters (identity switch). Keeps flags.
   Future<void> resetIdentity() async {
     await _s.remove('currentHomeId');

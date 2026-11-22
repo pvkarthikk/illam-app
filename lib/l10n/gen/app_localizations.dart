@@ -2039,6 +2039,408 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{month} salary · {amount}'**
   String salaryStaffButton(Object month, Object amount);
+
+  /// No description provided for @listsChannelZepto.
+  ///
+  /// In en, this message translates to:
+  /// **'Zepto'**
+  String get listsChannelZepto;
+
+  /// No description provided for @listsChannelBlinkit.
+  ///
+  /// In en, this message translates to:
+  /// **'Blinkit'**
+  String get listsChannelBlinkit;
+
+  /// No description provided for @listsChannelBigbasket.
+  ///
+  /// In en, this message translates to:
+  /// **'BigBasket'**
+  String get listsChannelBigbasket;
+
+  /// No description provided for @listsChannelAmazon.
+  ///
+  /// In en, this message translates to:
+  /// **'Amazon'**
+  String get listsChannelAmazon;
+
+  /// No description provided for @listsChannelFlipkart.
+  ///
+  /// In en, this message translates to:
+  /// **'Flipkart'**
+  String get listsChannelFlipkart;
+
+  /// No description provided for @listsChannelMeesho.
+  ///
+  /// In en, this message translates to:
+  /// **'Meesho'**
+  String get listsChannelMeesho;
+
+  /// No description provided for @listsChannelOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline'**
+  String get listsChannelOffline;
+
+  /// No description provided for @listsEtaZepto.
+  ///
+  /// In en, this message translates to:
+  /// **'~10 min'**
+  String get listsEtaZepto;
+
+  /// No description provided for @listsEtaBlinkit.
+  ///
+  /// In en, this message translates to:
+  /// **'~10 min'**
+  String get listsEtaBlinkit;
+
+  /// No description provided for @listsEtaBigbasket.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow 7–9 AM'**
+  String get listsEtaBigbasket;
+
+  /// No description provided for @listsEtaAmazon.
+  ///
+  /// In en, this message translates to:
+  /// **'1–2 days'**
+  String get listsEtaAmazon;
+
+  /// No description provided for @listsEtaFlipkart.
+  ///
+  /// In en, this message translates to:
+  /// **'2–3 days'**
+  String get listsEtaFlipkart;
+
+  /// No description provided for @listsEtaMeesho.
+  ///
+  /// In en, this message translates to:
+  /// **'4–6 days'**
+  String get listsEtaMeesho;
+
+  /// No description provided for @listsEtaOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'Local store / D-Mart'**
+  String get listsEtaOffline;
+
+  /// No description provided for @listsEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'BUY'**
+  String get listsEyebrow;
+
+  /// No description provided for @listsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Lists'**
+  String get listsTitle;
+
+  /// No description provided for @listsStoreMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Store mode'**
+  String get listsStoreMode;
+
+  /// No description provided for @listsGrocery.
+  ///
+  /// In en, this message translates to:
+  /// **'Grocery'**
+  String get listsGrocery;
+
+  /// No description provided for @listsShopping.
+  ///
+  /// In en, this message translates to:
+  /// **'Shopping'**
+  String get listsShopping;
+
+  /// No description provided for @listsPlaceholderGrocery.
+  ///
+  /// In en, this message translates to:
+  /// **'Add “Milk 2L”, “Onions 1kg”…'**
+  String get listsPlaceholderGrocery;
+
+  /// No description provided for @listsPlaceholderShopping.
+  ///
+  /// In en, this message translates to:
+  /// **'Add “Phone charger”…'**
+  String get listsPlaceholderShopping;
+
+  /// No description provided for @listsStoreButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Buy from {store}. Change'**
+  String listsStoreButton(Object store);
+
+  /// No description provided for @listsAddTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get listsAddTooltip;
+
+  /// No description provided for @listsHintIdle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tip: quantities are understood — “Rice 5kg”.'**
+  String get listsHintIdle;
+
+  /// No description provided for @listsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'{item} → {store}{usual}'**
+  String listsHint(Object item, Object store, Object usual);
+
+  /// No description provided for @listsHintItemQty.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} · {qty}'**
+  String listsHintItemQty(Object name, Object qty);
+
+  /// No description provided for @listsHintUsual.
+  ///
+  /// In en, this message translates to:
+  /// **' (where you usually buy it)'**
+  String get listsHintUsual;
+
+  /// No description provided for @listsAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Added {name} → {store}'**
+  String listsAdded(Object name, Object store);
+
+  /// No description provided for @listsMerged.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} was already on the list — now {qty}'**
+  String listsMerged(Object name, Object qty);
+
+  /// No description provided for @listsAlready.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is already on the list ({qty})'**
+  String listsAlready(Object name, Object qty);
+
+  /// No description provided for @listsPickerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Where will you buy it?'**
+  String get listsPickerTitle;
+
+  /// No description provided for @listsPickerLead.
+  ///
+  /// In en, this message translates to:
+  /// **'New items go here. Items you’ve bought before go to their usual store automatically.'**
+  String get listsPickerLead;
+
+  /// No description provided for @listsStoreModeStub.
+  ///
+  /// In en, this message translates to:
+  /// **'Store mode arrives in P07'**
+  String get listsStoreModeStub;
+
+  /// No description provided for @listsAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get listsAll;
+
+  /// No description provided for @listsToBuy.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} to buy · {eta}'**
+  String listsToBuy(int n, Object eta);
+
+  /// No description provided for @listsOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Order'**
+  String get listsOrder;
+
+  /// No description provided for @listsShop.
+  ///
+  /// In en, this message translates to:
+  /// **'Shop'**
+  String get listsShop;
+
+  /// No description provided for @listsOrderStub.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening the store arrives in P07'**
+  String get listsOrderStub;
+
+  /// No description provided for @listsGotSemantics.
+  ///
+  /// In en, this message translates to:
+  /// **'Got {name}'**
+  String listsGotSemantics(Object name);
+
+  /// No description provided for @listsLess.
+  ///
+  /// In en, this message translates to:
+  /// **'Less'**
+  String get listsLess;
+
+  /// No description provided for @listsMore.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get listsMore;
+
+  /// No description provided for @listsCheckQty.
+  ///
+  /// In en, this message translates to:
+  /// **'Check quantity'**
+  String get listsCheckQty;
+
+  /// No description provided for @listsGot.
+  ///
+  /// In en, this message translates to:
+  /// **'Got {name}'**
+  String listsGot(Object name);
+
+  /// No description provided for @listsAllBought.
+  ///
+  /// In en, this message translates to:
+  /// **'All bought from {store}.'**
+  String listsAllBought(Object store);
+
+  /// No description provided for @listsGotFooter.
+  ///
+  /// In en, this message translates to:
+  /// **'Got: {names}'**
+  String listsGotFooter(Object names);
+
+  /// No description provided for @listsClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get listsClear;
+
+  /// No description provided for @listsCleared.
+  ///
+  /// In en, this message translates to:
+  /// **'Cleared {n} · they’re in Buy again'**
+  String listsCleared(int n);
+
+  /// No description provided for @listsItemLead.
+  ///
+  /// In en, this message translates to:
+  /// **'{qty} · {category} · on {list, select, grocery{grocery} other{shopping}} list'**
+  String listsItemLead(Object qty, Object category, String list);
+
+  /// No description provided for @listsName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get listsName;
+
+  /// No description provided for @listsQuantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity'**
+  String get listsQuantity;
+
+  /// No description provided for @listsUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit'**
+  String get listsUnit;
+
+  /// No description provided for @listsCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get listsCategory;
+
+  /// No description provided for @listsMoveTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Move to'**
+  String get listsMoveTo;
+
+  /// No description provided for @listsRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get listsRemove;
+
+  /// No description provided for @listsRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'Removed'**
+  String get listsRemoved;
+
+  /// No description provided for @listsSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get listsSave;
+
+  /// No description provided for @listsSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get listsSaved;
+
+  /// No description provided for @listsMoved.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} → {store}. We’ll remember that.'**
+  String listsMoved(Object name, Object store);
+
+  /// No description provided for @listsMergeAsk.
+  ///
+  /// In en, this message translates to:
+  /// **'Merge with {name} ({qty})?'**
+  String listsMergeAsk(Object name, Object qty);
+
+  /// No description provided for @listsMerge.
+  ///
+  /// In en, this message translates to:
+  /// **'Merge'**
+  String get listsMerge;
+
+  /// No description provided for @listsCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get listsCancel;
+
+  /// No description provided for @listsBuyAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Buy again'**
+  String get listsBuyAgain;
+
+  /// No description provided for @listsBuyAgainChip.
+  ///
+  /// In en, this message translates to:
+  /// **'+ {name}'**
+  String listsBuyAgainChip(Object name);
+
+  /// No description provided for @todayReadyToOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready to order'**
+  String get todayReadyToOrder;
+
+  /// No description provided for @todayListsLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Lists'**
+  String get todayListsLink;
+
+  /// No description provided for @todayPillCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 item} other{{n} items}}'**
+  String todayPillCount(int n);
+
+  /// No description provided for @todayStoreRun.
+  ///
+  /// In en, this message translates to:
+  /// **'store run'**
+  String get todayStoreRun;
 }
 
 class _AppLocalizationsDelegate

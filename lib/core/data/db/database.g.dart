@@ -9716,6 +9716,1857 @@ class ExpensesCompanion extends UpdateCompanion<ExpenseRow> {
   }
 }
 
+class $ItemsTable extends Items with TableInfo<$ItemsTable, ItemRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ItemsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _homeIdMeta = const VerificationMeta('homeId');
+  @override
+  late final GeneratedColumn<String> homeId = GeneratedColumn<String>(
+    'home_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _deletedMeta = const VerificationMeta(
+    'deleted',
+  );
+  @override
+  late final GeneratedColumn<bool> deleted = GeneratedColumn<bool>(
+    'deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _createdByMeta = const VerificationMeta(
+    'createdBy',
+  );
+  @override
+  late final GeneratedColumn<String> createdBy = GeneratedColumn<String>(
+    'created_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _updatedByMeta = const VerificationMeta(
+    'updatedBy',
+  );
+  @override
+  late final GeneratedColumn<String> updatedBy = GeneratedColumn<String>(
+    'updated_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _listMeta = const VerificationMeta('list');
+  @override
+  late final GeneratedColumn<String> list = GeneratedColumn<String>(
+    'list',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('grocery'),
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _nameKeyMeta = const VerificationMeta(
+    'nameKey',
+  );
+  @override
+  late final GeneratedColumn<String> nameKey = GeneratedColumn<String>(
+    'name_key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _qtyMilliMeta = const VerificationMeta(
+    'qtyMilli',
+  );
+  @override
+  late final GeneratedColumn<int> qtyMilli = GeneratedColumn<int>(
+    'qty_milli',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _unitMeta = const VerificationMeta('unit');
+  @override
+  late final GeneratedColumn<String> unit = GeneratedColumn<String>(
+    'unit',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _channelMeta = const VerificationMeta(
+    'channel',
+  );
+  @override
+  late final GeneratedColumn<String> channel = GeneratedColumn<String>(
+    'channel',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('zepto'),
+  );
+  static const VerificationMeta _categoryMeta = const VerificationMeta(
+    'category',
+  );
+  @override
+  late final GeneratedColumn<String> category = GeneratedColumn<String>(
+    'category',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('Other'),
+  );
+  static const VerificationMeta _noteMeta = const VerificationMeta('note');
+  @override
+  late final GeneratedColumn<String> note = GeneratedColumn<String>(
+    'note',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _doneMeta = const VerificationMeta('done');
+  @override
+  late final GeneratedColumn<bool> done = GeneratedColumn<bool>(
+    'done',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("done" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _doneAtMeta = const VerificationMeta('doneAt');
+  @override
+  late final GeneratedColumn<int> doneAt = GeneratedColumn<int>(
+    'done_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _doneByMeta = const VerificationMeta('doneBy');
+  @override
+  late final GeneratedColumn<String> doneBy = GeneratedColumn<String>(
+    'done_by',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _sourceMeta = const VerificationMeta('source');
+  @override
+  late final GeneratedColumn<String> source = GeneratedColumn<String>(
+    'source',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('manual'),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    homeId,
+    deleted,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    list,
+    name,
+    nameKey,
+    qtyMilli,
+    unit,
+    channel,
+    category,
+    note,
+    done,
+    doneAt,
+    doneBy,
+    source,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'items';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ItemRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('home_id')) {
+      context.handle(
+        _homeIdMeta,
+        homeId.isAcceptableOrUnknown(data['home_id']!, _homeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_homeIdMeta);
+    }
+    if (data.containsKey('deleted')) {
+      context.handle(
+        _deletedMeta,
+        deleted.isAcceptableOrUnknown(data['deleted']!, _deletedMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('created_by')) {
+      context.handle(
+        _createdByMeta,
+        createdBy.isAcceptableOrUnknown(data['created_by']!, _createdByMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('updated_by')) {
+      context.handle(
+        _updatedByMeta,
+        updatedBy.isAcceptableOrUnknown(data['updated_by']!, _updatedByMeta),
+      );
+    }
+    if (data.containsKey('list')) {
+      context.handle(
+        _listMeta,
+        list.isAcceptableOrUnknown(data['list']!, _listMeta),
+      );
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    }
+    if (data.containsKey('name_key')) {
+      context.handle(
+        _nameKeyMeta,
+        nameKey.isAcceptableOrUnknown(data['name_key']!, _nameKeyMeta),
+      );
+    }
+    if (data.containsKey('qty_milli')) {
+      context.handle(
+        _qtyMilliMeta,
+        qtyMilli.isAcceptableOrUnknown(data['qty_milli']!, _qtyMilliMeta),
+      );
+    }
+    if (data.containsKey('unit')) {
+      context.handle(
+        _unitMeta,
+        unit.isAcceptableOrUnknown(data['unit']!, _unitMeta),
+      );
+    }
+    if (data.containsKey('channel')) {
+      context.handle(
+        _channelMeta,
+        channel.isAcceptableOrUnknown(data['channel']!, _channelMeta),
+      );
+    }
+    if (data.containsKey('category')) {
+      context.handle(
+        _categoryMeta,
+        category.isAcceptableOrUnknown(data['category']!, _categoryMeta),
+      );
+    }
+    if (data.containsKey('note')) {
+      context.handle(
+        _noteMeta,
+        note.isAcceptableOrUnknown(data['note']!, _noteMeta),
+      );
+    }
+    if (data.containsKey('done')) {
+      context.handle(
+        _doneMeta,
+        done.isAcceptableOrUnknown(data['done']!, _doneMeta),
+      );
+    }
+    if (data.containsKey('done_at')) {
+      context.handle(
+        _doneAtMeta,
+        doneAt.isAcceptableOrUnknown(data['done_at']!, _doneAtMeta),
+      );
+    }
+    if (data.containsKey('done_by')) {
+      context.handle(
+        _doneByMeta,
+        doneBy.isAcceptableOrUnknown(data['done_by']!, _doneByMeta),
+      );
+    }
+    if (data.containsKey('source')) {
+      context.handle(
+        _sourceMeta,
+        source.isAcceptableOrUnknown(data['source']!, _sourceMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ItemRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ItemRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      homeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}home_id'],
+      )!,
+      deleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}deleted'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}created_at'],
+      )!,
+      createdBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_by'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      updatedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by'],
+      )!,
+      list: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}list'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      nameKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name_key'],
+      )!,
+      qtyMilli: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}qty_milli'],
+      )!,
+      unit: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}unit'],
+      )!,
+      channel: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}channel'],
+      )!,
+      category: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}category'],
+      )!,
+      note: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}note'],
+      ),
+      done: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}done'],
+      )!,
+      doneAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}done_at'],
+      ),
+      doneBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}done_by'],
+      ),
+      source: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}source'],
+      )!,
+    );
+  }
+
+  @override
+  $ItemsTable createAlias(String alias) {
+    return $ItemsTable(attachedDatabase, alias);
+  }
+}
+
+class ItemRow extends DataClass implements Insertable<ItemRow> {
+  final String id;
+  final String homeId;
+  final bool deleted;
+  final int createdAt;
+  final String createdBy;
+  final int updatedAt;
+  final String updatedBy;
+  final String list;
+  final String name;
+  final String nameKey;
+  final int qtyMilli;
+  final String unit;
+  final String channel;
+  final String category;
+  final String? note;
+  final bool done;
+  final int? doneAt;
+  final String? doneBy;
+  final String source;
+  const ItemRow({
+    required this.id,
+    required this.homeId,
+    required this.deleted,
+    required this.createdAt,
+    required this.createdBy,
+    required this.updatedAt,
+    required this.updatedBy,
+    required this.list,
+    required this.name,
+    required this.nameKey,
+    required this.qtyMilli,
+    required this.unit,
+    required this.channel,
+    required this.category,
+    this.note,
+    required this.done,
+    this.doneAt,
+    this.doneBy,
+    required this.source,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['home_id'] = Variable<String>(homeId);
+    map['deleted'] = Variable<bool>(deleted);
+    map['created_at'] = Variable<int>(createdAt);
+    map['created_by'] = Variable<String>(createdBy);
+    map['updated_at'] = Variable<int>(updatedAt);
+    map['updated_by'] = Variable<String>(updatedBy);
+    map['list'] = Variable<String>(list);
+    map['name'] = Variable<String>(name);
+    map['name_key'] = Variable<String>(nameKey);
+    map['qty_milli'] = Variable<int>(qtyMilli);
+    map['unit'] = Variable<String>(unit);
+    map['channel'] = Variable<String>(channel);
+    map['category'] = Variable<String>(category);
+    if (!nullToAbsent || note != null) {
+      map['note'] = Variable<String>(note);
+    }
+    map['done'] = Variable<bool>(done);
+    if (!nullToAbsent || doneAt != null) {
+      map['done_at'] = Variable<int>(doneAt);
+    }
+    if (!nullToAbsent || doneBy != null) {
+      map['done_by'] = Variable<String>(doneBy);
+    }
+    map['source'] = Variable<String>(source);
+    return map;
+  }
+
+  ItemsCompanion toCompanion(bool nullToAbsent) {
+    return ItemsCompanion(
+      id: Value(id),
+      homeId: Value(homeId),
+      deleted: Value(deleted),
+      createdAt: Value(createdAt),
+      createdBy: Value(createdBy),
+      updatedAt: Value(updatedAt),
+      updatedBy: Value(updatedBy),
+      list: Value(list),
+      name: Value(name),
+      nameKey: Value(nameKey),
+      qtyMilli: Value(qtyMilli),
+      unit: Value(unit),
+      channel: Value(channel),
+      category: Value(category),
+      note: note == null && nullToAbsent ? const Value.absent() : Value(note),
+      done: Value(done),
+      doneAt: doneAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(doneAt),
+      doneBy: doneBy == null && nullToAbsent
+          ? const Value.absent()
+          : Value(doneBy),
+      source: Value(source),
+    );
+  }
+
+  factory ItemRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ItemRow(
+      id: serializer.fromJson<String>(json['id']),
+      homeId: serializer.fromJson<String>(json['homeId']),
+      deleted: serializer.fromJson<bool>(json['deleted']),
+      createdAt: serializer.fromJson<int>(json['createdAt']),
+      createdBy: serializer.fromJson<String>(json['createdBy']),
+      updatedAt: serializer.fromJson<int>(json['updatedAt']),
+      updatedBy: serializer.fromJson<String>(json['updatedBy']),
+      list: serializer.fromJson<String>(json['list']),
+      name: serializer.fromJson<String>(json['name']),
+      nameKey: serializer.fromJson<String>(json['nameKey']),
+      qtyMilli: serializer.fromJson<int>(json['qtyMilli']),
+      unit: serializer.fromJson<String>(json['unit']),
+      channel: serializer.fromJson<String>(json['channel']),
+      category: serializer.fromJson<String>(json['category']),
+      note: serializer.fromJson<String?>(json['note']),
+      done: serializer.fromJson<bool>(json['done']),
+      doneAt: serializer.fromJson<int?>(json['doneAt']),
+      doneBy: serializer.fromJson<String?>(json['doneBy']),
+      source: serializer.fromJson<String>(json['source']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'homeId': serializer.toJson<String>(homeId),
+      'deleted': serializer.toJson<bool>(deleted),
+      'createdAt': serializer.toJson<int>(createdAt),
+      'createdBy': serializer.toJson<String>(createdBy),
+      'updatedAt': serializer.toJson<int>(updatedAt),
+      'updatedBy': serializer.toJson<String>(updatedBy),
+      'list': serializer.toJson<String>(list),
+      'name': serializer.toJson<String>(name),
+      'nameKey': serializer.toJson<String>(nameKey),
+      'qtyMilli': serializer.toJson<int>(qtyMilli),
+      'unit': serializer.toJson<String>(unit),
+      'channel': serializer.toJson<String>(channel),
+      'category': serializer.toJson<String>(category),
+      'note': serializer.toJson<String?>(note),
+      'done': serializer.toJson<bool>(done),
+      'doneAt': serializer.toJson<int?>(doneAt),
+      'doneBy': serializer.toJson<String?>(doneBy),
+      'source': serializer.toJson<String>(source),
+    };
+  }
+
+  ItemRow copyWith({
+    String? id,
+    String? homeId,
+    bool? deleted,
+    int? createdAt,
+    String? createdBy,
+    int? updatedAt,
+    String? updatedBy,
+    String? list,
+    String? name,
+    String? nameKey,
+    int? qtyMilli,
+    String? unit,
+    String? channel,
+    String? category,
+    Value<String?> note = const Value.absent(),
+    bool? done,
+    Value<int?> doneAt = const Value.absent(),
+    Value<String?> doneBy = const Value.absent(),
+    String? source,
+  }) => ItemRow(
+    id: id ?? this.id,
+    homeId: homeId ?? this.homeId,
+    deleted: deleted ?? this.deleted,
+    createdAt: createdAt ?? this.createdAt,
+    createdBy: createdBy ?? this.createdBy,
+    updatedAt: updatedAt ?? this.updatedAt,
+    updatedBy: updatedBy ?? this.updatedBy,
+    list: list ?? this.list,
+    name: name ?? this.name,
+    nameKey: nameKey ?? this.nameKey,
+    qtyMilli: qtyMilli ?? this.qtyMilli,
+    unit: unit ?? this.unit,
+    channel: channel ?? this.channel,
+    category: category ?? this.category,
+    note: note.present ? note.value : this.note,
+    done: done ?? this.done,
+    doneAt: doneAt.present ? doneAt.value : this.doneAt,
+    doneBy: doneBy.present ? doneBy.value : this.doneBy,
+    source: source ?? this.source,
+  );
+  ItemRow copyWithCompanion(ItemsCompanion data) {
+    return ItemRow(
+      id: data.id.present ? data.id.value : this.id,
+      homeId: data.homeId.present ? data.homeId.value : this.homeId,
+      deleted: data.deleted.present ? data.deleted.value : this.deleted,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      createdBy: data.createdBy.present ? data.createdBy.value : this.createdBy,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      updatedBy: data.updatedBy.present ? data.updatedBy.value : this.updatedBy,
+      list: data.list.present ? data.list.value : this.list,
+      name: data.name.present ? data.name.value : this.name,
+      nameKey: data.nameKey.present ? data.nameKey.value : this.nameKey,
+      qtyMilli: data.qtyMilli.present ? data.qtyMilli.value : this.qtyMilli,
+      unit: data.unit.present ? data.unit.value : this.unit,
+      channel: data.channel.present ? data.channel.value : this.channel,
+      category: data.category.present ? data.category.value : this.category,
+      note: data.note.present ? data.note.value : this.note,
+      done: data.done.present ? data.done.value : this.done,
+      doneAt: data.doneAt.present ? data.doneAt.value : this.doneAt,
+      doneBy: data.doneBy.present ? data.doneBy.value : this.doneBy,
+      source: data.source.present ? data.source.value : this.source,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ItemRow(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('deleted: $deleted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('list: $list, ')
+          ..write('name: $name, ')
+          ..write('nameKey: $nameKey, ')
+          ..write('qtyMilli: $qtyMilli, ')
+          ..write('unit: $unit, ')
+          ..write('channel: $channel, ')
+          ..write('category: $category, ')
+          ..write('note: $note, ')
+          ..write('done: $done, ')
+          ..write('doneAt: $doneAt, ')
+          ..write('doneBy: $doneBy, ')
+          ..write('source: $source')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    homeId,
+    deleted,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    list,
+    name,
+    nameKey,
+    qtyMilli,
+    unit,
+    channel,
+    category,
+    note,
+    done,
+    doneAt,
+    doneBy,
+    source,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ItemRow &&
+          other.id == this.id &&
+          other.homeId == this.homeId &&
+          other.deleted == this.deleted &&
+          other.createdAt == this.createdAt &&
+          other.createdBy == this.createdBy &&
+          other.updatedAt == this.updatedAt &&
+          other.updatedBy == this.updatedBy &&
+          other.list == this.list &&
+          other.name == this.name &&
+          other.nameKey == this.nameKey &&
+          other.qtyMilli == this.qtyMilli &&
+          other.unit == this.unit &&
+          other.channel == this.channel &&
+          other.category == this.category &&
+          other.note == this.note &&
+          other.done == this.done &&
+          other.doneAt == this.doneAt &&
+          other.doneBy == this.doneBy &&
+          other.source == this.source);
+}
+
+class ItemsCompanion extends UpdateCompanion<ItemRow> {
+  final Value<String> id;
+  final Value<String> homeId;
+  final Value<bool> deleted;
+  final Value<int> createdAt;
+  final Value<String> createdBy;
+  final Value<int> updatedAt;
+  final Value<String> updatedBy;
+  final Value<String> list;
+  final Value<String> name;
+  final Value<String> nameKey;
+  final Value<int> qtyMilli;
+  final Value<String> unit;
+  final Value<String> channel;
+  final Value<String> category;
+  final Value<String?> note;
+  final Value<bool> done;
+  final Value<int?> doneAt;
+  final Value<String?> doneBy;
+  final Value<String> source;
+  final Value<int> rowid;
+  const ItemsCompanion({
+    this.id = const Value.absent(),
+    this.homeId = const Value.absent(),
+    this.deleted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.list = const Value.absent(),
+    this.name = const Value.absent(),
+    this.nameKey = const Value.absent(),
+    this.qtyMilli = const Value.absent(),
+    this.unit = const Value.absent(),
+    this.channel = const Value.absent(),
+    this.category = const Value.absent(),
+    this.note = const Value.absent(),
+    this.done = const Value.absent(),
+    this.doneAt = const Value.absent(),
+    this.doneBy = const Value.absent(),
+    this.source = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ItemsCompanion.insert({
+    required String id,
+    required String homeId,
+    this.deleted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.list = const Value.absent(),
+    this.name = const Value.absent(),
+    this.nameKey = const Value.absent(),
+    this.qtyMilli = const Value.absent(),
+    this.unit = const Value.absent(),
+    this.channel = const Value.absent(),
+    this.category = const Value.absent(),
+    this.note = const Value.absent(),
+    this.done = const Value.absent(),
+    this.doneAt = const Value.absent(),
+    this.doneBy = const Value.absent(),
+    this.source = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       homeId = Value(homeId);
+  static Insertable<ItemRow> custom({
+    Expression<String>? id,
+    Expression<String>? homeId,
+    Expression<bool>? deleted,
+    Expression<int>? createdAt,
+    Expression<String>? createdBy,
+    Expression<int>? updatedAt,
+    Expression<String>? updatedBy,
+    Expression<String>? list,
+    Expression<String>? name,
+    Expression<String>? nameKey,
+    Expression<int>? qtyMilli,
+    Expression<String>? unit,
+    Expression<String>? channel,
+    Expression<String>? category,
+    Expression<String>? note,
+    Expression<bool>? done,
+    Expression<int>? doneAt,
+    Expression<String>? doneBy,
+    Expression<String>? source,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (homeId != null) 'home_id': homeId,
+      if (deleted != null) 'deleted': deleted,
+      if (createdAt != null) 'created_at': createdAt,
+      if (createdBy != null) 'created_by': createdBy,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (updatedBy != null) 'updated_by': updatedBy,
+      if (list != null) 'list': list,
+      if (name != null) 'name': name,
+      if (nameKey != null) 'name_key': nameKey,
+      if (qtyMilli != null) 'qty_milli': qtyMilli,
+      if (unit != null) 'unit': unit,
+      if (channel != null) 'channel': channel,
+      if (category != null) 'category': category,
+      if (note != null) 'note': note,
+      if (done != null) 'done': done,
+      if (doneAt != null) 'done_at': doneAt,
+      if (doneBy != null) 'done_by': doneBy,
+      if (source != null) 'source': source,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ItemsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? homeId,
+    Value<bool>? deleted,
+    Value<int>? createdAt,
+    Value<String>? createdBy,
+    Value<int>? updatedAt,
+    Value<String>? updatedBy,
+    Value<String>? list,
+    Value<String>? name,
+    Value<String>? nameKey,
+    Value<int>? qtyMilli,
+    Value<String>? unit,
+    Value<String>? channel,
+    Value<String>? category,
+    Value<String?>? note,
+    Value<bool>? done,
+    Value<int?>? doneAt,
+    Value<String?>? doneBy,
+    Value<String>? source,
+    Value<int>? rowid,
+  }) {
+    return ItemsCompanion(
+      id: id ?? this.id,
+      homeId: homeId ?? this.homeId,
+      deleted: deleted ?? this.deleted,
+      createdAt: createdAt ?? this.createdAt,
+      createdBy: createdBy ?? this.createdBy,
+      updatedAt: updatedAt ?? this.updatedAt,
+      updatedBy: updatedBy ?? this.updatedBy,
+      list: list ?? this.list,
+      name: name ?? this.name,
+      nameKey: nameKey ?? this.nameKey,
+      qtyMilli: qtyMilli ?? this.qtyMilli,
+      unit: unit ?? this.unit,
+      channel: channel ?? this.channel,
+      category: category ?? this.category,
+      note: note ?? this.note,
+      done: done ?? this.done,
+      doneAt: doneAt ?? this.doneAt,
+      doneBy: doneBy ?? this.doneBy,
+      source: source ?? this.source,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (homeId.present) {
+      map['home_id'] = Variable<String>(homeId.value);
+    }
+    if (deleted.present) {
+      map['deleted'] = Variable<bool>(deleted.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (createdBy.present) {
+      map['created_by'] = Variable<String>(createdBy.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (updatedBy.present) {
+      map['updated_by'] = Variable<String>(updatedBy.value);
+    }
+    if (list.present) {
+      map['list'] = Variable<String>(list.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (nameKey.present) {
+      map['name_key'] = Variable<String>(nameKey.value);
+    }
+    if (qtyMilli.present) {
+      map['qty_milli'] = Variable<int>(qtyMilli.value);
+    }
+    if (unit.present) {
+      map['unit'] = Variable<String>(unit.value);
+    }
+    if (channel.present) {
+      map['channel'] = Variable<String>(channel.value);
+    }
+    if (category.present) {
+      map['category'] = Variable<String>(category.value);
+    }
+    if (note.present) {
+      map['note'] = Variable<String>(note.value);
+    }
+    if (done.present) {
+      map['done'] = Variable<bool>(done.value);
+    }
+    if (doneAt.present) {
+      map['done_at'] = Variable<int>(doneAt.value);
+    }
+    if (doneBy.present) {
+      map['done_by'] = Variable<String>(doneBy.value);
+    }
+    if (source.present) {
+      map['source'] = Variable<String>(source.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ItemsCompanion(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('deleted: $deleted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('list: $list, ')
+          ..write('name: $name, ')
+          ..write('nameKey: $nameKey, ')
+          ..write('qtyMilli: $qtyMilli, ')
+          ..write('unit: $unit, ')
+          ..write('channel: $channel, ')
+          ..write('category: $category, ')
+          ..write('note: $note, ')
+          ..write('done: $done, ')
+          ..write('doneAt: $doneAt, ')
+          ..write('doneBy: $doneBy, ')
+          ..write('source: $source, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ItemHistoryTable extends ItemHistory
+    with TableInfo<$ItemHistoryTable, ItemHistoryRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ItemHistoryTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _homeIdMeta = const VerificationMeta('homeId');
+  @override
+  late final GeneratedColumn<String> homeId = GeneratedColumn<String>(
+    'home_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _deletedMeta = const VerificationMeta(
+    'deleted',
+  );
+  @override
+  late final GeneratedColumn<bool> deleted = GeneratedColumn<bool>(
+    'deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _createdByMeta = const VerificationMeta(
+    'createdBy',
+  );
+  @override
+  late final GeneratedColumn<String> createdBy = GeneratedColumn<String>(
+    'created_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _updatedByMeta = const VerificationMeta(
+    'updatedBy',
+  );
+  @override
+  late final GeneratedColumn<String> updatedBy = GeneratedColumn<String>(
+    'updated_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _listMeta = const VerificationMeta('list');
+  @override
+  late final GeneratedColumn<String> list = GeneratedColumn<String>(
+    'list',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('grocery'),
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _nameKeyMeta = const VerificationMeta(
+    'nameKey',
+  );
+  @override
+  late final GeneratedColumn<String> nameKey = GeneratedColumn<String>(
+    'name_key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _usualChannelMeta = const VerificationMeta(
+    'usualChannel',
+  );
+  @override
+  late final GeneratedColumn<String> usualChannel = GeneratedColumn<String>(
+    'usual_channel',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _lastBoughtAtMeta = const VerificationMeta(
+    'lastBoughtAt',
+  );
+  @override
+  late final GeneratedColumn<int> lastBoughtAt = GeneratedColumn<int>(
+    'last_bought_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _timesBoughtMeta = const VerificationMeta(
+    'timesBought',
+  );
+  @override
+  late final GeneratedColumn<int> timesBought = GeneratedColumn<int>(
+    'times_bought',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _lastQtyMilliMeta = const VerificationMeta(
+    'lastQtyMilli',
+  );
+  @override
+  late final GeneratedColumn<int> lastQtyMilli = GeneratedColumn<int>(
+    'last_qty_milli',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _lastUnitMeta = const VerificationMeta(
+    'lastUnit',
+  );
+  @override
+  late final GeneratedColumn<String> lastUnit = GeneratedColumn<String>(
+    'last_unit',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    homeId,
+    deleted,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    list,
+    name,
+    nameKey,
+    usualChannel,
+    lastBoughtAt,
+    timesBought,
+    lastQtyMilli,
+    lastUnit,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'item_history';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ItemHistoryRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('home_id')) {
+      context.handle(
+        _homeIdMeta,
+        homeId.isAcceptableOrUnknown(data['home_id']!, _homeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_homeIdMeta);
+    }
+    if (data.containsKey('deleted')) {
+      context.handle(
+        _deletedMeta,
+        deleted.isAcceptableOrUnknown(data['deleted']!, _deletedMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('created_by')) {
+      context.handle(
+        _createdByMeta,
+        createdBy.isAcceptableOrUnknown(data['created_by']!, _createdByMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('updated_by')) {
+      context.handle(
+        _updatedByMeta,
+        updatedBy.isAcceptableOrUnknown(data['updated_by']!, _updatedByMeta),
+      );
+    }
+    if (data.containsKey('list')) {
+      context.handle(
+        _listMeta,
+        list.isAcceptableOrUnknown(data['list']!, _listMeta),
+      );
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    }
+    if (data.containsKey('name_key')) {
+      context.handle(
+        _nameKeyMeta,
+        nameKey.isAcceptableOrUnknown(data['name_key']!, _nameKeyMeta),
+      );
+    }
+    if (data.containsKey('usual_channel')) {
+      context.handle(
+        _usualChannelMeta,
+        usualChannel.isAcceptableOrUnknown(
+          data['usual_channel']!,
+          _usualChannelMeta,
+        ),
+      );
+    }
+    if (data.containsKey('last_bought_at')) {
+      context.handle(
+        _lastBoughtAtMeta,
+        lastBoughtAt.isAcceptableOrUnknown(
+          data['last_bought_at']!,
+          _lastBoughtAtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('times_bought')) {
+      context.handle(
+        _timesBoughtMeta,
+        timesBought.isAcceptableOrUnknown(
+          data['times_bought']!,
+          _timesBoughtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('last_qty_milli')) {
+      context.handle(
+        _lastQtyMilliMeta,
+        lastQtyMilli.isAcceptableOrUnknown(
+          data['last_qty_milli']!,
+          _lastQtyMilliMeta,
+        ),
+      );
+    }
+    if (data.containsKey('last_unit')) {
+      context.handle(
+        _lastUnitMeta,
+        lastUnit.isAcceptableOrUnknown(data['last_unit']!, _lastUnitMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ItemHistoryRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ItemHistoryRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      homeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}home_id'],
+      )!,
+      deleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}deleted'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}created_at'],
+      )!,
+      createdBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_by'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      updatedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by'],
+      )!,
+      list: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}list'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      nameKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name_key'],
+      )!,
+      usualChannel: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}usual_channel'],
+      ),
+      lastBoughtAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}last_bought_at'],
+      ),
+      timesBought: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}times_bought'],
+      )!,
+      lastQtyMilli: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}last_qty_milli'],
+      ),
+      lastUnit: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}last_unit'],
+      ),
+    );
+  }
+
+  @override
+  $ItemHistoryTable createAlias(String alias) {
+    return $ItemHistoryTable(attachedDatabase, alias);
+  }
+}
+
+class ItemHistoryRow extends DataClass implements Insertable<ItemHistoryRow> {
+  final String id;
+  final String homeId;
+  final bool deleted;
+  final int createdAt;
+  final String createdBy;
+  final int updatedAt;
+  final String updatedBy;
+  final String list;
+  final String name;
+  final String nameKey;
+  final String? usualChannel;
+  final int? lastBoughtAt;
+  final int timesBought;
+  final int? lastQtyMilli;
+  final String? lastUnit;
+  const ItemHistoryRow({
+    required this.id,
+    required this.homeId,
+    required this.deleted,
+    required this.createdAt,
+    required this.createdBy,
+    required this.updatedAt,
+    required this.updatedBy,
+    required this.list,
+    required this.name,
+    required this.nameKey,
+    this.usualChannel,
+    this.lastBoughtAt,
+    required this.timesBought,
+    this.lastQtyMilli,
+    this.lastUnit,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['home_id'] = Variable<String>(homeId);
+    map['deleted'] = Variable<bool>(deleted);
+    map['created_at'] = Variable<int>(createdAt);
+    map['created_by'] = Variable<String>(createdBy);
+    map['updated_at'] = Variable<int>(updatedAt);
+    map['updated_by'] = Variable<String>(updatedBy);
+    map['list'] = Variable<String>(list);
+    map['name'] = Variable<String>(name);
+    map['name_key'] = Variable<String>(nameKey);
+    if (!nullToAbsent || usualChannel != null) {
+      map['usual_channel'] = Variable<String>(usualChannel);
+    }
+    if (!nullToAbsent || lastBoughtAt != null) {
+      map['last_bought_at'] = Variable<int>(lastBoughtAt);
+    }
+    map['times_bought'] = Variable<int>(timesBought);
+    if (!nullToAbsent || lastQtyMilli != null) {
+      map['last_qty_milli'] = Variable<int>(lastQtyMilli);
+    }
+    if (!nullToAbsent || lastUnit != null) {
+      map['last_unit'] = Variable<String>(lastUnit);
+    }
+    return map;
+  }
+
+  ItemHistoryCompanion toCompanion(bool nullToAbsent) {
+    return ItemHistoryCompanion(
+      id: Value(id),
+      homeId: Value(homeId),
+      deleted: Value(deleted),
+      createdAt: Value(createdAt),
+      createdBy: Value(createdBy),
+      updatedAt: Value(updatedAt),
+      updatedBy: Value(updatedBy),
+      list: Value(list),
+      name: Value(name),
+      nameKey: Value(nameKey),
+      usualChannel: usualChannel == null && nullToAbsent
+          ? const Value.absent()
+          : Value(usualChannel),
+      lastBoughtAt: lastBoughtAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastBoughtAt),
+      timesBought: Value(timesBought),
+      lastQtyMilli: lastQtyMilli == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastQtyMilli),
+      lastUnit: lastUnit == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastUnit),
+    );
+  }
+
+  factory ItemHistoryRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ItemHistoryRow(
+      id: serializer.fromJson<String>(json['id']),
+      homeId: serializer.fromJson<String>(json['homeId']),
+      deleted: serializer.fromJson<bool>(json['deleted']),
+      createdAt: serializer.fromJson<int>(json['createdAt']),
+      createdBy: serializer.fromJson<String>(json['createdBy']),
+      updatedAt: serializer.fromJson<int>(json['updatedAt']),
+      updatedBy: serializer.fromJson<String>(json['updatedBy']),
+      list: serializer.fromJson<String>(json['list']),
+      name: serializer.fromJson<String>(json['name']),
+      nameKey: serializer.fromJson<String>(json['nameKey']),
+      usualChannel: serializer.fromJson<String?>(json['usualChannel']),
+      lastBoughtAt: serializer.fromJson<int?>(json['lastBoughtAt']),
+      timesBought: serializer.fromJson<int>(json['timesBought']),
+      lastQtyMilli: serializer.fromJson<int?>(json['lastQtyMilli']),
+      lastUnit: serializer.fromJson<String?>(json['lastUnit']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'homeId': serializer.toJson<String>(homeId),
+      'deleted': serializer.toJson<bool>(deleted),
+      'createdAt': serializer.toJson<int>(createdAt),
+      'createdBy': serializer.toJson<String>(createdBy),
+      'updatedAt': serializer.toJson<int>(updatedAt),
+      'updatedBy': serializer.toJson<String>(updatedBy),
+      'list': serializer.toJson<String>(list),
+      'name': serializer.toJson<String>(name),
+      'nameKey': serializer.toJson<String>(nameKey),
+      'usualChannel': serializer.toJson<String?>(usualChannel),
+      'lastBoughtAt': serializer.toJson<int?>(lastBoughtAt),
+      'timesBought': serializer.toJson<int>(timesBought),
+      'lastQtyMilli': serializer.toJson<int?>(lastQtyMilli),
+      'lastUnit': serializer.toJson<String?>(lastUnit),
+    };
+  }
+
+  ItemHistoryRow copyWith({
+    String? id,
+    String? homeId,
+    bool? deleted,
+    int? createdAt,
+    String? createdBy,
+    int? updatedAt,
+    String? updatedBy,
+    String? list,
+    String? name,
+    String? nameKey,
+    Value<String?> usualChannel = const Value.absent(),
+    Value<int?> lastBoughtAt = const Value.absent(),
+    int? timesBought,
+    Value<int?> lastQtyMilli = const Value.absent(),
+    Value<String?> lastUnit = const Value.absent(),
+  }) => ItemHistoryRow(
+    id: id ?? this.id,
+    homeId: homeId ?? this.homeId,
+    deleted: deleted ?? this.deleted,
+    createdAt: createdAt ?? this.createdAt,
+    createdBy: createdBy ?? this.createdBy,
+    updatedAt: updatedAt ?? this.updatedAt,
+    updatedBy: updatedBy ?? this.updatedBy,
+    list: list ?? this.list,
+    name: name ?? this.name,
+    nameKey: nameKey ?? this.nameKey,
+    usualChannel: usualChannel.present ? usualChannel.value : this.usualChannel,
+    lastBoughtAt: lastBoughtAt.present ? lastBoughtAt.value : this.lastBoughtAt,
+    timesBought: timesBought ?? this.timesBought,
+    lastQtyMilli: lastQtyMilli.present ? lastQtyMilli.value : this.lastQtyMilli,
+    lastUnit: lastUnit.present ? lastUnit.value : this.lastUnit,
+  );
+  ItemHistoryRow copyWithCompanion(ItemHistoryCompanion data) {
+    return ItemHistoryRow(
+      id: data.id.present ? data.id.value : this.id,
+      homeId: data.homeId.present ? data.homeId.value : this.homeId,
+      deleted: data.deleted.present ? data.deleted.value : this.deleted,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      createdBy: data.createdBy.present ? data.createdBy.value : this.createdBy,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      updatedBy: data.updatedBy.present ? data.updatedBy.value : this.updatedBy,
+      list: data.list.present ? data.list.value : this.list,
+      name: data.name.present ? data.name.value : this.name,
+      nameKey: data.nameKey.present ? data.nameKey.value : this.nameKey,
+      usualChannel: data.usualChannel.present
+          ? data.usualChannel.value
+          : this.usualChannel,
+      lastBoughtAt: data.lastBoughtAt.present
+          ? data.lastBoughtAt.value
+          : this.lastBoughtAt,
+      timesBought: data.timesBought.present
+          ? data.timesBought.value
+          : this.timesBought,
+      lastQtyMilli: data.lastQtyMilli.present
+          ? data.lastQtyMilli.value
+          : this.lastQtyMilli,
+      lastUnit: data.lastUnit.present ? data.lastUnit.value : this.lastUnit,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ItemHistoryRow(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('deleted: $deleted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('list: $list, ')
+          ..write('name: $name, ')
+          ..write('nameKey: $nameKey, ')
+          ..write('usualChannel: $usualChannel, ')
+          ..write('lastBoughtAt: $lastBoughtAt, ')
+          ..write('timesBought: $timesBought, ')
+          ..write('lastQtyMilli: $lastQtyMilli, ')
+          ..write('lastUnit: $lastUnit')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    homeId,
+    deleted,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    list,
+    name,
+    nameKey,
+    usualChannel,
+    lastBoughtAt,
+    timesBought,
+    lastQtyMilli,
+    lastUnit,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ItemHistoryRow &&
+          other.id == this.id &&
+          other.homeId == this.homeId &&
+          other.deleted == this.deleted &&
+          other.createdAt == this.createdAt &&
+          other.createdBy == this.createdBy &&
+          other.updatedAt == this.updatedAt &&
+          other.updatedBy == this.updatedBy &&
+          other.list == this.list &&
+          other.name == this.name &&
+          other.nameKey == this.nameKey &&
+          other.usualChannel == this.usualChannel &&
+          other.lastBoughtAt == this.lastBoughtAt &&
+          other.timesBought == this.timesBought &&
+          other.lastQtyMilli == this.lastQtyMilli &&
+          other.lastUnit == this.lastUnit);
+}
+
+class ItemHistoryCompanion extends UpdateCompanion<ItemHistoryRow> {
+  final Value<String> id;
+  final Value<String> homeId;
+  final Value<bool> deleted;
+  final Value<int> createdAt;
+  final Value<String> createdBy;
+  final Value<int> updatedAt;
+  final Value<String> updatedBy;
+  final Value<String> list;
+  final Value<String> name;
+  final Value<String> nameKey;
+  final Value<String?> usualChannel;
+  final Value<int?> lastBoughtAt;
+  final Value<int> timesBought;
+  final Value<int?> lastQtyMilli;
+  final Value<String?> lastUnit;
+  final Value<int> rowid;
+  const ItemHistoryCompanion({
+    this.id = const Value.absent(),
+    this.homeId = const Value.absent(),
+    this.deleted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.list = const Value.absent(),
+    this.name = const Value.absent(),
+    this.nameKey = const Value.absent(),
+    this.usualChannel = const Value.absent(),
+    this.lastBoughtAt = const Value.absent(),
+    this.timesBought = const Value.absent(),
+    this.lastQtyMilli = const Value.absent(),
+    this.lastUnit = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ItemHistoryCompanion.insert({
+    required String id,
+    required String homeId,
+    this.deleted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.list = const Value.absent(),
+    this.name = const Value.absent(),
+    this.nameKey = const Value.absent(),
+    this.usualChannel = const Value.absent(),
+    this.lastBoughtAt = const Value.absent(),
+    this.timesBought = const Value.absent(),
+    this.lastQtyMilli = const Value.absent(),
+    this.lastUnit = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       homeId = Value(homeId);
+  static Insertable<ItemHistoryRow> custom({
+    Expression<String>? id,
+    Expression<String>? homeId,
+    Expression<bool>? deleted,
+    Expression<int>? createdAt,
+    Expression<String>? createdBy,
+    Expression<int>? updatedAt,
+    Expression<String>? updatedBy,
+    Expression<String>? list,
+    Expression<String>? name,
+    Expression<String>? nameKey,
+    Expression<String>? usualChannel,
+    Expression<int>? lastBoughtAt,
+    Expression<int>? timesBought,
+    Expression<int>? lastQtyMilli,
+    Expression<String>? lastUnit,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (homeId != null) 'home_id': homeId,
+      if (deleted != null) 'deleted': deleted,
+      if (createdAt != null) 'created_at': createdAt,
+      if (createdBy != null) 'created_by': createdBy,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (updatedBy != null) 'updated_by': updatedBy,
+      if (list != null) 'list': list,
+      if (name != null) 'name': name,
+      if (nameKey != null) 'name_key': nameKey,
+      if (usualChannel != null) 'usual_channel': usualChannel,
+      if (lastBoughtAt != null) 'last_bought_at': lastBoughtAt,
+      if (timesBought != null) 'times_bought': timesBought,
+      if (lastQtyMilli != null) 'last_qty_milli': lastQtyMilli,
+      if (lastUnit != null) 'last_unit': lastUnit,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ItemHistoryCompanion copyWith({
+    Value<String>? id,
+    Value<String>? homeId,
+    Value<bool>? deleted,
+    Value<int>? createdAt,
+    Value<String>? createdBy,
+    Value<int>? updatedAt,
+    Value<String>? updatedBy,
+    Value<String>? list,
+    Value<String>? name,
+    Value<String>? nameKey,
+    Value<String?>? usualChannel,
+    Value<int?>? lastBoughtAt,
+    Value<int>? timesBought,
+    Value<int?>? lastQtyMilli,
+    Value<String?>? lastUnit,
+    Value<int>? rowid,
+  }) {
+    return ItemHistoryCompanion(
+      id: id ?? this.id,
+      homeId: homeId ?? this.homeId,
+      deleted: deleted ?? this.deleted,
+      createdAt: createdAt ?? this.createdAt,
+      createdBy: createdBy ?? this.createdBy,
+      updatedAt: updatedAt ?? this.updatedAt,
+      updatedBy: updatedBy ?? this.updatedBy,
+      list: list ?? this.list,
+      name: name ?? this.name,
+      nameKey: nameKey ?? this.nameKey,
+      usualChannel: usualChannel ?? this.usualChannel,
+      lastBoughtAt: lastBoughtAt ?? this.lastBoughtAt,
+      timesBought: timesBought ?? this.timesBought,
+      lastQtyMilli: lastQtyMilli ?? this.lastQtyMilli,
+      lastUnit: lastUnit ?? this.lastUnit,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (homeId.present) {
+      map['home_id'] = Variable<String>(homeId.value);
+    }
+    if (deleted.present) {
+      map['deleted'] = Variable<bool>(deleted.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (createdBy.present) {
+      map['created_by'] = Variable<String>(createdBy.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (updatedBy.present) {
+      map['updated_by'] = Variable<String>(updatedBy.value);
+    }
+    if (list.present) {
+      map['list'] = Variable<String>(list.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (nameKey.present) {
+      map['name_key'] = Variable<String>(nameKey.value);
+    }
+    if (usualChannel.present) {
+      map['usual_channel'] = Variable<String>(usualChannel.value);
+    }
+    if (lastBoughtAt.present) {
+      map['last_bought_at'] = Variable<int>(lastBoughtAt.value);
+    }
+    if (timesBought.present) {
+      map['times_bought'] = Variable<int>(timesBought.value);
+    }
+    if (lastQtyMilli.present) {
+      map['last_qty_milli'] = Variable<int>(lastQtyMilli.value);
+    }
+    if (lastUnit.present) {
+      map['last_unit'] = Variable<String>(lastUnit.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ItemHistoryCompanion(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('deleted: $deleted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('list: $list, ')
+          ..write('name: $name, ')
+          ..write('nameKey: $nameKey, ')
+          ..write('usualChannel: $usualChannel, ')
+          ..write('lastBoughtAt: $lastBoughtAt, ')
+          ..write('timesBought: $timesBought, ')
+          ..write('lastQtyMilli: $lastQtyMilli, ')
+          ..write('lastUnit: $lastUnit, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$NestDatabase extends GeneratedDatabase {
   _$NestDatabase(QueryExecutor e) : super(e);
   $NestDatabaseManager get managers => $NestDatabaseManager(this);
@@ -9732,6 +11583,8 @@ abstract class _$NestDatabase extends GeneratedDatabase {
   late final $SettlementAttemptsTable settlementAttempts =
       $SettlementAttemptsTable(this);
   late final $ExpensesTable expenses = $ExpensesTable(this);
+  late final $ItemsTable items = $ItemsTable(this);
+  late final $ItemHistoryTable itemHistory = $ItemHistoryTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -9749,6 +11602,8 @@ abstract class _$NestDatabase extends GeneratedDatabase {
     payAdjustments,
     settlementAttempts,
     expenses,
+    items,
+    itemHistory,
   ];
 }
 
@@ -14388,6 +16243,879 @@ typedef $$ExpensesTableProcessedTableManager =
       ExpenseRow,
       PrefetchHooks Function()
     >;
+typedef $$ItemsTableCreateCompanionBuilder = ItemsCompanion Function({
+  required String id,
+  required String homeId,
+  Value<bool> deleted,
+  Value<int> createdAt,
+  Value<String> createdBy,
+  Value<int> updatedAt,
+  Value<String> updatedBy,
+  Value<String> list,
+  Value<String> name,
+  Value<String> nameKey,
+  Value<int> qtyMilli,
+  Value<String> unit,
+  Value<String> channel,
+  Value<String> category,
+  Value<String?> note,
+  Value<bool> done,
+  Value<int?> doneAt,
+  Value<String?> doneBy,
+  Value<String> source,
+  Value<int> rowid,
+});
+typedef $$ItemsTableUpdateCompanionBuilder = ItemsCompanion Function({
+  Value<String> id,
+  Value<String> homeId,
+  Value<bool> deleted,
+  Value<int> createdAt,
+  Value<String> createdBy,
+  Value<int> updatedAt,
+  Value<String> updatedBy,
+  Value<String> list,
+  Value<String> name,
+  Value<String> nameKey,
+  Value<int> qtyMilli,
+  Value<String> unit,
+  Value<String> channel,
+  Value<String> category,
+  Value<String?> note,
+  Value<bool> done,
+  Value<int?> doneAt,
+  Value<String?> doneBy,
+  Value<String> source,
+  Value<int> rowid,
+});
+
+class $$ItemsTableFilterComposer extends Composer<_$NestDatabase, $ItemsTable> {
+  $$ItemsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get list => $composableBuilder(
+    column: $table.list,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get nameKey => $composableBuilder(
+    column: $table.nameKey,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get qtyMilli => $composableBuilder(
+    column: $table.qtyMilli,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get unit => $composableBuilder(
+    column: $table.unit,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get channel => $composableBuilder(
+    column: $table.channel,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get done => $composableBuilder(
+    column: $table.done,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get doneAt => $composableBuilder(
+    column: $table.doneAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get doneBy => $composableBuilder(
+    column: $table.doneBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get source => $composableBuilder(
+    column: $table.source,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ItemsTableOrderingComposer
+    extends Composer<_$NestDatabase, $ItemsTable> {
+  $$ItemsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get list => $composableBuilder(
+    column: $table.list,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get nameKey => $composableBuilder(
+    column: $table.nameKey,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get qtyMilli => $composableBuilder(
+    column: $table.qtyMilli,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get unit => $composableBuilder(
+    column: $table.unit,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get channel => $composableBuilder(
+    column: $table.channel,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get done => $composableBuilder(
+    column: $table.done,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get doneAt => $composableBuilder(
+    column: $table.doneAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get doneBy => $composableBuilder(
+    column: $table.doneBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get source => $composableBuilder(
+    column: $table.source,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ItemsTableAnnotationComposer
+    extends Composer<_$NestDatabase, $ItemsTable> {
+  $$ItemsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get homeId =>
+      $composableBuilder(column: $table.homeId, builder: (column) => column);
+
+  GeneratedColumn<bool> get deleted =>
+      $composableBuilder(column: $table.deleted, builder: (column) => column);
+
+  GeneratedColumn<int> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<String> get createdBy =>
+      $composableBuilder(column: $table.createdBy, builder: (column) => column);
+
+  GeneratedColumn<int> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get updatedBy =>
+      $composableBuilder(column: $table.updatedBy, builder: (column) => column);
+
+  GeneratedColumn<String> get list =>
+      $composableBuilder(column: $table.list, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get nameKey =>
+      $composableBuilder(column: $table.nameKey, builder: (column) => column);
+
+  GeneratedColumn<int> get qtyMilli =>
+      $composableBuilder(column: $table.qtyMilli, builder: (column) => column);
+
+  GeneratedColumn<String> get unit =>
+      $composableBuilder(column: $table.unit, builder: (column) => column);
+
+  GeneratedColumn<String> get channel =>
+      $composableBuilder(column: $table.channel, builder: (column) => column);
+
+  GeneratedColumn<String> get category =>
+      $composableBuilder(column: $table.category, builder: (column) => column);
+
+  GeneratedColumn<String> get note =>
+      $composableBuilder(column: $table.note, builder: (column) => column);
+
+  GeneratedColumn<bool> get done =>
+      $composableBuilder(column: $table.done, builder: (column) => column);
+
+  GeneratedColumn<int> get doneAt =>
+      $composableBuilder(column: $table.doneAt, builder: (column) => column);
+
+  GeneratedColumn<String> get doneBy =>
+      $composableBuilder(column: $table.doneBy, builder: (column) => column);
+
+  GeneratedColumn<String> get source =>
+      $composableBuilder(column: $table.source, builder: (column) => column);
+}
+
+class $$ItemsTableTableManager
+    extends
+        RootTableManager<
+          _$NestDatabase,
+          $ItemsTable,
+          ItemRow,
+          $$ItemsTableFilterComposer,
+          $$ItemsTableOrderingComposer,
+          $$ItemsTableAnnotationComposer,
+          $$ItemsTableCreateCompanionBuilder,
+          $$ItemsTableUpdateCompanionBuilder,
+          (ItemRow, BaseReferences<_$NestDatabase, $ItemsTable, ItemRow>),
+          ItemRow,
+          PrefetchHooks Function()
+        > {
+  $$ItemsTableTableManager(_$NestDatabase db, $ItemsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ItemsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ItemsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ItemsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> homeId = const Value.absent(),
+                Value<bool> deleted = const Value.absent(),
+                Value<int> createdAt = const Value.absent(),
+                Value<String> createdBy = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> updatedBy = const Value.absent(),
+                Value<String> list = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> nameKey = const Value.absent(),
+                Value<int> qtyMilli = const Value.absent(),
+                Value<String> unit = const Value.absent(),
+                Value<String> channel = const Value.absent(),
+                Value<String> category = const Value.absent(),
+                Value<String?> note = const Value.absent(),
+                Value<bool> done = const Value.absent(),
+                Value<int?> doneAt = const Value.absent(),
+                Value<String?> doneBy = const Value.absent(),
+                Value<String> source = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ItemsCompanion(
+                id: id,
+                homeId: homeId,
+                deleted: deleted,
+                createdAt: createdAt,
+                createdBy: createdBy,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy,
+                list: list,
+                name: name,
+                nameKey: nameKey,
+                qtyMilli: qtyMilli,
+                unit: unit,
+                channel: channel,
+                category: category,
+                note: note,
+                done: done,
+                doneAt: doneAt,
+                doneBy: doneBy,
+                source: source,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String homeId,
+                Value<bool> deleted = const Value.absent(),
+                Value<int> createdAt = const Value.absent(),
+                Value<String> createdBy = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> updatedBy = const Value.absent(),
+                Value<String> list = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> nameKey = const Value.absent(),
+                Value<int> qtyMilli = const Value.absent(),
+                Value<String> unit = const Value.absent(),
+                Value<String> channel = const Value.absent(),
+                Value<String> category = const Value.absent(),
+                Value<String?> note = const Value.absent(),
+                Value<bool> done = const Value.absent(),
+                Value<int?> doneAt = const Value.absent(),
+                Value<String?> doneBy = const Value.absent(),
+                Value<String> source = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ItemsCompanion.insert(
+                id: id,
+                homeId: homeId,
+                deleted: deleted,
+                createdAt: createdAt,
+                createdBy: createdBy,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy,
+                list: list,
+                name: name,
+                nameKey: nameKey,
+                qtyMilli: qtyMilli,
+                unit: unit,
+                channel: channel,
+                category: category,
+                note: note,
+                done: done,
+                doneAt: doneAt,
+                doneBy: doneBy,
+                source: source,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$ItemsTable, ItemRow>(table),
+                  BaseReferences<_$NestDatabase, $ItemsTable, ItemRow>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ItemsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$NestDatabase,
+      $ItemsTable,
+      ItemRow,
+      $$ItemsTableFilterComposer,
+      $$ItemsTableOrderingComposer,
+      $$ItemsTableAnnotationComposer,
+      $$ItemsTableCreateCompanionBuilder,
+      $$ItemsTableUpdateCompanionBuilder,
+      (ItemRow, BaseReferences<_$NestDatabase, $ItemsTable, ItemRow>),
+      ItemRow,
+      PrefetchHooks Function()
+    >;
+typedef $$ItemHistoryTableCreateCompanionBuilder =
+    ItemHistoryCompanion Function({
+      required String id,
+      required String homeId,
+      Value<bool> deleted,
+      Value<int> createdAt,
+      Value<String> createdBy,
+      Value<int> updatedAt,
+      Value<String> updatedBy,
+      Value<String> list,
+      Value<String> name,
+      Value<String> nameKey,
+      Value<String?> usualChannel,
+      Value<int?> lastBoughtAt,
+      Value<int> timesBought,
+      Value<int?> lastQtyMilli,
+      Value<String?> lastUnit,
+      Value<int> rowid,
+    });
+typedef $$ItemHistoryTableUpdateCompanionBuilder =
+    ItemHistoryCompanion Function({
+      Value<String> id,
+      Value<String> homeId,
+      Value<bool> deleted,
+      Value<int> createdAt,
+      Value<String> createdBy,
+      Value<int> updatedAt,
+      Value<String> updatedBy,
+      Value<String> list,
+      Value<String> name,
+      Value<String> nameKey,
+      Value<String?> usualChannel,
+      Value<int?> lastBoughtAt,
+      Value<int> timesBought,
+      Value<int?> lastQtyMilli,
+      Value<String?> lastUnit,
+      Value<int> rowid,
+    });
+
+class $$ItemHistoryTableFilterComposer
+    extends Composer<_$NestDatabase, $ItemHistoryTable> {
+  $$ItemHistoryTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get list => $composableBuilder(
+    column: $table.list,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get nameKey => $composableBuilder(
+    column: $table.nameKey,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get usualChannel => $composableBuilder(
+    column: $table.usualChannel,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get lastBoughtAt => $composableBuilder(
+    column: $table.lastBoughtAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get timesBought => $composableBuilder(
+    column: $table.timesBought,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get lastQtyMilli => $composableBuilder(
+    column: $table.lastQtyMilli,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get lastUnit => $composableBuilder(
+    column: $table.lastUnit,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ItemHistoryTableOrderingComposer
+    extends Composer<_$NestDatabase, $ItemHistoryTable> {
+  $$ItemHistoryTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get list => $composableBuilder(
+    column: $table.list,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get nameKey => $composableBuilder(
+    column: $table.nameKey,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get usualChannel => $composableBuilder(
+    column: $table.usualChannel,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get lastBoughtAt => $composableBuilder(
+    column: $table.lastBoughtAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get timesBought => $composableBuilder(
+    column: $table.timesBought,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get lastQtyMilli => $composableBuilder(
+    column: $table.lastQtyMilli,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get lastUnit => $composableBuilder(
+    column: $table.lastUnit,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ItemHistoryTableAnnotationComposer
+    extends Composer<_$NestDatabase, $ItemHistoryTable> {
+  $$ItemHistoryTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get homeId =>
+      $composableBuilder(column: $table.homeId, builder: (column) => column);
+
+  GeneratedColumn<bool> get deleted =>
+      $composableBuilder(column: $table.deleted, builder: (column) => column);
+
+  GeneratedColumn<int> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<String> get createdBy =>
+      $composableBuilder(column: $table.createdBy, builder: (column) => column);
+
+  GeneratedColumn<int> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get updatedBy =>
+      $composableBuilder(column: $table.updatedBy, builder: (column) => column);
+
+  GeneratedColumn<String> get list =>
+      $composableBuilder(column: $table.list, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get nameKey =>
+      $composableBuilder(column: $table.nameKey, builder: (column) => column);
+
+  GeneratedColumn<String> get usualChannel => $composableBuilder(
+    column: $table.usualChannel,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get lastBoughtAt => $composableBuilder(
+    column: $table.lastBoughtAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get timesBought => $composableBuilder(
+    column: $table.timesBought,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get lastQtyMilli => $composableBuilder(
+    column: $table.lastQtyMilli,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get lastUnit =>
+      $composableBuilder(column: $table.lastUnit, builder: (column) => column);
+}
+
+class $$ItemHistoryTableTableManager
+    extends
+        RootTableManager<
+          _$NestDatabase,
+          $ItemHistoryTable,
+          ItemHistoryRow,
+          $$ItemHistoryTableFilterComposer,
+          $$ItemHistoryTableOrderingComposer,
+          $$ItemHistoryTableAnnotationComposer,
+          $$ItemHistoryTableCreateCompanionBuilder,
+          $$ItemHistoryTableUpdateCompanionBuilder,
+          (
+            ItemHistoryRow,
+            BaseReferences<_$NestDatabase, $ItemHistoryTable, ItemHistoryRow>,
+          ),
+          ItemHistoryRow,
+          PrefetchHooks Function()
+        > {
+  $$ItemHistoryTableTableManager(_$NestDatabase db, $ItemHistoryTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ItemHistoryTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ItemHistoryTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ItemHistoryTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> homeId = const Value.absent(),
+                Value<bool> deleted = const Value.absent(),
+                Value<int> createdAt = const Value.absent(),
+                Value<String> createdBy = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> updatedBy = const Value.absent(),
+                Value<String> list = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> nameKey = const Value.absent(),
+                Value<String?> usualChannel = const Value.absent(),
+                Value<int?> lastBoughtAt = const Value.absent(),
+                Value<int> timesBought = const Value.absent(),
+                Value<int?> lastQtyMilli = const Value.absent(),
+                Value<String?> lastUnit = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ItemHistoryCompanion(
+                id: id,
+                homeId: homeId,
+                deleted: deleted,
+                createdAt: createdAt,
+                createdBy: createdBy,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy,
+                list: list,
+                name: name,
+                nameKey: nameKey,
+                usualChannel: usualChannel,
+                lastBoughtAt: lastBoughtAt,
+                timesBought: timesBought,
+                lastQtyMilli: lastQtyMilli,
+                lastUnit: lastUnit,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String homeId,
+                Value<bool> deleted = const Value.absent(),
+                Value<int> createdAt = const Value.absent(),
+                Value<String> createdBy = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> updatedBy = const Value.absent(),
+                Value<String> list = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> nameKey = const Value.absent(),
+                Value<String?> usualChannel = const Value.absent(),
+                Value<int?> lastBoughtAt = const Value.absent(),
+                Value<int> timesBought = const Value.absent(),
+                Value<int?> lastQtyMilli = const Value.absent(),
+                Value<String?> lastUnit = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ItemHistoryCompanion.insert(
+                id: id,
+                homeId: homeId,
+                deleted: deleted,
+                createdAt: createdAt,
+                createdBy: createdBy,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy,
+                list: list,
+                name: name,
+                nameKey: nameKey,
+                usualChannel: usualChannel,
+                lastBoughtAt: lastBoughtAt,
+                timesBought: timesBought,
+                lastQtyMilli: lastQtyMilli,
+                lastUnit: lastUnit,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$ItemHistoryTable, ItemHistoryRow>(table),
+                  BaseReferences<
+                    _$NestDatabase,
+                    $ItemHistoryTable,
+                    ItemHistoryRow
+                  >(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ItemHistoryTableProcessedTableManager =
+    ProcessedTableManager<
+      _$NestDatabase,
+      $ItemHistoryTable,
+      ItemHistoryRow,
+      $$ItemHistoryTableFilterComposer,
+      $$ItemHistoryTableOrderingComposer,
+      $$ItemHistoryTableAnnotationComposer,
+      $$ItemHistoryTableCreateCompanionBuilder,
+      $$ItemHistoryTableUpdateCompanionBuilder,
+      (
+        ItemHistoryRow,
+        BaseReferences<_$NestDatabase, $ItemHistoryTable, ItemHistoryRow>,
+      ),
+      ItemHistoryRow,
+      PrefetchHooks Function()
+    >;
 
 class $NestDatabaseManager {
   final _$NestDatabase _db;
@@ -14415,4 +17143,8 @@ class $NestDatabaseManager {
       $$SettlementAttemptsTableTableManager(_db, _db.settlementAttempts);
   $$ExpensesTableTableManager get expenses =>
       $$ExpensesTableTableManager(_db, _db.expenses);
+  $$ItemsTableTableManager get items =>
+      $$ItemsTableTableManager(_db, _db.items);
+  $$ItemHistoryTableTableManager get itemHistory =>
+      $$ItemHistoryTableTableManager(_db, _db.itemHistory);
 }

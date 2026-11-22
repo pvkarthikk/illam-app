@@ -842,5 +842,176 @@
       "month": {},
       "amount": {}
     }
-  }
+  },
+  "listsChannelZepto": "Zepto",
+  "listsChannelBlinkit": "Blinkit",
+  "listsChannelBigbasket": "BigBasket",
+  "listsChannelAmazon": "Amazon",
+  "listsChannelFlipkart": "Flipkart",
+  "listsChannelMeesho": "Meesho",
+  "listsChannelOffline": "Offline",
+  "listsEtaZepto": "~10 min",
+  "listsEtaBlinkit": "~10 min",
+  "listsEtaBigbasket": "Tomorrow 7–9 AM",
+  "listsEtaAmazon": "1–2 days",
+  "listsEtaFlipkart": "2–3 days",
+  "listsEtaMeesho": "4–6 days",
+  "listsEtaOffline": "Local store / D-Mart",
+  "listsEyebrow": "BUY",
+  "listsTitle": "Lists",
+  "listsStoreMode": "Store mode",
+  "listsGrocery": "Grocery",
+  "listsShopping": "Shopping",
+  "listsPlaceholderGrocery": "Add “Milk 2L”, “Onions 1kg”…",
+  "listsPlaceholderShopping": "Add “Phone charger”…",
+  "listsStoreButton": "Buy from {store}. Change",
+  "@listsStoreButton": {
+    "placeholders": {
+      "store": {}
+    }
+  },
+  "listsAddTooltip": "Add",
+  "listsHintIdle": "Tip: quantities are understood — “Rice 5kg”.",
+  "listsHint": "{item} → {store}{usual}",
+  "@listsHint": {
+    "placeholders": {
+      "item": {},
+      "store": {},
+      "usual": {}
+    }
+  },
+  "listsHintItemQty": "{name} · {qty}",
+  "@listsHintItemQty": {
+    "placeholders": {
+      "name": {},
+      "qty": {}
+    }
+  },
+  "listsHintUsual": " (where you usually buy it)",
+  "listsAdded": "Added {name} → {store}",
+  "@listsAdded": {
+    "placeholders": {
+      "name": {},
+      "store": {}
+    }
+  },
+  "listsMerged": "{name} was already on the list — now {qty}",
+  "@listsMerged": {
+    "placeholders": {
+      "name": {},
+      "qty": {}
+    }
+  },
+  "listsAlready": "{name} is already on the list ({qty})",
+  "@listsAlready": {
+    "placeholders": {
+      "name": {},
+      "qty": {}
+    }
+  },
+  "listsPickerTitle": "Where will you buy it?",
+  "listsPickerLead": "New items go here. Items you’ve bought before go to their usual store automatically.",
+  "listsStoreModeStub": "Store mode arrives in P07",
+  "listsAll": "All",
+  "listsToBuy": "{n} to buy · {eta}",
+  "@listsToBuy": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "eta": {}
+    }
+  },
+  "listsOrder": "Order",
+  "listsShop": "Shop",
+  "listsOrderStub": "Opening the store arrives in P07",
+  "listsGotSemantics": "Got {name}",
+  "@listsGotSemantics": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "listsLess": "Less",
+  "listsMore": "More",
+  "listsCheckQty": "Check quantity",
+  "listsGot": "Got {name}",
+  "@listsGot": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "listsAllBought": "All bought from {store}.",
+  "@listsAllBought": {
+    "placeholders": {
+      "store": {}
+    }
+  },
+  "listsGotFooter": "Got: {names}",
+  "@listsGotFooter": {
+    "placeholders": {
+      "names": {}
+    }
+  },
+  "listsClear": "Clear",
+  "listsCleared": "Cleared {n} · they’re in Buy again",
+  "@listsCleared": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "listsItemLead": "{qty} · {category} · on {list, select, grocery{grocery} other{shopping}} list",
+  "@listsItemLead": {
+    "placeholders": {
+      "qty": {},
+      "category": {},
+      "list": {
+        "type": "String"
+      }
+    }
+  },
+  "listsName": "Name",
+  "listsQuantity": "Quantity",
+  "listsUnit": "Unit",
+  "listsCategory": "Category",
+  "listsMoveTo": "Move to",
+  "listsRemove": "Remove",
+  "listsRemoved": "Removed",
+  "listsSave": "Save",
+  "listsSaved": "Saved",
+  "listsMoved": "{name} → {store}. We’ll remember that.",
+  "@listsMoved": {
+    "placeholders": {
+      "name": {},
+      "store": {}
+    }
+  },
+  "listsMergeAsk": "Merge with {name} ({qty})?",
+  "@listsMergeAsk": {
+    "placeholders": {
+      "name": {},
+      "qty": {}
+    }
+  },
+  "listsMerge": "Merge",
+  "listsCancel": "Cancel",
+  "listsBuyAgain": "Buy again",
+  "listsBuyAgainChip": "+ {name}",
+  "@listsBuyAgainChip": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "todayReadyToOrder": "Ready to order",
+  "todayListsLink": "Lists",
+  "todayPillCount": "{n, plural, =1{1 item} other{{n} items}}",
+  "@todayPillCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "todayStoreRun": "store run"
 }

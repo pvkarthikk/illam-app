@@ -117,12 +117,16 @@ class QtyStepper extends StatelessWidget {
     required this.onMinus,
     required this.onPlus,
     required this.semanticLabel,
+    this.minusTooltip,
+    this.plusTooltip,
   });
 
   final String valueText;
   final VoidCallback? onMinus;
   final VoidCallback onPlus;
   final String semanticLabel;
+  final String? minusTooltip;
+  final String? plusTooltip;
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +152,7 @@ class QtyStepper extends StatelessWidget {
           IconButton(
             style: btnStyle,
             icon: const Icon(Icons.remove_rounded),
-            tooltip: l10n.commonDecrease,
+            tooltip: minusTooltip ?? l10n.commonDecrease,
             onPressed: onMinus,
           ),
           Semantics(
@@ -173,7 +177,7 @@ class QtyStepper extends StatelessWidget {
           IconButton(
             style: btnStyle,
             icon: const Icon(Icons.add_rounded),
-            tooltip: l10n.commonIncrease,
+            tooltip: plusTooltip ?? l10n.commonIncrease,
             onPressed: onPlus,
           ),
         ],
