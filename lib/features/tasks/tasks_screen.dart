@@ -54,57 +54,70 @@ class TasksScreen extends ConsumerWidget {
     return Scaffold(
       body: SafeArea(
         bottom: false,
-        child: ListView(
-          controller:
-              ref.watch(tabScrollControllersProvider)[NestTab.tasks.index],
-          padding: const EdgeInsets.only(bottom: 96),
-          children: [
-            NestTopBar.tab(
-              eyebrow: l10n.tasksEyebrow,
-              title: l10n.tasksTitle,
+        child: CustomScrollView(
+          controller: ref.watch(
+            tabScrollControllersProvider.select(
+              (list) => list[NestTab.tasks.index],
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
-              child: SegmentedTabs<String>(
-                segments: [
-                  ('routines', '⟳ ${l10n.tasksCleaningTab}', dueRoutinesCount),
-                  ('todos', '✓ ${l10n.tasksTodosTab}', openTodosCount),
-                ],
-                selected: ui.tab,
-                onChanged: ctrl.setTab,
-              ),
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-              child: Row(
+          ),
+          slivers: [
+            SliverToBoxAdapter(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  NestChip(
-                    label: l10n.tasksEveryone,
-                    selected: effectivePerson == null,
-                    onTap: () => ctrl.setPerson(null),
+                  NestTopBar.tab(
+                    eyebrow: l10n.tasksEyebrow,
+                    title: l10n.tasksTitle,
                   ),
-                  for (final p in visiblePeople) ...[
-                    const SizedBox(width: 8),
-                    NestChip(
-                      label: personName(l10n, p),
-                      leading: Avatar(
-                        name: p.firstName,
-                        color: p.color,
-                        size: AvatarSize.s24,
-                      ),
-                      selected: effectivePerson == p.id,
-                      onTap: () => ctrl.setPerson(p.id),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
+                    child: SegmentedTabs<String>(
+                      segments: [
+                        ('routines', '⟳ ${l10n.tasksCleaningTab}', dueRoutinesCount),
+                        ('todos', '✓ ${l10n.tasksTodosTab}', openTodosCount),
+                      ],
+                      selected: ui.tab,
+                      onChanged: ctrl.setTab,
                     ),
-                  ],
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 6,
+                    ),
+                    child: Row(
+                      children: [
+                        NestChip(
+                          label: l10n.tasksEveryone,
+                          selected: effectivePerson == null,
+                          onTap: () => ctrl.setPerson(null),
+                        ),
+                        for (final p in visiblePeople) ...[
+                          const SizedBox(width: 8),
+                          NestChip(
+                            label: personName(l10n, p),
+                            leading: Avatar(
+                              name: p.firstName,
+                              color: p.color,
+                              size: AvatarSize.s24,
+                            ),
+                            selected: effectivePerson == p.id,
+                            onTap: () => ctrl.setPerson(p.id),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 8),
                 ],
               ),
             ),
-            const SizedBox(height: 8),
             if (ui.tab == 'routines')
-              RoutinesView(person: effectivePerson)
+              SliverToBoxAdapter(child: RoutinesView(person: effectivePerson))
             else
               TodosView(person: effectivePerson),
+            const SliverToBoxAdapter(child: SizedBox(height: 96)),
           ],
         ),
       ),

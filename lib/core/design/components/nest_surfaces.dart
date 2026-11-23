@@ -20,28 +20,37 @@ class NestCard extends StatelessWidget {
   final Color? fill;
   final Color? borderColor;
 
-  @override
-  Widget build(BuildContext context) {
+  /// Card surface decoration shared by [NestCard] and card-wrapped slivers.
+  static BoxDecoration cardDecoration(
+    BuildContext context, {
+    Color? fill,
+    Color? borderColor,
+  }) {
     final c = context.nest;
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    return BoxDecoration(
+      color: fill ?? c.card,
+      borderRadius: BorderRadius.circular(18),
+      border: Border.all(color: borderColor ?? c.line),
+      boxShadow: [
+        BoxShadow(
+          color: isDark
+              ? const Color(0x40000000)
+              : const Color(0x0F1D2A21),
+          blurRadius: 10,
+          offset: const Offset(0, 2),
+        ),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final content = Padding(padding: padding, child: child);
 
     return Container(
       clipBehavior: Clip.antiAlias,
-      decoration: BoxDecoration(
-        color: fill ?? c.card,
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: borderColor ?? c.line),
-        boxShadow: [
-          BoxShadow(
-            color: isDark
-                ? const Color(0x40000000)
-                : const Color(0x0F1D2A21),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
+      decoration: cardDecoration(context, fill: fill, borderColor: borderColor),
       child: onTap == null
           ? content
           : Material(

@@ -345,6 +345,17 @@ class SpendRow extends ConsumerWidget {
   }
 }
 
+/// Latest 8 expenses for [month]. [MoneyRepo.watchExpensesInMonth] already
+/// orders rows by `date DESC, created_at DESC` in SQL, so no sorting is done here.
+final recentMonthExpensesProvider = Provider.family<List<ExpenseRow>, String>((
+  ref,
+  month,
+) {
+  final rows = ref.watch(monthExpensesProvider(month)).value;
+  if (rows == null || rows.isEmpty) return const <ExpenseRow>[];
+  return rows.length <= 8 ? rows : rows.sublist(0, 8);
+});
+
 class RecentSection extends ConsumerWidget {
   const RecentSection({super.key});
 
@@ -354,15 +365,8 @@ class RecentSection extends ConsumerWidget {
     final c = context.nest;
     final today = ref.watch(todayDateProvider);
     final month = Dates.month(today);
-    final rows = ref.watch(monthExpensesProvider(month)).value;
-    if (rows == null || rows.isEmpty) return const SizedBox.shrink();
-
-    final sorted = rows.toList()
-      ..sort((a, b) {
-        final byDate = b.date.compareTo(a.date);
-        return byDate != 0 ? byDate : b.createdAt.compareTo(a.createdAt);
-      });
-    final recent = sorted.take(8).toList();
+    final recent = ref.watch(recentMonthExpensesProvider(month));
+    if (recent.isEmpty) return const SizedBox.shrink();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
