@@ -43,45 +43,59 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final joinUi = ref.watch(joinControllerProvider);
-    final prefs = ref.watch(prefsProvider);
-    final homeId =
-        ref.watch(currentHomeIdProvider).value ?? prefs.currentHomeId;
-    final showSetupBanner =
-        homeId != null && prefs.setupIncompleteHomeId == homeId;
-    final setupPct = joinUi.copy == JoinStepState.active
-        ? joinUi.pct
-        : prefs.setupPct;
+    final controller = ref.watch(
+      tabScrollControllersProvider.select((list) => list[NestTab.today.index]),
+    );
 
     return Scaffold(
       body: SafeArea(
         bottom: false,
         child: ListView(
-          controller:
-              ref.watch(tabScrollControllersProvider)[NestTab.today.index],
+          controller: controller,
           padding: const EdgeInsets.only(bottom: 96),
-          children: [
-            const OfflineIndicator(),
-            const RestoreBanner(),
-            if (showSetupBanner)
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-                child: InfoBanner(
-                  icon: Icons.sync_rounded,
-                  title: l10n.setupBanner(setupPct),
-                  subtitle: '',
-                  info: true,
-                ),
-              ),
-            const HeroSection(),
-            const DueTodaySection(),
-            const MenuSection(),
-            const ReadyToOrderSection(),
-            const HelpAtHomeSection(),
-            const MonthSoFarSection(),
+          children: const [
+            OfflineIndicator(),
+            RestoreBanner(),
+            _SetupBanner(),
+            HeroSection(),
+            DueTodaySection(),
+            MenuSection(),
+            ReadyToOrderSection(),
+            HelpAtHomeSection(),
+            MonthSoFarSection(),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _SetupBanner extends ConsumerWidget {
+  const _SetupBanner();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final prefs = ref.read(prefsProvider);
+    final homeId =
+        ref.watch(currentHomeIdProvider.select((v) => v.value)) ??
+        prefs.currentHomeId;
+    final activePct = ref.watch(
+      joinControllerProvider.select(
+        (j) => j.copy == JoinStepState.active ? j.pct : -1,
+      ),
+    );
+    if (homeId == null || prefs.setupIncompleteHomeId != homeId) {
+      return const SizedBox.shrink();
+    }
+    final setupPct = activePct >= 0 ? activePct : prefs.setupPct;
+    final l10n = AppLocalizations.of(context);
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+      child: InfoBanner(
+        icon: Icons.sync_rounded,
+        title: l10n.setupBanner(setupPct),
+        subtitle: '',
+        info: true,
       ),
     );
   }

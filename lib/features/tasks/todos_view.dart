@@ -11,6 +11,47 @@ import 'package:nm_flat/features/staff/staff_providers.dart';
 import 'package:nm_flat/features/tasks/todo_sheet.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
+class GroupedTodos {
+  const GroupedTodos({
+    required this.open,
+    required this.done,
+    required this.hasOpen,
+  });
+
+  final Map<TodoGroup, List<TodoRow>> open;
+  final List<TodoRow> done;
+  final bool hasOpen;
+}
+
+final groupedTodosProvider = Provider.family<GroupedTodos, String?>((
+  ref,
+  filterId,
+) {
+  final allTodos = ref.watch(todosProvider).value ?? const <TodoRow>[];
+  final today = ref.watch(todayDateProvider);
+  final grouped = <TodoGroup, List<TodoRow>>{
+    for (final g in TodoGroup.values) g: <TodoRow>[],
+  };
+  final doneTodos = <TodoRow>[];
+  for (final t in allTodos) {
+    if (filterId != null && t.assignee != filterId) continue;
+    if (t.done) {
+      doneTodos.add(t);
+    } else {
+      grouped[todoGroup(t.due, today)]!.add(t);
+    }
+  }
+  for (final list in grouped.values) {
+    list.sort((a, b) {
+      final cmp = a.due.compareTo(b.due);
+      return cmp != 0 ? cmp : a.title.compareTo(b.title);
+    });
+  }
+  doneTodos.sort((a, b) => (b.doneAt ?? 0).compareTo(a.doneAt ?? 0));
+  final hasOpen = grouped.values.any((list) => list.isNotEmpty);
+  return GroupedTodos(open: grouped, done: doneTodos, hasOpen: hasOpen);
+});
+
 class TodosView extends ConsumerStatefulWidget {
   const TodosView({super.key, this.person});
 
@@ -39,158 +80,163 @@ class _TodosViewState extends ConsumerState<TodosView> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final c = context.nest;
-    final allTodos = ref.watch(todosProvider).value ?? const <TodoRow>[];
-    final people = ref.watch(taskPeopleProvider).value ?? const <TaskPerson>[];
+    final data = ref.watch(groupedTodosProvider(widget.person));
+    final byId = ref.watch(taskPeopleByIdProvider);
     final today = ref.watch(todayDateProvider);
 
-    final byId = {for (final p in people) p.id: p};
     final filterId = widget.person;
-    final filtered = [
-      for (final t in allTodos)
-        if (filterId == null || t.assignee == filterId) t,
-    ];
-
-    final grouped = <TodoGroup, List<TodoRow>>{
-      for (final g in TodoGroup.values) g: [],
-    };
-    final doneTodos = <TodoRow>[];
-    for (final t in filtered) {
-      if (t.done) {
-        doneTodos.add(t);
-      } else {
-        grouped[todoGroup(t.due, today)]!.add(t);
-      }
-    }
-    for (final list in grouped.values) {
-      list.sort((a, b) {
-        final cmp = a.due.compareTo(b.due);
-        return cmp != 0 ? cmp : a.title.compareTo(b.title);
-      });
-    }
-    doneTodos.sort((a, b) => (b.doneAt ?? 0).compareTo(a.doneAt ?? 0));
-
-    final hasOpen = grouped.values.any((list) => list.isNotEmpty);
     final selectedName = filterId != null && byId[filterId] != null
         ? personName(l10n, byId[filterId]!)
         : '';
 
-    return Padding(
+    return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          if (!hasOpen)
-            EmptyState(
-              icon: Icons.task_alt_rounded,
-              title: l10n.tasksAllDone,
-              body: filterId == null || selectedName.isEmpty
-                  ? l10n.tasksNothingPending
-                  : l10n.tasksNothingPendingFor(selectedName),
+      sliver: SliverMainAxisGroup(
+        slivers: [
+          if (!data.hasOpen)
+            SliverToBoxAdapter(
+              child: EmptyState(
+                icon: Icons.task_alt_rounded,
+                title: l10n.tasksAllDone,
+                body: filterId == null || selectedName.isEmpty
+                    ? l10n.tasksNothingPending
+                    : l10n.tasksNothingPendingFor(selectedName),
+              ),
             )
           else
             for (final group in TodoGroup.values)
-              if (grouped[group]!.isNotEmpty) ...[
-                _GroupHeader(
-                  title: switch (group) {
-                    TodoGroup.overdue => l10n.tasksGroupOverdue,
-                    TodoGroup.today => l10n.tasksGroupToday,
-                    TodoGroup.tomorrow => l10n.tasksGroupTomorrow,
-                    TodoGroup.later => l10n.tasksGroupLater,
-                  },
-                  count: grouped[group]!.length,
-                  danger: group == TodoGroup.overdue,
-                ),
-                NestCard(
-                  padding: EdgeInsets.zero,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      for (var i = 0; i < grouped[group]!.length; i++) ...[
-                        if (i > 0) Container(height: 1, color: c.line),
-                        _TodoTile(
-                          row: grouped[group]![i],
-                          who: byId[grouped[group]![i].assignee],
-                          today: today,
-                          completed: false,
-                          onCheck: () =>
-                              _toggleDone(grouped[group]![i], true),
-                        ),
-                      ],
-                    ],
+              if (data.open[group]!.isNotEmpty) ...[
+                SliverToBoxAdapter(
+                  child: _GroupHeader(
+                    title: switch (group) {
+                      TodoGroup.overdue => l10n.tasksGroupOverdue,
+                      TodoGroup.today => l10n.tasksGroupToday,
+                      TodoGroup.tomorrow => l10n.tasksGroupTomorrow,
+                      TodoGroup.later => l10n.tasksGroupLater,
+                    },
+                    count: data.open[group]!.length,
+                    danger: group == TodoGroup.overdue,
                   ),
                 ),
-                const SizedBox(height: 16),
+                DecoratedSliver(
+                  decoration: NestCard.cardDecoration(context),
+                  sliver: SliverPadding(
+                    padding: const EdgeInsets.all(1),
+                    sliver: SliverList.builder(
+                      itemCount: data.open[group]!.length,
+                      itemBuilder: (context, i) {
+                        final row = data.open[group]![i];
+                        return Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            if (i > 0) Container(height: 1, color: c.line),
+                            _TodoTile(
+                              row: row,
+                              who: byId[row.assignee],
+                              today: today,
+                              completed: false,
+                              onCheck: () => _toggleDone(row, true),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                const SliverToBoxAdapter(child: SizedBox(height: 16)),
               ],
-          if (doneTodos.isNotEmpty) ...[
-            if (!hasOpen) const SizedBox(height: 8),
-            NestCard(
-              padding: EdgeInsets.zero,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Semantics(
-                    button: true,
-                    expanded: _completedOpen,
-                    child: InkWell(
-                      onTap: () =>
-                          setState(() => _completedOpen = !_completedOpen),
-                      child: ConstrainedBox(
-                        constraints: const BoxConstraints(minHeight: 48),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 12,
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  l10n.tasksCompleted(doneTodos.length),
-                                  style: TextStyle(
-                                    fontFamily: NestText.sans,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
-                                    fontVariations: const [
-                                      FontVariation.weight(600),
-                                    ],
-                                    color: c.ink2,
-                                  ),
+          if (data.done.isNotEmpty) ...[
+            if (!data.hasOpen)
+              const SliverToBoxAdapter(child: SizedBox(height: 8)),
+            DecoratedSliver(
+              decoration: NestCard.cardDecoration(context),
+              sliver: SliverPadding(
+                padding: const EdgeInsets.all(1),
+                sliver: SliverMainAxisGroup(
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: Material(
+                        type: MaterialType.transparency,
+                        child: Semantics(
+                          button: true,
+                          expanded: _completedOpen,
+                          child: InkWell(
+                            onTap: () => setState(
+                              () => _completedOpen = !_completedOpen,
+                            ),
+                            child: ConstrainedBox(
+                              constraints: const BoxConstraints(minHeight: 48),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 12,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        l10n.tasksCompleted(data.done.length),
+                                        style: TextStyle(
+                                          fontFamily: NestText.sans,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w600,
+                                          fontVariations: const [
+                                            FontVariation.weight(600),
+                                          ],
+                                          color: c.ink2,
+                                        ),
+                                      ),
+                                    ),
+                                    Icon(
+                                      _completedOpen
+                                          ? Icons.expand_less_rounded
+                                          : Icons.expand_more_rounded,
+                                      color: c.ink3,
+                                    ),
+                                  ],
                                 ),
                               ),
-                              Icon(
-                                _completedOpen
-                                    ? Icons.expand_less_rounded
-                                    : Icons.expand_more_rounded,
-                                color: c.ink3,
-                              ),
-                            ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  if (_completedOpen)
-                    for (final t in doneTodos) ...[
-                      Container(height: 1, color: c.line),
-                      _TodoTile(
-                        row: t,
-                        who: byId[t.assignee],
-                        today: today,
-                        completed: true,
-                        onCheck: () => _toggleDone(t, false),
+                    if (_completedOpen)
+                      SliverList.builder(
+                        itemCount: data.done.length,
+                        itemBuilder: (context, i) {
+                          final t = data.done[i];
+                          return Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Container(height: 1, color: c.line),
+                              _TodoTile(
+                                row: t,
+                                who: byId[t.assignee],
+                                today: today,
+                                completed: true,
+                                onCheck: () => _toggleDone(t, false),
+                              ),
+                            ],
+                          );
+                        },
                       ),
-                    ],
-                ],
+                  ],
+                ),
               ),
             ),
-            const SizedBox(height: 16),
+            const SliverToBoxAdapter(child: SizedBox(height: 16)),
           ],
-          NestButton(
-            label: l10n.tasksNewTodo,
-            icon: Icons.add_rounded,
-            kind: NestButtonKind.ghost,
-            size: NestButtonSize.block,
-            onPressed: () => showTodoSheet(context),
+          SliverToBoxAdapter(
+            child: NestButton(
+              label: l10n.tasksNewTodo,
+              icon: Icons.add_rounded,
+              kind: NestButtonKind.ghost,
+              size: NestButtonSize.block,
+              onPressed: () => showTodoSheet(context),
+            ),
           ),
         ],
       ),

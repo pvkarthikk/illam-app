@@ -16,16 +16,6 @@ class ShellScaffold extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final tasksBadge = ref.watch(tasksBadgeProvider);
-    final moneyBadge = ref.watch(moneyBadgeProvider);
-
-    Widget badged(Widget icon, int count) => Badge(
-      isLabelVisible: count > 0,
-      label: Text('$count'),
-      backgroundColor: context.nest.danger,
-      textColor: Colors.white,
-      child: icon,
-    );
 
     return PopScope(
       canPop: shell.currentIndex == 0,
@@ -69,8 +59,14 @@ class ShellScaffold extends ConsumerWidget {
               label: l10n.tabLists,
             ),
             NavigationDestination(
-              icon: badged(const Icon(Icons.task_alt_outlined), tasksBadge),
-              selectedIcon: badged(const Icon(Icons.task_alt_rounded), tasksBadge),
+              icon: _NavBadgeIcon(
+                provider: tasksBadgeProvider,
+                icon: const Icon(Icons.task_alt_outlined),
+              ),
+              selectedIcon: _NavBadgeIcon(
+                provider: tasksBadgeProvider,
+                icon: const Icon(Icons.task_alt_rounded),
+              ),
               label: l10n.tabTasks,
             ),
             NavigationDestination(
@@ -79,19 +75,38 @@ class ShellScaffold extends ConsumerWidget {
               label: l10n.tabMeals,
             ),
             NavigationDestination(
-              icon: badged(
-                const Icon(Icons.account_balance_wallet_outlined),
-                moneyBadge,
+              icon: _NavBadgeIcon(
+                provider: moneyBadgeProvider,
+                icon: const Icon(Icons.account_balance_wallet_outlined),
               ),
-              selectedIcon: badged(
-                const Icon(Icons.account_balance_wallet_rounded),
-                moneyBadge,
+              selectedIcon: _NavBadgeIcon(
+                provider: moneyBadgeProvider,
+                icon: const Icon(Icons.account_balance_wallet_rounded),
               ),
               label: l10n.tabMoney,
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _NavBadgeIcon extends ConsumerWidget {
+  const _NavBadgeIcon({required this.provider, required this.icon});
+
+  final Provider<int> provider;
+  final Widget icon;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final count = ref.watch(provider);
+    return Badge(
+      isLabelVisible: count > 0,
+      label: Text('$count'),
+      backgroundColor: context.nest.danger,
+      textColor: Colors.white,
+      child: icon,
     );
   }
 }

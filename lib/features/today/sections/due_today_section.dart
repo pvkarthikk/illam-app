@@ -13,6 +13,65 @@ import 'package:nm_flat/core/ui/formatters.dart';
 import 'package:nm_flat/features/staff/staff_providers.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
+class DueTodayData {
+  const DueTodayData({
+    required this.todos,
+    required this.routines,
+    required this.total,
+  });
+
+  final List<TodoRow> todos;
+  final List<({RoutineRow row, RoutineState st})> routines;
+  final int total;
+}
+
+final dueTodayProvider = Provider<DueTodayData>((ref) {
+  final routines = ref.watch(routinesProvider).value ?? const <RoutineRow>[];
+  final todos = ref.watch(todosProvider).value ?? const <TodoRow>[];
+  final today = ref.watch(todayDateProvider);
+
+  final dueTodos = [
+    for (final t in todos)
+      if (!t.done &&
+          t.due.isNotEmpty &&
+          Dates.daysBetween(t.due, today) >= 0)
+        t,
+  ]..sort((a, b) {
+      final cmp = a.due.compareTo(b.due);
+      return cmp != 0 ? cmp : a.title.compareTo(b.title);
+    });
+
+  final dueRoutines = <({RoutineRow row, RoutineState st})>[];
+  for (final r in routines) {
+    final st = routineState(
+      lastDone: r.lastDone,
+      everyDays: r.everyDays,
+      today: today,
+    );
+    if (st.left <= 0) {
+      dueRoutines.add((row: r, st: st));
+    }
+  }
+  dueRoutines.sort((a, b) {
+    final cmp = a.st.left.compareTo(b.st.left);
+    return cmp != 0 ? cmp : a.row.name.compareTo(b.row.name);
+  });
+
+  final visibleTodos = dueTodos.length <= 5
+      ? dueTodos
+      : dueTodos.sublist(0, 5);
+  final remaining = 5 - visibleTodos.length;
+  final visibleRoutines = dueRoutines.length <= remaining
+      ? dueRoutines
+      : dueRoutines.sublist(0, remaining);
+
+  return DueTodayData(
+    todos: visibleTodos,
+    routines: visibleRoutines,
+    total: dueTodos.length + dueRoutines.length,
+  );
+});
+
 class DueTodaySection extends ConsumerWidget {
   const DueTodaySection({super.key});
 
@@ -20,62 +79,22 @@ class DueTodaySection extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final c = context.nest;
-    final routines = ref.watch(routinesProvider).value ?? const <RoutineRow>[];
-    final todos = ref.watch(todosProvider).value ?? const <TodoRow>[];
-    final people = ref.watch(taskPeopleProvider).value ?? const <TaskPerson>[];
+    final due = ref.watch(dueTodayProvider);
+    final byId = ref.watch(taskPeopleByIdProvider);
     final today = ref.watch(todayDateProvider);
 
-    final byId = {for (final p in people) p.id: p};
-
-    final dueTodos = [
-      for (final t in todos)
-        if (!t.done &&
-            t.due.isNotEmpty &&
-            Dates.daysBetween(t.due, today) >= 0)
-          t,
-    ]..sort((a, b) {
-        final cmp = a.due.compareTo(b.due);
-        return cmp != 0 ? cmp : a.title.compareTo(b.title);
-      });
-
-    final dueRoutines = [
-      for (final r in routines)
-        if (routineState(
-              lastDone: r.lastDone,
-              everyDays: r.everyDays,
-              today: today,
-            ).left <=
-            0)
-          (
-            row: r,
-            st: routineState(
-              lastDone: r.lastDone,
-              everyDays: r.everyDays,
-              today: today,
-            ),
-          ),
-    ]..sort((a, b) {
-        final cmp = a.st.left.compareTo(b.st.left);
-        return cmp != 0 ? cmp : a.row.name.compareTo(b.row.name);
-      });
-
-    final total = dueTodos.length + dueRoutines.length;
-    final rows = <Widget>[];
-    for (final t in dueTodos) {
-      if (rows.length == 5) break;
-      rows.add(_DueTodoRow(row: t, who: byId[t.assignee], today: today));
-    }
-    for (final item in dueRoutines) {
-      if (rows.length == 5) break;
-      rows.add(
+    final total = due.total;
+    final rows = <Widget>[
+      for (final t in due.todos)
+        _DueTodoRow(row: t, who: byId[t.assignee], today: today),
+      for (final item in due.routines)
         _DueRoutineRow(
           row: item.row,
           state: item.st,
           who: byId[item.row.assignee],
           today: today,
         ),
-      );
-    }
+    ];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,

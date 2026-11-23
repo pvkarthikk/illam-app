@@ -569,6 +569,10 @@ final taskPeopleProvider = Provider<AsyncValue<List<TaskPerson>>>((ref) {
       ),
   ]);
 });
+final taskPeopleByIdProvider = Provider<Map<String, TaskPerson>>((ref) {
+  final people = ref.watch(taskPeopleProvider).value ?? const <TaskPerson>[];
+  return {for (final p in people) p.id: p};
+});
 
 final moneyRepoProvider = Provider<MoneyRepo>(
   (ref) => MoneyRepo(
