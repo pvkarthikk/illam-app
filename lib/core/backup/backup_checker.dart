@@ -57,7 +57,7 @@ class BackupChecker {
 
       final bytes = await dest.download(newest.name);
       final decoded = await BackupCodec.decode(bytes, password);
-      final snap = Snapshot.fromBytes(decoded.json);
+      final snap = await Snapshot.decode(decoded.json);
 
       final tempDb = NestDatabase.forTesting(NativeDatabase.memory());
       final tempContainer = ProviderContainer(

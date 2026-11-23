@@ -135,16 +135,27 @@ class _NextcloudSheetState extends ConsumerState<_NextcloudSheet> {
         const Duration(minutes: 20),
         () => _backToEnter(DestError.other.name),
       );
-      _pollTimer = Timer.periodic(
-        const Duration(seconds: 2),
-        (_) => _pollOnce(started.endpoint, started.token),
-      );
+      _schedulePoll(started.endpoint, started.token, _pollStart);
     } on DestinationException catch (e) {
       _backToEnter(e.error.name);
     } on Object catch (e) {
       debugPrint('Nextcloud login start failed: $e');
       _backToEnter(DestError.other.name);
     }
+  }
+
+  static const _pollStart = Duration(seconds: 3);
+  static const _pollMax = Duration(seconds: 15);
+
+  /// Polls with a growing delay (3 s, 4.5 s, ... capped at 15 s).
+  void _schedulePoll(Uri endpoint, String token, Duration delay) {
+    _pollTimer?.cancel();
+    _pollTimer = Timer(delay, () async {
+      await _pollOnce(endpoint, token);
+      if (!mounted || _stage != _NextcloudStage.waiting) return;
+      final next = delay * 1.5;
+      _schedulePoll(endpoint, token, next > _pollMax ? _pollMax : next);
+    });
   }
 
   Future<void> _pollOnce(Uri endpoint, String token) async {

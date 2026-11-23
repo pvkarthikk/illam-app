@@ -101,6 +101,32 @@ void main() {
       expect(toHex(kb.ke), toHex(ka.ke));
     });
 
+    test('startAsync/finishAsync match the synchronous results', () async {
+      final v = vectors.first;
+      Spake2 side(bool isA) => isA
+          ? Spake2.a(
+              w: BigInt.parse(v.w, radix: 16),
+              x: BigInt.parse(v.x, radix: 16),
+              idA: utf8.encode(v.a),
+              idB: utf8.encode(v.b),
+            )
+          : Spake2.b(
+              w: BigInt.parse(v.w, radix: 16),
+              y: BigInt.parse(v.y, radix: 16),
+              idA: utf8.encode(v.a),
+              idB: utf8.encode(v.b),
+            );
+      final a = side(true);
+      final b = side(false);
+      final pA = await a.startAsync();
+      final pB = await b.startAsync();
+      expect(toHex(pA), toHex(side(true).start()));
+      final ka = await a.finishAsync(pB);
+      final kb = await b.finishAsync(pA);
+      expect(toHex(ka.ke), '0e0672dc86f8e45565d338b0540abe69');
+      expect(toHex(kb.ke), toHex(ka.ke));
+    });
+
     test('all 4 RFC 9382 Appendix B vectors match Ke, cA, cB on both sides', () {
       for (final v in vectors) {
         final a = Spake2.a(

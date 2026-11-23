@@ -122,10 +122,10 @@ class JoinGuest {
         idB: idInviter,
         aad: concatBytes([utf8.encode(s.context), ch.transcript]),
       );
-      await ch.send({'t': 'pake1', 'pA': b64(sp.start())});
+      await ch.send({'t': 'pake1', 'pA': b64(await sp.startAsync())});
 
       final p2 = await ch.receive();
-      final keys = sp.finish(unb64(p2['pB'] as String));
+      final keys = await sp.finishAsync(unb64(p2['pB'] as String));
       final cB = unb64(p2['cB'] as String);
       if (!constantTimeEquals(cB, keys.peerConfirm)) {
         emit(const JoinFailed(JoinFailure.wrongCode));

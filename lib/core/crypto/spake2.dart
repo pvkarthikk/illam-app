@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:isolate';
 import 'dart:typed_data';
 
 import 'package:crypto/crypto.dart' as c;
@@ -163,6 +164,17 @@ class Spake2 {
     _mine = enc;
     return enc;
   }
+
+  /// [start] on a worker isolate (point multiplication is slow in Dart).
+  Future<Uint8List> startAsync() async {
+    final enc = await Isolate.run(start);
+    _mine = enc;
+    return enc;
+  }
+
+  /// [finish] on a worker isolate.
+  Future<Spake2Keys> finishAsync(List<int> peerMsg) =>
+      Isolate.run(() => finish(peerMsg));
 
   /// Processes the peer's 65-byte SPAKE2 message and derives session & confirm keys.
   Spake2Keys finish(List<int> peerMsg) {

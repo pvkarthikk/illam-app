@@ -84,9 +84,9 @@ class JoinHost {
         idB: idInviter,
         aad: concatBytes([utf8.encode(ctx), ch.transcript]),
       );
-      final pB = sp.start();
+      final pB = await sp.startAsync();
       final p1 = await ch.receive();
-      final keys = sp.finish(unb64(p1['pA'] as String));
+      final keys = await sp.finishAsync(unb64(p1['pA'] as String));
       await ch.send({
         't': 'pake2',
         'pB': b64(pB),
