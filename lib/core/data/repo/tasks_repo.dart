@@ -53,6 +53,43 @@ class TasksRepo {
             ..orderBy([(r) => OrderingTerm.asc(r.name)]))
           .watch();
 
+  /// Only the two columns the "tasks due" badge needs, not whole rows.
+  Stream<List<({String lastDone, int everyDays})>> watchRoutineClocks(
+    String homeId,
+  ) {
+    final q = db.selectOnly(db.routines)
+      ..addColumns([db.routines.lastDone, db.routines.everyDays])
+      ..where(
+        db.routines.homeId.equals(homeId) & db.routines.deleted.equals(false),
+      );
+    return q.watch().map(
+      (rows) => [
+        for (final r in rows)
+          (
+            lastDone: r.read(db.routines.lastDone) ?? '',
+            everyDays: r.read(db.routines.everyDays) ?? 0,
+          ),
+      ],
+    );
+  }
+
+  /// Open dated to-dos only, projected to what the badge counts.
+  Stream<List<({String due, bool done})>> watchOpenTodoDues(String homeId) {
+    final q = db.selectOnly(db.todos)
+      ..addColumns([db.todos.due])
+      ..where(
+        db.todos.homeId.equals(homeId) &
+            db.todos.deleted.equals(false) &
+            db.todos.done.equals(false) &
+            db.todos.due.equals('').not(),
+      );
+    return q.watch().map(
+      (rows) => [
+        for (final r in rows) (due: r.read(db.todos.due) ?? '', done: false),
+      ],
+    );
+  }
+
   Stream<List<TodoRow>> watchTodos(String homeId) =>
       (db.select(db.todos)
             ..where((t) => t.homeId.equals(homeId) & t.deleted.equals(false))
@@ -155,11 +192,7 @@ class TasksRepo {
     );
   }
 
-  void buildReassignOps(
-    ChangeBuilder c,
-    AssignedWork w,
-    String toMemberId,
-  ) {
+  void buildReassignOps(ChangeBuilder c, AssignedWork w, String toMemberId) {
     for (final id in w.routineIds) {
       c.set('routines', id, 'assignee_type', 'member');
       c.set('routines', id, 'assignee', toMemberId);

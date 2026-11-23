@@ -79,29 +79,37 @@ final snackbarProvider = Provider((ref) => SnackbarService());
 final themeModeProvider = NotifierProvider<ThemeModeController, ThemeMode>(
   ThemeModeController.new,
 );
+final _routineClocksProvider =
+    StreamProvider<List<({String lastDone, int everyDays})>>((ref) {
+      final home = ref.watch(currentHomeIdProvider).value;
+      if (home == null) return Stream.value(const []);
+      return ref.watch(tasksRepoProvider).watchRoutineClocks(home);
+    });
+final _openTodoDuesProvider = StreamProvider<List<({String due, bool done})>>((
+  ref,
+) {
+  final home = ref.watch(currentHomeIdProvider).value;
+  if (home == null) return Stream.value(const []);
+  return ref.watch(tasksRepoProvider).watchOpenTodoDues(home);
+});
 final tasksBadgeProvider = Provider<int>((ref) {
-  final routines = ref.watch(routinesProvider).value ?? const <RoutineRow>[];
-  final todos = ref.watch(todosProvider).value ?? const <TodoRow>[];
+  final routines = ref.watch(_routineClocksProvider).value ?? const [];
+  final todos = ref.watch(_openTodoDuesProvider).value ?? const [];
   final today = ref.watch(todayDateProvider);
-  return tasksDueCount(
-    routines: [
-      for (final r in routines)
-        (lastDone: r.lastDone, everyDays: r.everyDays),
-    ],
-    todos: [
-      for (final t in todos) (due: t.due, done: t.done),
-    ],
-    today: today,
-  );
+  return tasksDueCount(routines: routines, todos: todos, today: today);
 });
-final moneyBadgeProvider = Provider<int>((ref) {
+// One shared recount of the bill statuses feeds both badges.
+final _billBadgesProvider = Provider<({int money, int due})>((ref) {
   final list = ref.watch(billStatusesProvider).value ?? const [];
-  return moneyBadgeCount([for (final item in list) item.$2]);
+  final statuses = <BillStatus>[for (final item in list) item.$2];
+  return (money: moneyBadgeCount(statuses), due: billsDueCount(statuses));
 });
-final billsDueCountProvider = Provider<int>((ref) {
-  final list = ref.watch(billStatusesProvider).value ?? const [];
-  return billsDueCount([for (final item in list) item.$2]);
-});
+final moneyBadgeProvider = Provider<int>(
+  (ref) => ref.watch(_billBadgesProvider.select((b) => b.money)),
+);
+final billsDueCountProvider = Provider<int>(
+  (ref) => ref.watch(_billBadgesProvider.select((b) => b.due)),
+);
 final tabScrollControllersProvider = Provider<List<ScrollController>>((ref) {
   final list = List.generate(NestTab.values.length, (_) => ScrollController());
   ref.onDispose(() {

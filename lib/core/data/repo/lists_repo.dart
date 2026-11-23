@@ -16,13 +16,7 @@ import 'package:nm_flat/core/util/hash_id.dart';
 enum AddKind { added, merged, incompatible }
 
 class AddOutcome {
-  const AddOutcome(
-    this.kind,
-    this.name,
-    this.channel,
-    this.qtyText,
-    this.undo,
-  );
+  const AddOutcome(this.kind, this.name, this.channel, this.qtyText, this.undo);
 
   final AddKind kind;
   final String name;
@@ -103,28 +97,35 @@ class ListsRepo {
     final name = parsed.name;
     final nameKey = itemNameKey(name);
 
-    final openRows = await (db.select(db.items)
-          ..where(
-            (i) =>
-                i.homeId.equals(homeId) &
-                i.list.equals(list) &
-                i.done.equals(false) &
-                i.deleted.equals(false),
-          )
-          ..orderBy([
-            (i) => OrderingTerm.asc(i.createdAt),
-            (i) => OrderingTerm.asc(i.id),
-          ]))
-        .get();
+    // Only rows that can matter for this one item: the same name among open
+    // items, and the usual store for the name (or its pre-digit prefix).
+    final openRows =
+        await (db.select(db.items)
+              ..where(
+                (i) =>
+                    i.homeId.equals(homeId) &
+                    i.list.equals(list) &
+                    i.nameKey.equals(nameKey) &
+                    i.done.equals(false) &
+                    i.deleted.equals(false),
+              )
+              ..orderBy([
+                (i) => OrderingTerm.asc(i.createdAt),
+                (i) => OrderingTerm.asc(i.id),
+              ]))
+            .get();
 
-    final usualRows = await (db.select(db.itemHistory)..where(
-          (h) =>
-              h.homeId.equals(homeId) &
-              h.list.equals(list) &
-              h.deleted.equals(false) &
-              h.usualChannel.isNotNull(),
-        ))
-        .get();
+    final usualKeys = {nameKey, ?_digitPrefix(nameKey)};
+    final usualRows =
+        await (db.select(db.itemHistory)..where(
+              (h) =>
+                  h.homeId.equals(homeId) &
+                  h.list.equals(list) &
+                  h.deleted.equals(false) &
+                  h.usualChannel.isNotNull() &
+                  h.nameKey.isIn(usualKeys),
+            ))
+            .get();
 
     final usualByKey = <String, String>{
       for (final h in usualRows)
@@ -317,16 +318,16 @@ class ListsRepo {
     if (homeId == null) {
       return (await changes.write('Cleared', (_) {}), 0);
     }
-    final doneItems = await (db.select(db.items)
-          ..where(
-            (i) =>
-                i.homeId.equals(homeId) &
-                i.list.equals(list) &
-                i.channel.equals(channel) &
-                i.done.equals(true) &
-                i.deleted.equals(false),
-          ))
-        .get();
+    final doneItems =
+        await (db.select(db.items)..where(
+              (i) =>
+                  i.homeId.equals(homeId) &
+                  i.list.equals(list) &
+                  i.channel.equals(channel) &
+                  i.done.equals(true) &
+                  i.deleted.equals(false),
+            ))
+            .get();
     final res = await changes.write('Cleared $channel', (c) {
       buildClearOps(c, doneItems, _now);
     });
@@ -383,4 +384,12 @@ class ListsRepo {
       }
     }
   });
+}
+
+/// The part of [nameKey] before its first digit, as `usualStore` looks it up.
+String? _digitPrefix(String nameKey) {
+  final digitIdx = nameKey.indexOf(RegExp(r'\d'));
+  if (digitIdx <= 0) return null;
+  final cut = nameKey.substring(0, digitIdx).trim();
+  return cut.isEmpty ? null : cut;
 }
