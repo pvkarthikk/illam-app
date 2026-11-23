@@ -51,6 +51,7 @@ For dual-device local Wi-Fi sync testing on Android, install both flavors side b
 flutter run --flavor dev -d <device-1>
 flutter run --flavor peer2 -d <device-2>
 ```
+
 ---
 
 ## Install & Releases
@@ -61,14 +62,15 @@ Signed APKs are published on the [GitHub Releases](https://github.com/pvkarthikk
 https://github.com/pvkarthikk/illam-app
 ```
 
-To cut a release, bump `version:` in `pubspec.yaml` (the build number after `+` must increase every time), commit, then push a matching tag:
+To cut a release, push a tag of the form `vMAJOR.MINOR.PATCH` that is higher than the previous release:
 
 ```bash
 git tag v1.0.1
 git push origin v1.0.1
 ```
 
-The [Release workflow](.github/workflows/release.yml) runs the tests, builds the `dev` flavor signed with the release key, and attaches `illam-v<version>.apk` to a new GitHub release. It needs these repository secrets: `KEYSTORE_BASE64` (the keystore file, base64-encoded), `KEYSTORE_PASSWORD`, `KEY_ALIAS`, and `KEY_PASSWORD`. Every release must be signed with the same keystore, otherwise installed copies cannot update.
+The [Release workflow](.github/workflows/release.yml) takes the version from the tag (`v1.0.1` becomes version name `1.0.1` and version code `1000001`), so `pubspec.yaml` does not need a bump. It runs the tests, builds the `dev` flavor signed with the release key, and attaches `illam-v<version>.apk` to a new GitHub release. It needs these repository secrets: `KEYSTORE_BASE64` (the keystore file, base64-encoded), `KEYSTORE_PASSWORD`, `KEY_ALIAS`, and `KEY_PASSWORD`. Every release must be signed with the same keystore, otherwise installed copies cannot update.
+
 
 ---
 

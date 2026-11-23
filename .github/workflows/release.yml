@@ -16,13 +16,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Check tag matches pubspec version
+      - name: Read version from tag
+        id: version
         run: |
-          version=$(grep '^version:' pubspec.yaml | sed 's/version: *//; s/+.*//')
-          if [ "v$version" != "$GITHUB_REF_NAME" ]; then
-            echo "::error::Tag $GITHUB_REF_NAME does not match pubspec version $version"
+          part='(0|[1-9][0-9]{0,2})'
+          if [[ ! "$GITHUB_REF_NAME" =~ ^v${part}\.${part}\.${part}$ ]]; then
+            echo "::error::Tag $GITHUB_REF_NAME must look like v1.2.3 (each number 0-999)"
             exit 1
           fi
+          major=${BASH_REMATCH[1]}
+          minor=${BASH_REMATCH[2]}
+          patch=${BASH_REMATCH[3]}
+          echo "name=$major.$minor.$patch" >> "$GITHUB_OUTPUT"
+          echo "code=$(( major * 1000000 + minor * 1000 + patch ))" >> "$GITHUB_OUTPUT"
 
       - name: Restore signing key
         env:
@@ -66,7 +72,10 @@ jobs:
         run: flutter test
 
       - name: Build dev APK (release)
-        run: flutter build apk --release --flavor dev
+        env:
+          BUILD_NAME: ${{ steps.version.outputs.name }}
+          BUILD_NUMBER: ${{ steps.version.outputs.code }}
+        run: flutter build apk --release --flavor dev --build-name="$BUILD_NAME" --build-number="$BUILD_NUMBER"
 
       - name: Publish GitHub release
         env:
