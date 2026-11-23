@@ -68,7 +68,7 @@ class BackupRunner {
       createdAt: now,
       includeKit: kitLive,
     );
-    final snapBytes = snap.toBytes();
+    final snapBytes = await snap.encode();
 
     final useLight = prefs.getFlag('backupKdfLight');
     var kdf = kdfOverride ?? (useLight ? BackupCodec.light : BackupCodec.strong);

@@ -161,7 +161,7 @@ class RestoreController extends Notifier<RestoreUi> {
       final bytes = await dest.download(name);
       state = state.copyWith(step: 1);
       final decoded = await BackupCodec.decode(bytes, password);
-      final snap = Snapshot.fromBytes(decoded.json);
+      final snap = await Snapshot.decode(decoded.json);
       state = state.copyWith(snapshot: snap, password: password, step: 2);
       return true;
     } on DestinationException {

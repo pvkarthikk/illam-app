@@ -75,7 +75,7 @@ void main() {
     final snap = await a.container
         .read(snapshotBuilderProvider)
         .build(homeId, createdAt: now.millisecondsSinceEpoch, includeKit: false);
-    final decoded = Snapshot.fromBytes(snap.toBytes());
+    final decoded = await Snapshot.decode(await snap.encode());
 
     await b.container.read(snapshotImporterProvider).import(decoded);
 

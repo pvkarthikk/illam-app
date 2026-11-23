@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:isolate';
 
 import 'package:drift/drift.dart';
 
@@ -99,6 +100,10 @@ class Snapshot {
     }
   }
 
+  /// [fromBytes] on a worker isolate, so a large snapshot never stalls the UI.
+  static Future<Snapshot> decode(Uint8List b) =>
+      Isolate.run(() => fromBytes(b));
+
   final String homeId;
   final String homeName;
   final String vaultId;
@@ -123,6 +128,9 @@ class Snapshot {
   };
 
   Uint8List toBytes() => Uint8List.fromList(utf8.encode(jsonEncode(toJson())));
+
+  /// [toBytes] on a worker isolate.
+  Future<Uint8List> encode() => Isolate.run(toBytes);
 }
 
 /// Builds a [Snapshot] from local database state, [HomeKeyRing], and [RecoveryKits].
@@ -153,18 +161,23 @@ class SnapshotBuilder {
     final home = await (db.select(
       db.homes,
     )..where((h) => h.id.equals(homeId))).getSingleOrNull();
-    final opRows = await (db.select(
-      db.ops,
-    )..where((o) => o.homeId.equals(homeId) & o.status.equals('quarantined').not())).get();
+    final opRows =
+        await (db.select(db.ops)..where(
+              (o) =>
+                  o.homeId.equals(homeId) &
+                  o.status.equals('quarantined').not(),
+            ))
+            .get();
     final memberOps = await log.allWire(homeId);
     final ring = await keyRing.all(homeId);
     final k = await keys;
     final myMemberId = prefs.memberId ?? k.deviceId;
-    final memberRow = await (db.select(
-      db.members,
-    )..where((m) => m.id.equals(myMemberId) & m.homeId.equals(homeId)))
-        .getSingleOrNull();
-    final myName = (memberRow?.firstName != null && memberRow!.firstName!.isNotEmpty)
+    final memberRow =
+        await (db.select(db.members)
+              ..where((m) => m.id.equals(myMemberId) & m.homeId.equals(homeId)))
+            .getSingleOrNull();
+    final myName =
+        (memberRow?.firstName != null && memberRow!.firstName!.isNotEmpty)
         ? memberRow.firstName!
         : Names.firstName(memberRow?.fullName ?? '');
 
@@ -207,9 +220,11 @@ class SnapshotBuilder {
 /// Deterministic SHA-256 summary of applied home ops (excluding `backup_status` & `vault_id`) and membership ops.
 abstract final class SnapshotHeads {
   static Future<String> compute(NestDatabase db, String homeId) async {
-    final opRows = await (db.select(
-      db.ops,
-    )..where((o) => o.homeId.equals(homeId) & o.status.equals('applied'))).get();
+    final opRows =
+        await (db.select(db.ops)..where(
+              (o) => o.homeId.equals(homeId) & o.status.equals('applied'),
+            ))
+            .get();
     final maxByDev = <String, int>{};
     for (final r in opRows) {
       if (r.tbl == 'backup_status') continue;
@@ -218,9 +233,8 @@ abstract final class SnapshotHeads {
       if (r.seq > prev) maxByDev[r.deviceId] = r.seq;
     }
 
-    final devLines = [
-      for (final e in maxByDev.entries) '${e.key}:${e.value}',
-    ]..sort();
+    final devLines = [for (final e in maxByDev.entries) '${e.key}:${e.value}']
+      ..sort();
 
     final memRows = await (db.select(
       db.memberOps,
