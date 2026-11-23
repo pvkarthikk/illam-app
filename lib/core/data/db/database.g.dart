@@ -19401,6 +19401,14 @@ abstract class _$NestDatabase extends GeneratedDatabase {
     'items_list_name_done',
     'CREATE INDEX items_list_name_done ON items (list, name_key, done)',
   );
+  late final Index itemsHomeListDone = Index(
+    'items_home_list_done',
+    'CREATE INDEX items_home_list_done ON items (home_id, list, deleted, done)',
+  );
+  late final Index itemsHomeListNameDone = Index(
+    'items_home_list_name_done',
+    'CREATE INDEX items_home_list_name_done ON items (home_id, list, name_key, deleted, done)',
+  );
   late final Index itemHistoryListLast = Index(
     'item_history_list_last',
     'CREATE INDEX item_history_list_last ON item_history (list, last_bought_at)',
@@ -19448,6 +19456,8 @@ abstract class _$NestDatabase extends GeneratedDatabase {
     billsActiveDueDay,
     itemsListDone,
     itemsListNameDone,
+    itemsHomeListDone,
+    itemsHomeListNameDone,
     itemHistoryListLast,
     todosDoneDue,
   ];
