@@ -25,6 +25,7 @@ class HlcClock {
   final Clock _clock;
   final DevicePrefs _prefs;
   Hlc? _last;
+  bool _dirty = false;
 
   Hlc get _lastOrZero {
     final cached = _last;
@@ -37,7 +38,11 @@ class HlcClock {
   }
 
   /// Local event: wall = max(now, last.wall); counter +1 if wall didn't move, else 0.
-  Future<String> next() async {
+  ///
+  /// With [persist] false the new HLC is only held in memory until [flush];
+  /// a write path that mints several HLCs in one transaction pays a single
+  /// prefs write instead of one per op.
+  Future<String> next({bool persist = true}) async {
     final last = _lastOrZero;
     final now = _clock.nowMs;
     var wall = now > last.wall ? now : last.wall;
@@ -48,8 +53,23 @@ class HlcClock {
     }
     final h = Hlc(wall, counter, _prefs.deviceId);
     _last = h;
-    await _prefs.setLastHlc(h.toString());
+    if (persist) {
+      _dirty = false;
+      await _prefs.setLastHlc(h.toString());
+    } else {
+      _dirty = true;
+    }
     return h.toString();
+  }
+
+  /// Persists the newest in-memory HLC once, if [next] was called with
+  /// `persist: false` and nothing has flushed yet.
+  Future<void> flush() async {
+    if (!_dirty) return;
+    final last = _last;
+    _dirty = false;
+    if (last == null) return;
+    await _prefs.setLastHlc(last.toString());
   }
 
   /// Remote HLC seen (sync, later phases): never go backwards.
@@ -59,10 +79,14 @@ class HlcClock {
     if (r.wall > l.wall || (r.wall == l.wall && r.counter > l.counter)) {
       final h = Hlc(r.wall, r.counter, _prefs.deviceId);
       _last = h;
+      _dirty = false; // the newer value below is written to prefs directly
       await _prefs.setLastHlc(h.toString());
     }
   }
 
   /// P03 switches deviceId: forget the cached HLC so new HLCs carry the new id.
-  void reset() => _last = null;
+  void reset() {
+    _last = null;
+    _dirty = false;
+  }
 }

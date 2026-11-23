@@ -121,14 +121,15 @@ class ChangeWriter {
     try {
       await db.transaction(() async {
         inverse = await _inverseOf(ops);
-        final maxHlc = await _maxHlc();
+        final state = await _nextSeqAndMaxHlc();
+        final maxHlc = state.maxHlc;
         if (maxHlc != null) {
           await hlc.observe(maxHlc);
         }
-        var seq = await _nextSeq();
+        var seq = state.seq;
         final recs = <OpRecord>[];
         for (final op in ops) {
-          final opHlc = await hlc.next();
+          final opHlc = await hlc.next(persist: false);
           recs.add(
             OpRecord(
               opId: '${prefs.deviceId}:$seq',
@@ -148,6 +149,7 @@ class ChangeWriter {
           );
           seq++;
         }
+        await hlc.flush();
 
         if (_validator != null) {
           final hasDevices = await db
@@ -160,12 +162,7 @@ class ChangeWriter {
             final view = DriftValidationView(db, registry);
             final nowMs = (_clock ?? SystemClock()).nowMs;
             for (final rec in recs) {
-              final d = await _validator.check(
-                rec,
-                recs,
-                view,
-                nowMs: nowMs,
-              );
+              final d = await _validator.check(rec, recs, view, nowMs: nowMs);
               if (d.verdict != Verdict.accept) {
                 throw ChangeRejected(d.reason);
               }
@@ -173,10 +170,11 @@ class ChangeWriter {
           }
         }
 
+        final signed = <OpRecord>[];
         for (final rec in recs) {
-          final signed = _signer != null ? await _signer.sign(rec) : rec;
-          await _applier.applyOne(signed);
+          signed.add(_signer != null ? await _signer.sign(rec) : rec);
         }
+        await _applier.applyLocal(signed);
         nextSeq = seq;
       });
     } on ChangeRejected catch (e) {
@@ -197,28 +195,56 @@ class ChangeWriter {
     );
   }
 
-  Future<int> _nextSeq() async {
+  /// Per-device sequence and the newest HLC in one round trip (both read the
+  /// same `ops` rows for this device, so one scan serves both).
+  Future<({int seq, String? maxHlc})> _nextSeqAndMaxHlc() async {
     final row = await db
         .customSelect(
-          'SELECT COALESCE(MAX(seq), 0) AS m FROM ops WHERE device_id = ?',
+          'SELECT COALESCE(MAX(seq), 0) AS m, MAX(hlc) AS h '
+          'FROM ops WHERE device_id = ?',
           variables: [Variable.withString(prefs.deviceId)],
         )
         .getSingle();
-    return (row.data['m'] as int) + 1;
+    return (seq: (row.data['m'] as int) + 1, maxHlc: row.data['h'] as String?);
   }
 
-  Future<String?> _maxHlc() async {
-    final row = await db
-        .customSelect(
-          'SELECT MAX(hlc) AS h FROM ops WHERE device_id = ?',
-          variables: [Variable.withString(prefs.deviceId)],
-        )
-        .getSingle();
-    return row.data['h'] as String?;
+  /// Reads every row the change touches up front — one `IN` query per distinct
+  /// table instead of one query per op (and per set field).
+  Future<Map<String, Map<String, Object?>>> _readUndoRows(
+    List<PendingOp> ops,
+  ) async {
+    final byTable = <String, Set<String>>{};
+    for (final op in ops) {
+      byTable.putIfAbsent(op.tbl, () => <String>{}).add(op.id);
+    }
+    final out = <String, Map<String, Object?>>{};
+    for (final e in byTable.entries) {
+      final spec = registry.spec(e.key);
+      final t = spec.table.actualTableName;
+      final ids = e.value.toList();
+      final rows = await db
+          .customSelect(
+            'SELECT * FROM $t WHERE id IN '
+            '(${List.filled(ids.length, '?').join(', ')})',
+            variables: [for (final id in ids) Variable.withString(id)],
+            readsFrom: {spec.table},
+          )
+          .get();
+      for (final r in rows) {
+        out['${e.key}/${r.data['id']}'] = {
+          for (final col in r.data.entries)
+            col.key: spec.columns.containsKey(col.key)
+                ? registry.fromSql(e.key, col.key, col.value)
+                : col.value,
+        };
+      }
+    }
+    return out;
   }
 
   Future<List<UndoEntry>> _inverseOf(List<PendingOp> ops) async {
     final entries = <UndoEntry>[];
+    final rows = await _readUndoRows(ops);
     final createdRows = <String>{};
     final existingRows = <String>{};
     final setIndex = <String, int>{};
@@ -227,15 +253,9 @@ class ChangeWriter {
       final rowKey = '${op.tbl}/${op.id}';
       if (createdRows.contains(rowKey)) continue;
 
-      final t = registry.spec(op.tbl).table.actualTableName;
       if (!existingRows.contains(rowKey)) {
-        final existing = await db
-            .customSelect(
-              'SELECT id FROM $t WHERE id = ?',
-              variables: [Variable.withString(op.id)],
-            )
-            .getSingleOrNull();
-        if (existing == null) {
+        final row = rows[rowKey];
+        if (row == null) {
           createdRows.add(rowKey);
           entries.add(
             UndoEntry(
@@ -282,15 +302,7 @@ class ChangeWriter {
         continue;
       }
 
-      final valRow = await db
-          .customSelect(
-            'SELECT ${op.field} AS v FROM $t WHERE id = ?',
-            variables: [Variable.withString(op.id)],
-          )
-          .getSingleOrNull();
-      final oldVal = valRow == null
-          ? null
-          : registry.fromSql(op.tbl, op.field, valRow.data['v']);
+      final oldVal = rows[rowKey]?[op.field];
       setIndex[fieldKey] = entries.length;
       entries.add(
         UndoEntry(
@@ -341,10 +353,7 @@ class ChangeWriter {
               variables: [Variable.withString(u)],
             )
             .getSingleOrNull();
-        return UndoConflict(
-          byMe: false,
-          name: memberRow?.data['n'] as String?,
-        );
+        return UndoConflict(byMe: false, name: memberRow?.data['n'] as String?);
       }
       return const UndoConflict(byMe: false);
     }
