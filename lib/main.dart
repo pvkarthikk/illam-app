@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -26,9 +27,14 @@ import 'package:nm_flat/core/providers.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   WidgetsBinding.instance.addObserver(PcloudRedirectCatcher());
-  final prefs = await DevicePrefs.open();
+  // Paint a light shell immediately; the heavy start-up below runs behind it.
+  runApp(const _BootShell());
+  unawaited(SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge));
   final secure = FlutterSecureStore();
-  final keyHex = await DbKey.loadOrCreate(secure);
+  final (prefs, keyHex) = await (
+    DevicePrefs.open(),
+    DbKey.loadOrCreate(secure),
+  ).wait;
   await encryptExistingDatabase(keyHex);
   var db = NestDatabase.open(keyHex: keyHex);
   try {
@@ -69,33 +75,6 @@ Future<void> main() async {
     runApp(const CantSecureApp());
     return;
   }
-  await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-  await initTimeZone();
-  await initNotifications(onResponse: NotificationRouter.instance.handle);
-  final launch = await plugin.getNotificationAppLaunchDetails();
-  if (launch?.didNotificationLaunchApp == true &&
-      launch?.notificationResponse?.payload != null) {
-    try {
-      final data =
-          jsonDecode(launch!.notificationResponse!.payload!)
-              as Map<String, dynamic>;
-      NotificationRouter.instance.pendingRoute = data['route'] as String?;
-    } catch (_) {}
-  }
-  await Workmanager().initialize(callbackDispatcher);
-  await Workmanager().registerPeriodicTask(
-    'nm.plan',
-    'nm.plan',
-    frequency: const Duration(hours: 1),
-    existingWorkPolicy: ExistingPeriodicWorkPolicy.keep,
-  );
-  await Workmanager().registerPeriodicTask(
-    'nm.sync.periodic',
-    'nm.sync',
-    frequency: const Duration(minutes: 15),
-    constraints: Constraints(networkType: NetworkType.connected),
-    existingWorkPolicy: ExistingPeriodicWorkPolicy.keep,
-  );
   runApp(
     ProviderScope(
       overrides: [
@@ -105,5 +84,60 @@ Future<void> main() async {
       ],
       child: const NestApp(),
     ),
+  );
+  unawaited(_initBackground());
+}
+
+/// Notifications and background work are not needed for the first frame, so
+/// they start after the app is on screen.
+Future<void> _initBackground() async {
+  try {
+    await initTimeZone();
+    await initNotifications(onResponse: NotificationRouter.instance.handle);
+    final launch = await plugin.getNotificationAppLaunchDetails();
+    final payload = launch?.notificationResponse?.payload;
+    if (launch?.didNotificationLaunchApp == true && payload != null) {
+      try {
+        final data = jsonDecode(payload) as Map<String, dynamic>;
+        final route = data['route'] as String?;
+        final nav = NotificationRouter.instance;
+        if (route != null) {
+          if (nav.router != null) {
+            nav.router!.go(route);
+          } else {
+            nav.pendingRoute = route;
+          }
+        }
+      } catch (_) {}
+    }
+    await Workmanager().initialize(callbackDispatcher);
+    await Future.wait([
+      Workmanager().registerPeriodicTask(
+        'nm.plan',
+        'nm.plan',
+        frequency: const Duration(hours: 1),
+        existingWorkPolicy: ExistingPeriodicWorkPolicy.keep,
+      ),
+      Workmanager().registerPeriodicTask(
+        'nm.sync.periodic',
+        'nm.sync',
+        frequency: const Duration(minutes: 15),
+        constraints: Constraints(networkType: NetworkType.connected),
+        existingWorkPolicy: ExistingPeriodicWorkPolicy.keep,
+      ),
+    ]);
+  } catch (_) {
+    // Reminders and background sync are best-effort; the app works without.
+  }
+}
+
+/// Minimal first frame shown while the database and keys open.
+class _BootShell extends StatelessWidget {
+  const _BootShell();
+
+  @override
+  Widget build(BuildContext context) => const MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: Scaffold(body: Center(child: CircularProgressIndicator())),
   );
 }
