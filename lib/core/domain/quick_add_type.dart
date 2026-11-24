@@ -4,7 +4,7 @@ final _rupeeSymbolRe = RegExp(r'₹', caseSensitive: false);
 final _rsRe = RegExp(r'\brs\.?\s*\d', caseSensitive: false);
 final _paidSpentRe = RegExp(r'\b(paid|spent)\s+\d', caseSensitive: false);
 final _leadingNumberNonUnitRe = RegExp(
-  r'^\d+\s+(?!(kg|g|gm|l|ltr|ml|pcs|pc|dozen|bunch|packets?|x)\b)\D',
+  r'^\d[\d,]*(?:\.\d+)?\s+(?!(kg|g|gm|l|ltr|ml|pcs|pc|dozen|bunch|packets?|x)\b)\D',
   caseSensitive: false,
 );
 final _todoRe = RegExp(

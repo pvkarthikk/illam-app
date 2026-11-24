@@ -2,14 +2,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:nm_flat/core/backup/destinations/webdav/propfind_parser.dart';
 
 void main() {
-  const name = 'NestMojo_ab12cd34_20261120-101500Z_0f1e2d3c.nmbak';
+  const name = 'Illam_ab12cd34_20261120-101500Z_0f1e2d3c.nmbak';
 
   test('parses Nextcloud style PROPFIND XML', () {
     const xml = '''
 <?xml version="1.0" encoding="utf-8"?>
 <d:multistatus xmlns:d="DAV:">
   <d:response>
-    <d:href>/remote.php/dav/files/anand/Nest%20Mojo%20Flat/</d:href>
+    <d:href>/remote.php/dav/files/anand/Illam/</d:href>
     <d:propstat>
       <d:prop>
         <d:resourcetype><d:collection/></d:resourcetype>
@@ -18,7 +18,7 @@ void main() {
     </d:propstat>
   </d:response>
   <d:response>
-    <d:href>/remote.php/dav/files/anand/Nest%20Mojo%20Flat/$name</d:href>
+    <d:href>/remote.php/dav/files/anand/Illam/$name</d:href>
     <d:propstat>
       <d:prop>
         <d:getcontentlength>2457600</d:getcontentlength>
@@ -35,7 +35,7 @@ void main() {
     expect(entries.length, 2);
 
     expect(entries[0].isFolder, isTrue);
-    expect(entries[0].name, 'Nest Mojo Flat');
+    expect(entries[0].name, 'Illam');
 
     expect(entries[1].name, name);
     expect(entries[1].size, 2457600);
@@ -48,7 +48,7 @@ void main() {
 <?xml version="1.0" encoding="utf-8"?>
 <D:multistatus xmlns:D="DAV:">
   <D:response>
-    <D:href>/remote.php/dav/files/anand/Nest%20Mojo%20Flat/</D:href>
+    <D:href>/remote.php/dav/files/anand/Illam/</D:href>
     <D:propstat>
       <D:prop>
         <D:resourcetype><D:collection /></D:resourcetype>
@@ -57,7 +57,7 @@ void main() {
     </D:propstat>
   </D:response>
   <D:response>
-    <D:href>/remote.php/dav/files/anand/Nest%20Mojo%20Flat/$name</D:href>
+    <D:href>/remote.php/dav/files/anand/Illam/$name</D:href>
     <D:propstat>
       <D:prop>
         <lp1:getcontentlength xmlns:lp1="DAV:">2457600</lp1:getcontentlength>
@@ -74,7 +74,7 @@ void main() {
     expect(entries.length, 2);
 
     expect(entries[0].isFolder, isTrue);
-    expect(entries[0].name, 'Nest Mojo Flat');
+    expect(entries[0].name, 'Illam');
 
     expect(entries[1].name, name);
     expect(entries[1].size, 2457600);

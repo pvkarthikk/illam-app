@@ -56,6 +56,7 @@ class BackupHeader {
     required this.kdf,
     required this.salt,
     required this.nonce,
+    this.keyCheck,
   });
 
   final String vaultId;
@@ -66,6 +67,7 @@ class BackupHeader {
   final KdfParams kdf;
   final Uint8List salt;
   final Uint8List nonce;
+  final String? keyCheck;
 
   Map<String, Object?> toJson() => {
     'vaultId': vaultId,
@@ -76,6 +78,7 @@ class BackupHeader {
     'salt': base64Encode(salt),
     'nonce': base64Encode(nonce),
     'bodySize': bodySize,
+    if (keyCheck != null) 'keyCheck': keyCheck,
   };
 }
 
@@ -126,6 +129,7 @@ Uint8List encodePrefix(BackupHeader h) {
     final saltB64 = decoded['salt'];
     final nonceB64 = decoded['nonce'];
     final bodySize = decoded['bodySize'];
+    final rawKeyCheck = decoded['keyCheck'];
 
     if (vaultId is! String ||
         snapshotId is! String ||
@@ -174,6 +178,7 @@ Uint8List encodePrefix(BackupHeader h) {
       kdf: KdfParams(memKiB: m, t: t, p: p),
       salt: salt,
       nonce: nonce,
+      keyCheck: rawKeyCheck is String ? rawKeyCheck : null,
     );
   } on Object {
     throw const BackupFormatException(BackupError.newerOrDamaged);
@@ -203,11 +208,11 @@ String backupFileName({
   final time = '${_pad2(u.hour)}${_pad2(u.minute)}${_pad2(u.second)}';
   final v8 = vaultId.substring(0, 8);
   final s8 = snapshotId.substring(0, 8);
-  return 'NestMojo_${v8}_$date-${time}Z_$s8.nmbak';
+  return 'Illam_${v8}_$date-${time}Z_$s8.nmbak';
 }
 
 final RegExp backupNameRe = RegExp(
-  r'^NestMojo_([0-9a-f]{8})_(\d{8}-\d{6})Z_([0-9a-f]{8})\.nmbak$',
+  r'^Illam_([0-9a-f]{8})_(\d{8}-\d{6})Z_([0-9a-f]{8})\.nmbak$',
 );
 
 String formatBackupSize(int bytes) {

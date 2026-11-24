@@ -234,22 +234,23 @@ class BackupRunner {
     final recoveryCapable = committedFull
         ? true
         : (existing?.recoveryCapable ?? false);
+    final debugOff = prefs.getFlag('debugFolderOffPhone');
+    bool isOff(DestinationConfig d) =>
+        debugOff ||
+        d.kind != 'folder' ||
+        !FolderDestination.isPhoneStorage(
+          (d.settings['treeUri'] as String?) ?? '',
+        );
     final offPhone =
-        config.destinations.any(
-          (d) =>
-              d.lastSuccessAt != null &&
-              (d.kind != 'folder' ||
-                  !FolderDestination.isPhoneStorage(
-                    (d.settings['treeUri'] as String?) ?? '',
-                  )),
-        ) ||
-        prefs.getFlag('debugFolderOffPhone');
+        config.destinations.any((d) => d.lastSuccessAt != null && isOff(d)) ||
+        debugOff;
     final destsJson = jsonEncode([
       for (final d in config.destinations)
         {
           'providerKind': d.kind,
           'lastSuccessAt': d.lastSuccessAt,
           'lastResult': d.lastResult,
+          'offPhone': isOff(d),
         },
     ]);
 

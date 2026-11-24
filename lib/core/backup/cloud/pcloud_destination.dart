@@ -7,9 +7,9 @@ import 'package:nm_flat/core/backup/destinations/backup_destination.dart';
 import 'package:nm_flat/core/backup/destinations/http_tools.dart';
 import 'package:nm_flat/core/backup/file_format.dart';
 
-const String _folder = '/Nest Mojo Flat';
+const String _folder = '/Illam';
 
-/// Backup destination stored in pCloud (`/Nest Mojo Flat`).
+/// Backup destination stored in pCloud (`/Illam`).
 class PcloudDestination extends BackupDestination {
   PcloudDestination(this.host, this.token, {Dio? dio})
     : _dio = dio ?? buildServerDio();
@@ -203,7 +203,7 @@ class PcloudDestination extends BackupDestination {
 
   @override
   Future<void> testWrite() async {
-    final tmp = 'NestMojo_test_${randomHex(4)}.tmp';
+    final tmp = 'Illam_test_${randomHex(4)}.tmp';
     await upload(tmp, Uint8List.fromList(utf8.encode('NMBK test')));
     await delete(tmp);
   }

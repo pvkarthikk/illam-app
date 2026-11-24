@@ -8040,7 +8040,7 @@ abstract class AppLocalizations {
   /// No description provided for @bkSrvS3Hint.
   ///
   /// In en, this message translates to:
-  /// **'Create a key that can only write to this bucket. Files go under nestmojo/.'**
+  /// **'Create a key that can only write to this bucket. Files go under illam/.'**
   String get bkSrvS3Hint;
 
   /// No description provided for @bkSrvS3Account.

@@ -29,7 +29,7 @@ final _memberKeyProvider =
                       d.memberId.equals(args.memberId) &
                       d.active.equals(true),
                 )
-                ..orderBy([(d) => OrderingTerm.asc(d.addedAt)])
+                ..orderBy([(d) => OrderingTerm.desc(d.addedAt)])
                 ..limit(1))
               .getSingleOrNull();
       if (row == null || row.signPub.isEmpty) return '';
@@ -164,9 +164,8 @@ class _MemberSheetBody extends ConsumerWidget {
             .watch(_memberKeyProvider((homeId: homeId, memberId: live.id)))
             .value ??
         '';
-    final fp = devFp.isNotEmpty
-        ? devFp
-        : (isMe ? (ref.watch(myFingerprintProvider).value ?? '') : '');
+    final myFp = isMe ? (ref.watch(myFingerprintProvider).value ?? '') : '';
+    final fp = isMe ? (myFp.isNotEmpty ? myFp : devFp) : devFp;
 
     final fullName = live.fullName ?? '';
     final firstName = live.firstName ?? Names.firstName(fullName);

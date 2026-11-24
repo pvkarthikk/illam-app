@@ -9,7 +9,7 @@ import 'package:nm_flat/core/backup/file_format.dart';
 
 const int _maxUploadBytes = 140 * 1024 * 1024;
 
-/// Backup destination stored in the app's Dropbox App Folder (`Apps/Nest Mojo Flat`).
+/// Backup destination stored in the app's Dropbox App Folder (`Apps/Illam`).
 class DropboxDestination extends BackupDestination {
   DropboxDestination(this.keeper);
 
@@ -249,7 +249,7 @@ class DropboxDestination extends BackupDestination {
 
   @override
   Future<void> testWrite() async {
-    final tmp = '/NestMojo_test_${randomHex(4)}.tmp';
+    final tmp = '/Illam_test_${randomHex(4)}.tmp';
     final data = Uint8List.fromList(utf8.encode('NMBK test'));
     final res = await _authedJson<dynamic>(
       Uri.parse('https://content.dropboxapi.com/2/files/upload'),

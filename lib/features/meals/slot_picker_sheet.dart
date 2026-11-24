@@ -177,8 +177,6 @@ class _SlotPickerSheetState extends ConsumerState<_SlotPickerSheet> {
         return a.name.compareTo(b.name);
       });
 
-    final trimmedNote = _noteCtrl.text.trim();
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
@@ -217,19 +215,24 @@ class _SlotPickerSheetState extends ConsumerState<_SlotPickerSheet> {
             controller: _noteCtrl,
             maxLength: 60,
             textCapitalization: TextCapitalization.sentences,
-            onChanged: (_) => setState(() {}),
             decoration: InputDecoration(
               hintText: l10n.mealsNoteHint,
               counterText: '',
             ),
           ),
           const SizedBox(height: 8),
-          NestButton(
-            label: l10n.mealsNoteSave,
-            kind: NestButtonKind.primary,
-            onPressed: (trimmedNote.isEmpty || _saving)
-                ? null
-                : () => _planKind(l10n, 'note', text: trimmedNote),
+          ValueListenableBuilder<TextEditingValue>(
+            valueListenable: _noteCtrl,
+            builder: (context, value, _) {
+              final trimmedNote = value.text.trim();
+              return NestButton(
+                label: l10n.mealsNoteSave,
+                kind: NestButtonKind.primary,
+                onPressed: (trimmedNote.isEmpty || _saving)
+                    ? null
+                    : () => _planKind(l10n, 'note', text: trimmedNote),
+              );
+            },
           ),
         ],
         if (recipes.length > 10) ...[

@@ -4,10 +4,10 @@ import 'package:drift/native.dart';
 import 'package:nm_flat/core/data/db/database.dart';
 import 'package:path_provider/path_provider.dart';
 
-/// Encrypts a legacy unencrypted `nestmojo.sqlite` file in place once.
+/// Encrypts a legacy unencrypted `illam.sqlite` file in place once.
 Future<void> encryptExistingDatabase(String keyHex) async {
   final dir = await getApplicationDocumentsDirectory();
-  final file = File('${dir.path}${Platform.pathSeparator}nestmojo.sqlite');
+  final file = File('${dir.path}${Platform.pathSeparator}illam.sqlite');
   if (!await file.exists()) return;
 
   final raf = await file.open();

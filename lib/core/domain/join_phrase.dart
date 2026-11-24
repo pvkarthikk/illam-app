@@ -36,7 +36,7 @@ abstract final class JoinPhrase {
   static List<int> password(String phrase) =>
       utf8.encode(normalise(phrase).split('-').skip(1).join(' '));
 
-  static String context(String nameplate) => 'nestmojo-join-v1|$nameplate';
+  static String context(String nameplate) => 'illam-join-v1|$nameplate';
 }
 
 /// QR ticket encoding connection details and ephemeral PAKE secret.
@@ -62,13 +62,13 @@ class JoinTicket {
       utf8.encode(jsonEncode({'ip': ip, 'p': port, 'n': nameplate})),
     );
     final s = b64url(secret);
-    return 'https://nestmojo.app/j#v=1&h=$homeId&a=$a&s=$s&e=$expiry';
+    return 'https://illam.app/j#v=1&h=$homeId&a=$a&s=$s&e=$expiry';
   }
 
   static JoinTicket? parse(String url) {
     try {
       final uri = Uri.tryParse(url);
-      if (uri == null || uri.host != 'nestmojo.app' || uri.path != '/j') {
+      if (uri == null || uri.host != 'illam.app' || uri.path != '/j') {
         return null;
       }
       final q = Uri.splitQueryString(uri.fragment);

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:nm_flat/core/nav/router.dart';
@@ -31,7 +33,7 @@ class CreateHomeController extends Notifier<bool> {
             model: model,
           );
       if (addStarter) {
-        await ref.read(recipesRepoProvider).addStarterPack();
+        ref.read(recipesRepoProvider).addStarterPack().ignore();
       }
       ref.read(routerProvider).go('${Routes.invite}?first=1');
     } finally {

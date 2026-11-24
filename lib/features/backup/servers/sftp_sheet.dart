@@ -77,7 +77,7 @@ class _SftpSheetState extends ConsumerState<_SftpSheet> {
     );
     _userCtrl = TextEditingController(text: (s?['user'] as String?) ?? '');
     _folderCtrl = TextEditingController(
-      text: (s?['folder'] as String?) ?? '/backups/nest-mojo',
+      text: (s?['folder'] as String?) ?? '/backups/illam',
     );
     _auth = (s?['auth'] as String?) == 'key' ? 'key' : 'password';
     if (_auth == 'key') {

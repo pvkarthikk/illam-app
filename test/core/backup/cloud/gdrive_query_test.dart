@@ -4,8 +4,8 @@ import 'package:nm_flat/core/backup/cloud/gdrive_destination.dart';
 void main() {
   test('nameQuery formats unescaped filename', () {
     expect(
-      GdriveDestination.nameQuery('NestMojo_a.nmbak'),
-      "name = 'NestMojo_a.nmbak' and trashed = false",
+      GdriveDestination.nameQuery('Illam_a.nmbak'),
+      "name = 'Illam_a.nmbak' and trashed = false",
     );
   });
 

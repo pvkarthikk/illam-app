@@ -8,7 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 /// Captures pCloud OAuth redirect URIs before `go_router` can handle them.
 class PcloudRedirectCatcher with WidgetsBindingObserver {
-  static Completer<Uri>? pending;
+  static Completer<Uri?>? pending;
 
   @override
   Future<bool> didPushRouteInformation(RouteInformation routeInformation) async {
@@ -58,9 +58,17 @@ class PcloudAuth {
     return (token: token, host: host);
   }
 
+  static void cancel() {
+    final completer = PcloudRedirectCatcher.pending;
+    PcloudRedirectCatcher.pending = null;
+    if (completer != null && !completer.isCompleted) {
+      completer.complete(null);
+    }
+  }
+
   static Future<({String token, String host})?> signIn() async {
     final state = randomHex(16);
-    final completer = Completer<Uri>();
+    final completer = Completer<Uri?>();
     PcloudRedirectCatcher.pending = completer;
 
     final url = authorizeUrl(
@@ -75,6 +83,7 @@ class PcloudAuth {
     }
     try {
       final uri = await completer.future.timeout(const Duration(minutes: 10));
+      if (uri == null) return null;
       return parseRedirect(uri, state);
     } on TimeoutException {
       if (identical(PcloudRedirectCatcher.pending, completer)) {

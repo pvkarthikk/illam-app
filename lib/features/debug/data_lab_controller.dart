@@ -24,23 +24,33 @@ final devNotesProvider = StreamProvider<List<DevNote>>((ref) {
 });
 
 final opStatsProvider =
-    StreamProvider<({int total, Map<String, int> perTable, List<OpRow> last50})>(
-      (ref) {
-        final db = ref.watch(dbProvider);
-        return db.select(db.ops).watch().map((rows) {
-          final perTable = <String, int>{};
-          for (final row in rows) {
-            perTable[row.tbl] = (perTable[row.tbl] ?? 0) + 1;
-          }
-          final sorted = [...rows]..sort((a, b) => b.hlc.compareTo(a.hlc));
-          return (
-            total: rows.length,
-            perTable: perTable,
-            last50: sorted.take(50).toList(),
-          );
-        });
-      },
-    );
+    StreamProvider.autoDispose<
+      ({int total, Map<String, int> perTable, List<OpRow> last50})
+    >((ref) {
+      final db = ref.watch(dbProvider);
+      return db
+          .customSelect(
+            'SELECT tbl, COUNT(*) AS cnt FROM ops GROUP BY tbl',
+            readsFrom: {db.ops},
+          )
+          .watch()
+          .asyncMap((countRows) async {
+            final perTable = <String, int>{};
+            var total = 0;
+            for (final row in countRows) {
+              final tbl = row.read<String>('tbl');
+              final cnt = row.read<int>('cnt');
+              perTable[tbl] = cnt;
+              total += cnt;
+            }
+            final last50 =
+                await (db.select(db.ops)
+                      ..orderBy([(o) => OrderingTerm.desc(o.hlc)])
+                      ..limit(50))
+                    .get();
+            return (total: total, perTable: perTable, last50: last50);
+          });
+    });
 
 final dataLabControllerProvider =
     NotifierProvider<DataLabController, List<UndoToken>>(DataLabController.new);

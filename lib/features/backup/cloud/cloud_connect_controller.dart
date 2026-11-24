@@ -71,6 +71,10 @@ class CloudConnectController extends Notifier<CloudConnectState> {
     String? reauthDestId,
     required AppLocalizations l10n,
   }) async {
+    if (state.busy == 'pcloud') {
+      PcloudAuth.cancel();
+      await Future<void>.delayed(Duration.zero);
+    }
     if (state.busy != null) return;
     state = state.copyWith(clearError: true, clearNext: true);
 

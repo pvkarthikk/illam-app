@@ -5036,7 +5036,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get bkSrvS3Hint =>
-      'Create a key that can only write to this bucket. Files go under nestmojo/.';
+      'Create a key that can only write to this bucket. Files go under illam/.';
 
   @override
   String bkSrvS3Account(Object bucket, Object service) {

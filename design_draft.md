@@ -1,4 +1,4 @@
-# Nest Mojo - Flat: Offline-First Household Management & Local Wi-Fi Sync
+# Illam: Offline-First Household Management & Local Wi-Fi Sync
 
 *   **Author:** Karthik Venkatesh
 *   **Status:** Draft
@@ -8,7 +8,7 @@
 
 ## Overview
 
-Nest Mojo - Flat is an Android-first, offline-first household management application for Indian flats and nuclear families. Every household member holds a complete local copy of the flat's data on their own phone and synchronizes directly with other family phones over the home Wi-Fi network—with no cloud backend, no user accounts, and no recurring server hosting costs.
+Illam is an Android-first, offline-first household management application for Indian flats and nuclear families. Every household member holds a complete local copy of the flat's data on their own phone and synchronizes directly with other family phones over the home Wi-Fi network—with no cloud backend, no user accounts, and no recurring server hosting costs.
 
 Version 1 covers five text-and-number household workflows in one unified app: assignable one-time and recurring todos, store- and app-grouped shopping lists, domestic help (maid) attendance and adjustable monthly salary calculation, manual household expenses with recurring bills, budgets, and splits, and a weekly meal planner backed by recipes and ingredients. Every member can independently export a passphrase-encrypted backup file through Android's system file picker to Google Drive, OneDrive, or local storage and restore it onto a replacement phone with deterministic bidirectional conflict resolution upon reconnecting to home Wi-Fi.
 
@@ -24,7 +24,7 @@ Solving this purely on-device without a central server introduces four hard prob
 3. **Backup restore collisions:** Restoring an older cloud backup onto a replacement phone can silently drop newer writes, swallow counter increments, or resurrect deleted items across every family phone unless device identity, cursors, and tombstones are isolated from backups.
 4. **Role administration without a server:** Restricting membership changes and maid salary edits to home owners must avoid zero-owner lockouts and stale offline role overwrites.
 
-Nest Mojo - Flat solves these problems by combining a unified local SQLite op-log and deterministic merge engine with owner-paired encrypted home Wi-Fi sync, centralized app-level role guards, and passphrase-encrypted portable backups via Android Storage Access Framework (SAF).
+Illam solves these problems by combining a unified local SQLite op-log and deterministic merge engine with owner-paired encrypted home Wi-Fi sync, centralized app-level role guards, and passphrase-encrypted portable backups via Android Storage Access Framework (SAF).
 
 ## Goals
 
@@ -39,7 +39,7 @@ Nest Mojo - Flat solves these problems by combining a unified local SQLite op-lo
 
 *   **Away-from-home cellular / mobile-network sync:** Deferred out of v1. Edits made outside home Wi-Fi queue locally and sync when devices reconnect on home Wi-Fi.
 *   **Media and file attachments:** No photos, bill receipts, recipe images, or maid ID-proof scans in v1; all data is strictly text, numbers, and dates.
-*   **iOS support:** Production v1 targets Android only (`app.nestmojo`); iOS is deferred until user demand or funding justifies it.
+*   **iOS support:** Production v1 targets Android only (`io.github.pvkarthikk.illam`); iOS is deferred until user demand or funding justifies it.
 *   **Cryptographic sync-layer RBAC:** v1 assumes cooperative family members and uses centralized app-level owner guards with stale-authority flagging rather than per-operation cryptographic signatures against rooted or malicious devices.
 *   **Native cloud provider SDKs or live cloud sync:** No Google Drive API, Microsoft Graph/OneDrive SDK, OAuth app verification, or using personal cloud storage as a live sync relay.
 *   **Multi-currency accounting or Splitwise-style debt-simplification graphs:** Expenses use INR (`₹`) with equal/custom splits and a monthly net summary, excluding settlement transfers from monthly spending budgets.
@@ -60,7 +60,7 @@ Nest Mojo - Flat solves these problems by combining a unified local SQLite op-lo
 ### CUJ 2: Concurrent Offline Shopping & Todo Edits Converging on Home Wi-Fi
 
 *   **Given**: User A and User B have synced phones. Both go offline. On the same shopping item ("Milk", grouped under `Zepto`), User A changes the store group to `DMart` while User B marks `checked = true`. Separately, both phones cross midnight on a recurring daily todo ("Switch off geyser").
-*   **When**: Both users return home and open Nest Mojo - Flat on home Wi-Fi (or tap "Sync Now").
+*   **When**: Both users return home and open Illam on home Wi-Fi (or tap "Sync Now").
 *   **Then**: Chunked transactional sync merges the shopping item via Field-LWW so both changes converge deterministically without overwriting unrelated fields, the recurring daily todo appears once (not duplicated) via deterministic occurrence keying, and both phones show identical materialized state and matching state digests.
 
 ### CUJ 3: Maid Daily Attendance, Adjustable Monthly Salary, and Optional Expense Logging
@@ -84,7 +84,7 @@ Nest Mojo - Flat solves these problems by combining a unified local SQLite op-lo
 ### CUJ 6: Encrypted Personal Backup via SAF and Bidirectional Restore Merge
 
 *   **Given**: User A previously exported a passphrase-encrypted `.nmflat` backup file to personal Google Drive via Android SAF on Day 10. On Day 14, User A's phone breaks, while User B has deleted two shopping items and added three expenses on Days 11–14.
-*   **When**: User A installs Nest Mojo - Flat on a replacement Android phone, selects "Restore from Backup", picks the `.nmflat` file from Google Drive via SAF, enters the backup passphrase, and later syncs with User B on home Wi-Fi.
+*   **When**: User A installs Illam on a replacement Android phone, selects "Restore from Backup", picks the `.nmflat` file from Google Drive via SAF, enters the backup passphrase, and later syncs with User B on home Wi-Fi.
 *   **Then**: Restore validates `home_id` and the AEAD tag, mints a brand-new `deviceId` (keeping User A's existing `memberId`), clears peer cursors, and merges with User B on Wi-Fi so User B's Day 11–14 expenses appear on User A's phone, User B's tombstoned deletions stay deleted (never resurrected), and any newer edits from the backup propagate cleanly to User B.
 
 --------------------------------------------------------------------------------
@@ -198,7 +198,7 @@ All currency values are stored as integer paise (`int`, `₹1 = 100`) and format
 3.  The joining phone scans the QR code, saves `home_sync_key` in `flutter_secure_storage`, opens the encrypted TCP session, registers its new `member_id` + `device_id`, and pulls the initial paginated op stream.
 
 #### Peer Discovery & Foreground Sync Trigger Model
-*   **Discovery:** While the app is open on Wi-Fi, `LanSyncService` acquires a scoped `WifiManager.MulticastLock` and registers/browses `_nestmojo._tcp` via Android `NsdManager`, placing only `h=<truncated_sha256(home_id || "nestmojo-mdns-v1")>` and `p=<protocol_ver>` in TXT records (zero PII, zero SSID reads, zero Location permissions). If router AP isolation blocks multicast, users can tap "Connect Manually" and enter or scan a peer's `IP:port`.
+*   **Discovery:** While the app is open on Wi-Fi, `LanSyncService` acquires a scoped `WifiManager.MulticastLock` and registers/browses `_illam._tcp` via Android `NsdManager`, placing only `h=<truncated_sha256(home_id || "illam-mdns-v1")>` and `p=<protocol_ver>` in TXT records (zero PII, zero SSID reads, zero Location permissions). If router AP isolation blocks multicast, users can tap "Connect Manually" and enter or scan a peer's `IP:port`.
 *   **Sync Triggers:** Foreground opportunistic auto-sync whenever two home phones have the app open on Wi-Fi, plus a manual "Sync Now" button (which optionally holds a short-lived Android `dataSync` foreground notification while an active transfer is in progress). No silent Doze-killed background daemon is promised in v1.
 *   **Glare Resolution:** If Device A and Device B discover each other simultaneously, the device with the lexicographically lower `device_id` acts as TCP initiator and the higher `device_id` acts as listener.
 
@@ -241,7 +241,7 @@ Initiator (lower device_id)                         Listener (higher device_id)
     *   **Plaintext authenticated header (AAD):** `{magic: "NMFLAT1", format_version: 1, app_schema_version, home_id, kdf: "argon2id", kdf_mem_kib, kdf_iters, kdf_parallelism, salt_b64, nonce_b64, created_at_ms, op_count}`.
     *   **AEAD ciphertext payload:** Gzipped JSONL containing `{home_sync_key, sync_ops: [...]}` encrypted with the Argon2id-derived key using `XChaCha20-Poly1305`. Device-local state (`device_id`, `local_seq`, `peer_cursors`, `sync_events`) is strictly excluded.
     *   **Key recovery:** Because the key derives from a user-chosen backup passphrase (or generated recovery code), backups remain decryptable on a brand-new phone even if the old phone and its Android Keystore are completely lost. The derived key may optionally be cached in `flutter_secure_storage` purely to avoid re-typing on routine exports.
-*   **Export Flow:** Uses Android SAF (`ACTION_CREATE_DOCUMENT`) writing a new timestamped filename (`nestmojo_YYYYMMDD_HHMMSS.nmflat`) so cloud providers like OneDrive never suffer in-place overwrite truncation.
+*   **Export Flow:** Uses Android SAF (`ACTION_CREATE_DOCUMENT`) writing a new timestamped filename (`illam_YYYYMMDD_HHMMSS.nmflat`) so cloud providers like OneDrive never suffer in-place overwrite truncation.
 *   **Restore Flow:** Uses Android SAF (`ACTION_OPEN_DOCUMENT`). Validates header `magic`, `format_version`, and AEAD authentication tag; checks `home_id` (blocking accidental merge of a different household's backup into an active home); takes an automatic local pre-restore SQLite snapshot; mints a **brand-new `device_id`** (preserving the user's `member_id`), resets `peer_cursors`, freezes historical `device_id` PN-Counter slots, and runs every restored op through the standard CRDT ingest pipeline in chunked transactions; displays a plain-English merge summary (inserted, updated, skipped, tombstones preserved).
 
 ### 8. On-Device Observability & `/debug` Diagnostics (`kDebugMode`)
@@ -345,7 +345,7 @@ Implementation is organized into six incremental vertical milestones (`M0–M5`)
 
 ##### 1. `AGENTS.md` (Modify)
 *   **Type / Scope:** Repository conventions and coding contract.
-*   **Proposed Changes:** Fix the duplicate Material import typo on line 17 to mandate `package:material_ui/material_ui.dart` (forbidding `package:flutter/material.dart`); change currency notation on line 24 from `£` to INR `₹` (`₹1 = 100` paise, Indian grouping `₹1,234`); update the `SyncedColumns` and `ChangeWriter` data rules to match the `sync_ops` + `field_clocks` + `pn_counters` + compensating-undo design; align app display title punctuation (`Nest Mojo - Flat`).
+*   **Proposed Changes:** Fix the duplicate Material import typo on line 17 to mandate `package:material_ui/material_ui.dart` (forbidding `package:flutter/material.dart`); change currency notation on line 24 from `£` to INR `₹` (`₹1 = 100` paise, Indian grouping `₹1,234`); update the `SyncedColumns` and `ChangeWriter` data rules to match the `sync_ops` + `field_clocks` + `pn_counters` + compensating-undo design; align app display title punctuation (`Illam`).
 
 ##### 2. `pubspec.yaml` and `l10n.yaml` (Modify / Create)
 *   **Type / Scope:** Package manifest and Flutter ARB localization configuration.
@@ -353,15 +353,15 @@ Implementation is organized into six incremental vertical milestones (`M0–M5`)
 
 ##### 3. `android/app/build.gradle.kts` (Modify)
 *   **Type / Scope:** Android Gradle build configuration.
-*   **Proposed Changes:** Change `namespace` and `applicationId` from `com.example.nm_flat` to `app.nestmojo`; set `minSdk = 26` and `targetSdk = 35` so `NsdManager`, SAF document pickers, and modern Android Keystore APIs are guaranteed.
+*   **Proposed Changes:** Change `namespace` and `applicationId` from `com.example.nm_flat` to `io.github.pvkarthikk.illam`; set `minSdk = 26` and `targetSdk = 35` so `NsdManager`, SAF document pickers, and modern Android Keystore APIs are guaranteed.
 
 ##### 4. `android/app/src/main/AndroidManifest.xml` and `android/app/src/main/res/xml/data_extraction_rules.xml` (Modify / Create)
 *   **Type / Scope:** Android manifest permissions and backup-exclusion rules.
 *   **Proposed Changes:** Add `<uses-permission>` entries for `INTERNET`, `ACCESS_NETWORK_STATE`, `ACCESS_WIFI_STATE`, `CHANGE_WIFI_MULTICAST_STATE`, and `CAMERA` (for QR pairing only — explicitly omitting Location and `NEARBY_WIFI_DEVICES`); set `android:allowBackup="false"` and `android:dataExtractionRules="@xml/data_extraction_rules"` excluding SQLite databases and SharedPreferences so Android Auto Backup never clones `device_id` across phones; declare optional `FOREGROUND_SERVICE_DATA_SYNC` for bounded manual Sync Now transfers.
 
-##### 5. `android/app/src/main/kotlin/app/nestmojo/MainActivity.kt` (Create; Delete `android/app/src/main/kotlin/com/example/nm_flat/MainActivity.kt`)
+##### 5. `android/app/src/main/kotlin/io/github/pvkarthikk/illam/MainActivity.kt` (Create; Delete `android/app/src/main/kotlin/com/example/nm_flat/MainActivity.kt`)
 *   **Type / Scope:** Android Kotlin platform bridge.
-*   **Proposed Changes:** Move `MainActivity` to `package app.nestmojo` matching the updated namespace; register lightweight `MethodChannel` handlers for: (a) acquiring/releasing `WifiManager.MulticastLock` + running `NsdManager` service registration/discovery (`_nestmojo._tcp` TXT records), and (b) launching Android SAF `ACTION_CREATE_DOCUMENT` / `ACTION_OPEN_DOCUMENT` intents and streaming bytes to/from `.nmflat` document URIs without third-party cloud SDKs.
+*   **Proposed Changes:** Move `MainActivity` to `package io.github.pvkarthikk.illam` matching the updated namespace; register lightweight `MethodChannel` handlers for: (a) acquiring/releasing `WifiManager.MulticastLock` + running `NsdManager` service registration/discovery (`_illam._tcp` TXT records), and (b) launching Android SAF `ACTION_CREATE_DOCUMENT` / `ACTION_OPEN_DOCUMENT` intents and streaming bytes to/from `.nmflat` document URIs without third-party cloud SDKs.
 
 ##### 6. `lib/l10n/app_en.arb` (Create)
 *   **Type / Scope:** Application localization strings (ICU placeholders and plurals).
@@ -437,7 +437,7 @@ Implementation is organized into six incremental vertical milestones (`M0–M5`)
 
 ##### 22. `lib/core/data/sync/lan_discovery_service.dart` (Create)
 *   **Type / Scope:** Android `NsdManager` + `MulticastLock` bridge and manual `IP:port` fallback.
-*   **Proposed Changes:** Wrap the Kotlin `MethodChannel` to advertise/browse `_nestmojo._tcp` using only `h=<truncated_sha256(home_id || "nestmojo-mdns-v1")>` and `p=<protocol_ver>` while foregrounded, releasing `MulticastLock` immediately on pause/background; expose manual `IP:port` + QR peer targeting when multicast is blocked by router AP isolation.
+*   **Proposed Changes:** Wrap the Kotlin `MethodChannel` to advertise/browse `_illam._tcp` using only `h=<truncated_sha256(home_id || "illam-mdns-v1")>` and `p=<protocol_ver>` while foregrounded, releasing `MulticastLock` immediately on pause/background; expose manual `IP:port` + QR peer targeting when multicast is blocked by router AP isolation.
 
 ##### 23. `lib/core/data/sync/lan_sync_service.dart` (Create)
 *   **Type / Scope:** Raw TCP sync state machine (`dart:io` `ServerSocket`/`Socket`).
@@ -457,7 +457,7 @@ Implementation is organized into six incremental vertical milestones (`M0–M5`)
 
 ##### 26. `lib/core/data/backup/backup_service.dart` (Create)
 *   **Type / Scope:** SAF export/import coordinator with pre-restore snapshot and `device_id` rotation.
-*   **Proposed Changes:** Export timestamped `nestmojo_YYYYMMDD_HHMMSS.nmflat` files through the `MainActivity.kt` SAF channel (optionally caching derived export key in `flutter_secure_storage`); on restore, validate header/AEAD/`home_id`, copy local SQLite to a pre-restore safety snapshot, mint a brand-new `device_id` (preserving `member_id`), clear `peer_cursors`, mark restored PN-Counter slots read-only, ingest ops in chunked transactions through `ChangeWriter.ingestRemoteBatch`, and return a structured `RestoreMergeSummary`.
+*   **Proposed Changes:** Export timestamped `illam_YYYYMMDD_HHMMSS.nmflat` files through the `MainActivity.kt` SAF channel (optionally caching derived export key in `flutter_secure_storage`); on restore, validate header/AEAD/`home_id`, copy local SQLite to a pre-restore safety snapshot, mint a brand-new `device_id` (preserving `member_id`), clear `peer_cursors`, mark restored PN-Counter slots read-only, ingest ops in chunked transactions through `ChangeWriter.ingestRemoteBatch`, and return a structured `RestoreMergeSummary`.
 
 ##### 27. `lib/features/settings_backup/settings_backup_screen.dart` and `settings_backup_controller.dart` (Create)
 *   **Type / Scope:** Settings, Light/Dark theme switch, and Backup/Restore UI.
@@ -520,7 +520,7 @@ Implementation is organized into six incremental vertical milestones (`M0–M5`)
 *   **Code Generation & Localization:** `flutter pub get`, `dart run build_runner build --delete-conflicting-outputs`, and `flutter gen-l10n` complete with exit code `0`.
 *   **Static Analysis & Linting:** `flutter analyze` passes with `0` errors and `0` warnings (no `// ignore` suppressions or weakened lints).
 *   **Unit, CRDT Simulation, Migration, & Widget Tests:** `flutter test` passes across all pure domain tests, 3-node randomized CRDT/sync simulations, Drift `SchemaVerifier` (`v1 -> v2 -> v3`) migration tests, golden `.nmflat` crypto/restore tests, and font-scale `2.0` widget tests (`>= 85%` line/branch coverage on `lib/core/domain/` and `lib/core/data/sync/`).
-*   **Android Release Build Check:** `flutter build apk --release` succeeds with `applicationId = app.nestmojo`, `android:allowBackup="false"`, and zero Location/cleartext permissions.
+*   **Android Release Build Check:** `flutter build apk --release` succeeds with `applicationId = io.github.pvkarthikk.illam`, `android:allowBackup="false"`, and zero Location/cleartext permissions.
 *   **Physical Android Device Soak Checklist (M2 & M3):** Run on two physical Android phones on home Wi-Fi (testing mDNS discovery, manual `IP:port` fallback, mid-batch Wi-Fi toggle recovery, airplane-mode divergence + reconnect, clock-skew banner, and SAF `.nmflat` round-trip via Google Drive and local storage verifying identical `/debug` state digests).
 
 --------------------------------------------------------------------------------

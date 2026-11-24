@@ -13,6 +13,7 @@ import 'package:nm_flat/core/backup/backup_config.dart';
 import 'package:nm_flat/core/backup/backup_schedule.dart';
 import 'package:nm_flat/core/backup/cloud/pcloud_auth.dart';
 import 'package:nm_flat/core/backup/destination_secrets.dart';
+import 'package:nm_flat/core/crypto/device_keys.dart';
 import 'package:nm_flat/core/data/bootstrap.dart';
 import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/data/db/db_key.dart';
@@ -31,32 +32,44 @@ Future<void> main() async {
   runApp(const _BootShell());
   unawaited(SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge));
   final secure = FlutterSecureStore();
-  final (prefs, keyHex) = await (
-    DevicePrefs.open(),
-    DbKey.loadOrCreate(secure),
-  ).wait;
-  await encryptExistingDatabase(keyHex);
-  var db = NestDatabase.open(keyHex: keyHex);
+  final keysFuture = DeviceKeys.ensure(secure)..ignore();
+  final DevicePrefs prefs;
+  NestDatabase db;
   try {
-    await db.customSelect('SELECT COUNT(*) FROM sqlite_master').get();
-  } on Object catch (e) {
-    if (!e.toString().contains('file is not a database')) rethrow;
-    try {
-      await db.close();
-    } on Object {
-      // Ignore close error on unreadable database file.
+    final (loadedPrefs, keyHex) = await (
+      DevicePrefs.open(),
+      DbKey.loadOrCreate(secure),
+    ).wait;
+    prefs = loadedPrefs;
+    if (!prefs.getFlag('dbEncrypted')) {
+      await encryptExistingDatabase(keyHex);
+      await prefs.setFlag('dbEncrypted', true);
     }
-    final docs = await getApplicationDocumentsDirectory();
-    for (final name in const [
-      'nestmojo.sqlite',
-      'nestmojo.sqlite-wal',
-      'nestmojo.sqlite-shm',
-    ]) {
-      final f = File('${docs.path}${Platform.pathSeparator}$name');
-      if (await f.exists()) await f.delete();
-    }
-    await prefs.clearAll();
     db = NestDatabase.open(keyHex: keyHex);
+    try {
+      await db.customSelect('SELECT COUNT(*) FROM sqlite_master').get();
+    } on Object catch (e) {
+      if (!e.toString().contains('file is not a database')) rethrow;
+      try {
+        await db.close();
+      } on Object {
+        // Ignore close error on unreadable database file.
+      }
+      final docs = await getApplicationDocumentsDirectory();
+      for (final name in const [
+        'illam.sqlite',
+        'illam.sqlite-wal',
+        'illam.sqlite-shm',
+      ]) {
+        final f = File('${docs.path}${Platform.pathSeparator}$name');
+        if (await f.exists()) await f.delete();
+      }
+      await prefs.clearAll();
+      db = NestDatabase.open(keyHex: keyHex);
+    }
+  } catch (_) {
+    runApp(const CantSecureApp());
+    return;
   }
   HomeEraser.onErase.add((homeId) async {
     final cfg = await BackupConfigStore(secure).load(homeId);
@@ -69,8 +82,14 @@ Future<void> main() async {
     await cancelBackup(homeId);
     await BackupConfigStore(secure).delete(homeId);
   });
+  DeviceKeys? bootKeys;
   try {
-    await Bootstrap.ensureIdentity(secure: secure, prefs: prefs, db: db);
+    bootKeys = await Bootstrap.ensureIdentity(
+      secure: secure,
+      prefs: prefs,
+      db: db,
+      keys: keysFuture,
+    );
   } catch (_) {
     runApp(const CantSecureApp());
     return;
@@ -81,6 +100,12 @@ Future<void> main() async {
         prefsProvider.overrideWithValue(prefs),
         dbProvider.overrideWithValue(db),
         secureStoreProvider.overrideWithValue(secure),
+        deviceKeysProvider.overrideWith((_) {
+          final k = bootKeys;
+          bootKeys = null;
+          if (k != null) return k;
+          return DeviceKeys.ensure(secure);
+        }),
       ],
       child: const NestApp(),
     ),

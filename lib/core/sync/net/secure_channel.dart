@@ -67,7 +67,7 @@ class SecureChannel {
 
     final t = await sha256Of(
       concatBytes([
-        utf8.encode('nestmojo/chan/v1'),
+        utf8.encode('illam/chan/v1'),
         initiator ? mine : theirs,
         initiator ? theirs : mine,
       ]),
@@ -82,7 +82,7 @@ class SecureChannel {
     final k = await hkdfSha256(
       ikm: await shared.extractBytes(),
       salt: t,
-      info: utf8.encode('nestmojo/chan/keys'),
+      info: utf8.encode('illam/chan/keys'),
       length: 64,
     );
     final i2r = Uint8List.fromList(k.sublist(0, 32));
@@ -127,7 +127,7 @@ class SecureChannel {
     final k = await hkdfSha256(
       ikm: secret,
       salt: transcript,
-      info: utf8.encode('nestmojo/chan/rekey'),
+      info: utf8.encode('illam/chan/rekey'),
       length: 64,
     );
     final i2r = Uint8List.fromList(k.sublist(0, 32));

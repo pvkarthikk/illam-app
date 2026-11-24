@@ -3765,7 +3765,7 @@
   "bkSrvBucket": "Bucket",
   "bkSrvAccessKeyId": "Access key ID",
   "bkSrvSecretKey": "Secret access key",
-  "bkSrvS3Hint": "Create a key that can only write to this bucket. Files go under nestmojo/.",
+  "bkSrvS3Hint": "Create a key that can only write to this bucket. Files go under illam/.",
   "bkSrvS3Account": "{bucket} · {service}",
   "@bkSrvS3Account": {
     "placeholders": {

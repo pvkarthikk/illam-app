@@ -7,10 +7,10 @@ import 'package:nm_flat/core/crypto/bytes.dart';
 
 /// Signature domain separation constants.
 abstract final class SignDomain {
-  static const env = 'nestmojo/env/v1';
-  static const op = 'nestmojo/op/v1';
-  static const auth = 'nestmojo/auth/v1';
-  static const join = 'nestmojo/join/v1';
+  static const env = 'illam/env/v1';
+  static const op = 'illam/op/v1';
+  static const auth = 'illam/auth/v1';
+  static const join = 'illam/join/v1';
 }
 
 /// Returns `utf8(domain) || 0x00 || body` for domain-separated signing/hashing.

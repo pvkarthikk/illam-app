@@ -127,7 +127,7 @@ class Spake2 {
     final okm = hkdfSync(
       ikm: password,
       salt: utf8.encode(context),
-      info: utf8.encode('nestmojo/spake2/w'),
+      info: utf8.encode('illam/spake2/w'),
       length: 40,
     );
     return _int(okm) % _dom.n;

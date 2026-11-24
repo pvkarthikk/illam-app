@@ -195,6 +195,7 @@ class _SyncLifecycleState extends ConsumerState<SyncLifecycle> {
   StreamSubscription<void>? _changedSub;
   StreamSubscription<void>? _syncedSub;
   Timer? _stopTimer;
+  Timer? _startTimer;
   bool _dirty = false;
 
   @override
@@ -202,7 +203,7 @@ class _SyncLifecycleState extends ConsumerState<SyncLifecycle> {
     super.initState();
     _lifecycle = AppLifecycleListener(onResume: _onResume, onPause: _onPause);
     final engine = ref.read(syncEngineProvider);
-    unawaited(engine.startForeground());
+    _startSoon();
     _syncedSub = engine.synced.listen((_) => _dirty = false);
     _changedSub = ref.read(changesProvider).changed.listen((_) {
       _dirty = true;
@@ -210,13 +211,24 @@ class _SyncLifecycleState extends ConsumerState<SyncLifecycle> {
     });
   }
 
+  void _startSoon() {
+    _startTimer?.cancel();
+    _startTimer = Timer(const Duration(seconds: 1), () {
+      if (mounted) {
+        unawaited(ref.read(syncEngineProvider).startForeground());
+      }
+    });
+  }
+
   void _onResume() {
     _stopTimer?.cancel();
     _stopTimer = null;
-    unawaited(ref.read(syncEngineProvider).startForeground());
+    _startSoon();
   }
 
   void _onPause() {
+    _startTimer?.cancel();
+    _startTimer = null;
     if (_dirty) {
       try {
         unawaited(
@@ -241,6 +253,7 @@ class _SyncLifecycleState extends ConsumerState<SyncLifecycle> {
 
   @override
   void dispose() {
+    _startTimer?.cancel();
     _stopTimer?.cancel();
     _changedSub?.cancel();
     _syncedSub?.cancel();

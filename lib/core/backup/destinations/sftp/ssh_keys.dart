@@ -24,14 +24,14 @@ class SshKeys {
     final priv = Uint8List(seed.length + pub.length)
       ..setAll(0, seed)
       ..setAll(seed.length, pub);
-    return OpenSSHEd25519KeyPair(pub, priv, 'nestmojo');
+    return OpenSSHEd25519KeyPair(pub, priv, 'illam');
   }
 
   static String publicLine(Uint8List pub) {
     final blob = BytesBuilder(copy: false)
       ..add(_sshString(utf8.encode('ssh-ed25519')))
       ..add(_sshString(pub));
-    return 'ssh-ed25519 ${base64Encode(blob.takeBytes())} nestmojo';
+    return 'ssh-ed25519 ${base64Encode(blob.takeBytes())} illam';
   }
 
   static Uint8List _sshString(List<int> data) {

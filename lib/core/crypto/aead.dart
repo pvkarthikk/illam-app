@@ -107,7 +107,7 @@ abstract final class Aead {
 /// Anonymous public-key sealed box using X25519 + HKDF-SHA256 + XChaCha20-Poly1305.
 abstract final class SealedBox {
   static final _x25519 = X25519();
-  static final _info = utf8.encode('nestmojo/seal/v1');
+  static final _info = utf8.encode('illam/seal/v1');
 
   /// Encrypts [plain] to an X25519 public key [recipientPub].
   static Future<Uint8List> seal(List<int> recipientPub, List<int> plain) async {

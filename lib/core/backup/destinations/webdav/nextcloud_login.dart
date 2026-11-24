@@ -73,7 +73,7 @@ class NextcloudLogin {
   }
 
   static Uri davFolder(Uri server, String userId) => server.resolve(
-    'remote.php/dav/files/${Uri.encodeComponent(userId)}/Nest%20Mojo%20Flat/',
+    'remote.php/dav/files/${Uri.encodeComponent(userId)}/Illam/',
   );
 
   Future<String> userId(Uri server, String login, String pass) async {

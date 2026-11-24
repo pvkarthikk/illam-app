@@ -29,7 +29,7 @@ class SftpDestination extends BackupDestination {
       host: s['host'] as String? ?? '',
       port: (s['port'] as num?)?.toInt() ?? 22,
       user: s['user'] as String? ?? '',
-      folder: s['folder'] as String? ?? '/backups/nest-mojo',
+      folder: s['folder'] as String? ?? '/backups/illam',
       auth: s['auth'] as String? ?? 'password',
       hostKey: s['hostKey'] as String?,
       secret: secret,
@@ -278,7 +278,7 @@ class SftpDestination extends BackupDestination {
   @override
   Future<void> testWrite() => _run((sftp) async {
     await _ensureFolder(sftp);
-    final p = _path('NestMojo_test_${randomHex(4)}.tmp');
+    final p = _path('Illam_test_${randomHex(4)}.tmp');
     await _writeAll(sftp, p, Uint8List.fromList(utf8.encode('NMBK test')));
     await sftp.remove(p);
   });

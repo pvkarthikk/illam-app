@@ -63,7 +63,7 @@ class LanSyncService {
     }
     final service = BonsoirService(
       name: 'nm-${toHex(randomBytes(3))}',
-      type: '_nestmojo._tcp',
+      type: '_illam._tcp',
       port: port,
       attributes: {'h': tag, 'v': '1'},
     );
@@ -78,7 +78,7 @@ class LanSyncService {
     void Function(String host, int port) onPeer,
   ) async {
     await _stopDiscovery();
-    final d = BonsoirDiscovery(type: '_nestmojo._tcp');
+    final d = BonsoirDiscovery(type: '_illam._tcp');
     _discovery = d;
     await d.initialize();
     _discoverySub = d.eventStream!.listen((event) {

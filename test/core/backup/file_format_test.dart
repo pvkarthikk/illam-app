@@ -109,7 +109,7 @@ void main() {
       snapshotId: 'ffee0011${List.filled(24, '0').join()}',
       createdAtMs: ts,
     );
-    expect(name, 'NestMojo_a1b2c3d4_20261120-050309Z_ffee0011.nmbak');
+    expect(name, 'Illam_a1b2c3d4_20261120-050309Z_ffee0011.nmbak');
 
     final match = backupNameRe.firstMatch(name);
     expect(match, isNotNull);

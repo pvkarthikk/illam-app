@@ -100,7 +100,7 @@ void main() {
 
     test('xSeal/xOpen round trip and tamper detection', () async {
       final key = randomBytes(32);
-      final plain = utf8.encode('hello nest mojo');
+      final plain = utf8.encode('hello illam');
       final sealed = await Aead.xSeal(key, plain);
       expect(await Aead.xOpen(key, sealed), plain);
 

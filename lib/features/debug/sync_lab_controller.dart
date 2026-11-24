@@ -127,11 +127,14 @@ final syncMemberLogProvider = StreamProvider<List<MemberLogEntry>>((ref) {
       });
 });
 
-final syncRecentOpsProvider = StreamProvider<List<RecentOpEntry>>((ref) {
+final syncRecentOpsProvider = StreamProvider.autoDispose<List<RecentOpEntry>>((
+  ref,
+) {
   final home = ref.watch(currentHomeIdProvider).value;
   if (home == null) return Stream.value(const <RecentOpEntry>[]);
   final db = ref.watch(dbProvider);
   final log = ref.watch(membershipLogProvider);
+  final verified = <String, bool>{};
   return (db.select(db.ops)
         ..where((t) => t.homeId.equals(home))
         ..orderBy([
@@ -143,12 +146,20 @@ final syncRecentOpsProvider = StreamProvider<List<RecentOpEntry>>((ref) {
       .asyncMap((rows) async {
         final out = <RecentOpEntry>[];
         for (final row in rows) {
-          var ok = false;
-          if (row.sig.isNotEmpty) {
-            final pub = await log.signPubOf(row.deviceId);
-            if (pub != null) {
-              ok = await OpSigner.verify(OpRecord.fromRow(row), pub);
+          final cached = verified[row.opId];
+          final bool ok;
+          if (cached != null) {
+            ok = cached;
+          } else {
+            var checked = false;
+            if (row.sig.isNotEmpty) {
+              final pub = await log.signPubOf(row.deviceId);
+              if (pub != null) {
+                checked = await OpSigner.verify(OpRecord.fromRow(row), pub);
+              }
             }
+            verified[row.opId] = checked;
+            ok = checked;
           }
           out.add(RecentOpEntry(row: row, signed: ok));
         }
@@ -233,7 +244,7 @@ class SyncLabController extends AsyncNotifier<SyncLabState> {
             .get();
     final ops = [for (final r in opRows) opToWire(OpRecord.fromRow(r))];
     final bundle = {
-      'format': 'nestmojo-bundle/v1',
+      'format': 'illam-bundle/v1',
       'homeId': home,
       'memberOps': memberOps,
       'ops': ops,
@@ -294,7 +305,7 @@ class SyncLabController extends AsyncNotifier<SyncLabState> {
       final jsonStr = utf8.decode(gzip.decode(gz));
       final decoded = jsonDecode(jsonStr);
       if (decoded is! Map<String, Object?>) return null;
-      if (decoded['format'] != 'nestmojo-bundle/v1') return null;
+      if (decoded['format'] != 'illam-bundle/v1') return null;
       final homeId = decoded['homeId'];
       if (homeId is! String || homeId.isEmpty) return null;
       final memRaw = decoded['memberOps'] as List? ?? const [];

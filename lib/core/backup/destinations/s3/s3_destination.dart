@@ -39,7 +39,7 @@ DestError? s3ErrorKind(String? code, int status) {
   }
 }
 
-/// Parses an S3 `ListObjectsV2` XML response under prefix `nestmojo/`.
+/// Parses an S3 `ListObjectsV2` XML response under prefix `illam/`.
 ({List<RemoteBackupFile> files, bool truncated, String? nextToken}) parseS3List(
   String xml,
 ) {
@@ -47,8 +47,8 @@ DestError? s3ErrorKind(String? code, int status) {
   for (final m in _contentsRe.allMatches(xml)) {
     final block = m.group(1) ?? '';
     final rawKey = _keyRe.firstMatch(block)?.group(1)?.trim() ?? '';
-    final name = rawKey.startsWith('nestmojo/')
-        ? rawKey.substring('nestmojo/'.length)
+    final name = rawKey.startsWith('illam/')
+        ? rawKey.substring('illam/'.length)
         : rawKey;
     if (!backupNameRe.hasMatch(name)) continue;
     final size =
@@ -111,7 +111,7 @@ class S3Destination extends BackupDestination {
   @override
   String get kind => 's3';
 
-  static String _key(String name) => 'nestmojo/$name';
+  static String _key(String name) => 'illam/$name';
 
   Uri _url(String key) {
     if (virtualHost) {
@@ -214,7 +214,7 @@ class S3Destination extends BackupDestination {
 
   @override
   Future<void> testWrite() async {
-    final tmp = 'NestMojo_test_${randomHex(4)}.tmp';
+    final tmp = 'Illam_test_${randomHex(4)}.tmp';
     await _send(
       'PUT',
       _url(_key(tmp)),
@@ -232,7 +232,7 @@ class S3Destination extends BackupDestination {
       final url = root.replace(
         queryParameters: <String, String>{
           'list-type': '2',
-          'prefix': 'nestmojo/',
+          'prefix': 'illam/',
           if (token != null && token.isNotEmpty) 'continuation-token': token,
         },
       );

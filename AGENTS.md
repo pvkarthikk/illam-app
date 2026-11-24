@@ -1,7 +1,7 @@
-# AGENTS.md — Nest Mojo : Flat (Flutter)
+# AGENTS.md — Illam (Flutter)
 
 ## The app
-"Nest Mojo : Flat" – a household app: house-help attendance and salary, grocery/shopping lists, cleaning tasks, meals and recipes, spends and bills, and later offline-first sync between family phones and encrypted backups. Android first, works fully offline. Android application id: `app.nestmojo`.
+"Illam" – a household app: house-help attendance and salary, grocery/shopping lists, cleaning tasks, meals and recipes, spends and bills, and later offline-first sync between family phones and encrypted backups. Android first, works fully offline. Android application id: `io.github.pvkarthikk.illam`.
 
 ## Scope
 1. Do **only** the instruction you were given. Do not start the next one, refactor, rename or reformat other code.

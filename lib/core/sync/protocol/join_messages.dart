@@ -2,8 +2,8 @@ import 'dart:convert';
 
 const int kProtocolVersion = 1;
 
-final List<int> idJoiner = utf8.encode('nestmojo/joiner');
-final List<int> idInviter = utf8.encode('nestmojo/inviter');
+final List<int> idJoiner = utf8.encode('illam/joiner');
+final List<int> idInviter = utf8.encode('illam/inviter');
 
 /// Join protocol message exchange order (every message is JSON with `t`, bytes as base64):
 /// - J -> I: `hello{v, mode: 'phrase'|'qr'}`

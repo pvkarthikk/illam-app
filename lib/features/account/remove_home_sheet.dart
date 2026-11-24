@@ -71,6 +71,17 @@ Future<void> showRemoveHomeSheet(BuildContext context, WidgetRef ref) async {
   }
   if (choice != _RemoveChoice.remove) return;
 
+  if (ref.read(membersProvider).hasValue && !hasOthers) {
+    final snackbar = ref.read(snackbarProvider);
+    final res = await ref
+        .read(membershipServiceProvider)
+        .removeFromThisPhoneNow();
+    snackbar.show(
+      res.applied ? l10n.homeLeft(homeName) : l10n.profileOnlyAdminLead,
+    );
+    return;
+  }
+
   final homeId = home?.id ?? ref.read(prefsProvider).currentHomeId ?? '';
   final res = await ref.read(membershipServiceProvider).leaveHome();
   if (!context.mounted) return;

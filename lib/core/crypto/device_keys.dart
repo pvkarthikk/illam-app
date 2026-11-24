@@ -74,12 +74,14 @@ class DeviceKeys {
     final fingerprint =
         '${hex.substring(0, 4)} ${hex.substring(4, 8)} ${hex.substring(8, 12)}';
     return DeviceKeys._(
-      signSeed: signSeed,
-      signPub: signPub,
-      agreeSeed: agreeSeed,
-      agreePub: agreePub,
-      deviceId: deviceId,
-      fingerprint: fingerprint,
-    );
+        signSeed: signSeed,
+        signPub: signPub,
+        agreeSeed: agreeSeed,
+        agreePub: agreePub,
+        deviceId: deviceId,
+        fingerprint: fingerprint,
+      )
+      .._signKp = signPair
+      .._agreeKp = agreePair;
   }
 }

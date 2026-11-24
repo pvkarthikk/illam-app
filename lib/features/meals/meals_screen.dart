@@ -167,6 +167,14 @@ class MealsScreen extends ConsumerWidget {
               ),
             ),
             const RecipeBookSection(),
+            for (var i = 0; i < recipes.length; i += 2)
+              Padding(
+                padding: EdgeInsets.fromLTRB(16, i == 0 ? 4 : 12, 16, 0),
+                child: RecipeGridRow(
+                  left: recipes[i],
+                  right: i + 1 < recipes.length ? recipes[i + 1] : null,
+                ),
+              ),
           ],
         ),
       ),

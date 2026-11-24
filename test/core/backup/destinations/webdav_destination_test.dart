@@ -9,7 +9,7 @@ import 'package:nm_flat/core/backup/destinations/webdav/webdav_destination.dart'
 import 'fake_webdav_adapter.dart';
 
 void main() {
-  const name = 'NestMojo_ab12cd34_20261120-101500Z_0f1e2d3c.nmbak';
+  const name = 'Illam_ab12cd34_20261120-101500Z_0f1e2d3c.nmbak';
 
   late FakeWebDavAdapter fake;
   late WebDavDestination d;

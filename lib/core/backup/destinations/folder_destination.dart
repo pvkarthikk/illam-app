@@ -81,7 +81,7 @@ class FolderDestination extends BackupDestination {
     await _saf(() async {
       final file = await _stream.writeFileBytes(
         treeUri,
-        '.nestmojo-test',
+        '.illam-test',
         _mime,
         Uint8List.fromList(utf8.encode('ok')),
         overwrite: true,

@@ -25,7 +25,7 @@ final OAuthProvider microsoftOAuth = OAuthProvider(
 
 const _root = 'https://graph.microsoft.com/v1.0/me/drive/special/approot';
 
-/// Backup destination stored in OneDrive's app folder (`Apps/Nest Mojo Flat`).
+/// Backup destination stored in OneDrive's app folder (`Apps/Illam`).
 class OneDriveDestination extends BackupDestination {
   OneDriveDestination(this.keeper);
 
@@ -236,7 +236,7 @@ class OneDriveDestination extends BackupDestination {
 
   @override
   Future<void> testWrite() async {
-    final tmp = 'NestMojo_test_${randomHex(4)}.tmp';
+    final tmp = 'Illam_test_${randomHex(4)}.tmp';
     final data = Uint8List.fromList(utf8.encode('NMBK test'));
     final res = await keeper.authed<dynamic>(
       (tok) => keeper.dio.putUri<dynamic>(

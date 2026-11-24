@@ -78,7 +78,8 @@ String? backupAttentionReason(AppLocalizations l, BackupConfig c, int nowMs) {
   final isStale =
       newestSuccess != null &&
       nowMs - newestSuccess > 2 * backupIntervalMs(c.frequency);
-  if (c.consecutiveFailures < 2 && !isStale) return null;
+  final hasFailingDest = c.destinations.any((d) => d.failures >= 2);
+  if (c.consecutiveFailures < 2 && !hasFailingDest && !isStale) return null;
 
   final failing = [
     for (final d in c.destinations)
@@ -96,11 +97,11 @@ String? backupAttentionReason(AppLocalizations l, BackupConfig c, int nowMs) {
     if (d.lastResult == 'full') {
       return l.backupReasonFull(short);
     }
+    newestSuccess = d.lastSuccessAt;
   }
 
-  final days = newestSuccess == null
-      ? 0
-      : max(0, (nowMs - newestSuccess) ~/ _dayMs);
+  if (newestSuccess == null) return l.homeBackupNone;
+  final days = max(0, (nowMs - newestSuccess) ~/ _dayMs);
   return l.backupStatusStale(days);
 }
 

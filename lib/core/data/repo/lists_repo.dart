@@ -327,28 +327,91 @@ class ListsRepo {
     });
   });
 
-  void buildClearOps(ChangeBuilder c, List<ItemRow> doneItems, int nowMs) {
+  Future<({Map<String, ItemHistoryRow> history, Map<String, PantryEntry> pantry})>
+  loadClearRows(List<ItemRow> doneItems) async {
+    final histIds = <String>{
+      for (final item in doneItems) itemHistoryId(item.list, item.nameKey),
+    };
+    final pantryIds = <String>{
+      for (final item in doneItems)
+        if (item.list == 'grocery') sha1Hex(item.nameKey),
+    };
+    final histRows = histIds.isEmpty
+        ? const <ItemHistoryRow>[]
+        : await (db.select(
+            db.itemHistory,
+          )..where((h) => h.id.isIn(histIds))).get();
+    final pantryRows = pantryIds.isEmpty
+        ? const <PantryEntry>[]
+        : await (db.select(
+            db.pantry,
+          )..where((p) => p.id.isIn(pantryIds))).get();
+    return (
+      history: {for (final r in histRows) r.id: r},
+      pantry: {for (final r in pantryRows) r.id: r},
+    );
+  }
+
+  void buildClearOps(
+    ChangeBuilder c,
+    List<ItemRow> doneItems,
+    int nowMs, {
+    Map<String, ItemHistoryRow> history = const {},
+    Map<String, PantryEntry> pantry = const {},
+  }) {
+    final groups = <String, List<ItemRow>>{};
     for (final item in doneItems) {
       c.delete('items', item.id);
       final histId = itemHistoryId(item.list, item.nameKey);
+      (groups[histId] ??= []).add(item);
+    }
+
+    for (final entry in groups.entries) {
+      final histId = entry.key;
+      final items = entry.value;
+      final first = items.first;
+
+      var totalMilli = 0;
+      for (final item in items) {
+        final converted = convertMilli(item.qtyMilli, item.unit, first.unit);
+        if (converted != null) totalMilli += converted;
+      }
+
+      final storedHist = history[histId];
       c.setAll('item_history', histId, {
-        'deleted': false,
-        'list': item.list,
-        'name': item.name,
-        'name_key': item.nameKey,
-        'usual_channel': item.channel,
+        if (storedHist == null || storedHist.deleted != false) 'deleted': false,
+        if (storedHist == null || storedHist.list != first.list)
+          'list': first.list,
+        if (storedHist == null || storedHist.name != first.name)
+          'name': first.name,
+        if (storedHist == null || storedHist.nameKey != first.nameKey)
+          'name_key': first.nameKey,
+        if (storedHist == null || storedHist.usualChannel != first.channel)
+          'usual_channel': first.channel,
         'last_bought_at': nowMs,
-        'last_qty_milli': item.qtyMilli,
-        'last_unit': item.unit,
+        if (storedHist == null || storedHist.lastQtyMilli != totalMilli)
+          'last_qty_milli': totalMilli,
+        if (storedHist == null || storedHist.lastUnit != first.unit)
+          'last_unit': first.unit,
       });
       c.inc('item_history', histId, 'times_bought', 1);
-      if (item.list == 'grocery') {
-        c.setAll('pantry', sha1Hex(item.nameKey), {
-          'deleted': false,
-          'name': item.name,
-          'name_key': item.nameKey,
-          'in_stock': true,
-        });
+
+      if (first.list == 'grocery') {
+        final pantryId = sha1Hex(first.nameKey);
+        final storedPantry = pantry[pantryId];
+        final pantryFields = <String, Object?>{
+          if (storedPantry == null || storedPantry.deleted != false)
+            'deleted': false,
+          if (storedPantry == null || storedPantry.name != first.name)
+            'name': first.name,
+          if (storedPantry == null || storedPantry.nameKey != first.nameKey)
+            'name_key': first.nameKey,
+          if (storedPantry == null || storedPantry.inStock != true)
+            'in_stock': true,
+        };
+        if (pantryFields.isNotEmpty) {
+          c.setAll('pantry', pantryId, pantryFields);
+        }
       }
     }
   }
@@ -368,8 +431,15 @@ class ListsRepo {
                   i.deleted.equals(false),
             ))
             .get();
+    final rows = await loadClearRows(doneItems);
     final res = await changes.write('Cleared $channel', (c) {
-      buildClearOps(c, doneItems, _now);
+      buildClearOps(
+        c,
+        doneItems,
+        _now,
+        history: rows.history,
+        pantry: rows.pantry,
+      );
     });
     return (res, doneItems.length);
   }

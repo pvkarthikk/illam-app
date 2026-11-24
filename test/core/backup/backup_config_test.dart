@@ -20,14 +20,14 @@ void main() {
         DestinationConfig(
           destId: 'dest-1',
           kind: 'folder',
-          label: 'Documents/Nest Mojo Flat',
+          label: 'Documents/Illam',
           settings: {'treeUri': 'content://com.android.externalstorage.documents/tree/primary%3ADocs'},
           lastSuccessAt: 1763600000000,
           lastResult: 'ok',
           keptCount: 2,
           failures: 0,
           lastCommittedHeads: 'abc',
-          lastFullName: 'NestMojo_aaaaaaaa_20261120-000000Z_bbbbbbbb.nmbak',
+          lastFullName: 'Illam_aaaaaaaa_20261120-000000Z_bbbbbbbb.nmbak',
         ),
       ],
       password: 'correct horse',
@@ -48,7 +48,7 @@ void main() {
     expect(loaded.destinations.length, 1);
     expect(loaded.destinations.single.destId, 'dest-1');
     expect(loaded.destinations.single.kind, 'folder');
-    expect(loaded.destinations.single.label, 'Documents/Nest Mojo Flat');
+    expect(loaded.destinations.single.label, 'Documents/Illam');
     expect(
       loaded.destinations.single.settings['treeUri'],
       'content://com.android.externalstorage.documents/tree/primary%3ADocs',

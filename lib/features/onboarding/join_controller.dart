@@ -138,7 +138,7 @@ class JoinController extends Notifier<JoinUi> {
       secret: JoinSecret(
         mode: 'qr',
         password: t.secret,
-        context: 'nestmojo-join-v1|${t.homeId}',
+        context: 'illam-join-v1|${t.homeId}',
         nameplate: t.nameplate,
         expectedHomeId: t.homeId,
       ),

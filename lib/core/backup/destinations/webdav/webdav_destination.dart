@@ -45,7 +45,7 @@ class WebDavDestination extends BackupDestination {
   @override
   Future<void> testWrite() async {
     await _dav.mkcol(_dav.folderUrl);
-    final tmp = 'NestMojo_test_${randomHex(4)}.tmp';
+    final tmp = 'Illam_test_${randomHex(4)}.tmp';
     await _dav.put(tmp, Uint8List.fromList(utf8.encode('NMBK test')));
     await _dav.delete(tmp);
   }

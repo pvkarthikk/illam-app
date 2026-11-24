@@ -23,8 +23,9 @@ import 'package:nm_flat/features/backup/backup_texts.dart';
 import 'package:nm_flat/features/staff/staff_providers.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
-const kPrivacyUrl = 'https://nestmojo.app/privacy';
-const kHelpUrl = 'https://nestmojo.app/help';
+const kPrivacyUrl =
+    'https://github.com/pvkarthikk/illam-app/blob/main/docs/store/privacy-policy.md';
+const kHelpUrl = 'https://github.com/pvkarthikk/illam-app#readme';
 
 class ProfileNotificationsSection extends ConsumerStatefulWidget {
   const ProfileNotificationsSection({super.key});

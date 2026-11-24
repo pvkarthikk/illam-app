@@ -378,13 +378,14 @@ Future<void> showDeleteHomeSheet(
   }
 
   if (confirmed != true) return;
+  final snackbar = ref.read(snackbarProvider);
   final r = await ref.read(membershipServiceProvider).deleteHome();
   if (!r.applied) {
-    ref.read(snackbarProvider).show(reasonText(l10n, r.reasonKey));
+    snackbar.show(reasonText(l10n, r.reasonKey));
   } else {
     if (context.mounted) {
       context.go(Routes.onboardingStep('welcome'));
     }
-    ref.read(snackbarProvider).show(l10n.deleteDone(homeName));
+    snackbar.show(l10n.deleteDone(homeName));
   }
 }

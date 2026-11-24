@@ -15,14 +15,15 @@ abstract final class Bootstrap {
     required SecureStore secure,
     required DevicePrefs prefs,
     required NestDatabase db,
+    Future<DeviceKeys>? keys,
   }) async {
-    final keys = await DeviceKeys.ensure(secure);
-    if (prefs.deviceIdKind != 'key' || prefs.deviceId != keys.deviceId) {
+    final resolved = await (keys ?? DeviceKeys.ensure(secure));
+    if (prefs.deviceIdKind != 'key' || prefs.deviceId != resolved.deviceId) {
       await db.wipeAll();
       await prefs.resetIdentity();
-      await prefs.setDeviceId(keys.deviceId, kind: 'key');
+      await prefs.setDeviceId(resolved.deviceId, kind: 'key');
     }
-    return keys;
+    return resolved;
   }
 }
 

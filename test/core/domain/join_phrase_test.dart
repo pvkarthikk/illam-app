@@ -46,7 +46,7 @@ void main() {
         JoinPhrase.password('47-mango-river-tulip'),
         utf8.encode('mango river tulip'),
       );
-      expect(JoinPhrase.context('47'), 'nestmojo-join-v1|47');
+      expect(JoinPhrase.context('47'), 'illam-join-v1|47');
     });
   });
 
@@ -93,7 +93,7 @@ void main() {
       expect(parsed.expiry, t.expiry);
 
       expect(
-        JoinTicket.parse(url.replaceFirst('nestmojo.app', 'evil.app')),
+        JoinTicket.parse(url.replaceFirst('illam.app', 'evil.app')),
         isNull,
       );
       expect(JoinTicket.parse(url.replaceFirst('v=1', 'v=2')), isNull);

@@ -19,7 +19,7 @@ void main() {
     final pub = await SshKeys.publicFromSeed(rfcSeed);
     expect(
       SshKeys.publicLine(pub),
-      'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINdamAGCsQq31Uv+08lkBzoO4XLz2qYjJa8CGmj3B1Ea nestmojo',
+      'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINdamAGCsQq31Uv+08lkBzoO4XLz2qYjJa8CGmj3B1Ea illam',
     );
   });
 

@@ -75,7 +75,7 @@ class JoinHost {
           ? invite.qrSecret
           : JoinPhrase.password(invite.phrase);
       final ctx = mode == 'qr'
-          ? 'nestmojo-join-v1|$homeId'
+          ? 'illam-join-v1|$homeId'
           : JoinPhrase.context(invite.nameplate);
 
       final sp = Spake2.b(

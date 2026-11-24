@@ -86,6 +86,7 @@ class _LogBillSheetState extends ConsumerState<_LogBillSheet> {
       _nameError = null;
     });
 
+    var closed = false;
     try {
       final clock = ref.read(clockProvider);
       final today = Dates.today(clock);
@@ -107,47 +108,77 @@ class _LogBillSheetState extends ConsumerState<_LogBillSheet> {
           return;
         }
       }
-      final res = await ref.read(changesProvider).write('Store bill', (c) {
-        expenses.createIn(
-          c,
-          NewExpense(
-            amountPaise: paise,
-            merchant: store,
-            category: widget.list == 'grocery' ? 'Groceries' : 'Shopping',
-            method: _method,
-            date: today,
-            source: 'store',
-          ),
-        );
-        listsRepo.buildClearOps(c, widget.picked, nowMs);
-      });
+      final rows = await listsRepo.loadClearRows(widget.picked);
       if (!mounted) return;
-      ref
-          .read(snackbarProvider)
-          .show(
-            l10n.storeLogged(Money.format(paise), store),
-            undo: res.undo,
-          );
+      final snack = ref.read(snackbarProvider);
+      final changes = ref.read(changesProvider);
+      final list = widget.list;
+      final picked = widget.picked;
+      final method = _method;
+      final msg = l10n.storeLogged(Money.format(paise), store);
+      closed = true;
       Navigator.of(context).pop(true);
+      try {
+        final res = await changes.write('Store bill', (c) {
+          expenses.createIn(
+            c,
+            NewExpense(
+              amountPaise: paise,
+              merchant: store,
+              category: list == 'grocery' ? 'Groceries' : 'Shopping',
+              method: method,
+              date: today,
+              source: 'store',
+            ),
+          );
+          listsRepo.buildClearOps(
+            c,
+            picked,
+            nowMs,
+            history: rows.history,
+            pantry: rows.pantry,
+          );
+        });
+        snack.show(msg, undo: res.undo);
+      } on Object {
+        snack.show(rejectText('other'));
+      }
     } finally {
-      if (mounted) setState(() => _saving = false);
+      if (!closed && mounted) setState(() => _saving = false);
     }
   }
 
   Future<void> _skip(AppLocalizations l10n) async {
     if (_saving) return;
     setState(() => _saving = true);
+    var closed = false;
     try {
       final nowMs = ref.read(clockProvider).nowMs;
       final listsRepo = ref.read(listsRepoProvider);
-      final res = await ref.read(changesProvider).write('Store trip', (c) {
-        listsRepo.buildClearOps(c, widget.picked, nowMs);
-      });
+      final rows = await listsRepo.loadClearRows(widget.picked);
       if (!mounted) return;
-      ref.read(snackbarProvider).show(l10n.storeTripDone, undo: res.undo);
+      final snack = ref.read(snackbarProvider);
+      final changes = ref.read(changesProvider);
+      final picked = widget.picked;
+      final msg = l10n.storeTripDone;
+      closed = true;
       Navigator.of(context).pop(true);
+      try {
+        final res = await changes.write('Store trip', (c) {
+          listsRepo.buildClearOps(
+            c,
+            picked,
+            nowMs,
+            history: rows.history,
+            pantry: rows.pantry,
+          );
+        });
+        snack.show(msg, undo: res.undo);
+      } on Object {
+        snack.show(rejectText('other'));
+      }
     } finally {
-      if (mounted) setState(() => _saving = false);
+      if (!closed && mounted) setState(() => _saving = false);
     }
   }
 

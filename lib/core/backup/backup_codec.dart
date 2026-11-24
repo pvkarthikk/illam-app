@@ -27,6 +27,14 @@ abstract final class BackupCodec {
     hashLength: 32,
   ).deriveKey(secretKey: SecretKey(utf8.encode(password)), nonce: salt);
 
+  static Future<String> _keyCheck(SecretKey key) async {
+    final mac = await Hmac.sha256().calculateMac(
+      utf8.encode('nmbak-key-check'),
+      secretKey: key,
+    );
+    return base64Encode(mac.bytes);
+  }
+
   /// Compresses and encrypts [snapshotJson] inside a background isolate.
   static Future<Uint8List> encode({
     required Uint8List snapshotJson,
@@ -44,6 +52,8 @@ abstract final class BackupCodec {
     final nonce = rand(24);
     final snapshotId = Ids.hex(rand(16));
     final body = Uint8List.fromList(const GZipEncoder().encode(snapshotJson));
+    final key = await _key(password, salt, kdf);
+    final keyCheck = await _keyCheck(key);
     final header = BackupHeader(
       vaultId: vaultId,
       snapshotId: snapshotId,
@@ -53,9 +63,9 @@ abstract final class BackupCodec {
       kdf: kdf,
       salt: salt,
       nonce: nonce,
+      keyCheck: keyCheck,
     );
     final prefix = encodePrefix(header);
-    final key = await _key(password, salt, kdf);
     final box = await Xchacha20.poly1305Aead().encrypt(
       body,
       secretKey: key,
@@ -83,6 +93,9 @@ abstract final class BackupCodec {
       mac: Mac(body.sublist(split)),
     );
     final key = await _key(password, header.salt, header.kdf);
+    if (header.keyCheck != null && header.keyCheck != await _keyCheck(key)) {
+      throw const BackupFormatException(BackupError.wrongPassword);
+    }
     final List<int> compressed;
     try {
       compressed = await Xchacha20.poly1305Aead().decrypt(
@@ -91,7 +104,11 @@ abstract final class BackupCodec {
         aad: parsed.aad,
       );
     } on SecretBoxAuthenticationError {
-      throw const BackupFormatException(BackupError.wrongPassword);
+      throw BackupFormatException(
+        header.keyCheck != null
+            ? BackupError.damaged
+            : BackupError.wrongPassword,
+      );
     }
 
     final cap = min(1 << 30, 20 * header.bodySize);

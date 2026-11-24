@@ -19,9 +19,9 @@ void main() {
   });
 
   test('parseS3List filters backup filenames and parses metadata', () {
-    const validName = 'NestMojo_ab12cd34_20261120-101500Z_0f1e2d3c.nmbak';
+    const validName = 'Illam_ab12cd34_20261120-101500Z_0f1e2d3c.nmbak';
     const oneItemXml = '''
-<ListBucketResult><IsTruncated>false</IsTruncated><Contents><Key>nestmojo/$validName</Key><LastModified>2026-11-20T10:15:02.000Z</LastModified><Size>2457600</Size></Contents></ListBucketResult>''';
+<ListBucketResult><IsTruncated>false</IsTruncated><Contents><Key>illam/$validName</Key><LastModified>2026-11-20T10:15:02.000Z</LastModified><Size>2457600</Size></Contents></ListBucketResult>''';
 
     final res1 = parseS3List(oneItemXml);
     expect(res1.truncated, isFalse);
@@ -30,7 +30,7 @@ void main() {
     expect(res1.files.single.size, 2457600);
 
     const withTmpXml = '''
-<ListBucketResult><IsTruncated>false</IsTruncated><Contents><Key>nestmojo/$validName</Key><LastModified>2026-11-20T10:15:02.000Z</LastModified><Size>2457600</Size></Contents><Contents><Key>nestmojo/NestMojo_test_ab12.tmp</Key><LastModified>2026-11-20T10:15:02.000Z</LastModified><Size>9</Size></Contents></ListBucketResult>''';
+<ListBucketResult><IsTruncated>false</IsTruncated><Contents><Key>illam/$validName</Key><LastModified>2026-11-20T10:15:02.000Z</LastModified><Size>2457600</Size></Contents><Contents><Key>illam/Illam_test_ab12.tmp</Key><LastModified>2026-11-20T10:15:02.000Z</LastModified><Size>9</Size></Contents></ListBucketResult>''';
 
     final res2 = parseS3List(withTmpXml);
     expect(res2.files.length, 1);
@@ -48,8 +48,8 @@ void main() {
       https: true,
     );
     expect(
-      aws.debugUrl('nestmojo/x.nmbak').toString(),
-      'https://mybucket.s3.ap-south-1.amazonaws.com/nestmojo/x.nmbak',
+      aws.debugUrl('illam/x.nmbak').toString(),
+      'https://mybucket.s3.ap-south-1.amazonaws.com/illam/x.nmbak',
     );
 
     final b2 = S3Destination(
@@ -62,8 +62,8 @@ void main() {
       https: true,
     );
     expect(
-      b2.debugUrl('nestmojo/x.nmbak').toString(),
-      'https://s3.us-east-005.backblazeb2.com/mybucket/nestmojo/x.nmbak',
+      b2.debugUrl('illam/x.nmbak').toString(),
+      'https://s3.us-east-005.backblazeb2.com/mybucket/illam/x.nmbak',
     );
   });
 }

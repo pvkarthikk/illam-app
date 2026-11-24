@@ -63,7 +63,7 @@ class RecoveryKits {
     final cfg = await configs.load(homeId);
     final pub = cfg.kit?['pub'];
     if (pub is! String || pub.isEmpty) return false;
-    final replay = await log.replayAndProject(homeId);
+    final replay = await log.replayState(homeId);
     return replay.liveKits.containsKey(pub);
   }
 

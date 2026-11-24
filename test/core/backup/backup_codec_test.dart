@@ -70,7 +70,7 @@ void main() {
     );
   });
 
-  test('flipping a body byte throws wrongPassword', () async {
+  test('flipping a body byte throws damaged', () async {
     final file = await BackupCodec.encode(
       snapshotJson: Uint8List.fromList(utf8.encode('{"ok":true}')),
       password: 'secret',
@@ -88,7 +88,7 @@ void main() {
         isA<BackupFormatException>().having(
           (e) => e.error,
           'error',
-          BackupError.wrongPassword,
+          BackupError.damaged,
         ),
       ),
     );

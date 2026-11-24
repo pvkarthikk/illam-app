@@ -21,7 +21,7 @@ Future<List<String>> sasFor(
   final b = await hkdfSha256(
     ikm: ke,
     salt: transcript,
-    info: concatBytes([utf8.encode('nestmojo/sas/v1'), nI, nJ]),
+    info: concatBytes([utf8.encode('illam/sas/v1'), nI, nJ]),
     length: 3,
   );
   return [for (final byte in b) sasEmojis[byte & 63]];

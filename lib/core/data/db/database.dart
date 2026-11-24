@@ -63,7 +63,7 @@ class NestDatabase extends _$NestDatabase {
 
   factory NestDatabase.open({required String keyHex}) => NestDatabase(
     driftDatabase(
-      name: 'nestmojo',
+      name: 'illam',
       native: DriftNativeOptions(
         shareAcrossIsolates: true,
         setup: (db) {

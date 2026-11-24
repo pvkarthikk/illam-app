@@ -466,83 +466,106 @@ class RecipeBookSection extends ConsumerWidget {
           actionLabel: '+ ${l10n.mealsAdd}',
           onAction: () => showAddRecipeSheet(context),
         ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
-          child: Builder(
-            builder: (_) {
-              if (recipesAsync.isLoading && recipes == null) {
-                return const Padding(
-                  padding: EdgeInsets.all(24),
-                  child: Center(child: CircularProgressIndicator()),
-                );
-              }
-              if (recipesAsync.hasError && recipes == null) {
-                return Text(
-                  '${recipesAsync.error}',
-                  style: NestText.meta13.copyWith(color: c.danger),
-                );
-              }
-              final list = recipes ?? const <RecipeView>[];
-              if (list.isEmpty) {
-                return NestCard(
-                  child: EmptyState(
-                    icon: Icons.menu_book_rounded,
-                    title: l10n.mealsEmptyTitle,
-                    body: l10n.mealsEmptyBody,
-                    action: Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      alignment: WrapAlignment.center,
-                      children: [
-                        NestButton(
-                          label: l10n.mealsAddStarter,
-                          kind: NestButtonKind.tonal,
-                          onPressed: () async {
-                            final (added, res) = await ref
-                                .read(recipesRepoProvider)
-                                .addStarterPack();
-                            if (!context.mounted || added <= 0) return;
-                            ref
-                                .read(snackbarProvider)
-                                .show(
-                                  l10n.mealsStarterAdded(added),
-                                  undo: res?.undo,
-                                );
-                          },
-                        ),
-                        NestButton(
-                          label: l10n.mealsTypeRecipe,
-                          kind: NestButtonKind.ghost,
-                          onPressed: () =>
-                              context.push(Routes.recipeEdit('new')),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              }
-
-              return Column(
-                children: [
-                  for (var i = 0; i < list.length; i += 2) ...[
-                    if (i > 0) const SizedBox(height: 12),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(child: _RecipeGridCard(r: list[i])),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: i + 1 < list.length
-                              ? _RecipeGridCard(r: list[i + 1])
-                              : const SizedBox.shrink(),
-                        ),
-                      ],
-                    ),
-                  ],
-                ],
+        Builder(
+          builder: (_) {
+            final Widget? stateChild;
+            if (recipesAsync.isLoading && recipes == null) {
+              stateChild = const Padding(
+                padding: EdgeInsets.all(24),
+                child: Center(child: CircularProgressIndicator()),
               );
-            },
-          ),
+            } else if (recipesAsync.hasError && recipes == null) {
+              stateChild = Text(
+                '${recipesAsync.error}',
+                style: NestText.meta13.copyWith(color: c.danger),
+              );
+            } else if ((recipes ?? const <RecipeView>[]).isEmpty) {
+              stateChild = NestCard(
+                child: EmptyState(
+                  icon: Icons.menu_book_rounded,
+                  title: l10n.mealsEmptyTitle,
+                  body: l10n.mealsEmptyBody,
+                  action: Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    alignment: WrapAlignment.center,
+                    children: [
+                      const _StarterPackButton(),
+                      NestButton(
+                        label: l10n.mealsTypeRecipe,
+                        kind: NestButtonKind.ghost,
+                        onPressed: () => context.push(Routes.recipeEdit('new')),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            } else {
+              stateChild = null;
+            }
+            if (stateChild == null) return const SizedBox.shrink();
+            return Padding(
+              padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
+              child: stateChild,
+            );
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class _StarterPackButton extends ConsumerStatefulWidget {
+  const _StarterPackButton();
+
+  @override
+  ConsumerState<_StarterPackButton> createState() => _StarterPackButtonState();
+}
+
+class _StarterPackButtonState extends ConsumerState<_StarterPackButton> {
+  bool _busy = false;
+
+  Future<void> _add(AppLocalizations l10n) async {
+    if (_busy) return;
+    setState(() => _busy = true);
+    final snackbar = ref.read(snackbarProvider);
+    try {
+      final (added, res) = await ref.read(recipesRepoProvider).addStarterPack();
+      if (added > 0) {
+        snackbar.show(l10n.mealsStarterAdded(added), undo: res?.undo);
+      }
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return NestButton(
+      label: l10n.mealsAddStarter,
+      kind: NestButtonKind.tonal,
+      onPressed: _busy ? null : () => _add(l10n),
+    );
+  }
+}
+
+class RecipeGridRow extends StatelessWidget {
+  const RecipeGridRow({super.key, required this.left, this.right});
+
+  final RecipeView left;
+  final RecipeView? right;
+
+  @override
+  Widget build(BuildContext context) {
+    final r = right;
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(child: _RecipeGridCard(r: left)),
+        const SizedBox(width: 12),
+        Expanded(
+          child: r != null ? _RecipeGridCard(r: r) : const SizedBox.shrink(),
         ),
       ],
     );

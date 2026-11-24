@@ -35,7 +35,10 @@ int _intervalMs(String frequency) => switch (frequency) {
   _ => 7 * _dayMs,
 };
 
-({String kind, int at})? _newestSuccess(String destsJson) {
+({String kind, int at})? _newestSuccess(
+  String destsJson, {
+  bool offPhoneOnly = false,
+}) {
   try {
     final decoded = jsonDecode(destsJson);
     if (decoded is! List) return null;
@@ -43,6 +46,7 @@ int _intervalMs(String frequency) => switch (frequency) {
     int? bestAt;
     for (final raw in decoded) {
       if (raw is! Map) continue;
+      if (offPhoneOnly && raw['offPhone'] == false) continue;
       final at = raw['lastSuccessAt'];
       final kind = raw['providerKind'];
       if (at is! int || at <= 0) continue;
@@ -88,7 +92,7 @@ class BackupHealth {
       if (row.deleted) continue;
       final member = activeMembers[row.memberId];
       if (member == null) continue;
-      final newest = _newestSuccess(row.destsJson);
+      final newest = _newestSuccess(row.destsJson, offPhoneOnly: row.offPhone);
       if (newest == null) continue;
       successful.add((
         row: row,

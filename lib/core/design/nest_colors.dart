@@ -1,6 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
-/// Semantic colour tokens for Nest Mojo : Flat, attached via [ThemeExtension].
+/// Semantic colour tokens for Illam, attached via [ThemeExtension].
 @immutable
 class NestColors extends ThemeExtension<NestColors> {
   const NestColors({

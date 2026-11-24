@@ -30,13 +30,13 @@ class _QueuedJsonAdapter implements HttpClientAdapter {
 }
 
 void main() {
-  test('davFolder encodes userId and ends with Nest%20Mojo%20Flat/', () {
+  test('davFolder encodes userId and ends with Illam/', () {
     expect(
       NextcloudLogin.davFolder(
         Uri.parse('https://c.example.com/'),
         'anand@home',
       ).toString(),
-      'https://c.example.com/remote.php/dav/files/anand%40home/Nest%20Mojo%20Flat/',
+      'https://c.example.com/remote.php/dav/files/anand%40home/Illam/',
     );
   });
 

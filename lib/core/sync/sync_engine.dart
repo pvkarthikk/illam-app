@@ -91,6 +91,7 @@ class SyncEngine {
   Timer? _redialTimer;
   Timer? _pushTimer;
   DeviceKeys? _resolvedKeys;
+  Future<void> _lifecycle = Future<void>.value();
 
   Stream<SyncEngineState> get states => _states.stream;
   Stream<void> get synced => _synced.stream;
@@ -98,10 +99,14 @@ class SyncEngine {
 
   HomeKeyRing get _ring => HomeKeyRing(secure);
 
-  Future<Set<String>> _allLanTags(String hId, DateTime nowUtc) async {
-    final keys = await _ring.all(hId);
+  Future<Set<String>> _allLanTags(
+    String hId,
+    DateTime nowUtc, {
+    List<HomeKey>? homeKeys,
+  }) async {
+    final list = homeKeys ?? await _ring.all(hId);
     final tags = <String>{};
-    for (final k in keys) {
+    for (final k in list) {
       tags.addAll(await lanTagsFor(k.bytes, nowUtc));
     }
     return tags;
@@ -113,7 +118,13 @@ class SyncEngine {
     _states.add(next);
   }
 
-  Future<void> startForeground() async {
+  Future<void> startForeground() {
+    final next = _lifecycle.then((_) => _startForeground());
+    _lifecycle = next.then((_) {}, onError: (_) {});
+    return next;
+  }
+
+  Future<void> _startForeground() async {
     if (_started || _disposed || homeId == null) return;
     final hId = homeId!;
     final home = await (db.select(
@@ -140,12 +151,8 @@ class SyncEngine {
       // mDNS advertisement unavailable in headless environments.
     }
     try {
-      final tags = <String>{};
-      for (final k in homeKeys) {
-        tags.addAll(await lanTagsFor(k.bytes, nowUtc));
-      }
       await _lan.discover(
-        tags,
+        await _allLanTags(hId, nowUtc, homeKeys: homeKeys),
         (host, port) => unawaited(_dial(host, port)),
       );
     } on Object {
@@ -430,7 +437,13 @@ class SyncEngine {
     }
   }
 
-  Future<void> stopForeground() async {
+  Future<void> stopForeground() {
+    final next = _lifecycle.then((_) => _stopForeground());
+    _lifecycle = next.then((_) {}, onError: (_) {});
+    return next;
+  }
+
+  Future<void> _stopForeground() async {
     _started = false;
     _wifiTipTimer?.cancel();
     _redialTimer?.cancel();
