@@ -161,13 +161,9 @@ class SnapshotBuilder {
     final home = await (db.select(
       db.homes,
     )..where((h) => h.id.equals(homeId))).getSingleOrNull();
-    final opRows =
-        await (db.select(db.ops)..where(
-              (o) =>
-                  o.homeId.equals(homeId) &
-                  o.status.equals('quarantined').not(),
-            ))
-            .get();
+    final opRows = await (db.select(
+      db.ops,
+    )..where((o) => o.homeId.equals(homeId))).get();
     final memberOps = await log.allWire(homeId);
     final ring = await keyRing.all(homeId);
     final k = await keys;
@@ -220,18 +216,20 @@ class SnapshotBuilder {
 /// Deterministic SHA-256 summary of applied home ops (excluding `backup_status` & `vault_id`) and membership ops.
 abstract final class SnapshotHeads {
   static Future<String> compute(NestDatabase db, String homeId) async {
-    final opRows =
-        await (db.select(db.ops)..where(
-              (o) => o.homeId.equals(homeId) & o.status.equals('applied'),
-            ))
-            .get();
-    final maxByDev = <String, int>{};
-    for (final r in opRows) {
-      if (r.tbl == 'backup_status') continue;
-      if (r.tbl == 'homes' && r.field == 'vault_id') continue;
-      final prev = maxByDev[r.deviceId] ?? 0;
-      if (r.seq > prev) maxByDev[r.deviceId] = r.seq;
-    }
+    final rows = await db
+        .customSelect(
+          'SELECT device_id, MAX(seq) AS max_seq FROM ops '
+          "WHERE home_id = ? AND status = 'applied' "
+          "AND tbl != 'backup_status' "
+          "AND NOT (tbl = 'homes' AND field = 'vault_id') "
+          'GROUP BY device_id',
+          variables: [Variable.withString(homeId)],
+        )
+        .get();
+    final maxByDev = <String, int>{
+      for (final r in rows)
+        r.read<String>('device_id'): r.read<int>('max_seq'),
+    };
 
     final devLines = [for (final e in maxByDev.entries) '${e.key}:${e.value}']
       ..sort();

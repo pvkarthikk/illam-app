@@ -1,3 +1,5 @@
+import 'package:drift/drift.dart';
+import 'package:drift/isolate.dart';
 import 'package:drift/native.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -10,6 +12,17 @@ import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/data/secure/secure_store.dart';
 import 'package:nm_flat/core/notify/notifications.dart';
 import 'package:nm_flat/core/providers.dart';
+import 'package:nm_flat/core/sync/sync_reactions.dart';
+
+class _SilentReactions extends SyncReactions {
+  _SilentReactions(super.db, super.prefs);
+
+  @override
+  Future<void> flush() async {}
+
+  @override
+  Future<void> memberJoined(String memberId, String name) async {}
+}
 
 /// Verifies the newest backup file end-to-end in an isolated in-memory database.
 class BackupChecker {
@@ -59,24 +72,48 @@ class BackupChecker {
       final decoded = await BackupCodec.decode(bytes, password);
       final snap = await Snapshot.decode(decoded.json);
 
-      final tempDb = NestDatabase.forTesting(NativeDatabase.memory());
+      final isolate = await DriftIsolate.spawn(NativeDatabase.memory);
+      final conn = await isolate.connect(singleClientMode: true);
+      final tempDb = NestDatabase(conn);
+      final prefs = read(prefsProvider);
       final tempContainer = ProviderContainer(
         overrides: [
           dbProvider.overrideWithValue(tempDb),
           secureStoreProvider.overrideWithValue(MemorySecureStore()),
-          prefsProvider.overrideWithValue(read(prefsProvider)),
+          prefsProvider.overrideWithValue(prefs),
+          syncReactionsProvider.overrideWithValue(
+            _SilentReactions(tempDb, prefs),
+          ),
         ],
       );
       try {
         await tempContainer
             .read(snapshotImporterProvider)
             .import(snap, eraseOnFailure: false);
+        final tempPending = (await tempDb
+                .customSelect(
+                  "SELECT COUNT(*) AS n FROM ops WHERE status = 'pending'",
+                )
+                .getSingle())
+            .read<int>('n');
+        final dbPending = (await db
+                .customSelect(
+                  "SELECT COUNT(*) AS n FROM ops WHERE home_id = ? AND status = 'pending'",
+                  variables: [Variable.withString(homeId)],
+                )
+                .getSingle())
+            .read<int>('n');
+        if (tempPending > dbPending) {
+          throw const BackupFormatException(BackupError.damaged);
+        }
       } finally {
         tempContainer.dispose();
         await tempDb.close();
       }
 
       return (items: snap.ops.length, sizeBytes: bytes.length);
+    } on DestinationException {
+      rethrow;
     } on BackupFormatException {
       throw const BackupFormatException(BackupError.damaged);
     } on Object {

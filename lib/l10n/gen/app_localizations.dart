@@ -7503,6 +7503,12 @@ abstract class AppLocalizations {
   /// **'This backup is damaged — try an older one.'**
   String get backupDamaged;
 
+  /// No description provided for @backupCheckUnreachable.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn’t reach the backup place — try again later.'**
+  String get backupCheckUnreachable;
+
   /// No description provided for @backupRecent.
   ///
   /// In en, this message translates to:

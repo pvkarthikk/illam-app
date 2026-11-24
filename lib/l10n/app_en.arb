@@ -3538,6 +3538,7 @@
     }
   },
   "backupDamaged": "This backup is damaged — try an older one.",
+  "backupCheckUnreachable": "Couldn’t reach the backup place — try again later.",
   "backupRecent": "Recent backups",
   "backupRecentRow": "{ago} · {size} · {place}",
   "@backupRecentRow": {

@@ -53,7 +53,7 @@ List<DavEntry> parsePropfind(String xml) {
     if (modRaw != null && modRaw.isNotEmpty) {
       try {
         modified = HttpDate.parse(modRaw);
-      } on FormatException {
+      } on Object {
         modified = null;
       }
     }

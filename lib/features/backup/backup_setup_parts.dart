@@ -13,6 +13,7 @@ import 'package:nm_flat/features/backup/backup_password_sheet.dart';
 import 'package:nm_flat/features/backup/cloud/cloud_connect_controller.dart';
 import 'package:nm_flat/features/backup/servers/nextcloud_sheet.dart';
 import 'package:nm_flat/features/backup/servers/s3_sheet.dart';
+import 'package:nm_flat/features/backup/servers/server_connect_controller.dart';
 import 'package:nm_flat/features/backup/servers/sftp_sheet.dart';
 import 'package:nm_flat/features/backup/servers/webdav_sheet.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
@@ -46,10 +47,15 @@ Future<void> connectFolder(
         error: e.error == DestError.unreachable
             ? 'backupErrUnreachable'
             : 'backupErrNoPermission',
+        localCopy: false,
       );
       return;
     } on Object {
-      ctrl.setConnectState(busy: false, error: 'backupErrNoPermission');
+      ctrl.setConnectState(
+        busy: false,
+        error: 'backupErrNoPermission',
+        localCopy: false,
+      );
       return;
     } finally {
       ctrl.setConnectState(busy: false);
@@ -67,6 +73,7 @@ Future<void> connectFolder(
     ),
     mode,
   );
+  ctrl.setConnectState(localCopy: false);
 
   if (!context.mounted) return;
   onPicked?.call();
@@ -123,39 +130,40 @@ class ProviderList extends ConsumerWidget {
       }
     }
 
+    final serverCtrl = ref.read(serverConnectControllerProvider.notifier);
     final taps = <String, VoidCallback?>{
       'gdrive': () => connectCloud('gdrive'),
       'onedrive': () => connectCloud('onedrive'),
       'dropbox': () => connectCloud('dropbox'),
       'pcloud': () => connectCloud('pcloud'),
       'nextcloud': () => showNextcloudSheet(
-        context,
+        Navigator.of(context).context,
         ref,
         mode,
         existing: existing,
         onPicked: onPicked,
-      ),
+      ).whenComplete(serverCtrl.cancel),
       'webdav': () => showWebDavSheet(
-        context,
+        Navigator.of(context).context,
         ref,
         mode,
         existing: existing,
         onPicked: onPicked,
-      ),
+      ).whenComplete(serverCtrl.cancel),
       's3': () => showS3Sheet(
-        context,
+        Navigator.of(context).context,
         ref,
         mode,
         existing: existing,
         onPicked: onPicked,
-      ),
+      ).whenComplete(serverCtrl.cancel),
       'sftp': () => showSftpSheet(
-        context,
+        Navigator.of(context).context,
         ref,
         mode,
         existing: existing,
         onPicked: onPicked,
-      ),
+      ).whenComplete(serverCtrl.cancel),
       'folder': () => connectFolder(
         context,
         ref,

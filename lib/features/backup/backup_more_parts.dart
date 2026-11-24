@@ -4,6 +4,7 @@ import 'package:material_ui/material_ui.dart';
 
 import 'package:nm_flat/core/backup/backup_checker.dart';
 import 'package:nm_flat/core/backup/backup_config.dart';
+import 'package:nm_flat/core/backup/destinations/backup_destination.dart';
 import 'package:nm_flat/core/backup/file_format.dart';
 import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/providers.dart';
@@ -33,6 +34,7 @@ class _BackupMoreSectionState extends ConsumerState<BackupMoreSection> {
   bool _checking = false;
   ({int items, int size})? _checkOk;
   bool _checkFailed = false;
+  bool _checkUnreachable = false;
 
   Future<void> _checkBackup() async {
     if (_checking) return;
@@ -40,6 +42,7 @@ class _BackupMoreSectionState extends ConsumerState<BackupMoreSection> {
       _checking = true;
       _checkOk = null;
       _checkFailed = false;
+      _checkUnreachable = false;
     });
     try {
       final res = await BackupChecker(ref.read).checkLatest(widget.homeId);
@@ -47,6 +50,13 @@ class _BackupMoreSectionState extends ConsumerState<BackupMoreSection> {
       setState(() {
         _checking = false;
         _checkOk = (items: res.items, size: res.sizeBytes);
+      });
+    } on DestinationException {
+      if (!mounted) return;
+      setState(() {
+        _checking = false;
+        _checkFailed = true;
+        _checkUnreachable = true;
       });
     } on Object {
       if (!mounted) return;
@@ -160,7 +170,9 @@ class _BackupMoreSectionState extends ConsumerState<BackupMoreSection> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
                   child: Text(
-                    l.backupDamaged,
+                    _checkUnreachable
+                        ? l.backupCheckUnreachable
+                        : l.backupDamaged,
                     style: NestText.meta13.copyWith(color: c.danger),
                   ),
                 ),

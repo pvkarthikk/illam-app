@@ -122,6 +122,7 @@ class _NextcloudSheetState extends ConsumerState<_NextcloudSheet> {
 
     try {
       final started = await NextcloudLogin(buildServerDio()).start(server);
+      if (!mounted) return;
       final launched = await launchUrl(
         started.login,
         mode: LaunchMode.externalApplication,

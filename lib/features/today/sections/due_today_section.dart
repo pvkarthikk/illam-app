@@ -169,7 +169,7 @@ class DueTodaySection extends ConsumerWidget {
   }
 }
 
-class _DueTodoRow extends ConsumerWidget {
+class _DueTodoRow extends ConsumerStatefulWidget {
   const _DueTodoRow({
     required this.row,
     required this.who,
@@ -181,10 +181,28 @@ class _DueTodoRow extends ConsumerWidget {
   final String today;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_DueTodoRow> createState() => _DueTodoRowState();
+}
+
+class _DueTodoRowState extends ConsumerState<_DueTodoRow> {
+  bool _busy = false;
+
+  @override
+  void didUpdateWidget(covariant _DueTodoRow oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.row.id != widget.row.id) {
+      _busy = false;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final c = context.nest;
-    final whoLabel = who != null ? personName(l10n, who!) : l10n.tasksAnyone;
+    final row = widget.row;
+    final who = widget.who;
+    final today = widget.today;
+    final whoLabel = who != null ? personName(l10n, who) : l10n.tasksAnyone;
     final avatarColor = who?.color ?? c.ink3;
     final avatarName = who?.firstName ?? whoLabel;
     final overdue = Dates.daysBetween(row.due, today) > 0;
@@ -195,16 +213,24 @@ class _DueTodoRow extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           RoundCheck(
-            value: false,
+            value: _busy,
             semanticLabel: l10n.tasksCompleteTodo(row.title),
             onChanged: (_) async {
-              final res = await ref
-                  .read(tasksRepoProvider)
-                  .setTodoDone(row.id, true);
-              if (!context.mounted) return;
-              ref
-                  .read(snackbarProvider)
-                  .show(l10n.tasksTodoDone(row.title), undo: res.undo);
+              if (_busy) return;
+              final snackbar = ref.read(snackbarProvider);
+              final repo = ref.read(tasksRepoProvider);
+              setState(() => _busy = true);
+              try {
+                final res = await repo.setTodoDone(row.id, true);
+                if (res.undo == null && mounted) {
+                  setState(() => _busy = false);
+                }
+                snackbar.show(l10n.tasksTodoDone(row.title), undo: res.undo);
+              } catch (_) {
+                if (mounted) {
+                  setState(() => _busy = false);
+                }
+              }
             },
           ),
           Expanded(
@@ -252,7 +278,7 @@ class _DueTodoRow extends ConsumerWidget {
   }
 }
 
-class _DueRoutineRow extends ConsumerWidget {
+class _DueRoutineRow extends ConsumerStatefulWidget {
   const _DueRoutineRow({
     required this.row,
     required this.state,
@@ -266,10 +292,29 @@ class _DueRoutineRow extends ConsumerWidget {
   final String today;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_DueRoutineRow> createState() => _DueRoutineRowState();
+}
+
+class _DueRoutineRowState extends ConsumerState<_DueRoutineRow> {
+  bool _busy = false;
+
+  @override
+  void didUpdateWidget(covariant _DueRoutineRow oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.row.id != widget.row.id) {
+      _busy = false;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final c = context.nest;
-    final whoLabel = who != null ? personName(l10n, who!) : l10n.tasksAnyone;
+    final row = widget.row;
+    final state = widget.state;
+    final who = widget.who;
+    final today = widget.today;
+    final whoLabel = who != null ? personName(l10n, who) : l10n.tasksAnyone;
     final overdue = state.left < 0;
 
     return Padding(
@@ -278,19 +323,27 @@ class _DueRoutineRow extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           NestCheckbox(
-            value: false,
+            value: _busy,
             semanticLabel: l10n.tasksMarkDone(row.name),
             onChanged: (_) async {
-              final res = await ref
-                  .read(tasksRepoProvider)
-                  .markRoutineDone(row.id, today);
-              if (!context.mounted) return;
-              ref
-                  .read(snackbarProvider)
-                  .show(
-                    l10n.tasksRoutineDone(row.name, row.everyDays),
-                    undo: res.undo,
-                  );
+              if (_busy) return;
+              final snackbar = ref.read(snackbarProvider);
+              final repo = ref.read(tasksRepoProvider);
+              setState(() => _busy = true);
+              try {
+                final res = await repo.markRoutineDone(row.id, today);
+                if (res.undo == null && mounted) {
+                  setState(() => _busy = false);
+                }
+                snackbar.show(
+                  l10n.tasksRoutineDone(row.name, row.everyDays),
+                  undo: res.undo,
+                );
+              } catch (_) {
+                if (mounted) {
+                  setState(() => _busy = false);
+                }
+              }
             },
           ),
           Expanded(

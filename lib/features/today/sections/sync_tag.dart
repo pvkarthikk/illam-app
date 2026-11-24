@@ -6,6 +6,7 @@ import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/domain/sync_status.dart';
 import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/providers.dart';
+import 'package:nm_flat/features/staff/staff_providers.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
 /// Formats elapsed time between [thenMs] and [nowMs] using localized units.
@@ -25,6 +26,7 @@ class SyncTag extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(minuteTickProvider);
     final summary = ref.watch(syncSummaryProvider).value;
     if (summary == null) return const SizedBox.shrink();
 

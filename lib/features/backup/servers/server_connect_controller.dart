@@ -44,10 +44,17 @@ class ServerConnectState {
 }
 
 class ServerConnectController extends Notifier<ServerConnectState> {
+  int _gen = 0;
+
   @override
   ServerConnectState build() => const ServerConnectState();
 
-  void reset() => state = const ServerConnectState();
+  void cancel() => _gen++;
+
+  void reset() {
+    _gen++;
+    state = const ServerConnectState();
+  }
 
   void setErrorKey(String? key) => state = state.copyWith(
     errorKey: key,
@@ -63,6 +70,7 @@ class ServerConnectController extends Notifier<ServerConnectState> {
     required String secret,
     required ConnectMode mode,
   }) async {
+    final gen = _gen;
     state = state.copyWith(
       busy: true,
       clearError: true,
@@ -76,6 +84,7 @@ class ServerConnectController extends Notifier<ServerConnectState> {
       } else {
         await dest.testWrite();
       }
+      if (_gen != gen) return false;
       await DestinationSecrets(
         ref.read(secureStoreProvider),
       ).write(config.destId, secret);

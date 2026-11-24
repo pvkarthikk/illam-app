@@ -4700,6 +4700,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get backupDamaged => 'This backup is damaged — try an older one.';
 
   @override
+  String get backupCheckUnreachable =>
+      'Couldn’t reach the backup place — try again later.';
+
+  @override
   String get backupRecent => 'Recent backups';
 
   @override

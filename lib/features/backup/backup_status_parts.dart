@@ -128,7 +128,10 @@ class BackupStatusCard extends ConsumerWidget {
     }
 
     final baseMs = newestSuccess ?? config.passwordSetAt ?? nowMs;
-    final nextMs = baseMs + intervalMs;
+    var nextMs = baseMs + intervalMs;
+    while (nextMs <= nowMs) {
+      nextMs += intervalMs;
+    }
     final nextDt = DateTime.fromMillisecondsSinceEpoch(nextMs);
     final whenStr = DateFormat(
       (nextMs - nowMs <= 7 * _dayMs) ? 'EEE' : 'd MMM',
@@ -296,23 +299,25 @@ class BackupPlacesSection extends ConsumerWidget {
     );
   }
 
-  Future<void> _showAddSheet(BuildContext context, WidgetRef ref) =>
-      showNestSheet<void>(
-        context,
-        (ctx) => Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            NestSheetHeader(title: AppLocalizations.of(ctx).backupWhere),
-            ProviderList(
-              mode: ConnectMode.add,
-              onPicked: () {
-                if (ctx.mounted) Navigator.of(ctx).pop();
-              },
-            ),
-          ],
-        ),
-      );
+  Future<void> _showAddSheet(BuildContext context, WidgetRef ref) {
+    ref.read(backupControllerProvider.notifier).setConnectState(clearError: true);
+    return showNestSheet<void>(
+      context,
+      (ctx) => Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          NestSheetHeader(title: AppLocalizations.of(ctx).backupWhere),
+          ProviderList(
+            mode: ConnectMode.add,
+            onPicked: () {
+              if (ctx.mounted) Navigator.of(ctx).pop();
+            },
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

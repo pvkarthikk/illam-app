@@ -6,6 +6,7 @@ import 'package:nm_flat/core/domain/sync_status.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/sync/protocol/messages.dart';
 import 'package:nm_flat/core/sync/sync_engine.dart';
+import 'package:nm_flat/features/staff/staff_providers.dart';
 import 'package:nm_flat/features/today/sections/sync_tag.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
@@ -15,6 +16,7 @@ class HomeSyncCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(minuteTickProvider);
     final summary = ref.watch(syncSummaryProvider).value;
     if (summary == null) return const SizedBox.shrink();
 

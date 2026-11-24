@@ -11,6 +11,7 @@ import 'package:nm_flat/core/domain/names.dart';
 import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/ui/rich_text.dart';
+import 'package:nm_flat/features/staff/staff_providers.dart';
 import 'package:nm_flat/features/today/sections/hero_tags.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
@@ -21,6 +22,7 @@ class HeroSection extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final c = context.nest;
+    ref.watch(minuteTickProvider);
     final now = ref.watch(clockProvider).now();
     final home = ref.watch(currentHomeProvider).value;
     final members = ref.watch(membersProvider).value ?? const <Member>[];

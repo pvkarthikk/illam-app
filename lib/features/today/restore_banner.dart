@@ -27,12 +27,13 @@ Future<void> forkSeparateHome(
   required String homeName,
   required int createdAtMs,
 }) async {
+  final container = ProviderScope.containerOf(context, listen: false);
   final l = AppLocalizations.of(context);
   final dateStr = DateFormat(
     'd MMM yyyy',
     'en',
   ).format(DateTime.fromMillisecondsSinceEpoch(createdAtMs));
-  await SeparateCopy(ref.read).make(
+  await SeparateCopy(container.read).make(
     oldHomeId,
     newHomeName: l.restoreSeparateName(homeName, dateStr),
   );

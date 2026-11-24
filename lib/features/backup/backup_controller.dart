@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:nm_flat/core/backup/backup_config.dart';
 import 'package:nm_flat/core/backup/backup_runner.dart';
+import 'package:nm_flat/core/backup/backup_schedule.dart';
 import 'package:nm_flat/core/domain/names.dart';
 import 'package:nm_flat/core/notify/notifications.dart';
 import 'package:nm_flat/core/providers.dart';
@@ -90,7 +91,10 @@ class BackupController extends Notifier<BackupUi> {
     if (mode == ConnectMode.reauth) {
       final idx = config.destinations.indexWhere((d) => d.destId == c.destId);
       if (idx >= 0) {
-        config.destinations[idx] = c;
+        config.destinations[idx] = config.destinations[idx].copyWith(
+          label: c.label,
+          settings: c.settings,
+        );
       } else if (config.destinations.length < BackupConfig.maxDestinations) {
         config.destinations.add(c);
       }
@@ -110,6 +114,7 @@ class BackupController extends Notifier<BackupUi> {
     if (pw == null || pw.isEmpty) {
       return ConnectNext.askPassword;
     }
+    await scheduleBackup(homeId, config);
     await runNow();
     return ConnectNext.ranBackup;
   }
@@ -203,7 +208,7 @@ class KitView {
 final recoveryKitsViewProvider = FutureProvider<List<KitView>>((ref) async {
   final homeId = ref.watch(currentHomeIdProvider).value;
   if (homeId == null) return const [];
-  final r = await ref.read(membershipLogProvider).replayAndProject(homeId);
+  final r = await ref.read(membershipLogProvider).replayState(homeId);
   final myDeviceId = ref.read(prefsProvider).deviceId;
 
   final out = <KitView>[];

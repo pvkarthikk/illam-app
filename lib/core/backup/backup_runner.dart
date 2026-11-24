@@ -52,8 +52,16 @@ class BackupRunner {
           d,
     ];
     if (due.isEmpty) {
+      for (final d in config.destinations) {
+        d.lastSuccessAt = now;
+      }
       config.lastSkip = 'unchanged';
       await configStore.save(homeId, config);
+      await _syncBackupStatus(
+        homeId: homeId,
+        config: config,
+        committedFull: false,
+      );
       return BackupRunResult.unchanged;
     }
 
@@ -61,6 +69,7 @@ class BackupRunner {
     onProgress?.call(10);
 
     final kitLive = await read(recoveryKitsProvider).ensureLive(homeId);
+    config.kit = (await configStore.load(homeId)).kit;
     final committedHeads = await SnapshotHeads.compute(db, homeId);
     final kind = kitLive ? 'full' : 'data';
     final snap = await read(snapshotBuilderProvider).build(
@@ -131,12 +140,17 @@ class BackupRunner {
           d.lastFullName = name;
         }
         final listBefore = await dest.list();
+        final eligible = [
+          for (final f in listBefore)
+            if (f.name.compareTo(name) <= 0) f,
+        ];
         for (final oldName in namesToDelete(
-          listBefore,
+          eligible,
           vault8: vault8,
           keep: config.keep,
           protect: d.lastFullName,
         )) {
+          if (oldName == name) continue;
           await dest.delete(oldName);
         }
         for (final stale in await dest.staleParts(const Duration(hours: 24))) {
@@ -176,11 +190,24 @@ class BackupRunner {
     config.consecutiveFailures = successes > 0
         ? 0
         : config.consecutiveFailures + 1;
-    await configStore.save(homeId, config);
+    final fresh = await configStore.load(homeId);
+    for (final d in due) {
+      final idx = fresh.destinations.indexWhere((f) => f.destId == d.destId);
+      if (idx < 0) continue;
+      final current = fresh.destinations[idx];
+      fresh.destinations[idx] = d.copyWith(
+        label: current.label,
+        settings: current.settings,
+      );
+    }
+    fresh.history = config.history;
+    fresh.consecutiveFailures = config.consecutiveFailures;
+    fresh.lastSkip = null;
+    await configStore.save(homeId, fresh);
 
     await _syncBackupStatus(
       homeId: homeId,
-      config: config,
+      config: fresh,
       committedFull: successes > 0 && kind == 'full' && kitLive,
     );
 

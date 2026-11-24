@@ -97,12 +97,13 @@ class DropboxDestination extends BackupDestination {
   Future<Response<T>> _authedJson<T>(
     Uri uri, {
     Object? data,
+    Object? Function()? body,
     Map<String, Object?>? headers,
     ResponseType? responseType,
   }) => keeper.authed<T>(
     (tok) => keeper.dio.postUri<T>(
       uri,
-      data: data,
+      data: body != null ? body() : data,
       options: Options(
         headers: <String, Object?>{'Authorization': 'Bearer $tok', ...?headers},
         responseType: responseType,
@@ -118,7 +119,7 @@ class DropboxDestination extends BackupDestination {
     final partPath = '/$name.part';
     final res = await _authedJson<dynamic>(
       Uri.parse('https://content.dropboxapi.com/2/files/upload'),
-      data: Stream<Uint8List>.value(bytes),
+      body: () => Stream<Uint8List>.value(bytes),
       headers: {
         'Dropbox-API-Arg': argHeader({
           'path': partPath,
@@ -252,7 +253,7 @@ class DropboxDestination extends BackupDestination {
     final data = Uint8List.fromList(utf8.encode('NMBK test'));
     final res = await _authedJson<dynamic>(
       Uri.parse('https://content.dropboxapi.com/2/files/upload'),
-      data: Stream<Uint8List>.value(data),
+      body: () => Stream<Uint8List>.value(data),
       headers: {
         'Dropbox-API-Arg': argHeader({
           'path': tmp,

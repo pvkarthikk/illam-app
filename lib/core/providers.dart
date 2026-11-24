@@ -310,6 +310,25 @@ final opsTickProvider = StreamProvider<int>((ref) {
       .watchSingle()
       .map((r) => r.data['n'] as int);
 });
+final localChangeTickProvider = StreamProvider<int>((ref) {
+  final controller = StreamController<int>();
+  Timer? timer;
+  var tick = 0;
+  final sub = ref.watch(changesProvider).changed.listen((_) {
+    timer?.cancel();
+    timer = Timer(const Duration(seconds: 2), () {
+      if (!controller.isClosed) {
+        controller.add(++tick);
+      }
+    });
+  });
+  ref.onDispose(() {
+    timer?.cancel();
+    sub.cancel();
+    controller.close();
+  });
+  return controller.stream;
+});
 final syncSummaryProvider = FutureProvider<SyncSummary>((ref) async {
   final home = ref.watch(currentHomeIdProvider).value;
   if (home == null) {
@@ -319,8 +338,7 @@ final syncSummaryProvider = FutureProvider<SyncSummary>((ref) async {
   final peers = await ref.watch(syncPeersProvider.future);
   final engineState =
       ref.watch(syncEngineStateProvider).value ?? const SyncEngineState();
-  ref.watch(opsTickProvider);
-  ref.watch(minuteTickProvider);
+  ref.watch(localChangeTickProvider);
 
   final store = ref.watch(syncStoreProvider);
   final keys = await ref.watch(deviceKeysProvider.future);
