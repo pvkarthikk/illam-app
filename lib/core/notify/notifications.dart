@@ -4,10 +4,7 @@ import 'dart:ui';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/misc.dart' show ProviderListenable;
-import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:go_router/go_router.dart';
-import 'package:timezone/data/latest_all.dart' as tz_data;
-import 'package:timezone/timezone.dart' as tz;
 
 import 'package:nm_flat/core/domain/reminder_rules.dart';
 import 'package:nm_flat/core/nav/routes.dart';
@@ -40,16 +37,6 @@ int stableId(String key) {
     h = ((h ^ c) * 0x01000193) & 0x7fffffff;
   }
   return h;
-}
-
-Future<void> initTimeZone() async {
-  tz_data.initializeTimeZones();
-  try {
-    final info = await FlutterTimezone.getLocalTimezone();
-    tz.setLocalLocation(tz.getLocation(info.identifier));
-  } catch (_) {
-    tz.setLocalLocation(tz.getLocation('Asia/Kolkata'));
-  }
 }
 
 Future<void> initNotifications({

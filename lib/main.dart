@@ -92,7 +92,6 @@ Future<void> main() async {
 /// they start after the app is on screen.
 Future<void> _initBackground() async {
   try {
-    await initTimeZone();
     await initNotifications(onResponse: NotificationRouter.instance.handle);
     final launch = await plugin.getNotificationAppLaunchDetails();
     final payload = launch?.notificationResponse?.payload;
@@ -110,6 +109,10 @@ Future<void> _initBackground() async {
         }
       } catch (_) {}
     }
+  } catch (_) {
+    // Reminders are best-effort; the app works without.
+  }
+  try {
     await Workmanager().initialize(callbackDispatcher);
     await Future.wait([
       Workmanager().registerPeriodicTask(
@@ -127,7 +130,7 @@ Future<void> _initBackground() async {
       ),
     ]);
   } catch (_) {
-    // Reminders and background sync are best-effort; the app works without.
+    // Background sync and reminders are best-effort; the app works without.
   }
 }
 

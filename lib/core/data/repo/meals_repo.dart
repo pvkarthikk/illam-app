@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:drift/drift.dart';
 
 import 'package:nm_flat/core/data/db/database.dart';
@@ -20,6 +21,20 @@ class MealsRepo {
 
   String slotId(String date, String slot) => 'ms_${homeId}_${date}_$slot';
 
+  Future<List<String>> _slotIds(String date, String slot) async {
+    final rows =
+        await (db.select(db.mealSlots)..where(
+              (s) =>
+                  s.homeId.equals(homeId) &
+                  s.date.equals(date) &
+                  s.slot.equals(slot) &
+                  s.deleted.equals(false),
+            ))
+            .get();
+    if (rows.isEmpty) return [slotId(date, slot)];
+    return [for (final r in rows) r.id];
+  }
+
   Stream<List<MealSlot>> watchRange(String fromIso, String toIso) =>
       (db.select(db.mealSlots)..where(
             (s) =>
@@ -39,22 +54,30 @@ class MealsRepo {
                 p.inStock.equals(true),
           ))
           .watch()
-          .map((rows) => {for (final r in rows) r.nameKey});
+          .map((rows) => {for (final r in rows) r.nameKey})
+          .distinct(const SetEquality<String>().equals);
 
+  // Also returns bought rows until they are cleared.
   Stream<Set<String>> watchOpenGroceryKeys() =>
       (db.select(db.items)..where(
             (i) =>
                 i.homeId.equals(homeId) &
                 i.list.equals('grocery') &
-                i.done.equals(false) &
                 i.deleted.equals(false),
           ))
           .watch()
-          .map((rows) => {for (final r in rows) r.nameKey});
+          .map((rows) => {for (final r in rows) r.nameKey})
+          .distinct(const SetEquality<String>().equals);
 
-  Future<ChangeResult> planRecipe(String date, String slot, RecipeView r) =>
-      changes.write('Planned meal', (c) {
-        c.setAll('meal_slots', slotId(date, slot), {
+  Future<ChangeResult> planRecipe(
+    String date,
+    String slot,
+    RecipeView r,
+  ) async {
+    final ids = await _slotIds(date, slot);
+    return changes.write('Planned meal', (c) {
+      for (final id in ids) {
+        c.setAll('meal_slots', id, {
           'deleted': false,
           'date': date,
           'slot': slot,
@@ -63,28 +86,37 @@ class MealsRepo {
           'name_snapshot': r.name,
           'text': null,
         });
-      }, homeId: homeId);
+      }
+    }, homeId: homeId);
+  }
 
   Future<ChangeResult> planKind(
     String date,
     String slot,
     String kind, {
     String? text,
-  }) => changes.write('Planned meal', (c) {
-    c.setAll('meal_slots', slotId(date, slot), {
-      'deleted': false,
-      'date': date,
-      'slot': slot,
-      'kind': kind,
-      'recipe_id': null,
-      'name_snapshot': null,
-      'text': text,
-    });
-  }, homeId: homeId);
+  }) async {
+    final ids = await _slotIds(date, slot);
+    return changes.write('Planned meal', (c) {
+      for (final id in ids) {
+        c.setAll('meal_slots', id, {
+          'deleted': false,
+          'date': date,
+          'slot': slot,
+          'kind': kind,
+          'recipe_id': null,
+          'name_snapshot': null,
+          'text': text,
+        });
+      }
+    }, homeId: homeId);
+  }
 
-  Future<ChangeResult> clearSlot(String date, String slot) =>
-      changes.write('Cleared slot', (c) {
-        c.setAll('meal_slots', slotId(date, slot), {
+  Future<ChangeResult> clearSlot(String date, String slot) async {
+    final ids = await _slotIds(date, slot);
+    return changes.write('Cleared slot', (c) {
+      for (final id in ids) {
+        c.setAll('meal_slots', id, {
           'deleted': false,
           'date': date,
           'slot': slot,
@@ -93,7 +125,9 @@ class MealsRepo {
           'name_snapshot': null,
           'text': null,
         });
-      }, homeId: homeId);
+      }
+    }, homeId: homeId);
+  }
 
   Future<ChangeResult> setPantry(String name, String nameKey, bool inStock) =>
       changes.write('Pantry', (c) {
@@ -135,11 +169,10 @@ class MealsRepo {
           'list': 'grocery',
           'name': line.name,
           'name_key': line.nameKey,
-          'unit': line.unit,
+          if (line.unit.isNotEmpty) 'unit': line.unit,
           'channel': channel,
           'category': guessCategory(line.name),
           'note': line.note,
-          'done': false,
           'source': 'meal',
         });
         c.inc('items', id, 'qty_milli', (line.qty * 1000).round());

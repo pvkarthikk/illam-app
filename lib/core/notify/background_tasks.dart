@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:workmanager/workmanager.dart';
 
 import 'package:nm_flat/core/backup/backup_schedule.dart';
@@ -68,7 +69,7 @@ void callbackDispatcher() {
 }
 
 Future<ProviderContainer> openBackgroundContainer() async {
-  await initTimeZone();
+  await initializeDateFormatting();
   final prefs = await DevicePrefs.open();
   await prefs.reload();
   final secure = FlutterSecureStore();
@@ -130,7 +131,7 @@ Future<ReminderInputs?> loadReminderInputs(Reader read) async {
       if (!t.done && t.due.isNotEmpty && Dates.daysBetween(t.due, today) >= 0)
         t.title,
   ];
-  final dueCount = read(tasksBadgeProvider);
+  final dueCount = dueTitles.length;
 
   final statusById = {for (final (b, st) in statuses) b.id: st};
   final billInfos = <BillInfo>[

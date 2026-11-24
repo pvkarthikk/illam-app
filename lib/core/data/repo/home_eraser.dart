@@ -29,7 +29,7 @@ class HomeEraser {
 
   static final List<Future<void> Function(String homeId)> onErase = [];
 
-  Future<void> erase(String homeId) async {
+  Future<void> eraseRows(String homeId) async {
     await db.transaction(() async {
       await db.customUpdate(
         'DELETE FROM field_clocks WHERE entity_id IN '
@@ -55,8 +55,11 @@ class HomeEraser {
         );
       }
     });
+  }
 
+  Future<void> eraseRest(String homeId) async {
     await keyRing.clear(homeId);
+    await prefs.setText('restoreInProgress_$homeId', null);
 
     if (prefs.currentHomeId == homeId) {
       await prefs.clearHome();
@@ -69,6 +72,11 @@ class HomeEraser {
     for (final hook in [...onErase]) {
       await hook(homeId);
     }
+  }
+
+  Future<void> erase(String homeId) async {
+    await eraseRows(homeId);
+    await eraseRest(homeId);
   }
 
   /// Records a [Tombstone] in [controlStore] (reading the home's name first), then erases [homeId].

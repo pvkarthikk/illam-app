@@ -211,7 +211,9 @@ class _ConnectStepState extends ConsumerState<ConnectStep> {
               ],
               if (ui.approve == JoinStepState.done &&
                   ui.copy != JoinStepState.done &&
-                  ui.homeId != null) ...[
+                  ui.homeId != null &&
+                  ref.read(prefsProvider).setupIncompleteHomeId ==
+                      ui.homeId) ...[
                 const SizedBox(height: 20),
                 NestButton(
                   label: l.finishLater,

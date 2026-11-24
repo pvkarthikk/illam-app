@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:drift/drift.dart';
 
@@ -117,11 +118,25 @@ class ChangeWriter {
 
     final changeId = Ids.newId();
     late final List<UndoEntry> inverse;
-    late final int nextSeq;
     try {
       await db.transaction(() async {
         inverse = await _inverseOf(ops);
-        final state = await _nextSeqAndMaxHlc();
+        var state = await _nextSeqAndMaxHlc();
+        if (_validator != null &&
+            state.lastHome != null &&
+            state.lastHome != home) {
+          final homeHasDevices = await db
+              .customSelect(
+                'SELECT 1 FROM member_devices WHERE home_id = ? LIMIT 1',
+                variables: [Variable.withString(home)],
+              )
+              .getSingleOrNull();
+          if (homeHasDevices == null) {
+            throw const ChangeRejected('noHome');
+          }
+          await _purgeDeadHomes();
+          state = await _nextSeqAndMaxHlc();
+        }
         final maxHlc = state.maxHlc;
         if (maxHlc != null) {
           await hlc.observe(maxHlc);
@@ -149,7 +164,6 @@ class ChangeWriter {
           );
           seq++;
         }
-        await hlc.flush();
 
         if (_validator != null) {
           final hasDevices = await db
@@ -159,10 +173,16 @@ class ChangeWriter {
               )
               .getSingleOrNull();
           if (hasDevices != null) {
-            final view = DriftValidationView(db, registry);
+            final view = DriftValidationView(db, registry, local: true);
             final nowMs = (_clock ?? SystemClock()).nowMs;
             for (final rec in recs) {
-              final d = await _validator.check(rec, recs, view, nowMs: nowMs);
+              final recNowMs = max(nowMs, Hlc.parse(rec.hlc).wall);
+              final d = await _validator.check(
+                rec,
+                recs,
+                view,
+                nowMs: recNowMs,
+              );
               if (d.verdict != Verdict.accept) {
                 throw ChangeRejected(d.reason);
               }
@@ -175,7 +195,6 @@ class ChangeWriter {
           signed.add(_signer != null ? await _signer.sign(rec) : rec);
         }
         await _applier.applyLocal(signed);
-        nextSeq = seq;
       });
     } on ChangeRejected catch (e) {
       final cb = _onRejected;
@@ -185,7 +204,7 @@ class ChangeWriter {
       return ChangeResult(changeId, null);
     }
 
-    await prefs.setNextSeq(nextSeq);
+    unawaited(hlc.flush());
     if (!_changed.isClosed) {
       _changed.add(null);
     }
@@ -195,17 +214,52 @@ class ChangeWriter {
     );
   }
 
-  /// Per-device sequence and the newest HLC in one round trip (both read the
-  /// same `ops` rows for this device, so one scan serves both).
-  Future<({int seq, String? maxHlc})> _nextSeqAndMaxHlc() async {
+  /// Per-device next sequence, newest HLC, and latest home id using an index seek.
+  Future<({int seq, String? maxHlc, String? lastHome})>
+  _nextSeqAndMaxHlc() async {
     final row = await db
         .customSelect(
-          'SELECT COALESCE(MAX(seq), 0) AS m, MAX(hlc) AS h '
-          'FROM ops WHERE device_id = ?',
+          'SELECT seq, hlc, home_id FROM ops '
+          'WHERE device_id = ? ORDER BY seq DESC LIMIT 1',
           variables: [Variable.withString(prefs.deviceId)],
         )
-        .getSingle();
-    return (seq: (row.data['m'] as int) + 1, maxHlc: row.data['h'] as String?);
+        .getSingleOrNull();
+    if (row == null) return (seq: 1, maxHlc: null, lastHome: null);
+    return (
+      seq: (row.data['seq'] as int) + 1,
+      maxHlc: row.data['hlc'] as String?,
+      lastHome: row.data['home_id'] as String?,
+    );
+  }
+
+  Future<void> _purgeDeadHomes() async {
+    final rows = await db
+        .customSelect(
+          'SELECT DISTINCT o.home_id FROM ops o '
+          'WHERE o.device_id = ? '
+          'AND NOT EXISTS (SELECT 1 FROM member_devices d WHERE d.home_id = o.home_id)',
+          variables: [Variable.withString(prefs.deviceId)],
+        )
+        .get();
+    for (final r in rows) {
+      final deadHome = r.data['home_id'] as String;
+      await db.customUpdate(
+        'DELETE FROM field_clocks WHERE entity_id IN '
+        '(SELECT entity_id FROM ops WHERE home_id = ?)',
+        variables: [Variable.withString(deadHome)],
+        updates: {db.fieldClocks},
+        updateKind: UpdateKind.delete,
+      );
+      final tables = <TableInfo>[...registry.tables, db.ops];
+      for (final t in tables) {
+        await db.customUpdate(
+          'DELETE FROM ${t.actualTableName} WHERE home_id = ?',
+          variables: [Variable.withString(deadHome)],
+          updates: {t},
+          updateKind: UpdateKind.delete,
+        );
+      }
+    }
   }
 
   /// Reads every row the change touches up front — one `IN` query per distinct

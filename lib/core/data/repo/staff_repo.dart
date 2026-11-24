@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:collection/collection.dart';
 import 'package:drift/drift.dart';
 
 import 'package:nm_flat/core/data/db/database.dart';
@@ -52,7 +53,8 @@ class StaffRepo {
                   v.date.isSmallerOrEqualValue(to),
             )
             ..orderBy([(v) => OrderingTerm(expression: v.inAt)]))
-          .watch();
+          .watch()
+          .distinct(const ListEquality<Visit>().equals);
 
   Stream<List<Visit>> watchVisitsOn(String homeId, String date) =>
       (db.select(db.visits)
@@ -84,7 +86,8 @@ class StaffRepo {
                 l.date.isBiggerOrEqualValue(from) &
                 l.date.isSmallerOrEqualValue(to),
           ))
-          .watch();
+          .watch()
+          .distinct(const ListEquality<Leave>().equals);
 
   Stream<List<Leave>> watchLeavesOn(String homeId, String date) =>
       (db.select(db.leaves)..where(

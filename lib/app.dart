@@ -99,7 +99,7 @@ class _NestAppState extends ConsumerState<NestApp> {
 
   @override
   Widget build(BuildContext context) {
-    ref.watch(startupProvider);
+    ref.listen(startupProvider, (_, _) {});
     ref.listen<AsyncValue<Tombstone?>>(homeGoneProvider, (_, next) {
       final t = next.value;
       if (t == null || _handlingTombstoneHomeId == t.homeId) return;

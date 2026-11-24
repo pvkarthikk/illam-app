@@ -26,14 +26,6 @@ class InviteCard extends ConsumerWidget {
   final String homeName;
   final InviteUi ui;
 
-  String _countdown(DateTime expiresAt) {
-    final diff = expiresAt.difference(DateTime.now());
-    final secs = diff.isNegative ? 0 : diff.inSeconds;
-    final m = secs ~/ 60;
-    final s = secs % 60;
-    return '$m:${s.toString().padLeft(2, '0')}';
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
@@ -162,16 +154,58 @@ class InviteCard extends ConsumerWidget {
               const SizedBox(height: 12),
               Semantics(
                 liveRegion: false,
-                child: Text(
-                  l.inviteValidFor(_countdown(inv.expiresAt)),
-                  style: NestText.meta13.copyWith(color: c.ink3),
-                  textAlign: TextAlign.center,
-                ),
+                child: _InviteCountdown(expiresAt: inv.expiresAt),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class _InviteCountdown extends StatefulWidget {
+  const _InviteCountdown({required this.expiresAt});
+
+  final DateTime expiresAt;
+
+  @override
+  State<_InviteCountdown> createState() => _InviteCountdownState();
+}
+
+class _InviteCountdownState extends State<_InviteCountdown> {
+  Timer? _tick;
+
+  @override
+  void initState() {
+    super.initState();
+    _tick = Timer.periodic(const Duration(seconds: 1), (_) {
+      if (mounted) setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _tick?.cancel();
+    super.dispose();
+  }
+
+  String _countdown(DateTime expiresAt) {
+    final diff = expiresAt.difference(DateTime.now());
+    final secs = diff.isNegative ? 0 : diff.inSeconds;
+    final m = secs ~/ 60;
+    final s = secs % 60;
+    return '$m:${s.toString().padLeft(2, '0')}';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final c = context.nest;
+    return Text(
+      l.inviteValidFor(_countdown(widget.expiresAt)),
+      style: NestText.meta13.copyWith(color: c.ink3),
+      textAlign: TextAlign.center,
     );
   }
 }
@@ -362,6 +396,7 @@ class _JoinRequestCardState extends ConsumerState<JoinRequestCard> {
     return Semantics(
       scopesRoute: true,
       namesRoute: true,
+      explicitChildNodes: true,
       label: l.inviteRequestEyebrow,
       child: Container(
         decoration: BoxDecoration(

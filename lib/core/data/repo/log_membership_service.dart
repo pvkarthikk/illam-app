@@ -167,6 +167,9 @@ class LogMembershipService implements MembershipService {
 
   @override
   Future<MembershipResult> leaveHome() async {
+    final pending = await controlStore?.pendingOutbox(_homeId) ?? const [];
+    if (pending.isNotEmpty) return const MembershipResult.ok();
+
     final active = await _local.members().first;
     final amAdmin = active.any((m) => m.id == _myMemberId && m.role == 'admin');
     final otherAdmins = [

@@ -23,6 +23,8 @@ class SeparateCopy {
     final db = read(dbProvider);
     final prefs = read(prefsProvider);
     final registry = read(registryProvider);
+    final savedHomeId = prefs.currentHomeId;
+    final savedMemberId = prefs.memberId;
 
     final incRows = await db
         .customSelect(
@@ -79,45 +81,63 @@ class SeparateCopy {
       }
     }
 
-    await read(homeEraserProvider).erase(oldHomeId);
-    await prefs.setText('provisionalRestore_$oldHomeId', null);
-    await prefs.setText('provisionalRestoreAt_$oldHomeId', null);
-    await prefs.setText('recoverDead_$oldHomeId', null);
-
     final keys = await read(deviceKeysProvider.future);
-    final newHomeId = await read(homeRepoProvider).createHome(
-      creatorName: creatorName,
-      homeName: newHomeName,
-      keys: keys,
-      createdAt: read(clockProvider).nowMs,
-      nonceB64: base64Encode(Ids.randomBytes(16)),
-      model: await deviceModel(),
-    );
-
+    final model = await deviceModel();
+    final createdAt = read(clockProvider).nowMs;
+    final eraser = read(homeEraserProvider);
+    final homeRepo = read(homeRepoProvider);
     final changes = read(changesProvider);
-    for (var i = 0; i < copiedRows.length; i += 200) {
-      final end = min(i + 200, copiedRows.length);
-      final chunk = copiedRows.sublist(i, end);
-      await changes.write('Separate copy', (c) {
-        for (final row in chunk) {
-          c.set(row.tbl, row.id, 'deleted', false);
-          final tblCounters = counterCols[row.tbl] ?? const <String>{};
-          for (final entry in row.fields.entries) {
-            final col = entry.key;
-            final val = entry.value;
-            if (col == 'deleted' || val == null) continue;
-            if (tblCounters.contains(col)) {
-              final delta = (val as num).toInt();
-              if (delta != 0) c.inc(row.tbl, row.id, col, delta);
-            } else {
-              c.set(row.tbl, row.id, col, val);
+
+    final String newHomeId;
+    try {
+      newHomeId = await db.transaction(() async {
+        await eraser.eraseRows(oldHomeId);
+        final created = await homeRepo.createHome(
+          creatorName: creatorName,
+          homeName: newHomeName,
+          keys: keys,
+          createdAt: createdAt,
+          nonceB64: base64Encode(Ids.randomBytes(16)),
+          model: model,
+        );
+        await prefs.setCurrentHomeId(savedHomeId);
+        for (var i = 0; i < copiedRows.length; i += 200) {
+          final end = min(i + 200, copiedRows.length);
+          final chunk = copiedRows.sublist(i, end);
+          final res = await changes.write('Separate copy', (c) {
+            for (final row in chunk) {
+              c.set(row.tbl, row.id, 'deleted', false);
+              final tblCounters = counterCols[row.tbl] ?? const <String>{};
+              for (final entry in row.fields.entries) {
+                final col = entry.key;
+                final val = entry.value;
+                if (col == 'deleted' || val == null) continue;
+                if (tblCounters.contains(col)) {
+                  final delta = (val as num).toInt();
+                  if (delta != 0) c.inc(row.tbl, row.id, col, delta);
+                } else {
+                  c.set(row.tbl, row.id, col, val);
+                }
+              }
             }
+          }, homeId: created);
+          if (res.undo == null) {
+            throw StateError('Failed to copy rows');
           }
         }
-      }, homeId: newHomeId);
+        return created;
+      });
+    } on Object {
+      await prefs.setMemberId(savedMemberId);
+      await prefs.setCurrentHomeId(savedHomeId);
+      rethrow;
     }
 
     await prefs.setCurrentHomeId(newHomeId);
+    await eraser.eraseRest(oldHomeId);
+    await prefs.setText('provisionalRestore_$oldHomeId', null);
+    await prefs.setText('provisionalRestoreAt_$oldHomeId', null);
+    await prefs.setText('recoverDead_$oldHomeId', null);
     return newHomeId;
   }
 }

@@ -126,9 +126,22 @@ final prefsProvider = Provider<DevicePrefs>(
 final dbProvider = Provider<NestDatabase>(
   (ref) => throw UnimplementedError(),
 ); // overridden in main()
-final currentHomeIdProvider = StreamProvider<String?>(
-  (ref) => ref.watch(prefsProvider).currentHomeIdStream(),
-);
+class CurrentHomeIdController extends AsyncNotifier<String?> {
+  @override
+  FutureOr<String?> build() {
+    final prefs = ref.watch(prefsProvider);
+    final sub = prefs.currentHomeIdStream().skip(1).listen((id) {
+      state = AsyncData(id);
+    });
+    ref.onDispose(sub.cancel);
+    return prefs.currentHomeId;
+  }
+}
+
+final currentHomeIdProvider =
+    AsyncNotifierProvider<CurrentHomeIdController, String?>(
+      CurrentHomeIdController.new,
+    );
 final registryProvider = Provider(
   (ref) => CollectionRegistry.build(ref.watch(dbProvider)),
 );

@@ -9,14 +9,19 @@ import 'package:nm_flat/core/util/money.dart';
 import 'package:nm_flat/features/salary/salary_providers.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
+bool _markPaidBusy = false;
+
 Future<void> showMarkPaidSheet(
   BuildContext context, {
   required SalaryView view,
   required String month,
-}) => showNestSheet<void>(
-  context,
-  (_) => _MarkPaidSheet(view: view, month: month),
-);
+}) {
+  if (_markPaidBusy) return Future<void>.value();
+  return showNestSheet<void>(
+    context,
+    (_) => _MarkPaidSheet(view: view, month: month),
+  );
+}
 
 class _MarkPaidSheet extends ConsumerStatefulWidget {
   const _MarkPaidSheet({required this.view, required this.month});
@@ -35,27 +40,29 @@ class _MarkPaidSheetState extends ConsumerState<_MarkPaidSheet> {
   Future<void> _confirm(AppLocalizations l10n, String amountText) async {
     if (_saving) return;
     setState(() => _saving = true);
+    final repo = ref.read(salaryRepoProvider);
+    final snack = ref.read(snackbarProvider);
+    final today = Dates.today(ref.read(clockProvider));
+    final name = widget.view.staff.name ?? '';
+    final monthName = Formatters.monthName(widget.month);
+    _markPaidBusy = true;
     try {
-      final today = Dates.today(ref.read(clockProvider));
-      final name = widget.view.staff.name ?? '';
-      final monthName = Formatters.monthName(widget.month);
-      await ref
-          .read(salaryRepoProvider)
-          .markPaid(
-            staffId: widget.view.staff.id,
-            month: widget.month,
-            r: widget.view.payroll,
-            method: _method,
-            merchantText: l10n.salaryExpenseMerchant(name, monthName),
-            today: today,
-          );
-      if (!mounted) return;
       Navigator.of(context).pop();
-      ref
-          .read(snackbarProvider)
-          .show(l10n.salaryPaidSnack(amountText, name));
+      final res = await repo.markPaid(
+        staffId: widget.view.staff.id,
+        month: widget.month,
+        r: widget.view.payroll,
+        method: _method,
+        merchantText: l10n.salaryExpenseMerchant(name, monthName),
+        today: today,
+      );
+      if (res.undo != null) {
+        snack.show(l10n.salaryPaidSnack(amountText, name));
+      }
+    } on Object {
+      // Ignore write errors after closing the sheet.
     } finally {
-      if (mounted) setState(() => _saving = false);
+      _markPaidBusy = false;
     }
   }
 

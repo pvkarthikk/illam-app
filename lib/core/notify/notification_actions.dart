@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-import 'package:nm_flat/core/domain/bills.dart';
 import 'package:nm_flat/core/domain/salary_months.dart';
 import 'package:nm_flat/core/notify/notifications.dart';
 import 'package:nm_flat/core/providers.dart';
@@ -47,26 +46,28 @@ Future<void> handleNotificationAction(Reader read, NotificationResponse r) async
     case 'bill_paid':
       final billId = data['billId'] as String?;
       if (billId != null) {
+        final rawKey = data['key'] as String? ?? '';
+        final colon = rawKey.lastIndexOf(':');
+        final tail = colon >= 0 ? rawKey.substring(colon + 1) : '';
+        final month = tail.length == 10 ? Dates.month(tail) : Dates.month(today);
         final bills = await read(billsProvider.future);
-        final month = Dates.month(today);
-        await read(monthExpensesProvider(month).future);
-        await read(monthExpensesProvider(prevMonth(month)).future);
-        final statuses = await read(billStatusesProvider.future);
-        final unpaid = statuses
-            .where((s) => s.$1.id == billId && s.$2.kind != BillDue.paid)
-            .firstOrNull;
-        if (unpaid != null) {
-          final bill = bills.firstWhere(
-            (b) => b.id == billId,
-            orElse: () => unpaid.$1,
+        final bill = bills.where((b) => b.id == billId).firstOrNull;
+        if (bill != null && bill.active) {
+          final expenses = await read(
+            moneyRepoProvider,
+          ).watchExpensesSince(Dates.monthStart(prevMonth(month))).first;
+          final alreadyPaid = expenses.any(
+            (e) => e.billId == billId && e.forMonth == month,
           );
-          await read(moneyRepoProvider).markBillPaid(
-            bill: bill,
-            amountPaise: bill.usualAmountPaise,
-            method: bill.method,
-            date: today,
-            forMonth: month,
-          );
+          if (!alreadyPaid) {
+            await read(moneyRepoProvider).markBillPaid(
+              bill: bill,
+              amountPaise: bill.usualAmountPaise,
+              method: bill.method,
+              date: today,
+              forMonth: month,
+            );
+          }
         }
       }
   }

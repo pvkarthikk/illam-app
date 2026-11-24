@@ -65,7 +65,8 @@ class HomeRepo {
     required String model,
   }) async {
     final full = Names.titleCase(creatorName);
-    final name = homeName.trim();
+    final trimmed = homeName.trim();
+    final name = trimmed.length > 40 ? trimmed.substring(0, 40) : trimmed;
     final genesis = HomeIds.genesisJson(
       homeName: name,
       creatorName: full,
@@ -85,7 +86,7 @@ class HomeRepo {
     await prefs.setMemberId(memberId);
     await membershipLog?.ensureGenesis(homeId, genesis);
 
-    await changes.write('Created home', (c) {
+    final res = await changes.write('Created home', (c) {
       c.create('homes', {
         'name': name,
         'vault_id': Ids.hex(Ids.randomBytes(16)),
@@ -99,6 +100,9 @@ class HomeRepo {
         'device_model': model,
       }, id: memberId);
     }, homeId: homeId);
+    if (res.undo == null) {
+      throw StateError('Failed to create home');
+    }
 
     await prefs.setCurrentHomeId(homeId);
     return homeId;

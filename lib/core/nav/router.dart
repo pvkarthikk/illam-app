@@ -61,7 +61,7 @@ class StreamListenable extends ChangeNotifier {
 
 final routerProvider = Provider<GoRouter>((ref) {
   final prefs = ref.watch(prefsProvider);
-  final refresh = StreamListenable(prefs.currentHomeIdStream());
+  final refresh = StreamListenable(prefs.currentHomeIdStream().skip(1));
   ref.onDispose(refresh.dispose);
   return GoRouter(
     navigatorKey: rootNavigatorKey,

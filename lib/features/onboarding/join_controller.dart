@@ -109,6 +109,7 @@ final joinControllerProvider = NotifierProvider<JoinController, JoinUi>(
 class JoinController extends Notifier<JoinUi> {
   FramedConnection? _conn;
   bool _cancelled = false;
+  int _run = 0;
 
   @override
   JoinUi build() => const JoinUi();
@@ -148,6 +149,7 @@ class JoinController extends Notifier<JoinUi> {
 
   Future<void> start() async {
     if (state.running) return;
+    final run = ++_run;
     _cancelled = false;
     state = state.copyWith(
       find: JoinStepState.active,
@@ -177,11 +179,19 @@ class JoinController extends Notifier<JoinUi> {
     if (state.debugPort != null) {
       sock = await LanJoinFinder.dial('127.0.0.1', state.debugPort!);
     } else if (ticket != null) {
-      sock =
-          await LanJoinFinder.dial(ticket.ip, ticket.port) ??
-          await LanJoinFinder.find(ticket.nameplate);
+      sock = await LanJoinFinder.dial(ticket.ip, ticket.port);
+      if (run != _run) {
+        sock?.destroy();
+        return;
+      }
+      sock ??= await LanJoinFinder.find(ticket.nameplate);
     } else if (state.secret != null) {
       sock = await LanJoinFinder.find(state.secret!.nameplate);
+    }
+
+    if (run != _run) {
+      sock?.destroy();
+      return;
     }
 
     if (_cancelled) {
@@ -208,7 +218,15 @@ class JoinController extends Notifier<JoinUi> {
 
     try {
       final keys = await ref.read(deviceKeysProvider.future);
+      if (run != _run) {
+        await conn.close();
+        return;
+      }
       final model = await deviceModel();
+      if (run != _run) {
+        await conn.close();
+        return;
+      }
       final me = JoinRequest(
         name: state.name,
         model: model,
@@ -224,10 +242,18 @@ class JoinController extends Notifier<JoinUi> {
         ref.read(membershipLogProvider),
         ref.read(incomingProvider),
       );
-      await JoinGuest(me, receiver).run(conn, state.secret!, _onEvent);
+      await JoinGuest(me, receiver).run(conn, state.secret!, (e) {
+        if (run == _run) _onEvent(e);
+      });
+      if (run != _run) {
+        await conn.close();
+        return;
+      }
     } finally {
-      _conn = null;
-      state = state.copyWith(running: false);
+      if (run == _run) {
+        _conn = null;
+        state = state.copyWith(running: false);
+      }
     }
   }
 
@@ -302,6 +328,7 @@ class JoinController extends Notifier<JoinUi> {
   }
 
   Future<void> cancel() async {
+    _run++;
     _cancelled = true;
     await _conn?.close();
     _conn = null;

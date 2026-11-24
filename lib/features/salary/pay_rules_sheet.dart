@@ -95,34 +95,37 @@ class _PayRulesSheetState extends ConsumerState<_PayRulesSheet> {
       _amountError = null;
     });
 
+    final curMonth = Dates.month(Dates.today(ref.read(clockProvider)));
+    final applyNow = !currentSettled && _applyThisMonth;
+    final days = _workDays.toList()..sort();
+    final data = PayRulesData(
+      effectiveMonth: applyNow ? curMonth : nextMonth(curMonth),
+      workDays: days,
+      type: _type,
+      ratePerHourPaise: _type == PayType.hourly
+          ? paise
+          : (Money.parseRupees(_rateCtrl.text) ?? 0),
+      roundingMin: _roundingMin,
+      minHoursPerVisit: _minHours,
+      amountPerMonthPaise: _type == PayType.monthly
+          ? paise
+          : (Money.parseRupees(_monthlyCtrl.text) ?? 0),
+      paidLeavesPerMonth: _paidLeaves,
+    );
+    final repo = ref.read(salaryRepoProvider);
+    final snack = ref.read(snackbarProvider);
+    Navigator.of(context).pop();
     try {
-      final curMonth = Dates.month(Dates.today(ref.read(clockProvider)));
-      final applyNow = !currentSettled && _applyThisMonth;
-      final days = _workDays.toList()..sort();
-      final data = PayRulesData(
-        effectiveMonth: applyNow ? curMonth : nextMonth(curMonth),
-        workDays: days,
-        type: _type,
-        ratePerHourPaise: _type == PayType.hourly
-            ? paise
-            : (Money.parseRupees(_rateCtrl.text) ?? 0),
-        roundingMin: _roundingMin,
-        minHoursPerVisit: _minHours,
-        amountPerMonthPaise: _type == PayType.monthly
-            ? paise
-            : (Money.parseRupees(_monthlyCtrl.text) ?? 0),
-        paidLeavesPerMonth: _paidLeaves,
+      final res = await repo.saveRules(
+        widget.staffId,
+        data,
+        applyThisMonth: applyNow,
       );
-      final res = await ref
-          .read(salaryRepoProvider)
-          .saveRules(widget.staffId, data, applyThisMonth: applyNow);
-      if (!mounted) return;
-      Navigator.of(context).pop();
-      ref
-          .read(snackbarProvider)
-          .show(l10n.salaryRulesSaved, undo: res.undo);
-    } finally {
-      if (mounted) setState(() => _saving = false);
+      if (res.undo != null) {
+        snack.show(l10n.salaryRulesSaved, undo: res.undo);
+      }
+    } on Object {
+      // Ignore write errors after closing the sheet.
     }
   }
 

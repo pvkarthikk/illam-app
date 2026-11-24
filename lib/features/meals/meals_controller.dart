@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/time/dates.dart';
+import 'package:nm_flat/features/staff/staff_providers.dart';
 
 class MealsUiState {
   const MealsUiState({
@@ -28,6 +29,11 @@ class MealsController extends Notifier<MealsUiState> {
   MealsUiState build() {
     ref.watch(clockProvider);
     final today = _today();
+    ref.listen<String>(todayDateProvider, (prev, next) {
+      if (state.selectedDay == prev) {
+        state = MealsUiState(weekStart: _mondayOf(next), selectedDay: next);
+      }
+    });
     return MealsUiState(weekStart: _mondayOf(today), selectedDay: today);
   }
 

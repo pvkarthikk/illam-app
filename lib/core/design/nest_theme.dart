@@ -4,8 +4,11 @@ import 'package:nm_flat/core/design/nest_colors.dart';
 import 'package:nm_flat/core/design/nest_text.dart';
 
 abstract final class NestTheme {
-  static ThemeData light() => _build(NestColors.light, Brightness.light);
-  static ThemeData dark() => _build(NestColors.dark, Brightness.dark);
+  static final ThemeData _light = _build(NestColors.light, Brightness.light);
+  static final ThemeData _dark = _build(NestColors.dark, Brightness.dark);
+
+  static ThemeData light() => _light;
+  static ThemeData dark() => _dark;
 
   static ThemeData _build(NestColors c, Brightness b) {
     final colorScheme = ColorScheme(

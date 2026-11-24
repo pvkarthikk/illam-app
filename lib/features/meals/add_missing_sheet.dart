@@ -7,11 +7,16 @@ import 'package:nm_flat/core/domain/ingredients.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
+bool _addingMissing = false;
+
 Future<void> showAddMissingSheet(
   BuildContext context,
   WidgetRef ref,
   List<GroceryLine> lines,
-) => showNestSheet<void>(context, (_) => _AddMissingSheet(lines: lines));
+) {
+  if (_addingMissing) return Future<void>.value();
+  return showNestSheet<void>(context, (_) => _AddMissingSheet(lines: lines));
+}
 
 class _AddMissingSheet extends ConsumerStatefulWidget {
   const _AddMissingSheet({required this.lines});
@@ -44,26 +49,28 @@ class _AddMissingSheetState extends ConsumerState<_AddMissingSheet> {
   Future<void> _submit(AppLocalizations l10n) async {
     if (_saving || _ticked.isEmpty) return;
     setState(() => _saving = true);
-    try {
-      final ticked = <GroceryLine>[];
-      final unticked = <GroceryLine>[];
-      for (var i = 0; i < widget.lines.length; i++) {
-        if (_ticked.contains(i)) {
-          ticked.add(widget.lines[i]);
-        } else {
-          unticked.add(widget.lines[i]);
-        }
+    final ticked = <GroceryLine>[];
+    final unticked = <GroceryLine>[];
+    for (var i = 0; i < widget.lines.length; i++) {
+      if (_ticked.contains(i)) {
+        ticked.add(widget.lines[i]);
+      } else {
+        unticked.add(widget.lines[i]);
       }
-      final res = await ref
-          .read(mealsRepoProvider)
-          .addMissing(ticked: ticked, unticked: unticked);
-      if (!mounted) return;
+    }
+    final repo = ref.read(mealsRepoProvider);
+    final snack = ref.read(snackbarProvider);
+    _addingMissing = true;
+    try {
       Navigator.of(context).pop();
-      ref
-          .read(snackbarProvider)
-          .show(l10n.mealsAddedToGrocery(ticked.length), undo: res.undo);
+      final res = await repo.addMissing(ticked: ticked, unticked: unticked);
+      if (res.undo != null) {
+        snack.show(l10n.mealsAddedToGrocery(ticked.length), undo: res.undo);
+      }
+    } on Object {
+      // Ignore write errors after closing the sheet.
     } finally {
-      if (mounted) setState(() => _saving = false);
+      _addingMissing = false;
     }
   }
 

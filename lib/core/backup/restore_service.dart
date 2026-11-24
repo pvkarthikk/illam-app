@@ -22,14 +22,22 @@ class RestoreService {
     DestinationConfig dest, {
     void Function(int step)? onStep,
   }) async {
-    final db = read(dbProvider);
-    final existing = await (db.select(
-      db.homes,
-    )..where((h) => h.id.equals(snapshot.homeId) & h.deleted.equals(false)))
-        .getSingleOrNull();
-    if (existing != null) return RestoreOutcome.alreadyHere;
+    final prefs = read(prefsProvider);
+    final inProgressKey = 'restoreInProgress_${snapshot.homeId}';
+    final inProgress = prefs.getText(inProgressKey);
+    if (inProgress != null && inProgress.isNotEmpty) {
+      await read(homeEraserProvider).erase(snapshot.homeId);
+    } else {
+      final db = read(dbProvider);
+      final existing = await (db.select(
+        db.homes,
+      )..where((h) => h.id.equals(snapshot.homeId) & h.deleted.equals(false)))
+          .getSingleOrNull();
+      if (existing != null) return RestoreOutcome.alreadyHere;
+    }
 
     onStep?.call(2);
+    await prefs.setText(inProgressKey, '1');
     await read(snapshotImporterProvider).import(snapshot);
 
     final kit = snapshot.recoveryKit;
@@ -56,7 +64,6 @@ class RestoreService {
     ).append(snapshot.homeId, 'recover', payload);
     if (res.effect != 'applied') return RestoreOutcome.deadKit;
 
-    final prefs = read(prefsProvider);
     await prefs.setMemberId(kit['memberId'] as String);
     await prefs.setText(
       'provisionalRestore_${snapshot.homeId}',
@@ -66,6 +73,7 @@ class RestoreService {
       'provisionalRestoreAt_${snapshot.homeId}',
       '${read(clockProvider).nowMs}',
     );
+    await prefs.setText(inProgressKey, null);
     return RestoreOutcome.restored;
   }
 }

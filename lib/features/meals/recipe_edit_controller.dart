@@ -150,7 +150,7 @@ class RecipeEditController extends Notifier<RecipeEditState> {
   }
 }
 
-final recipeEditControllerProvider =
-    NotifierProvider.family<RecipeEditController, RecipeEditState, String>(
+final recipeEditControllerProvider = NotifierProvider.autoDispose
+    .family<RecipeEditController, RecipeEditState, String>(
       RecipeEditController.new,
     );

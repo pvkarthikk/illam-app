@@ -383,6 +383,8 @@ class DemoSeeder {
     final prefs = ref.read(prefsProvider);
     final homeId = prefs.currentHomeId;
     if (homeId == null) return;
+    final flag = 'demoSeeded.items.$homeId';
+    if (prefs.getFlag(flag)) return;
 
     final db = ref.read(dbProvider);
     final existing =
@@ -505,12 +507,15 @@ class DemoSeeder {
         c.inc('item_history', histId, 'times_bought', 1);
       }
     }, homeId: homeId);
+    await prefs.setFlag(flag, true);
   }
 
   Future<void> _seedTasks() async {
     final prefs = ref.read(prefsProvider);
     final homeId = prefs.currentHomeId;
     if (homeId == null) return;
+    final flag = 'demoSeeded.tasks.$homeId';
+    if (prefs.getFlag(flag)) return;
 
     final db = ref.read(dbProvider);
     final existing =
@@ -600,6 +605,7 @@ class DemoSeeder {
         });
       }
     }, homeId: homeId);
+    await prefs.setFlag(flag, true);
   }
 
   Future<void> _seedMeals() async {
@@ -670,6 +676,8 @@ class DemoSeeder {
     final prefs = ref.read(prefsProvider);
     final homeId = prefs.currentHomeId;
     if (homeId == null) return;
+    final flag = 'demoSeeded.money.$homeId';
+    if (prefs.getFlag(flag)) return;
 
     final db = ref.read(dbProvider);
     final existing =
@@ -885,6 +893,7 @@ class DemoSeeder {
         source: 'manual',
       );
     }, homeId: homeId);
+    await prefs.setFlag(flag, true);
   }
 
   Future<void> _seedDevNotes() async {

@@ -12,14 +12,25 @@ import 'package:nm_flat/core/ui/formatters.dart';
 import 'package:nm_flat/core/util/money.dart';
 import 'package:nm_flat/features/salary/mark_paid_sheet.dart';
 import 'package:nm_flat/features/salary/pay_slip.dart';
+import 'package:nm_flat/features/salary/salary_controller.dart';
 import 'package:nm_flat/features/salary/salary_providers.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
-class SalaryActions extends ConsumerWidget {
+class SalaryActions extends ConsumerStatefulWidget {
   const SalaryActions({super.key, required this.view, required this.month});
 
   final SalaryView view;
   final String month;
+
+  @override
+  ConsumerState<SalaryActions> createState() => _SalaryActionsState();
+}
+
+class _SalaryActionsState extends ConsumerState<SalaryActions> {
+  bool _closing = false;
+
+  SalaryView get view => widget.view;
+  String get month => widget.month;
 
   Future<void> _undoAttemptById(
     WidgetRef ref,
@@ -93,7 +104,7 @@ class SalaryActions extends ConsumerWidget {
   };
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final c = context.nest;
     final isAdmin = ref.watch(isAdminProvider);
@@ -136,6 +147,9 @@ class SalaryActions extends ConsumerWidget {
 
     final nextM = nextMonth(month);
     final nextMonthName = Formatters.monthName(nextM);
+    final endDate = view.staff.endDate;
+    final canCarry =
+        endDate == null || nextM.compareTo(Dates.month(endDate)) <= 0;
 
     return Padding(
       padding: const EdgeInsets.all(16),
@@ -151,8 +165,12 @@ class SalaryActions extends ConsumerWidget {
                 icon: Icons.currency_rupee_rounded,
                 kind: NestButtonKind.primary,
                 size: NestButtonSize.block,
-                onPressed: () =>
-                    showMarkPaidSheet(context, view: view, month: month),
+                onPressed: () {
+                  ref
+                      .read(salaryMonthProvider.notifier)
+                      .select(view.staff.id, month);
+                  showMarkPaidSheet(context, view: view, month: month);
+                },
               )
             else if (isAdmin)
               NestButton(
@@ -160,18 +178,27 @@ class SalaryActions extends ConsumerWidget {
                 kind: NestButtonKind.ghost,
                 size: NestButtonSize.block,
                 onPressed: () async {
-                  await ref
-                      .read(salaryRepoProvider)
-                      .closeAtZero(
-                        staffId: view.staff.id,
-                        month: month,
-                        r: r,
-                        carryNote: l10n.salaryCarryNote(monthName),
-                      );
-                  if (!context.mounted) return;
-                  ref
-                      .read(snackbarProvider)
-                      .show(l10n.salaryClosedSnack(monthName));
+                  if (_closing) return;
+                  setState(() => _closing = true);
+                  try {
+                    ref
+                        .read(salaryMonthProvider.notifier)
+                        .select(view.staff.id, month);
+                    await ref
+                        .read(salaryRepoProvider)
+                        .closeAtZero(
+                          staffId: view.staff.id,
+                          month: month,
+                          r: r,
+                          carryNote: l10n.salaryCarryNote(monthName),
+                        );
+                    if (!context.mounted) return;
+                    ref
+                        .read(snackbarProvider)
+                        .show(l10n.salaryClosedSnack(monthName));
+                  } finally {
+                    if (mounted) setState(() => _closing = false);
+                  }
                 },
               )
             else
@@ -250,10 +277,10 @@ class SalaryActions extends ConsumerWidget {
                   ),
                   Money.format(view.differencePaise),
                 ),
-                actionLabel: isAdmin
+                actionLabel: isAdmin && canCarry
                     ? l10n.salaryAddToMonth(nextMonthName)
                     : null,
-                onAction: isAdmin
+                onAction: isAdmin && canCarry
                     ? () async {
                         await ref
                             .read(salaryRepoProvider)

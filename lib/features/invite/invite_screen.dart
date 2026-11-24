@@ -26,6 +26,7 @@ class InviteScreen extends ConsumerStatefulWidget {
 
 class _InviteScreenState extends ConsumerState<InviteScreen> {
   Timer? _tick;
+  InviteController? _ctrl;
 
   @override
   void initState() {
@@ -35,7 +36,9 @@ class _InviteScreenState extends ConsumerState<InviteScreen> {
 
   void _initAdmin() {
     if (!mounted || !ref.read(isAdminProvider)) return;
-    unawaited(ref.read(inviteControllerProvider.notifier).start());
+    final ctrl = ref.read(inviteControllerProvider.notifier);
+    _ctrl = ctrl;
+    unawaited(ctrl.start());
     unawaited(_setWakelock(true));
     _tick = Timer.periodic(const Duration(seconds: 1), (_) {
       if (!mounted) return;
@@ -45,7 +48,6 @@ class _InviteScreenState extends ConsumerState<InviteScreen> {
           !ui.invite!.isOpen(DateTime.now())) {
         ref.read(inviteControllerProvider.notifier).expireNow();
       }
-      setState(() {});
     });
   }
 
@@ -64,8 +66,9 @@ class _InviteScreenState extends ConsumerState<InviteScreen> {
   @override
   void dispose() {
     _tick?.cancel();
-    if (ref.read(isAdminProvider)) {
-      unawaited(ref.read(inviteControllerProvider.notifier).pause());
+    final ctrl = _ctrl;
+    if (ctrl != null) {
+      unawaited(ctrl.pause());
       unawaited(_setWakelock(false));
     }
     super.dispose();

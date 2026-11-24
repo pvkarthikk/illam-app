@@ -382,6 +382,10 @@ class DbSyncContext
   Future<void> onFullAck() async {
     final p = prefs;
     if (p == null) return;
+    if (p.getText('provisionalRestore_$homeId') == null &&
+        p.getText('provisionalRestoreAt_$homeId') == null) {
+      return;
+    }
     await p.setText('provisionalRestore_$homeId', null);
     await p.setText('provisionalRestoreAt_$homeId', null);
   }

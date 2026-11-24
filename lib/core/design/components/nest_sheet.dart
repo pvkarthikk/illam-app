@@ -6,20 +6,34 @@ import 'package:nm_flat/core/design/nest_text.dart';
 Future<T?> showNestSheet<T>(BuildContext context, WidgetBuilder builder) {
   return showModalBottomSheet<T>(
     context: context,
+    useRootNavigator: true,
     isScrollControlled: true,
     useSafeArea: true,
     showDragHandle: true,
     constraints: BoxConstraints(
       maxHeight: MediaQuery.sizeOf(context).height * 0.88,
     ),
-    builder: (ctx) => Padding(
-      padding: EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(ctx).bottom),
+    builder: (ctx) => _KeyboardInset(
       child: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(20, 0, 20, 28),
         child: builder(ctx),
       ),
     ),
   );
+}
+
+class _KeyboardInset extends StatelessWidget {
+  const _KeyboardInset({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(context).bottom),
+      child: child,
+    );
+  }
 }
 
 class NestSheetHeader extends StatelessWidget {

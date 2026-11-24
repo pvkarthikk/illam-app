@@ -147,10 +147,7 @@ SalaryView buildSalaryView({
     for (final a in attempts)
       if (a.month == prev) attemptFromRow(a),
   ]);
-  final dropIds = {
-    for (final d in prevSettlement.duplicates)
-      if (d.kind == 'transfer') d.id,
-  };
+  final dropIds = {for (final d in prevSettlement.duplicates) d.id};
   final monthAdjustments = [
     for (final a in adjustments)
       if (a.month == month && !dropIds.contains(a.settlementAttemptId))
