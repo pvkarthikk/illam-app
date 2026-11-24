@@ -31,20 +31,7 @@ class _ListsScreenState extends ConsumerState<ListsScreen> {
   final _focus = FocusNode();
 
   @override
-  void initState() {
-    super.initState();
-    _ctrl.addListener(_onInputChanged);
-    _focus.addListener(_onInputChanged);
-  }
-
-  void _onInputChanged() {
-    if (mounted) setState(() {});
-  }
-
-  @override
   void dispose() {
-    _ctrl.removeListener(_onInputChanged);
-    _focus.removeListener(_onInputChanged);
     _ctrl.dispose();
     _focus.dispose();
     super.dispose();
@@ -55,13 +42,18 @@ class _ListsScreenState extends ConsumerState<ListsScreen> {
       _focus.requestFocus();
       return;
     }
-    final outcome = await ref
-        .read(listsControllerProvider.notifier)
-        .add(_ctrl.text);
-    if (!mounted || outcome == null) return;
-    _showOutcome(outcome);
+    final text = _ctrl.text;
     _ctrl.clear();
     _focus.requestFocus();
+    final outcome = await ref
+        .read(listsControllerProvider.notifier)
+        .add(text);
+    if (!mounted) return;
+    if (outcome == null) {
+      if (_ctrl.text.isEmpty) _ctrl.text = text;
+      return;
+    }
+    _showOutcome(outcome);
   }
 
   Future<void> _pickStore(String list) async {
@@ -96,25 +88,13 @@ class _ListsScreenState extends ConsumerState<ListsScreen> {
     final list = ui.listType;
     final ctrl = ref.read(listsControllerProvider.notifier);
 
-    final groceryRows =
-        ref.watch(listItemsProvider('grocery')).value ?? const <ItemRow>[];
-    final shoppingRows =
-        ref.watch(listItemsProvider('shopping')).value ?? const <ItemRow>[];
-    final openGrocery = groupOpenItems(
+    final rows = ref.watch(listItemsProvider(list)).value ?? const <ItemRow>[];
+    final openGroups = groupOpenItems(
       snapsOf([
-        for (final r in groceryRows)
+        for (final r in rows)
           if (!r.done) r,
       ]),
     );
-    final openShopping = groupOpenItems(
-      snapsOf([
-        for (final r in shoppingRows)
-          if (!r.done) r,
-      ]),
-    );
-
-    final rows = list == 'grocery' ? groceryRows : shoppingRows;
-    final openGroups = list == 'grocery' ? openGrocery : openShopping;
     final byId = {for (final r in rows) r.id: r};
 
     final rowsByChannel = <String, List<ItemRow>>{};
@@ -129,38 +109,6 @@ class _ListsScreenState extends ConsumerState<ListsScreen> {
       }
     }
     final hasOfflineOpen = (openByChannel['offline'] ?? const []).isNotEmpty;
-
-    final usualMap = ref.watch(usualMapProvider(list));
-    final prefs = ref.watch(prefsProvider);
-    final trimmed = _ctrl.text.trim();
-    late final String store;
-    late final String hint;
-    if (trimmed.isEmpty) {
-      store =
-          ui.pickedChannel ??
-          prefs.lastStore(list) ??
-          listChannels[list]!.first;
-      hint = l10n.listsHintIdle;
-    } else {
-      final p = parseItem(_ctrl.text);
-      final u = usualStore(
-        list: list,
-        nameKey: itemNameKey(p.name),
-        usualByKey: usualMap,
-        lastChosen: prefs.lastStore(list),
-      );
-      store = ui.pickedChannel ?? u.channel;
-      final itemText = (p.qty != 1 || p.unit.isNotEmpty)
-          ? l10n.listsHintItemQty(p.name, formatQty(p.qtyMilli, p.unit))
-          : p.name;
-      final learnedUsual =
-          u.learned && (ui.pickedChannel == null || ui.pickedChannel == u.channel);
-      hint = l10n.listsHint(
-        itemText,
-        channelName(l10n, store),
-        learnedUsual ? l10n.listsHintUsual : '',
-      );
-    }
 
     final channelsOrder = listChannels[list] ?? const <String>[];
     final presentChannels = [
@@ -212,36 +160,27 @@ class _ListsScreenState extends ConsumerState<ListsScreen> {
               padding: const EdgeInsets.fromLTRB(16, 4, 16, 12),
               child: SegmentedTabs<String>(
                 segments: [
-                  ('grocery', l10n.listsGrocery, openGrocery.length),
-                  ('shopping', l10n.listsShopping, openShopping.length),
+                  (
+                    'grocery',
+                    l10n.listsGrocery,
+                    ref.watch(openGroupCountProvider('grocery')),
+                  ),
+                  (
+                    'shopping',
+                    l10n.listsShopping,
+                    ref.watch(openGroupCountProvider('shopping')),
+                  ),
                 ],
                 selected: list,
                 onChanged: ctrl.setListType,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: _AddBar(
-                controller: _ctrl,
-                focusNode: _focus,
-                focused: _focus.hasFocus,
-                hintText: list == 'grocery'
-                    ? l10n.listsPlaceholderGrocery
-                    : l10n.listsPlaceholderShopping,
-                store: store,
-                onPickStore: () => _pickStore(list),
-                onSubmit: _submit,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 8, 20, 4),
-              child: Semantics(
-                liveRegion: true,
-                child: Text(
-                  hint,
-                  style: NestText.meta13.copyWith(color: c.ink3),
-                ),
-              ),
+            _AddSection(
+              controller: _ctrl,
+              focusNode: _focus,
+              list: list,
+              onPickStore: () => _pickStore(list),
+              onSubmit: _submit,
             ),
             if (presentChannels.isNotEmpty)
               SingleChildScrollView(
@@ -305,6 +244,98 @@ class _ListsScreenState extends ConsumerState<ListsScreen> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _AddSection extends ConsumerWidget {
+  const _AddSection({
+    required this.controller,
+    required this.focusNode,
+    required this.list,
+    required this.onPickStore,
+    required this.onSubmit,
+  });
+
+  final TextEditingController controller;
+  final FocusNode focusNode;
+  final String list;
+  final VoidCallback onPickStore;
+  final VoidCallback onSubmit;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final c = context.nest;
+    final ui = ref.watch(listsControllerProvider);
+    final usualMap = ref.watch(usualMapProvider(list));
+    final prefs = ref.watch(prefsProvider);
+
+    return ListenableBuilder(
+      listenable: Listenable.merge([controller, focusNode]),
+      builder: (context, _) {
+        final trimmed = controller.text.trim();
+        final String store;
+        final String hint;
+        if (trimmed.isEmpty) {
+          store =
+              ui.pickedChannel ??
+              prefs.lastStore(list) ??
+              listChannels[list]!.first;
+          hint = l10n.listsHintIdle;
+        } else {
+          final p = parseItem(controller.text);
+          final u = usualStore(
+            list: list,
+            nameKey: itemNameKey(p.name),
+            usualByKey: usualMap,
+            lastChosen: prefs.lastStore(list),
+          );
+          store = ui.pickedChannel ?? u.channel;
+          final itemText = (p.qty != 1 || p.unit.isNotEmpty)
+              ? l10n.listsHintItemQty(p.name, formatQty(p.qtyMilli, p.unit))
+              : p.name;
+          final learnedUsual =
+              u.learned &&
+              (ui.pickedChannel == null || ui.pickedChannel == u.channel);
+          hint = l10n.listsHint(
+            itemText,
+            channelName(l10n, store),
+            learnedUsual ? l10n.listsHintUsual : '',
+          );
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: _AddBar(
+                controller: controller,
+                focusNode: focusNode,
+                focused: focusNode.hasFocus,
+                hintText: list == 'grocery'
+                    ? l10n.listsPlaceholderGrocery
+                    : l10n.listsPlaceholderShopping,
+                store: store,
+                onPickStore: onPickStore,
+                onSubmit: onSubmit,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 8, 20, 4),
+              child: Semantics(
+                liveRegion: true,
+                child: Text(
+                  hint,
+                  style: NestText.meta13.copyWith(color: c.ink3),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

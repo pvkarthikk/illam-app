@@ -97,33 +97,35 @@ class _BillSheetState extends ConsumerState<_BillSheet> {
       _amountError = null;
       _dayError = null;
     });
+    var closed = false;
     try {
       final today = ref.read(todayDateProvider);
       final existing = widget.bill;
-      final res = await ref
-          .read(moneyRepoProvider)
-          .saveBill(
-            BillDraft(
-              name: name,
-              category: _category,
-              usualAmountPaise: paise!,
-              dueDay: day!,
-              method: _method,
-              remind: _remind,
-              today: today,
-            ),
-            id: existing?.id,
-          );
-      if (!mounted) return;
+      final snack = ref.read(snackbarProvider);
+      final repo = ref.read(moneyRepoProvider);
+      final draft = BillDraft(
+        name: name,
+        category: _category,
+        usualAmountPaise: paise!,
+        dueDay: day!,
+        method: _method,
+        remind: _remind,
+        today: today,
+      );
+      final existingId = existing?.id;
+      final text = existing == null
+          ? l10n.moneyBillAdded(name)
+          : l10n.moneyBillSaved;
+      closed = true;
       Navigator.of(context).pop();
-      ref
-          .read(snackbarProvider)
-          .show(
-            existing == null ? l10n.moneyBillAdded(name) : l10n.moneyBillSaved,
-            undo: res.undo,
-          );
+      try {
+        final res = await repo.saveBill(draft, id: existingId);
+        snack.show(text, undo: res.undo);
+      } on Object {
+        snack.show(rejectText('other'));
+      }
     } finally {
-      if (mounted) setState(() => _saving = false);
+      if (!closed && mounted) setState(() => _saving = false);
     }
   }
 

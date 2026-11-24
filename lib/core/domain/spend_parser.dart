@@ -10,7 +10,7 @@ class ParsedSpend {
 }
 
 final _amountRe = RegExp(
-  r'(?:₹|rs\.?\s*)?(\d[\d,]*(?:\.\d+)?)',
+  r'(?:₹|\brs\.?\s*)?(\d[\d,]*(?:\.\d+)?)',
   caseSensitive: false,
 );
 final _noiseWordsRe = RegExp(

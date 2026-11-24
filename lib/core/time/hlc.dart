@@ -73,14 +73,18 @@ class HlcClock {
   }
 
   /// Remote HLC seen (sync, later phases): never go backwards.
-  Future<void> observe(String remote) async {
+  Future<void> observe(String remote, {bool persist = true}) async {
     final r = Hlc.parse(remote);
     final l = _lastOrZero;
     if (r.wall > l.wall || (r.wall == l.wall && r.counter > l.counter)) {
       final h = Hlc(r.wall, r.counter, _prefs.deviceId);
       _last = h;
-      _dirty = false; // the newer value below is written to prefs directly
-      await _prefs.setLastHlc(h.toString());
+      if (persist) {
+        _dirty = false; // the newer value below is written to prefs directly
+        await _prefs.setLastHlc(h.toString());
+      } else {
+        _dirty = true;
+      }
     }
   }
 

@@ -91,6 +91,7 @@ class _BillPaidSheetState extends ConsumerState<_BillPaidSheet> {
       _saving = true;
       _amountError = null;
     });
+    var closed = false;
     try {
       final repo = ref.read(moneyRepoProvider);
       if (!_dupConfirmed) {
@@ -106,23 +107,27 @@ class _BillPaidSheetState extends ConsumerState<_BillPaidSheet> {
         }
       }
 
-      final res = await repo.markBillPaid(
-        bill: widget.bill,
-        amountPaise: paise!,
-        method: _method,
-        date: _date,
-        forMonth: forMonth,
-      );
-      if (!mounted) return;
+      final snack = ref.read(snackbarProvider);
+      final bill = widget.bill;
+      final method = _method;
+      final date = _date;
+      final text = l10n.moneyBillPaidSnack(bill.name, Money.format(paise!));
+      closed = true;
       Navigator.of(context).pop();
-      ref
-          .read(snackbarProvider)
-          .show(
-            l10n.moneyBillPaidSnack(widget.bill.name, Money.format(paise)),
-            undo: res.undo,
-          );
+      try {
+        final res = await repo.markBillPaid(
+          bill: bill,
+          amountPaise: paise,
+          method: method,
+          date: date,
+          forMonth: forMonth,
+        );
+        snack.show(text, undo: res.undo);
+      } on Object {
+        snack.show(rejectText('other'));
+      }
     } finally {
-      if (mounted) setState(() => _saving = false);
+      if (!closed && mounted) setState(() => _saving = false);
     }
   }
 

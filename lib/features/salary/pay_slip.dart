@@ -75,22 +75,36 @@ Future<void> showPaySlipSheet(
   (_) => _PaySlipSheet(view: view, month: month),
 );
 
-class _PaySlipSheet extends ConsumerWidget {
+class _PaySlipSheet extends ConsumerStatefulWidget {
   const _PaySlipSheet({required this.view, required this.month});
 
   final SalaryView view;
   final String month;
 
+  @override
+  ConsumerState<_PaySlipSheet> createState() => _PaySlipSheetState();
+}
+
+class _PaySlipSheetState extends ConsumerState<_PaySlipSheet> {
+  bool _sending = false;
+
   Future<void> _send(BuildContext context, String slipText) async {
-    final phone = view.staff.phoneE164;
-    if (phone != null && phone.isNotEmpty) {
-      final digits = IndianMobile.waDigits(phone);
-      final uri = Uri.parse(
-        'https://wa.me/$digits?text=${Uri.encodeComponent(slipText)}',
-      );
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } else {
-      await SharePlus.instance.share(ShareParams(text: slipText));
+    if (_sending) return;
+    _sending = true;
+    try {
+      final phone = widget.view.staff.phoneE164;
+      if (phone != null && phone.isNotEmpty) {
+        final digits = IndianMobile.waDigits(phone);
+        final uri = Uri.parse(
+          'https://wa.me/$digits?text=${Uri.encodeComponent(slipText)}',
+        );
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      } else {
+        await SharePlus.instance.share(ShareParams(text: slipText));
+      }
+    } catch (_) {
+      _sending = false;
+      rethrow;
     }
     if (context.mounted) {
       Navigator.of(context).pop();
@@ -98,13 +112,13 @@ class _PaySlipSheet extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final c = context.nest;
-    final name = view.staff.name ?? '';
+    final name = widget.view.staff.name ?? '';
     final slipText = buildPaySlip(
       l10n,
-      PaySlipData(month: month, name: name, r: view.shown),
+      PaySlipData(month: widget.month, name: name, r: widget.view.shown),
     );
 
     return Column(

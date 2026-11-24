@@ -12,8 +12,8 @@ class ParsedItem {
 
 String itemNameKey(String name) => merchantKey(name);
 
-const _unit = r'(kg|g|gm|l|ltr|ml|pcs|pc|dozen|bunch|packets?)';
-final _x = RegExp(r'^(.*?)\s*[x×]\s*(\d+)$', caseSensitive: false);
+const _unit = r'(kg|g|gm|l|ltr|ml|pcs|pc|dozen|bunch|packets?|pkt)';
+final _x = RegExp(r'^(.*?)\s*[x×](?<!\Sx)\s*(\d+)$', caseSensitive: false);
 final _a = RegExp(
   r'^(.*?)[\s,]+(\d+(?:\.\d+)?)\s*' + _unit + r'?$',
   caseSensitive: false,

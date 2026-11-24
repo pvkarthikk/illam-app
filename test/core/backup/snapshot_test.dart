@@ -111,6 +111,7 @@ void main() {
     final ops = [for (final o in snap.ops) Map<String, Object?>.from(o)];
     final idx = ops.indexWhere((o) => o['tbl'] == 'dev_notes');
     final badOpId = ops[idx]['opId'] as String;
+    final badSeq = ops[idx]['seq'] as int;
     final origSig = ops[idx]['sig'] as String;
     final flipped = '${origSig.startsWith('A') ? 'B' : 'A'}${origSig.substring(1)}';
     ops[idx]['sig'] = flipped;
@@ -131,13 +132,17 @@ void main() {
 
     final badRow = await (b.db.select(b.db.ops)
           ..where((o) => o.opId.equals(badOpId)))
-        .getSingle();
+        .getSingleOrNull();
     final otherRows = await (b.db.select(b.db.ops)
           ..where((o) => o.opId.equals(badOpId).not()))
         .get();
-    expect(badRow.status, 'quarantined');
-    expect(otherRows, isNotEmpty);
-    expect(otherRows.every((o) => o.status == 'applied'), isTrue);
+    expect(badRow == null, isTrue);
+    final beforeBad = otherRows.where((o) => o.seq < badSeq).toList();
+    final afterBad = otherRows.where((o) => o.seq > badSeq).toList();
+    expect(beforeBad, isNotEmpty);
+    expect(beforeBad.every((o) => o.status == 'applied'), isTrue);
+    expect(afterBad, isNotEmpty);
+    expect(afterBad.every((o) => o.status == 'pending'), isTrue);
   });
 
   test('3. mismatched homeId throws damaged and leaves database clean', () async {

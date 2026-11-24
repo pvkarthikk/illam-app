@@ -304,6 +304,7 @@ class SyncSession {
           if (_closed || _controlOnly) break;
           final end = (i + 200 < ops.length) ? i + 200 : ops.length;
           await _trySend(OpsMsg(batch: ops.sublist(i, end)).toJson());
+          await Future<void>.delayed(Duration.zero);
         }
         _sent = theirs.merge(await ctx.myVector());
       }

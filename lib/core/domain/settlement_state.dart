@@ -72,7 +72,8 @@ SettlementState computeSettlement(List<AttemptData> attempts) {
         }
       case 'reverse':
         if (effective != null && a.refAttemptId == effective.id) {
-          effective = null;
+          final nextIndex = duplicates.indexWhere((d) => d.kind == 'settle');
+          effective = nextIndex >= 0 ? duplicates.removeAt(nextIndex) : null;
           effectiveTransfers = [];
         } else if (a.refAttemptId != null) {
           duplicates.removeWhere((d) => d.id == a.refAttemptId);

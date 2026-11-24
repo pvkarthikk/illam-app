@@ -35,12 +35,15 @@ class _SalaryActionsState extends ConsumerState<SalaryActions> {
   Future<void> _undoAttemptById(
     WidgetRef ref,
     String staffId,
-    String attemptId,
-  ) async {
+    String attemptId, {
+    List<String> transferIds = const [],
+  }) async {
     final rows = ref.read(salaryAttemptsProvider(staffId)).value ?? const [];
     for (final row in rows) {
       if (row.id == attemptId) {
-        await ref.read(salaryRepoProvider).undoPayment(row);
+        await ref
+            .read(salaryRepoProvider)
+            .undoPayment(row, transferIds: transferIds);
         return;
       }
     }
@@ -52,40 +55,52 @@ class _SalaryActionsState extends ConsumerState<SalaryActions> {
     AppLocalizations l10n,
     AttemptData effective,
     String monthName,
-  ) => showNestSheet<void>(
-    context,
-    (sheetCtx) => Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        NestSheetHeader(
-          title: l10n.salaryUndoTitle,
-          lead: l10n.salaryUndoLead(
-            Money.format(effective.amountPaise),
-            monthName,
+  ) {
+    var busy = false;
+    return showNestSheet<void>(
+      context,
+      (sheetCtx) => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          NestSheetHeader(
+            title: l10n.salaryUndoTitle,
+            lead: l10n.salaryUndoLead(
+              Money.format(effective.amountPaise),
+              monthName,
+            ),
           ),
-        ),
-        NestSheetActions(
-          children: [
-            NestButton(
-              label: l10n.commonCancel,
-              kind: NestButtonKind.ghost,
-              onPressed: () => Navigator.of(sheetCtx).pop(),
-            ),
-            NestButton(
-              label: l10n.salaryUndoPayment,
-              kind: NestButtonKind.danger,
-              onPressed: () async {
-                await _undoAttemptById(ref, view.staff.id, effective.id);
-                if (sheetCtx.mounted) Navigator.of(sheetCtx).pop();
-                ref.read(snackbarProvider).show(l10n.salaryUndoneSnack);
-              },
-            ),
-          ],
-        ),
-      ],
-    ),
-  );
+          NestSheetActions(
+            children: [
+              NestButton(
+                label: l10n.commonCancel,
+                kind: NestButtonKind.ghost,
+                onPressed: () => Navigator.of(sheetCtx).pop(),
+              ),
+              NestButton(
+                label: l10n.salaryUndoPayment,
+                kind: NestButtonKind.danger,
+                onPressed: () async {
+                  if (busy) return;
+                  busy = true;
+                  await _undoAttemptById(
+                    ref,
+                    view.staff.id,
+                    effective.id,
+                    transferIds: [
+                      for (final t in view.settlement.effectiveTransfers) t.id,
+                    ],
+                  );
+                  if (sheetCtx.mounted) Navigator.of(sheetCtx).pop();
+                  ref.read(snackbarProvider).show(l10n.salaryUndoneSnack);
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 
   String _adminDisplayNames(WidgetRef ref, AppLocalizations l10n) {
     final list = [

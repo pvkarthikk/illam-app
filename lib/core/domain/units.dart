@@ -54,7 +54,7 @@ int stepMilli(String u) => switch (u) {
 
 String formatQty(int milli, String u) {
   final numText = (milli / 1000)
-      .toStringAsFixed(2)
+      .toStringAsFixed(3)
       .replaceFirst(RegExp(r'\.?0+$'), '');
   return u.isEmpty ? '×$numText' : '$numText $u';
 }

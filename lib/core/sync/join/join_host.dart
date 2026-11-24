@@ -93,14 +93,14 @@ class JoinHost {
         'cB': b64(keys.myConfirm),
       });
 
-      Map<String, Object?> p3;
+      List<int> cA;
       try {
-        p3 = await ch.receive(timeout: const Duration(seconds: 30));
+        final p3 = await ch.receive(timeout: const Duration(seconds: 30));
+        cA = unb64(p3['cA'] as String);
       } on Object {
         invite.registerFailure();
         return null;
       }
-      final cA = unb64(p3['cA'] as String);
       if (!constantTimeEquals(cA, keys.peerConfirm)) {
         invite.registerFailure();
         return null;
@@ -130,12 +130,21 @@ class JoinHost {
       final derivedId = await DeviceKeys.deviceIdFor(unb64(r.signPub));
       if (r.deviceId != derivedId) return null;
 
+      var left = false;
+      final gone = conn.closed.then<String?>((_) {
+        left = true;
+        return null;
+      });
       String? role;
       try {
-        role = await onRequest(r, emojis).timeout(const Duration(minutes: 3));
+        role = await Future.any<String?>([
+          onRequest(r, emojis),
+          gone,
+        ]).timeout(const Duration(minutes: 3));
       } on TimeoutException {
         role = null;
       }
+      if (left) return null;
       if (role == null) {
         await ch.send({'t': 'denied'});
         invite.status = InviteStatus.void_;

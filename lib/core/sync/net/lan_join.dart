@@ -27,8 +27,12 @@ class LanJoinServer {
       attributes: {'n': nameplate, 'v': '1'},
     );
     final broadcast = BonsoirBroadcast(service: service);
-    await broadcast.initialize();
-    await broadcast.start();
+    try {
+      await broadcast.initialize();
+      await broadcast.start();
+    } on Object {
+      // Ignore mDNS advertising failures; direct QR/IP join still works.
+    }
     return LanJoinServer._(server, broadcast);
   }
 
@@ -89,6 +93,7 @@ abstract final class LanJoinFinder {
     } on TimeoutException {
       return null;
     } finally {
+      if (!found.isCompleted) found.complete(null);
       await sub.cancel();
       await discovery.stop();
     }

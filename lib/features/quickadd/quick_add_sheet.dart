@@ -92,6 +92,7 @@ class _QuickAddSheetState extends ConsumerState<QuickAddSheet> {
         people: people,
         rules: rules,
         usualMap: usualMap,
+        lastChosen: ref.watch(prefsProvider).lastStore(list),
       );
       showCheck = s.text.trim().isNotEmpty && !s.needAmount;
     }

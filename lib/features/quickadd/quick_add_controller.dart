@@ -64,6 +64,7 @@ String quickAddPreview(
   required List<PersonRef> people,
   required Map<String, String> rules,
   required Map<String, String> usualMap,
+  String? lastChosen,
 }) {
   if (s.needAmount) return l10n.qaNeedAmount;
   final trimmed = s.text.trim();
@@ -99,6 +100,7 @@ String quickAddPreview(
         list: list,
         nameKey: itemNameKey(item.name),
         usualByKey: usualMap,
+        lastChosen: lastChosen,
       );
       final qStr = item.qty == item.qty.truncateToDouble()
           ? item.qty.truncate().toString()

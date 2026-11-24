@@ -99,6 +99,21 @@ class MoneyRepo {
             ]))
           .watch();
 
+  Stream<List<ExpenseRow>> watchBillPaymentsSince(String fromIso) =>
+      (db.select(db.expenses)
+            ..where(
+              (e) =>
+                  e.homeId.equals(homeId) &
+                  e.deleted.equals(false) &
+                  e.date.isBiggerOrEqualValue(fromIso) &
+                  e.billId.isNotNull(),
+            )
+            ..orderBy([
+              (e) => OrderingTerm.desc(e.date),
+              (e) => OrderingTerm.desc(e.createdAt),
+            ]))
+          .watch();
+
   Stream<List<ExpenseRow>> watchExpensesInMonth(String month) =>
       (db.select(db.expenses)
             ..where(

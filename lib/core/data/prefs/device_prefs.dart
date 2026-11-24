@@ -114,7 +114,12 @@ class DevicePrefs {
 
   Future<void> setNotif(String key, bool v) => setFlag(key, v);
 
-  Future<void> reload() => _s.reload();
+  Future<void> reload() async {
+    final before = currentHomeId;
+    await _s.reload();
+    final after = currentHomeId;
+    if (after != before) _home.add(after);
+  }
 
   bool get notifAsked => getFlag('notifAsked');
 

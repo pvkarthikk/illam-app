@@ -1,6 +1,9 @@
 import 'package:drift/drift.dart';
 
 @DataClassName('OpRow')
+@TableIndex(name: 'ops_device_seq', columns: {#deviceId, #seq})
+@TableIndex(name: 'ops_home_device_seq', columns: {#homeId, #deviceId, #seq})
+@TableIndex(name: 'ops_tbl_entity', columns: {#tbl, #entityId})
 class Ops extends Table {
   TextColumn get opId => text()(); // "$deviceId:$seq"
   TextColumn get homeId => text()();

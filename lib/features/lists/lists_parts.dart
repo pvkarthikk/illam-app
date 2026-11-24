@@ -259,7 +259,7 @@ class _GroupItemRow extends ConsumerWidget {
                   ? null
                   : () => ref
                         .read(listsRepoProvider)
-                        .stepQty(survivor.id, -step),
+                        .takeFromGroup(group.ids, step),
               onPlus: () =>
                   ref.read(listsRepoProvider).stepQty(survivor.id, step),
             ),

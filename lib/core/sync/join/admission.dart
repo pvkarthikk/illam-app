@@ -59,23 +59,34 @@ class HostAdmitter implements JoinAdmitter {
         if (m.color != null) m.color!,
     };
 
-    final res = await membershipLog.append(homeId, 'addMember', {
-      'memberId': r.deviceId,
-      'name': r.name,
-      'color': AvatarColors.pick(r.deviceId, usedColors),
-      'role': role,
-      'via': via,
-      'device': {
-        'deviceId': r.deviceId,
-        'signPub': r.signPub,
-        'agreePub': r.agreePub,
-        'model': r.model,
-      },
-      'wrappedKey': b64(wrapped),
-      'keyId': keyId,
-    });
-    if (res.effect != 'applied') {
-      throw StateError('addMember ${res.reason}');
+    final existingDev =
+        await (db.select(db.memberDevices)..where(
+              (d) =>
+                  d.deviceId.equals(r.deviceId) &
+                  d.homeId.equals(homeId) &
+                  d.active.equals(true),
+            ))
+            .getSingleOrNull();
+
+    if (existingDev == null || existingDev.signPub != r.signPub) {
+      final res = await membershipLog.append(homeId, 'addMember', {
+        'memberId': r.deviceId,
+        'name': r.name,
+        'color': AvatarColors.pick(r.deviceId, usedColors),
+        'role': role,
+        'via': via,
+        'device': {
+          'deviceId': r.deviceId,
+          'signPub': r.signPub,
+          'agreePub': r.agreePub,
+          'model': r.model,
+        },
+        'wrappedKey': b64(wrapped),
+        'keyId': keyId,
+      });
+      if (res.effect != 'applied') {
+        throw StateError('addMember ${res.reason}');
+      }
     }
 
     final ops = await syncStore.allOpsWire(homeId);
@@ -93,7 +104,9 @@ class HostAdmitter implements JoinAdmitter {
     }
 
     await ch.send({'t': 'done'});
-    final ack = await ch.receive(timeout: const Duration(seconds: 60));
+    final ack = await ch.receive(
+      timeout: Duration(seconds: 60 + ops.length ~/ 10),
+    );
     if (ack['t'] != 'ack') throw StateError('expected ack');
     return ops.length;
   }

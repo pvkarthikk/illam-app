@@ -56,6 +56,7 @@ class IncomingPipeline {
     final rep = IngestReport();
     if (memberOps.isNotEmpty) {
       await membership.addWireOps(homeId, memberOps);
+      await _revokeEnded(homeId);
     }
 
     final decoded = [
@@ -73,39 +74,63 @@ class IncomingPipeline {
     final view = DriftValidationView(db, registry);
     final newlyPending = <String>{};
 
-    for (final op in decoded) {
-      final existing = await (db.select(
-        db.ops,
-      )..where((o) => o.opId.equals(op.opId))).getSingleOrNull();
-      if (existing != null && existing.status != 'pending') {
-        rep.already++;
-        continue;
+    var i = 0;
+    while (i < decoded.length) {
+      final changeId = decoded[i].changeId;
+      var end = i + 1;
+      while (end < decoded.length &&
+          end - i < 20 &&
+          decoded[end].changeId == changeId) {
+        end++;
       }
+      final run = decoded.sublist(i, end);
+      i = end;
 
-      final expected = (have[op.deviceId] ?? 0) + 1;
-      if (op.seq > expected) {
-        if (existing == null) {
-          await db
-              .into(db.ops)
-              .insert(
-                op.toCompanion().copyWith(status: const Value('pending')),
-                mode: InsertMode.insertOrIgnore,
-              );
-          rep.pending++;
-          newlyPending.add(op.opId);
+      await db.transaction(() async {
+        for (final op in run) {
+          final existing = await (db.select(
+            db.ops,
+          )..where((o) => o.opId.equals(op.opId))).getSingleOrNull();
+          if (existing != null && existing.status != 'pending') {
+            rep.already++;
+            continue;
+          }
+
+          final expected = (have[op.deviceId] ?? 0) + 1;
+          if (op.seq > expected) {
+            if (existing == null) {
+              final pub = await membership.signPubOf(op.deviceId);
+              if (pub != null && !await OpSigner.verify(op, pub)) {
+                rep.quarantined++;
+                continue;
+              }
+              await db
+                  .into(db.ops)
+                  .insert(
+                    op.toCompanion().copyWith(status: const Value('pending')),
+                    mode: InsertMode.insertOrIgnore,
+                  );
+              rep.pending++;
+              newlyPending.add(op.opId);
+            }
+            continue;
+          }
+
+          final decision = await _decide(op, byChange[op.changeId]!, view);
+          if (decision.reason == 'badSignature') {
+            rep.quarantined++;
+            continue;
+          }
+          await _store(
+            op,
+            decision,
+            wasPending: existing != null,
+            rep: rep,
+            newlyPending: newlyPending,
+          );
+          have[op.deviceId] = max(have[op.deviceId] ?? 0, op.seq);
         }
-        continue;
-      }
-
-      final decision = await _decide(op, byChange[op.changeId]!, view);
-      await _store(
-        op,
-        decision,
-        wasPending: existing != null,
-        rep: rep,
-        newlyPending: newlyPending,
-      );
-      have[op.deviceId] = max(have[op.deviceId] ?? 0, op.seq);
+      });
     }
 
     await retryPending(homeId, rep, newlyPending: newlyPending);
@@ -113,6 +138,36 @@ class IncomingPipeline {
       await afterIngest!();
     }
     return rep;
+  }
+
+  Future<void> _revokeEnded(String homeId) async {
+    final devs =
+        await (db.select(db.memberDevices)..where(
+              (d) => d.homeId.equals(homeId) & d.endedHlc.isNotNull(),
+            ))
+            .get();
+    if (devs.isEmpty) return;
+
+    final view = DriftValidationView(db, registry);
+    for (final dev in devs) {
+      final endedHlc = dev.endedHlc;
+      if (endedHlc == null || endedHlc.isEmpty) continue;
+      final info = await view.memberForDevice(dev.deviceId);
+      if (info != null && info.status == 'active') continue;
+      final badOps =
+          await (db.select(db.ops)..where(
+                (o) =>
+                    o.homeId.equals(homeId) &
+                    o.deviceId.equals(dev.deviceId) &
+                    o.status.equals('applied') &
+                    o.hlc.isBiggerOrEqualValue(endedHlc) &
+                    o.tbl.equals('members').not(),
+              ))
+              .get();
+      if (badOps.isNotEmpty) {
+        await applier.revoke(badOps);
+      }
+    }
   }
 
   Future<Decision> _decide(
@@ -137,7 +192,7 @@ class IncomingPipeline {
   }) async {
     switch (d.verdict) {
       case Verdict.accept:
-        await hlc.observe(op.hlc);
+        await hlc.observe(op.hlc, persist: false);
         await db.transaction(() async {
           if (wasPending) {
             await applier.applyPending(op);
@@ -211,11 +266,17 @@ class IncomingPipeline {
           }
           changed = true;
         } else if (d.verdict == Verdict.quarantine) {
-          await (db.update(db.ops)..where((o) => o.opId.equals(op.opId)))
-              .write(const OpsCompanion(status: Value('quarantined')));
-          have[op.deviceId] = max(have[op.deviceId] ?? 0, op.seq);
+          if (d.reason == 'badSignature') {
+            await (db.delete(
+              db.ops,
+            )..where((o) => o.opId.equals(op.opId))).go();
+          } else {
+            await (db.update(db.ops)..where((o) => o.opId.equals(op.opId)))
+                .write(const OpsCompanion(status: Value('quarantined')));
+            have[op.deviceId] = max(have[op.deviceId] ?? 0, op.seq);
+            rep.notes.add('${op.opId}: ${d.reason}');
+          }
           rep.quarantined++;
-          rep.notes.add('${op.opId}: ${d.reason}');
           if ((newlyPending?.remove(op.opId) ?? false) && rep.pending > 0) {
             rep.pending--;
           }
@@ -223,5 +284,6 @@ class IncomingPipeline {
         }
       }
     }
+    await hlc.flush();
   }
 }

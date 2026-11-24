@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
-import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/providers.dart';
@@ -45,8 +44,9 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     final c = context.nest;
     final today = ref.watch(todayDateProvider);
     final month = Dates.month(today);
-    final expenses =
-        ref.watch(monthExpensesProvider(month)).value ?? const <ExpenseRow>[];
+    final empty = ref.watch(
+      monthExpensesProvider(month).select((a) => a.value?.isEmpty ?? true),
+    );
 
     return Scaffold(
       body: SafeArea(
@@ -79,7 +79,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
               ),
             ),
             const BillsSection(),
-            if (expenses.isEmpty) ...[
+            if (empty) ...[
               const StaffPaySection(),
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),

@@ -639,10 +639,9 @@ final billPaymentsProvider = StreamProvider<List<SpendLite>>((ref) {
   final today = ref.watch(todayDateProvider);
   final prevStart = Dates.monthStart(prevMonth(Dates.month(today)));
   final repo = ref.watch(moneyRepoProvider);
-  return repo.watchExpensesSince(prevStart).map((rows) => [
-    for (final e in rows)
-      if (e.billId != null) repo.toSpendLite(e),
-  ]);
+  return repo
+      .watchBillPaymentsSince(prevStart)
+      .map((rows) => [for (final e in rows) repo.toSpendLite(e)]);
 });
 
 final billStatusesProvider = FutureProvider<List<(Bill, BillStatus)>>((

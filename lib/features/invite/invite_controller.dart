@@ -72,6 +72,7 @@ class InviteController extends Notifier<InviteUi> {
   LanJoinServer? _server;
   Completer<String?>? _decision;
   bool _disposed = false;
+  int _gen = 0;
 
   @override
   InviteUi build() {
@@ -86,6 +87,7 @@ class InviteController extends Notifier<InviteUi> {
     final now = DateTime.now();
     var inv = state.invite;
     if (_server != null && inv != null && inv.isOpen(now)) return;
+    final gen = ++_gen;
 
     if (inv == null || !inv.isOpen(now)) {
       final wordList = await ref.read(wordListProvider.future);
@@ -93,7 +95,7 @@ class InviteController extends Notifier<InviteUi> {
         JoinPhrase.generate(wordList.words, Random.secure()),
       );
     }
-    if (_disposed) return;
+    if (_disposed || gen != _gen) return;
 
     await _server?.stop();
     _server = null;
@@ -102,13 +104,13 @@ class InviteController extends Notifier<InviteUi> {
       nameplate: inv.nameplate,
       onClient: (s) => unawaited(_serve(FramedConnection.socket(s))),
     );
-    if (_disposed) {
+    if (_disposed || gen != _gen) {
       await srv.stop();
       return;
     }
     _server = srv;
     final ip = await localWifiIp();
-    if (_disposed) return;
+    if (_disposed || gen != _gen) return;
     state = InviteUi(
       invite: inv,
       stage: InviteStage.waiting,
@@ -132,12 +134,16 @@ class InviteController extends Notifier<InviteUi> {
         : (me?.fullName ?? '');
 
     final db = ref.read(dbProvider);
+    var mine = false;
     final host = JoinHost(
       invite: inv,
       homeId: homeId,
       homeName: homeName,
       inviterName: inviterName,
-      onRequest: _onRequest,
+      onRequest: (r, emojis) {
+        mine = true;
+        return _onRequest(r, emojis);
+      },
       admitter: HostAdmitter(
         db,
         ref.read(secureStoreProvider),
@@ -153,6 +159,7 @@ class InviteController extends Notifier<InviteUi> {
 
     final res = await host.handle(conn);
     if (_disposed) return;
+    if (res == null && !mine) return;
 
     if (res != null) {
       var showTip = false;
@@ -220,6 +227,7 @@ class InviteController extends Notifier<InviteUi> {
   }
 
   Future<void> pause() async {
+    _gen++;
     if (_decision != null && !_decision!.isCompleted) {
       _decision!.complete(null);
     }

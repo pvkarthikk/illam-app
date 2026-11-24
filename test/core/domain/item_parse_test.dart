@@ -13,6 +13,7 @@ void main() {
       ('bread x2', 'Bread', 2, ''),
       ('milk 500 ML', 'Milk', 500, 'ml'),
       ('Atta 5 packets', 'Atta', 5, 'pkt'),
+      ('Chips 2 pkt', 'Chips', 2, 'pkt'),
       ('LED bulbs 9W', 'LED bulbs 9W', 1, ''),
       ('Sugar 0', 'Sugar', 1, ''),
     ];

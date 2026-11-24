@@ -114,8 +114,11 @@ class FramedConnection {
   final _frames = Queue<Uint8List>();
   final _waiters = Queue<Completer<Uint8List>>();
   late final StreamSubscription<List<int>> _sub;
+  final _closedCompleter = Completer<void>();
   bool _closed = false;
   Future<void>? _closeFuture;
+
+  Future<void> get closed => _closedCompleter.future;
 
   void sendFrame(List<int> payload) {
     if (_closed) throw const ConnectionClosed();
@@ -132,6 +135,7 @@ class FramedConnection {
 
   void _failAll(Object err) {
     _closed = true;
+    if (!_closedCompleter.isCompleted) _closedCompleter.complete();
     while (_waiters.isNotEmpty) {
       final w = _waiters.removeFirst();
       if (!w.isCompleted) w.completeError(err);

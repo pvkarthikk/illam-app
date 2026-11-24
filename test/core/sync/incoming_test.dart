@@ -186,8 +186,8 @@ void main() {
     expect(await s.db.select(s.db.items).get(), isEmpty);
     final opRow = await (s.db.select(
       s.db.ops,
-    )..where((o) => o.opId.equals(signed.opId))).getSingle();
-    expect(opRow.status, 'quarantined');
+    )..where((o) => o.opId.equals(signed.opId))).getSingleOrNull();
+    expect(opRow, isNull);
   });
 
   test('holds unknown device op pending then applies when addMember arrives', () async {

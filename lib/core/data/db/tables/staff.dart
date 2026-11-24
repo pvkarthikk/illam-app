@@ -23,6 +23,8 @@ class Staff extends Table with SyncedColumns {
 @DataClassName('Visit')
 @TableIndex(name: 'visits_staff_date', columns: {#staffId, #date})
 @TableIndex(name: 'visits_staff_out', columns: {#staffId, #outAt})
+@TableIndex(name: 'visits_home_date', columns: {#homeId, #date})
+@TableIndex(name: 'visits_home_out', columns: {#homeId, #outAt})
 class Visits extends Table with SyncedColumns {
   TextColumn get staffId => text().nullable()();
   TextColumn get date => text().nullable()();
@@ -33,6 +35,7 @@ class Visits extends Table with SyncedColumns {
 }
 
 @DataClassName('Leave')
+@TableIndex(name: 'leaves_home_date', columns: {#homeId, #date})
 class Leaves extends Table with SyncedColumns {
   TextColumn get staffId => text().nullable()();
   TextColumn get date => text().nullable()();

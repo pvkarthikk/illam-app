@@ -1,7 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:nm_flat/core/data/repo/lists_repo.dart';
+import 'package:nm_flat/core/domain/list_groups.dart';
 import 'package:nm_flat/core/providers.dart';
+import 'package:nm_flat/features/lists/lists_text.dart';
 
 class ListsUiState {
   const ListsUiState({
@@ -65,3 +67,14 @@ class ListsController extends Notifier<ListsUiState> {
 
 final listsControllerProvider =
     NotifierProvider<ListsController, ListsUiState>(ListsController.new);
+
+final openGroupCountProvider = Provider.family<int, String>((ref, list) {
+  final rows = ref.watch(listItemsProvider(list)).value;
+  if (rows == null) return 0;
+  return groupOpenItems(
+    snapsOf([
+      for (final r in rows)
+        if (!r.done) r,
+    ]),
+  ).length;
+});

@@ -49,10 +49,69 @@ class OpApplier {
   Future<void> applyLocal(List<OpRecord> recs) async {
     if (recs.isEmpty) return;
     final decoded = [for (final rec in recs) _decodeAndCheck(rec)];
+    final seen = <(String, String)>{};
     await db.batch((b) {
       for (var i = 0; i < recs.length; i++) {
-        b.insert(db.ops, recs[i].toCompanion());
-        _addEffects(b, recs[i], decoded[i]);
+        final rec = recs[i];
+        b.insert(db.ops, rec.toCompanion());
+        _addEffects(
+          b,
+          rec,
+          decoded[i],
+          ensureRow: seen.add((rec.tbl, rec.entityId)),
+        );
+      }
+    });
+  }
+
+  /// Marks [rows] quarantined and rebuilds every affected entity from remaining applied ops.
+  Future<void> revoke(List<OpRow> rows) async {
+    if (rows.isEmpty) return;
+    await db.transaction(() async {
+      for (final r in rows) {
+        await (db.update(db.ops)..where((o) => o.opId.equals(r.opId)))
+            .write(const OpsCompanion(status: Value('quarantined')));
+      }
+      final entities = <(String, String)>{
+        for (final r in rows) (r.tbl, r.entityId),
+      };
+      for (final (tbl, entityId) in entities) {
+        if (!registry.has(tbl)) continue;
+        final spec = registry.spec(tbl);
+        final t = spec.table.actualTableName;
+        await db.customUpdate(
+          'DELETE FROM $t WHERE id = ?',
+          variables: [Variable.withString(entityId)],
+          updates: {spec.table},
+          updateKind: UpdateKind.delete,
+        );
+        await (db.delete(db.fieldClocks)
+              ..where((c) => c.tbl.equals(tbl) & c.entityId.equals(entityId)))
+            .go();
+        final kept =
+            await (db.select(db.ops)
+                  ..where(
+                    (o) =>
+                        o.tbl.equals(tbl) &
+                        o.entityId.equals(entityId) &
+                        o.status.equals('applied'),
+                  )
+                  ..orderBy([
+                    (o) => OrderingTerm.asc(o.hlc),
+                    (o) => OrderingTerm.asc(o.opId),
+                  ]))
+                .get();
+        if (kept.isEmpty) continue;
+        final ops = [for (final r in kept) OpRecord.fromRow(r)];
+        final ordered = [
+          for (final op in ops)
+            if (op.kind != 'inc') op,
+          for (final op in ops)
+            if (op.kind == 'inc') op,
+        ];
+        await _applyEffects([
+          for (final op in ordered) (op, _decodeAndCheck(op)),
+        ]);
       }
     });
   }
@@ -77,33 +136,40 @@ class OpApplier {
 
   /// Everything one op changes, as statements of a single batch (one message
   /// to the database isolate instead of one per statement).
-  void _addEffects(Batch b, OpRecord op, Object? value) {
+  void _addEffects(
+    Batch b,
+    OpRecord op,
+    Object? value, {
+    bool ensureRow = true,
+  }) {
     final spec = registry.spec(op.tbl);
     final t = spec.table.actualTableName;
     final clocks = db.fieldClocks.actualTableName;
     final wall = Hlc.parse(op.hlc).wall;
     final onTable = TableUpdate.onTable(spec.table, kind: UpdateKind.update);
 
-    b.customStatement(
-      'INSERT OR IGNORE INTO $t (id, home_id, created_at, created_by, updated_at, updated_by) '
-      'VALUES (?, ?, ?, ?, ?, ?)',
-      [
-        _bound(op.entityId),
-        _bound(op.homeId),
-        wall,
-        _bound(op.authorMemberId),
-        wall,
-        _bound(op.authorMemberId),
-      ],
-      [TableUpdate.onTable(spec.table, kind: UpdateKind.insert)],
-    );
+    if (ensureRow) {
+      b.customStatement(
+        'INSERT OR IGNORE INTO $t (id, home_id, created_at, created_by, updated_at, updated_by) '
+        'VALUES (?, ?, ?, ?, ?, ?)',
+        [
+          _bound(op.entityId),
+          _bound(op.homeId),
+          wall,
+          _bound(op.authorMemberId),
+          wall,
+          _bound(op.authorMemberId),
+        ],
+        [TableUpdate.onTable(spec.table, kind: UpdateKind.insert)],
+      );
 
-    // The earliest op seen for a row also owns its creation stamp.
-    b.customStatement(
-      'UPDATE $t SET created_at = ?, created_by = ? WHERE id = ? AND created_at > ?',
-      [wall, _bound(op.authorMemberId), _bound(op.entityId), wall],
-      [onTable],
-    );
+      // The earliest op seen for a row also owns its creation stamp.
+      b.customStatement(
+        'UPDATE $t SET created_at = ?, created_by = ? WHERE id = ? AND created_at > ?',
+        [wall, _bound(op.authorMemberId), _bound(op.entityId), wall],
+        [onTable],
+      );
+    }
 
     if (op.kind == 'inc') {
       b.customStatement(

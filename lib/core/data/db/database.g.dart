@@ -19365,6 +19365,18 @@ abstract class _$NestDatabase extends GeneratedDatabase {
   late final $MemberDevicesTable memberDevices = $MemberDevicesTable(this);
   late final $SyncPeersTable syncPeers = $SyncPeersTable(this);
   late final $BackupStatusTable backupStatus = $BackupStatusTable(this);
+  late final Index opsDeviceSeq = Index(
+    'ops_device_seq',
+    'CREATE INDEX ops_device_seq ON ops (device_id, seq)',
+  );
+  late final Index opsHomeDeviceSeq = Index(
+    'ops_home_device_seq',
+    'CREATE INDEX ops_home_device_seq ON ops (home_id, device_id, seq)',
+  );
+  late final Index opsTblEntity = Index(
+    'ops_tbl_entity',
+    'CREATE INDEX ops_tbl_entity ON ops (tbl, entity_id)',
+  );
   late final Index visitsStaffDate = Index(
     'visits_staff_date',
     'CREATE INDEX visits_staff_date ON visits (staff_id, date)',
@@ -19372,6 +19384,18 @@ abstract class _$NestDatabase extends GeneratedDatabase {
   late final Index visitsStaffOut = Index(
     'visits_staff_out',
     'CREATE INDEX visits_staff_out ON visits (staff_id, out_at)',
+  );
+  late final Index visitsHomeDate = Index(
+    'visits_home_date',
+    'CREATE INDEX visits_home_date ON visits (home_id, date)',
+  );
+  late final Index visitsHomeOut = Index(
+    'visits_home_out',
+    'CREATE INDEX visits_home_out ON visits (home_id, out_at)',
+  );
+  late final Index leavesHomeDate = Index(
+    'leaves_home_date',
+    'CREATE INDEX leaves_home_date ON leaves (home_id, date)',
   );
   late final Index payAdjustmentsStaffMonth = Index(
     'pay_adjustments_staff_month',
@@ -19447,8 +19471,14 @@ abstract class _$NestDatabase extends GeneratedDatabase {
     memberDevices,
     syncPeers,
     backupStatus,
+    opsDeviceSeq,
+    opsHomeDeviceSeq,
+    opsTblEntity,
     visitsStaffDate,
     visitsStaffOut,
+    visitsHomeDate,
+    visitsHomeOut,
+    leavesHomeDate,
     payAdjustmentsStaffMonth,
     settlementAttemptsStaffMonth,
     expensesDateCreated,

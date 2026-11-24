@@ -73,7 +73,8 @@ class ListsRepo {
                   h.deleted.equals(false) &
                   h.lastBoughtAt.isNotNull(),
             )
-            ..orderBy([(h) => OrderingTerm.desc(h.lastBoughtAt)]))
+            ..orderBy([(h) => OrderingTerm.desc(h.lastBoughtAt)])
+            ..limit(40))
           .watch();
 
   Stream<List<ItemHistoryRow>> watchUsual(String homeId, String list) =>
@@ -240,6 +241,45 @@ class ListsRepo {
         (c) => c.inc('items', survivorId, 'qty_milli', deltaMilli),
       );
 
+  Future<ChangeResult> takeFromGroup(List<String> ids, int milli) async {
+    if (ids.isEmpty || milli <= 0) {
+      return changes.write('Quantity', (_) {});
+    }
+    final rows =
+        await (db.select(db.items)..where(
+              (i) => i.id.isIn(ids) & i.deleted.equals(false),
+            ))
+            .get();
+    final byId = {for (final r in rows) r.id: r};
+    final survivor = byId[ids.first];
+    if (survivor == null) {
+      return changes.write('Quantity', (_) {});
+    }
+
+    return changes.write('Quantity', (c) {
+      var rest = milli;
+      for (var idx = ids.length - 1; idx >= 0 && rest > 0; idx--) {
+        final row = byId[ids[idx]];
+        if (row == null) continue;
+        final heldInSurv = convertMilli(row.qtyMilli, row.unit, survivor.unit);
+        if (heldInSurv == null) continue;
+
+        if (idx > 0 && heldInSurv <= rest) {
+          c.delete('items', row.id);
+          if (heldInSurv > 0) rest -= heldInSurv;
+          continue;
+        }
+
+        final restInRow = convertMilli(rest, survivor.unit, row.unit);
+        if (restInRow == null || restInRow <= 0 || row.qtyMilli <= 0) continue;
+        final take = restInRow < row.qtyMilli ? restInRow : row.qtyMilli;
+        c.inc('items', row.id, 'qty_milli', -take);
+        final takenInSurv = convertMilli(take, row.unit, survivor.unit) ?? 0;
+        rest -= takenInSurv;
+      }
+    });
+  }
+
   Future<ChangeResult> setQtyAndUnit(
     ItemRow survivor,
     int newMilli,
@@ -357,10 +397,19 @@ class ListsRepo {
     if (name != survivor.name) {
       _applyRename(c, group.ids, name);
     }
-    final delta = qtyMilli - group.totalMilli;
     final unitChanged = unit != survivor.unit ? unit : null;
+    final diff = qtyMilli - group.totalMilli;
+    final collapse =
+        group.ids.length > 1 &&
+        (unitChanged != null || survivor.qtyMilli + diff <= 0);
+    final delta = collapse ? qtyMilli - survivor.qtyMilli : diff;
     if (delta != 0 || unitChanged != null) {
       _applyQtyAndUnit(c, survivor.id, delta, unitChanged);
+    }
+    if (collapse) {
+      for (final id in group.ids) {
+        if (id != survivor.id) c.delete('items', id);
+      }
     }
     if (category != survivor.category) {
       _applyCategory(c, group.ids, category);

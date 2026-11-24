@@ -377,28 +377,18 @@ class ChangeWriter {
   Future<UndoOutcome> undo(UndoToken t) async {
     if (t.used) return const UndoDone();
     final me = prefs.memberId ?? prefs.deviceId;
+    final rows = await _readUndoRows([
+      for (final e in t.entries)
+        if (e.guarded) PendingOp.set(e.tbl, e.id, e.field, null),
+    ]);
 
     for (final e in t.entries) {
       if (!e.guarded) continue;
-      final tName = registry.spec(e.tbl).table.actualTableName;
-      final row = await db
-          .customSelect(
-            'SELECT ${e.field} AS v FROM $tName WHERE id = ?',
-            variables: [Variable.withString(e.id)],
-          )
-          .getSingleOrNull();
-      final current = row == null
-          ? null
-          : registry.fromSql(e.tbl, e.field, row.data['v']);
+      final row = rows['${e.tbl}/${e.id}'];
+      final current = row?[e.field];
       if (_valuesEqual(current, e.expected)) continue;
 
-      final updaterRow = await db
-          .customSelect(
-            'SELECT updated_by AS u FROM $tName WHERE id = ?',
-            variables: [Variable.withString(e.id)],
-          )
-          .getSingleOrNull();
-      final u = updaterRow?.data['u'] as String?;
+      final u = row?['updated_by'] as String?;
       if (u == me) return const UndoConflict(byMe: true);
       if (u != null && registry.has('members')) {
         final memberRow = await db

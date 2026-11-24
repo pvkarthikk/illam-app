@@ -62,6 +62,7 @@ class MembershipLog {
     List<Map<String, Object?>> wire,
   ) async {
     var inserted = 0;
+    final added = <MemberOp>[];
     for (final w in wire) {
       final op = await MemberOpCodec.fromWire(w);
       if (op.homeId != homeId) continue;
@@ -94,9 +95,22 @@ class MembershipLog {
             mode: InsertMode.insertOrIgnore,
           );
       inserted++;
-      await hlc.observe(op.hlc);
+      added.add(op);
     }
     await _verifyUnknown(homeId);
+    await (db.delete(db.memberOps)
+          ..where((t) => t.homeId.equals(homeId) & t.sigOk.equals(false)))
+        .go();
+    for (final op in added) {
+      final row = await (db.select(
+        db.memberOps,
+      )..where((t) => t.opId.equals(op.opId))).getSingleOrNull();
+      if (row != null &&
+          row.sigOk == true &&
+          Hlc.parse(op.hlc).wall <= clock.nowMs + 300000) {
+        await hlc.observe(op.hlc);
+      }
+    }
     await replayAndProject(homeId);
     return inserted;
   }
@@ -135,7 +149,12 @@ class MembershipLog {
           final dev = op.payload['device'] as Map?;
           final key = dev?['signPub'] as String?;
           if (key == null) continue;
-          final okOp = await MemberOpCodec.verify(op, decodeKey(key));
+          bool okOp;
+          try {
+            okOp = await MemberOpCodec.verify(op, decodeKey(key));
+          } on Object {
+            okOp = false;
+          }
           final okRec = okOp && await verifyRecover(op.payload);
           await (db.update(db.memberOps)..where((t) => t.opId.equals(r.opId)))
               .write(MemberOpsCompanion(sigOk: Value(okRec)));
@@ -155,7 +174,12 @@ class MembershipLog {
         }
         if (key == null) continue;
 
-        final ok = await MemberOpCodec.verify(op, decodeKey(key));
+        bool ok;
+        try {
+          ok = await MemberOpCodec.verify(op, decodeKey(key));
+        } on Object {
+          ok = false;
+        }
         await (db.update(db.memberOps)..where((t) => t.opId.equals(r.opId)))
             .write(MemberOpsCompanion(sigOk: Value(ok)));
         changed = true;
@@ -176,16 +200,20 @@ class MembershipLog {
 
     final referenced = <String>{};
     for (final r in rows) {
+      if (r.sigOk != true) continue;
       for (final p in jsonDecode(r.prevJson) as List) {
         referenced.add(p as String);
       }
     }
+    final h = await hlc.next();
     final prev = [
       for (final r in rows)
-        if (!referenced.contains(r.opId)) r.opId,
+        if (r.sigOk == true &&
+            !referenced.contains(r.opId) &&
+            r.hlc.compareTo(h) < 0)
+          r.opId,
     ]..sort();
 
-    final h = await hlc.next();
     final unsigned = MemberOp(
       homeId: homeId,
       type: type,
@@ -418,7 +446,7 @@ class MembershipLog {
   Future<List<Map<String, Object?>>> allWire(String homeId) async {
     final rows =
         await (db.select(db.memberOps)
-              ..where((t) => t.homeId.equals(homeId))
+              ..where((t) => t.homeId.equals(homeId) & t.sigOk.equals(true))
               ..orderBy([
                 (t) => OrderingTerm.asc(t.hlc),
                 (t) => OrderingTerm.asc(t.opId),

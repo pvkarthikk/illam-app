@@ -24,7 +24,10 @@ String guessCategory(String name) {
   final lower = name.toLowerCase();
   for (final (category, keywords) in _rules) {
     for (final k in keywords) {
-      if (lower.contains(k)) return category;
+      final hit = k.length <= 4
+          ? RegExp(r'\b' + k).hasMatch(lower)
+          : lower.contains(k);
+      if (hit) return category;
     }
   }
   return 'Other';

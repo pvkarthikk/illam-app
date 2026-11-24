@@ -65,6 +65,7 @@ class _ItemSheetState extends ConsumerState<ItemSheet> {
   Future<void> _save(AppLocalizations l10n) async {
     if (_saving) return;
     setState(() => _saving = true);
+    var closed = false;
     try {
       final s = widget.survivor;
       final trimmedName = _nameCtrl.text.trim();
@@ -120,22 +121,29 @@ class _ItemSheetState extends ConsumerState<ItemSheet> {
         }
       }
 
-      final res = await ref
-          .read(listsRepoProvider)
-          .saveGroup(
-            group: widget.group,
-            survivor: s,
-            name: newName,
-            qtyMilli: newMilli,
-            unit: _unit,
-            category: _category,
-            mergeInto: mergeInto,
-          );
-      if (!mounted) return;
+      final snack = ref.read(snackbarProvider);
+      final repo = ref.read(listsRepoProvider);
+      final group = widget.group;
+      final unit = _unit;
+      final category = _category;
+      closed = true;
       Navigator.of(context).pop();
-      ref.read(snackbarProvider).show(l10n.listsSaved, undo: res.undo);
+      try {
+        final res = await repo.saveGroup(
+          group: group,
+          survivor: s,
+          name: newName,
+          qtyMilli: newMilli,
+          unit: unit,
+          category: category,
+          mergeInto: mergeInto,
+        );
+        snack.show(l10n.listsSaved, undo: res.undo);
+      } on Object {
+        snack.show(rejectText('other'));
+      }
     } finally {
-      if (mounted) setState(() => _saving = false);
+      if (!closed && mounted) setState(() => _saving = false);
     }
   }
 

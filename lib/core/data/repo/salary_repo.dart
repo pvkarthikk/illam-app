@@ -90,8 +90,21 @@ class SalaryRepo {
                     row.effectiveMonth.equals(r.effectiveMonth) &
                     row.deleted.equals(false),
               )
+              ..orderBy([
+                (row) => OrderingTerm.desc(row.createdAt),
+                (row) => OrderingTerm.desc(row.id),
+              ])
               ..limit(1))
             .getSingleOrNull();
+
+    final later =
+        await (db.select(db.payRules)..where(
+              (row) =>
+                  row.staffId.equals(staffId) &
+                  row.effectiveMonth.isBiggerThanValue(r.effectiveMonth) &
+                  row.deleted.equals(false),
+            ))
+            .get();
 
     final days = r.workDays.join(',');
     return changes.write('Pay rules', (c) {
@@ -129,6 +142,10 @@ class SalaryRepo {
           'amount_per_month_paise': r.amountPerMonthPaise,
           'paid_leaves_per_month': r.paidLeavesPerMonth,
         });
+      }
+
+      for (final row in later) {
+        c.delete('pay_rules', row.id);
       }
 
       if (applyThisMonth) {
@@ -220,11 +237,15 @@ class SalaryRepo {
     }
   });
 
-  Future<ChangeResult> undoPayment(SettlementAttemptRow attempt) async {
+  Future<ChangeResult> undoPayment(
+    SettlementAttemptRow attempt, {
+    List<String> transferIds = const [],
+  }) async {
+    final ids = [attempt.id, ...transferIds];
     final linkedAdjustments =
         await (db.select(db.payAdjustments)..where(
               (a) =>
-                  a.settlementAttemptId.equals(attempt.id) &
+                  a.settlementAttemptId.isIn(ids) &
                   a.deleted.equals(false),
             ))
             .get();
