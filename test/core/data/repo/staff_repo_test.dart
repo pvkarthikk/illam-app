@@ -142,4 +142,34 @@ void main() {
       expect(s2Visits.length, 1);
     },
   );
+
+  test('addStaff creates multiple distinct active helpers and pay rules', () async {
+    final e = await _env();
+    await e.repo.addStaff(
+      name: 'kamala',
+      role: 'House help',
+      payType: 'monthly',
+      amountPaise: 600000,
+      expectedTime: '09:00',
+      color: '#4F8A8B',
+      today: '2026-11-20',
+    );
+    await e.repo.addStaff(
+      name: 'lakshmi',
+      role: 'Cook',
+      payType: 'monthly',
+      amountPaise: 700000,
+      expectedTime: '08:00',
+      color: '#8A5A2B',
+      today: '2026-11-20',
+    );
+
+    final active = await e.repo.watchActive('NM-TEST').first;
+    expect(active.map((s) => s.name).toList(), ['Kamala', 'Lakshmi']);
+    expect(active.map((s) => s.id).toSet().length, 2);
+
+    final rules = await e.db.select(e.db.payRules).get();
+    expect(rules.length, 2);
+    expect(rules.map((r) => r.staffId).toSet(), active.map((s) => s.id).toSet());
+  });
 }

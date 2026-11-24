@@ -25,18 +25,34 @@ class HelpAtHomeSection extends ConsumerWidget {
 
     final header = Padding(
       padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            l10n.staffHelpTitle,
-            style: NestText.cardTitle20.copyWith(color: c.ink),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  l10n.staffHelpTitle,
+                  style: NestText.cardTitle20.copyWith(color: c.ink),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  l10n.staffHelpSub,
+                  style: NestText.meta13.copyWith(color: c.ink3),
+                ),
+              ],
+            ),
           ),
-          const SizedBox(height: 2),
-          Text(
-            l10n.staffHelpSub,
-            style: NestText.meta13.copyWith(color: c.ink3),
-          ),
+          if (isAdmin) ...[
+            const SizedBox(width: 8),
+            NestButton(
+              label: '+ ${l10n.commonAdd}',
+              kind: NestButtonKind.ghost,
+              size: NestButtonSize.sm,
+              onPressed: () => showAddStaffSheet(context),
+            ),
+          ],
         ],
       ),
     );
@@ -59,24 +75,9 @@ class HelpAtHomeSection extends ConsumerWidget {
             if (staffList.isEmpty)
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        l10n.staffNoneYet,
-                        style: NestText.meta13.copyWith(color: c.ink3),
-                      ),
-                    ),
-                    if (isAdmin) ...[
-                      const SizedBox(width: 8),
-                      NestButton(
-                        label: '+ ${l10n.commonAdd}',
-                        kind: NestButtonKind.ghost,
-                        size: NestButtonSize.sm,
-                        onPressed: () => showAddStaffSheet(context),
-                      ),
-                    ],
-                  ],
+                child: Text(
+                  l10n.staffNoneYet,
+                  style: NestText.meta13.copyWith(color: c.ink3),
                 ),
               )
             else
