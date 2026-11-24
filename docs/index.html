@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Illam (இல்லம்) — Local-first household management for Android</title>
+  <meta name="description" content="Organize daily chores, groceries, expenses, meal plans, and staff payroll across family phones—syncing peer-to-peer over home Wi-Fi with zero cloud accounts, subscriptions, or tracking.">
+  <meta name="theme-color" content="#F4ECDF" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0F1612" media="(prefers-color-scheme: dark)">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://pvkarthikk.github.io/illam-app/">
+  <meta property="og:title" content="Illam (இல்லம்) — Local-first household management">
+  <meta property="og:description" content="Open-source Android household app for shared todos, grouped shopping lists, expenses in ₹, meal plans, and staff payroll—with encrypted home Wi-Fi sync.">
+  <meta property="og:image" content="https://pvkarthikk.github.io/illam-app/assets/icon-192.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Illam (இல்லம்) — Local-first household management">
+  <meta name="twitter:description" content="Organize daily household routines across family phones over home Wi-Fi with zero cloud accounts or tracking.">
+  <link rel="icon" type="image/png" href="./assets/favicon.png">
+  <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="./styles.css">
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('illam-theme');
+        if (saved === 'light' || saved === 'dark') {
+          document.documentElement.dataset.theme = saved;
+        }
+      } catch (_) {}
+    })();
+  </script>
+  <script defer src="./app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="Illam home">
+        <img class="brand-logo" src="./assets/icon-192.png" alt="Illam app icon" width="40" height="40">
+        <span class="brand-text">
+          <span class="brand-name">Illam</span>
+          <span class="brand-sub" lang="ta">இல்லம்</span>
+        </span>
+      </a>
+
+      <nav class="desktop-nav" aria-label="Primary">
+        <a href="#features">Features</a>
+        <a href="#privacy">Privacy &amp; Sync</a>
+        <a href="#install">Install</a>
+        <a href="#docs">Docs</a>
+      </nav>
+
+      <div class="header-actions">
+        <button
+          type="button"
+          class="icon-btn"
+          id="theme-toggle"
+          aria-label="Switch color theme"
+          aria-pressed="false"
+          title="Toggle light or dark theme"
+        >
+          <svg class="icon-sun" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/>
+          </svg>
+        </button>
+
+        <a
+          class="btn btn-tonal nav-cta"
+          href="https://github.com/pvkarthikk/illam-app"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="currentColor">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z"/>
+          </svg>
+          <span>GitHub</span>
+        </a>
+
+        <button
+          type="button"
+          class="icon-btn menu-toggle"
+          id="menu-toggle"
+          aria-expanded="false"
+          aria-controls="mobile-nav"
+          aria-label="Open navigation menu"
+        >
+          <svg class="icon-menu" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+          <svg class="icon-close" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M6 6l12 12M18 6L6 18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="mobile-nav" id="mobile-nav" hidden>
+      <div class="container mobile-nav-inner">
+        <a href="#features">Features</a>
+        <a href="#privacy">Privacy &amp; Sync</a>
+        <a href="#install">Install</a>
+        <a href="#docs">Docs</a>
+        <a
+          class="btn btn-primary mobile-nav-cta"
+          href="https://github.com/pvkarthikk/illam-app/releases/latest"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Download Android APK
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="pill-badge">
+            <span class="pill-dot" aria-hidden="true"></span>
+            <span>Open Source &middot; Android &middot; Zero Cloud</span>
+          </div>
+
+          <h1 class="hero-title">
+            Local-first household management for everyday peace of mind.
+          </h1>
+
+          <p class="hero-lead">
+            Organize daily chores, groceries, expenses, meal plans, and staff payroll across family phones&mdash;syncing peer-to-peer over home Wi-Fi with zero cloud accounts, subscriptions, or tracking.
+          </p>
+
+          <div class="hero-actions">
+            <a
+              class="btn btn-primary btn-lg"
+              href="https://github.com/pvkarthikk/illam-app/releases/latest"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/>
+              </svg>
+              <span>Download Android APK</span>
+            </a>
+            <a
+              class="btn btn-outline btn-lg"
+              href="https://github.com/pvkarthikk/illam-app"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>View Source on GitHub</span>
+            </a>
+          </div>
+
+          <ul class="trust-strip" aria-label="Core guarantees">
+            <li>
+              <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 10.5l4 4 8-9"/>
+              </svg>
+              <span>100% Offline-First</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 10.5l4 4 8-9"/>
+              </svg>
+              <span>E2E Encrypted Wi-Fi Sync</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 10.5l4 4 8-9"/>
+              </svg>
+              <span>Apache 2.0 &middot; Zero Ads</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Interactive Android Mockup -->
+        <div class="hero-stage">
+          <div class="phone-halo" aria-hidden="true"></div>
+          <div class="phone-frame" role="region" aria-label="Interactive preview of the Illam Android app">
+            <div class="phone-speaker" aria-hidden="true">
+              <span class="phone-camera"></span>
+            </div>
+
+            <div class="phone-screen">
+              <div class="phone-statusbar">
+                <span>9:41</span>
+                <span class="sync-pill">
+                  <span class="sync-pill-dot" aria-hidden="true"></span>
+                  Synced on Home Wi-Fi
+                </span>
+              </div>
+
+              <div class="phone-viewport">
+                <!-- TODAY TAB -->
+                <div
+                  class="phone-panel is-active"
+                  id="panel-today"
+                  role="tabpanel"
+                  aria-labelledby="tab-today"
+                  data-phone-panel="today"
+                >
+                  <div class="app-hero-head">
+                    <div>
+                      <p class="app-eyebrow">HOME &middot; TUE, 24 NOV</p>
+                      <h2 class="app-greeting">
+                        Good morning.<br>
+                        <span class="app-greeting-accent">3 things today</span>
+                      </h2>
+                    </div>
+                    <div class="avatar-stack" aria-label="Household members">
+                      <span class="avatar" style="--av:#23503A" title="Anand">A</span>
+                      <span class="avatar" style="--av:#B0412A" title="Meera">M</span>
+                      <span class="avatar avatar-ring" style="--av:#34508A" title="Kavya">K</span>
+                    </div>
+                  </div>
+
+                  <div class="m3-card">
+                    <div class="m3-card-head">
+                      <span class="m3-card-title">Due Today</span>
+                      <span class="m3-chip m3-chip-accent">3 left</span>
+                    </div>
+                    <ul class="mini-check-list">
+                      <li>
+                        <span class="check-circle is-done" aria-hidden="true">&#10003;</span>
+                        <span class="strike-muted">Rinse &amp; swap RO filter</span>
+                        <span class="tag-pill">Monthly</span>
+                      </li>
+                      <li>
+                        <span class="check-circle" aria-hidden="true"></span>
+                        <span>Pay BESCOM electricity bill</span>
+                        <span class="tag-pill tag-warn">Today</span>
+                      </li>
+                      <li>
+                        <span class="check-circle" aria-hidden="true"></span>
+                        <span>Order fresh filter coffee</span>
+                        <span class="tag-pill">Anand</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="m3-card">
+                    <div class="m3-card-head">
+                      <span class="m3-card-title">Today&rsquo;s Menu</span>
+                      <span class="m3-link">Meals &rarr;</span>
+                    </div>
+                    <div class="menu-pills">
+                      <div class="menu-row">
+                        <span class="meal-slot">Lunch</span>
+                        <span class="meal-name">Pesarattu &amp; ginger chutney</span>
+                      </div>
+                      <div class="menu-row">
+                        <span class="meal-slot">Dinner</span>
+                        <span class="meal-name">Dal tadka &amp; jeera rice</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="m3-card">
+                    <div class="m3-card-head">
+                      <span class="m3-card-title">Help at Home</span>
+                      <span class="m3-meta">November</span>
+                    </div>
+                    <div class="staff-mini">
+                      <span class="staff-badge" aria-hidden="true">L</span>
+                      <div class="staff-info">
+                        <strong>Lakshmi</strong>
+                        <span>Cook &middot; Checked in 7:45 AM</span>
+                      </div>
+                      <span class="m3-chip m3-chip-ok">In today</span>
+                    </div>
+                  </div>
+
+                  <div class="m3-card m3-card-row">
+                    <div>
+                      <span class="m3-eyebrow-sm">MONTH SO FAR</span>
+                      <strong class="money-figure">&#8377;18,450</strong>
+                    </div>
+                    <div class="budget-mini">
+                      <span>Budget &#8377;30,000</span>
+                      <div class="progress-track" aria-hidden="true">
+                        <div class="progress-fill" style="width: 61%"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- LISTS TAB -->
+                <div
+                  class="phone-panel"
+                  id="panel-lists"
+                  role="tabpanel"
+                  aria-labelledby="tab-lists"
+                  data-phone-panel="lists"
+                  hidden
+                >
+                  <div class="app-subhead">
+                    <h2 class="app-screen-title">Shopping Lists</h2>
+                    <span class="m3-chip m3-chip-primary">Share</span>
+                  </div>
+
+                  <div class="m3-card">
+                    <div class="store-row-head">
+                      <span class="store-badge" style="background:#5B1E8C;color:#FFFFFF" aria-hidden="true">Z</span>
+                      <span class="m3-card-title">Zepto</span>
+                      <span class="m3-meta">2 items</span>
+                    </div>
+                    <ul class="mini-check-list">
+                      <li>
+                        <span class="check-circle" aria-hidden="true"></span>
+                        <span>Nandini toned milk</span>
+                        <span class="tag-pill">2 L</span>
+                      </li>
+                      <li>
+                        <span class="check-circle" aria-hidden="true"></span>
+                        <span>Cold-pressed sesame oil</span>
+                        <span class="tag-pill">1 L</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="m3-card">
+                    <div class="store-row-head">
+                      <span class="store-badge store-badge-local" aria-hidden="true">M</span>
+                      <span class="m3-card-title">Local Market</span>
+                      <span class="m3-meta">3 items</span>
+                    </div>
+                    <ul class="mini-check-list">
+                      <li>
+                        <span class="check-circle" aria-hidden="true"></span>
+                        <span>Fresh curry leaves</span>
+                        <span class="tag-pill">2 bunches</span>
+                      </li>
+                      <li>
+                        <span class="check-circle" aria-hidden="true"></span>
+                        <span>Sona masoori rice</span>
+                        <span class="tag-pill">10 kg</span>
+                      </li>
+                      <li>
+                        <span class="check-circle is-done" aria-hidden="true">&#10003;</span>
+                        <span class="strike-muted">Green chillies</span>
+                        <span class="tag-pill">250 g</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- TASKS TAB -->
+                <div
+                  class="phone-panel"
+                  id="panel-tasks"
+                  role="tabpanel"
+                  aria-labelledby="tab-tasks"
+                  data-phone-panel="tasks"
+                  hidden
+                >
+                  <div class="app-subhead">
+                    <h2 class="app-screen-title">Shared Todos</h2>
+                    <span class="m3-chip m3-chip-accent">2 due</span>
+                  </div>
+
+                  <div class="m3-card">
+                    <div class="m3-card-head">
+                      <span class="m3-card-title">Recurring Routines</span>
+                    </div>
+                    <ul class="mini-check-list">
+                      <li>
+                        <span class="check-circle" aria-hidden="true"></span>
+                        <span>Clear balcony rain drain</span>
+                        <span class="tag-pill tag-warn">Every 7d</span>
+                      </li>
+                      <li>
+                        <span class="check-circle" aria-hidden="true"></span>
+                        <span>Water terrace tulsi &amp; pots</span>
+                        <span class="tag-pill">Every 2d</span>
+                      </li>
+                      <li>
+                        <span class="check-circle is-done" aria-hidden="true">&#10003;</span>
+                        <span class="strike-muted">Descaling kettle</span>
+                        <span class="tag-pill">30d</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="m3-card">
+                    <div class="m3-card-head">
+                      <span class="m3-card-title">One-time Chores</span>
+                    </div>
+                    <ul class="mini-check-list">
+                      <li>
+                        <span class="check-circle" aria-hidden="true"></span>
+                        <span>Book Indane cylinder refill</span>
+                        <span class="tag-pill">Meera</span>
+                      </li>
+                      <li>
+                        <span class="check-circle" aria-hidden="true"></span>
+                        <span>Call plumber for sink trap</span>
+                        <span class="tag-pill">Sat</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- MEALS TAB -->
+                <div
+                  class="phone-panel"
+                  id="panel-meals"
+                  role="tabpanel"
+                  aria-labelledby="tab-meals"
+                  data-phone-panel="meals"
+                  hidden
+                >
+                  <div class="app-subhead">
+                    <h2 class="app-screen-title">Meal Planner</h2>
+                    <span class="m3-meta">Week 48</span>
+                  </div>
+
+                  <div class="week-strip" aria-hidden="true">
+                    <span>Mon</span>
+                    <span class="is-today">Tue</span>
+                    <span>Wed</span>
+                    <span>Thu</span>
+                    <span>Fri</span>
+                  </div>
+
+                  <div class="m3-card">
+                    <div class="m3-card-head">
+                      <span class="m3-card-title">Dal Tadka &amp; Jeera Rice</span>
+                      <span class="tag-pill">4 servings</span>
+                    </div>
+                    <p class="recipe-mini-note">
+                      Scaled from base 2 servings &middot; ingredients checked against pantry.
+                    </p>
+                    <div class="missing-box">
+                      <span>2 missing: Toor dal (500 g), Coriander</span>
+                      <span class="m3-chip m3-chip-primary">+ Send to Lists</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- MONEY TAB -->
+                <div
+                  class="phone-panel"
+                  id="panel-money"
+                  role="tabpanel"
+                  aria-labelledby="tab-money"
+                  data-phone-panel="money"
+                  hidden
+                >
+                  <div class="app-subhead">
+                    <h2 class="app-screen-title">Spends &amp; Staff</h2>
+                    <span class="m3-meta">Nov 2026</span>
+                  </div>
+
+                  <div class="m3-card">
+                    <span class="m3-eyebrow-sm">TOTAL HOUSEHOLD SPEND</span>
+                    <div class="money-row-top">
+                      <strong class="money-figure">&#8377;18,450</strong>
+                      <span class="m3-meta">of &#8377;30,000 budget</span>
+                    </div>
+                    <div class="progress-track" aria-hidden="true">
+                      <div class="progress-fill" style="width: 61%"></div>
+                    </div>
+                  </div>
+
+                  <div class="m3-card">
+                    <div class="m3-card-head">
+                      <span class="m3-card-title">Recent Entries</span>
+                    </div>
+                    <ul class="mini-spend-list">
+                      <li>
+                        <div>
+                          <strong>Fresh produce &amp; greens</strong>
+                          <span>UPI &middot; Groceries &middot; Equal split</span>
+                        </div>
+                        <span class="spend-amt">&#8377;420</span>
+                      </li>
+                      <li>
+                        <div>
+                          <strong>Lakshmi &mdash; Nov salary slip</strong>
+                          <span>Cash &middot; Staff &middot; 24 days in</span>
+                        </div>
+                        <span class="spend-amt">&#8377;6,500</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bottom Material 3 Navigation Bar -->
+              <div class="phone-navbar" role="tablist" aria-label="Preview Illam tabs">
+                <button type="button" role="tab" id="tab-today" aria-selected="true" aria-controls="panel-today" data-phone-tab="today">
+                  <span class="nav-pill">
+                    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>
+                  </span>
+                  <span>Today</span>
+                </button>
+                <button type="button" role="tab" id="tab-lists" aria-selected="false" aria-controls="panel-lists" data-phone-tab="lists" tabindex="-1">
+                  <span class="nav-pill">
+                    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M6 6L5 3H2"/></svg>
+                  </span>
+                  <span>Lists</span>
+                </button>
+                <button type="button" role="tab" id="tab-tasks" aria-selected="false" aria-controls="panel-tasks" data-phone-tab="tasks" tabindex="-1">
+                  <span class="nav-pill">
+                    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                  </span>
+                  <span>Tasks</span>
+                </button>
+                <button type="button" role="tab" id="tab-meals" aria-selected="false" aria-controls="panel-meals" data-phone-tab="meals" tabindex="-1">
+                  <span class="nav-pill">
+                    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3v7a3 3 0 0 0 6 0V3M7 3v18M15 3v18M15 8h4a2 2 0 0 1 2 2v1a3 3 0 0 1-3 3h-3"/></svg>
+                  </span>
+                  <span>Meals</span>
+                </button>
+                <button type="button" role="tab" id="tab-money" aria-selected="false" aria-controls="panel-money" data-phone-tab="money" tabindex="-1">
+                  <span class="nav-pill">
+                    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h11M6 9h11M9 4c3.5 0 5 2 5 5s-1.5 5-5 5H6l8 7"/></svg>
+                  </span>
+                  <span>Money</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <p class="phone-hint">Interactive preview &mdash; tap tabs above to explore modules</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Core Modules -->
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-eyebrow">CORE MODULES</p>
+          <h2 class="section-title">Everything a home runs on, without the noise.</h2>
+          <p class="section-lead">
+            Five focused workflows built for shared family routines&mdash;fast offline data entry on every phone, converging automatically when your household is on home Wi-Fi.
+          </p>
+        </div>
+
+        <div class="features-bento">
+          <article class="feature-card">
+            <div class="feature-icon" style="--cat:#23503A;--cat-bg:var(--primary-soft)">
+              <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 11l3 3L22 4"/>
+                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+              </svg>
+            </div>
+            <h3>Shared Todos</h3>
+            <p>
+              Household chores, maintenance tasks, and daily reminders with one-time or recurring routines, Today surfacing, and timely local notifications.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon" style="--cat:#2E7A4F;--cat-bg:var(--primary-soft)">
+              <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 6h15l-1.5 9h-12z"/>
+                <circle cx="9" cy="20" r="1.2"/>
+                <circle cx="18" cy="20" r="1.2"/>
+                <path d="M6 6L5 3H2"/>
+              </svg>
+            </div>
+            <h3>Grouped Shopping Lists</h3>
+            <p>
+              Smart quantity and item-type detection, store-by-store grouping across online apps and local shops, plus one-tap checklist sharing.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon" style="--cat:#D98F1C;--cat-bg:var(--accent-soft)">
+              <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 4h11M6 9h11M9 4c3.5 0 5 2 5 5s-1.5 5-5 5H6l8 7"/>
+              </svg>
+            </div>
+            <h3>Household Expenses (&#8377;)</h3>
+            <p>
+              Fast cash, UPI, and card logging stored in exact integer paise&mdash;with custom or equal family splits, monthly category budgets, and recurring bills.
+            </p>
+          </article>
+
+          <article class="feature-card feature-card-wide">
+            <div class="feature-icon" style="--cat:#B0412A;--cat-bg:var(--danger-soft)">
+              <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 3v7a3 3 0 0 0 6 0V3M7 3v18M15 3v18M15 8h4a2 2 0 0 1 2 2v1a3 3 0 0 1-3 3h-3"/>
+              </svg>
+            </div>
+            <div>
+              <h3>Meal Planning</h3>
+              <p>
+                Plan weekly breakfasts, lunches, and dinners so daily cooking stays calm. Manage a household recipe library with scalable servings and push missing ingredients straight onto your shopping list in a single tap.
+              </p>
+            </div>
+          </article>
+
+          <article class="feature-card feature-card-wide">
+            <div class="feature-icon" style="--cat:#34508A;--cat-bg:var(--info-soft)">
+              <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+            <div>
+              <h3>Staff Attendance &amp; Payroll</h3>
+              <p>
+                Log daily check-ins, check-outs, and leaves for house help. Calculate salaries cleanly from effective-dated monthly or hourly pay rules, advances, and bonuses, then settle transparent pay slips linked directly to expenses.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Illam / Privacy & Architecture -->
+    <section class="section" id="privacy">
+      <div class="container">
+        <div class="privacy-surface">
+          <div class="section-head section-head-light">
+            <p class="section-eyebrow section-eyebrow-warm">WHY ILLAM?</p>
+            <h2 class="section-title">Private by architecture, not just by promise.</h2>
+            <p class="section-lead">
+              Your family&rsquo;s daily life belongs on your devices&mdash;not in someone else&rsquo;s database. Illam is engineered to work completely offline with verifiable cryptography.
+            </p>
+          </div>
+
+          <div class="pillars-grid">
+            <article class="pillar-card">
+              <div class="pillar-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="4" y="11" width="16" height="10" rx="2"/>
+                  <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+                </svg>
+              </div>
+              <h3>100% Local-First</h3>
+              <p>
+                Your household data lives in an encrypted SQLite database (<code>SQLite3MultipleCiphers</code>) sealed with hardware-backed keys in Android Keystore. Every screen works instantaneously in airplane mode.
+              </p>
+            </article>
+
+            <article class="pillar-card">
+              <div class="pillar-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12.55a11 11 0 0 1 14.08 0"/>
+                  <path d="M1.42 9a16 16 0 0 1 21.16 0"/>
+                  <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
+                  <circle cx="12" cy="20" r="1"/>
+                </svg>
+              </div>
+              <h3>Peer-to-Peer Wi-Fi Sync</h3>
+              <p>
+                Pair family phones over your home Wi-Fi using a QR code or passphrase. Devices reconcile edits automatically via deterministic CRDT / Hybrid Logical Clock merge rules over end-to-end encrypted channels.
+              </p>
+            </article>
+
+            <article class="pillar-card">
+              <div class="pillar-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  <path d="M9 12l2 2 4-4"/>
+                </svg>
+              </div>
+              <h3>Portable Encrypted Backups</h3>
+              <p>
+                Create scheduled passphrase-encrypted <code>.nmbak</code> snapshots stored where you decide: phone/USB folders, Google Drive, OneDrive, Dropbox, pCloud, Nextcloud, WebDAV, S3-compatible storage, or SFTP.
+              </p>
+            </article>
+
+            <article class="pillar-card">
+              <div class="pillar-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="9"/>
+                  <path d="M8 12h8M12 8v8"/>
+                </svg>
+              </div>
+              <h3>Zero Bloat &amp; Open Source</h3>
+              <p>
+                No user accounts, no telemetry or ad SDKs, no subscriptions, and Android <code>allowBackup="false"</code> enforced by default. Auditable source code licensed under Apache 2.0.
+              </p>
+            </article>
+          </div>
+
+          <div class="tech-strip" aria-label="Technical stack highlights">
+            <span>Flutter &middot; Material 3</span>
+            <span>Drift + SQLite3MultipleCiphers</span>
+            <span>XChaCha20 &middot; Ed25519 &middot; SPAKE2</span>
+            <span>mDNS Local Discovery</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Installation & Obtainium -->
+    <section class="section" id="install">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-eyebrow">INSTALL ON ANDROID</p>
+          <h2 class="section-title">Start your home in two minutes.</h2>
+          <p class="section-lead">
+            Sideload the signed APK directly from GitHub Releases or subscribe to seamless updates in Obtainium&mdash;every release uses the same verified signing key.
+          </p>
+        </div>
+
+        <div class="install-grid">
+          <div class="install-steps-card">
+            <h3>Direct APK Installation</h3>
+            <ol class="steps-list">
+              <li>
+                <span class="step-num" aria-hidden="true">1</span>
+                <div>
+                  <strong>Download the signed APK</strong>
+                  <p>Grab the latest <code>illam-v*.apk</code> artifact built transparently from source on GitHub Releases.</p>
+                </div>
+              </li>
+              <li>
+                <span class="step-num" aria-hidden="true">2</span>
+                <div>
+                  <strong>Install on your Android phone</strong>
+                  <p>Open the downloaded APK and permit installation when Android prompts for trusted app installs.</p>
+                </div>
+              </li>
+              <li>
+                <span class="step-num" aria-hidden="true">3</span>
+                <div>
+                  <strong>Create a home &amp; pair over Wi-Fi</strong>
+                  <p>Set up your household offline, then invite family members via QR code or pairing phrase on home Wi-Fi.</p>
+                </div>
+              </li>
+            </ol>
+
+            <div class="install-actions">
+              <a
+                class="btn btn-primary"
+                href="https://github.com/pvkarthikk/illam-app/releases/latest"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Download Latest APK
+              </a>
+              <span class="app-id-tag">ID: <code>io.github.pvkarthikk.illam</code></span>
+            </div>
+          </div>
+
+          <div class="obtainium-card">
+            <div class="obtainium-badge">Recommended for Updates</div>
+            <h3>Subscribe with Obtainium</h3>
+            <p>
+              Prefer automatic update notifications straight from GitHub Releases without using an app store account? Add Illam&rsquo;s repository URL in <strong>Obtainium</strong>:
+            </p>
+
+            <div class="copy-box">
+              <code id="obtainium-url">https://github.com/pvkarthikk/illam-app</code>
+              <button
+                type="button"
+                class="btn btn-tonal btn-sm"
+                id="copy-url-btn"
+                data-copy-url="https://github.com/pvkarthikk/illam-app"
+              >
+                Copy URL
+              </button>
+            </div>
+            <p class="copy-status" id="copy-status" aria-live="polite"></p>
+
+            <ol class="obtainium-mini-steps">
+              <li>Open <strong>Obtainium</strong> &rarr; tap <strong>Add App</strong>.</li>
+              <li>Paste <code>https://github.com/pvkarthikk/illam-app</code> and tap <strong>Add</strong>.</li>
+              <li>Obtainium will track and verify signed releases from this repository.</li>
+            </ol>
+
+            <div class="obtainium-links">
+              <a
+                href="https://github.com/ImranR98/Obtainium"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                About Obtainium &nearr;
+              </a>
+              <a
+                href="https://github.com/pvkarthikk/illam-app/releases"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                All Releases &nearr;
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="docs">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="brand">
+            <img class="brand-logo" src="./assets/icon-192.png" alt="Illam app icon" width="40" height="40">
+            <span class="brand-text">
+              <span class="brand-name">Illam</span>
+              <span class="brand-sub" lang="ta">இல்லம்</span>
+            </span>
+          </div>
+          <p>
+            Open-source, offline-first household management for families. Designed with warm calm and built to stay yours forever.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Documentation</h4>
+          <ul>
+            <li><a href="./store/privacy-policy.md" data-doc-link data-doc-title="Privacy Policy">Privacy Policy</a></li>
+            <li><a href="./store/data-safety.md" data-doc-link data-doc-title="Google Play Data Safety Notes">Google Play Data Safety Notes</a></li>
+            <li><a href="./store/data-deletion.md" data-doc-link data-doc-title="Data Deletion Guide">Data Deletion Guide</a></li>
+            <li><a href="./designs/nest_mojo_flat_v1.md" data-doc-link data-doc-title="Design Document (v1)">Design Document (v1)</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Project &amp; Source</h4>
+          <ul>
+            <li><a href="https://github.com/pvkarthikk/illam-app" target="_blank" rel="noopener noreferrer">GitHub Repository</a></li>
+            <li><a href="https://github.com/pvkarthikk/illam-app/releases/latest" target="_blank" rel="noopener noreferrer">Latest APK Release</a></li>
+            <li><a href="https://github.com/pvkarthikk/illam-app/issues" target="_blank" rel="noopener noreferrer">Issue Tracker</a></li>
+            <li><a href="https://github.com/pvkarthikk/illam-app/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">Apache 2.0 License</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>Licensed under the <strong>Apache License, Version 2.0</strong>.</p>
+        <p>Android Application ID: <code>io.github.pvkarthikk.illam</code></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Progressive Enhancement Markdown Reader Dialog -->
+  <dialog class="doc-modal" id="doc-modal" aria-labelledby="doc-modal-title">
+    <div class="doc-modal-shell">
+      <div class="doc-modal-header">
+        <h3 id="doc-modal-title">Document</h3>
+        <div class="doc-modal-header-actions">
+          <a id="doc-modal-raw" href="./store/privacy-policy.md" target="_blank" rel="noopener noreferrer" class="doc-modal-raw-link">Raw .md &nearr;</a>
+          <a id="doc-modal-gh" href="https://github.com/pvkarthikk/illam-app" target="_blank" rel="noopener noreferrer" class="doc-modal-raw-link">GitHub &nearr;</a>
+          <button type="button" class="icon-btn" id="doc-modal-close" aria-label="Close document preview">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M6 6l12 12M18 6L6 18"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="doc-modal-body" id="doc-modal-body"></div>
+    </div>
+  </dialog>
+</body>
+</html>
