@@ -4576,6 +4576,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get backupPwMismatch => 'The two passwords don’t match.';
 
   @override
+  String get backupPwMissing =>
+      'Nothing is backed up yet. Set a backup password to start.';
+
+  @override
   String backupStatusOk(Object ago) {
     return 'Backed up $ago';
   }

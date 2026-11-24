@@ -25,6 +25,7 @@ class RecipeScreen extends ConsumerStatefulWidget {
 
 class _RecipeScreenState extends ConsumerState<RecipeScreen> {
   int? _servings;
+  final Map<String, bool> _pantryOverride = {};
 
   Future<void> _deleteRecipe(AppLocalizations l10n, RecipeView recipe) async {
     final today = ref.read(todayDateProvider);
@@ -81,6 +82,15 @@ class _RecipeScreenState extends ConsumerState<RecipeScreen> {
     final recipeAsync = ref.watch(recipeProvider(widget.id));
     final openKeys = ref.watch(openGroceryKeysProvider).value ?? const <String>{};
     final pantryKeys = ref.watch(pantryKeysProvider).value ?? const <String>{};
+    _pantryOverride.removeWhere((k, v) => pantryKeys.contains(k) == v);
+    final shownPantry = <String>{
+      ...pantryKeys,
+      for (final e in _pantryOverride.entries)
+        if (e.value) e.key,
+    };
+    for (final e in _pantryOverride.entries) {
+      if (!e.value) shownPantry.remove(e.key);
+    }
 
     final recipe = recipeAsync.value;
     if (recipeAsync.isLoading && recipe == null) {
@@ -113,7 +123,7 @@ class _RecipeScreenState extends ConsumerState<RecipeScreen> {
       recipe.toPlanned(),
       servings,
       openKeys,
-      pantryKeys,
+      shownPantry,
     );
 
     return Scaffold(
@@ -202,28 +212,44 @@ class _RecipeScreenState extends ConsumerState<RecipeScreen> {
                       state: ingredientState(
                         recipe.ingredients[idx].nameKey,
                         openKeys,
-                        pantryKeys,
+                        shownPantry,
                       ),
                       onTap: () async {
                         final ing = recipe.ingredients[idx];
                         final st = ingredientState(
                           ing.nameKey,
                           openKeys,
-                          pantryKeys,
+                          shownPantry,
                         );
                         final newHave = st != IngredientState.have;
-                        final res = await ref
-                            .read(mealsRepoProvider)
-                            .setPantry(ing.name, ing.nameKey, newHave);
-                        if (!context.mounted) return;
-                        ref
-                            .read(snackbarProvider)
-                            .show(
-                              newHave
-                                  ? l10n.recipeMarkedHave(ing.name)
-                                  : l10n.recipeMarkedMissing(ing.name),
-                              undo: res.undo,
+                        final repo = ref.read(mealsRepoProvider);
+                        final snack = ref.read(snackbarProvider);
+                        final msg = newHave
+                            ? l10n.recipeMarkedHave(ing.name)
+                            : l10n.recipeMarkedMissing(ing.name);
+                        setState(() => _pantryOverride[ing.nameKey] = newHave);
+                        try {
+                          final res = await repo.setPantry(
+                            ing.name,
+                            ing.nameKey,
+                            newHave,
+                          );
+                          if (res.undo != null) {
+                            snack.show(msg, undo: res.undo);
+                          } else if (mounted &&
+                              _pantryOverride[ing.nameKey] == newHave) {
+                            setState(
+                              () => _pantryOverride.remove(ing.nameKey),
                             );
+                          }
+                        } on Object {
+                          if (mounted &&
+                              _pantryOverride[ing.nameKey] == newHave) {
+                            setState(
+                              () => _pantryOverride.remove(ing.nameKey),
+                            );
+                          }
+                        }
                       },
                     ),
                   ],

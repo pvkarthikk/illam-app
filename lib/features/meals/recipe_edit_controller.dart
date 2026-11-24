@@ -98,6 +98,7 @@ class RecipeEditController extends Notifier<RecipeEditState> {
     state = state.copyWith(
       draft: state.draft.copyWith(ingredients: list),
       dirty: true,
+      errors: const {},
     );
   }
 
@@ -109,6 +110,7 @@ class RecipeEditController extends Notifier<RecipeEditState> {
     state = state.copyWith(
       draft: state.draft.copyWith(ingredients: list),
       dirty: true,
+      errors: const {},
     );
   }
 
@@ -125,6 +127,7 @@ class RecipeEditController extends Notifier<RecipeEditState> {
     state = state.copyWith(
       draft: state.draft.copyWith(steps: list),
       dirty: true,
+      errors: const {},
     );
   }
 
@@ -136,7 +139,14 @@ class RecipeEditController extends Notifier<RecipeEditState> {
     state = state.copyWith(
       draft: state.draft.copyWith(steps: list),
       dirty: true,
+      errors: const {},
     );
+  }
+
+  void markDirty() {
+    if (!state.dirty) {
+      state = state.copyWith(dirty: true);
+    }
   }
 
   void markClean() {

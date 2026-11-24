@@ -13,6 +13,7 @@ import 'package:nm_flat/core/backup/recovery_kits.dart';
 import 'package:nm_flat/core/backup/snapshot.dart';
 import 'package:nm_flat/core/crypto/device_keys.dart';
 import 'package:nm_flat/core/crypto/home_key_ring.dart';
+import 'package:nm_flat/core/crypto/sign_worker.dart';
 import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/data/ops/change_writer.dart';
 import 'package:nm_flat/core/data/ops/collection_registry.dart';
@@ -169,9 +170,12 @@ final secureStoreProvider = Provider<SecureStore>(
 final deviceKeysProvider = FutureProvider<DeviceKeys>(
   (ref) => DeviceKeys.ensure(ref.watch(secureStoreProvider)),
 );
-final opSignerProvider = Provider(
-  (ref) => OpSigner(ref.watch(deviceKeysProvider.future)),
-);
+final opSignerProvider = Provider((ref) {
+  final keys = ref.watch(deviceKeysProvider.future);
+  final worker = SignWorker(keys);
+  ref.onDispose(worker.dispose);
+  return OpSigner(keys, worker: worker);
+});
 final controlStoreProvider = Provider<ControlStore>((ref) {
   final store = ControlStore(
     ref.watch(secureStoreProvider),

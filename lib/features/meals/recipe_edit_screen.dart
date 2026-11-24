@@ -169,9 +169,46 @@ class _RecipeEditScreenState extends ConsumerState<RecipeEditScreen> {
     }
   }
 
+  RecipeDraft _draftFromFields(RecipeDraft draft) {
+    final time = int.tryParse(_timeCtrl.text.trim());
+    final serves = int.tryParse(_servesCtrl.text.trim());
+    final tags = [
+      for (final part in _tagsCtrl.text.split(','))
+        if (part.trim().isNotEmpty) part.trim(),
+    ];
+    final ingredients = [
+      for (var i = 0; i < draft.ingredients.length; i++)
+        draft.ingredients[i].copyWith(
+          name: i < _ingRows.length
+              ? _ingRows[i].nameCtrl.text
+              : draft.ingredients[i].name,
+          qtyText: i < _ingRows.length
+              ? _ingRows[i].qtyCtrl.text
+              : draft.ingredients[i].qtyText,
+        ),
+    ];
+    final steps = [
+      for (var i = 0; i < draft.steps.length; i++)
+        i < _stepRows.length ? _stepRows[i].textCtrl.text : draft.steps[i],
+    ];
+    return draft.copyWith(
+      name: _nameCtrl.text,
+      timeMin: time,
+      clearTimeMin: time == null,
+      serves: serves,
+      clearServes: serves == null,
+      tags: tags,
+      ingredients: ingredients,
+      steps: steps,
+    );
+  }
+
   Future<void> _save(AppLocalizations l10n) async {
     if (_saving) return;
     final ctrl = ref.read(recipeEditControllerProvider(widget.id).notifier);
+    ctrl.update(
+      _draftFromFields(ref.read(recipeEditControllerProvider(widget.id)).draft),
+    );
     final errors = ctrl.validate();
     if (errors.isNotEmpty) {
       _focusFirstError(errors);
@@ -284,7 +321,7 @@ class _RecipeEditScreenState extends ConsumerState<RecipeEditScreen> {
                 focusNode: _nameFocus,
                 maxLength: 60,
                 textCapitalization: TextCapitalization.sentences,
-                onChanged: (v) => ctrl.update(draft.copyWith(name: v)),
+                onChanged: (_) => ctrl.markDirty(),
                 decoration: InputDecoration(
                   labelText: l10n.recipeFieldName,
                   counterText: '',
@@ -300,15 +337,7 @@ class _RecipeEditScreenState extends ConsumerState<RecipeEditScreen> {
                       controller: _timeCtrl,
                       focusNode: _timeFocus,
                       keyboardType: TextInputType.number,
-                      onChanged: (v) {
-                        final parsed = int.tryParse(v.trim());
-                        ctrl.update(
-                          draft.copyWith(
-                            timeMin: parsed,
-                            clearTimeMin: parsed == null,
-                          ),
-                        );
-                      },
+                      onChanged: (_) => ctrl.markDirty(),
                       decoration: InputDecoration(
                         labelText: l10n.recipeFieldTime,
                         errorText: _errText(l10n, errors['time']),
@@ -321,15 +350,7 @@ class _RecipeEditScreenState extends ConsumerState<RecipeEditScreen> {
                       controller: _servesCtrl,
                       focusNode: _servesFocus,
                       keyboardType: TextInputType.number,
-                      onChanged: (v) {
-                        final parsed = int.tryParse(v.trim());
-                        ctrl.update(
-                          draft.copyWith(
-                            serves: parsed,
-                            clearServes: parsed == null,
-                          ),
-                        );
-                      },
+                      onChanged: (_) => ctrl.markDirty(),
                       decoration: InputDecoration(
                         labelText: l10n.recipeFieldServes,
                         errorText: _errText(l10n, errors['serves']),
@@ -341,13 +362,7 @@ class _RecipeEditScreenState extends ConsumerState<RecipeEditScreen> {
               const SizedBox(height: 12),
               TextField(
                 controller: _tagsCtrl,
-                onChanged: (v) {
-                  final list = [
-                    for (final part in v.split(','))
-                      if (part.trim().isNotEmpty) part.trim(),
-                  ];
-                  ctrl.update(draft.copyWith(tags: list));
-                },
+                onChanged: (_) => ctrl.markDirty(),
                 decoration: InputDecoration(
                   labelText: l10n.recipeFieldTags,
                   hintText: l10n.recipeTagsHint,
@@ -483,13 +498,7 @@ class _RecipeEditScreenState extends ConsumerState<RecipeEditScreen> {
                   controller: rowCtrls.nameCtrl,
                   focusNode: rowCtrls.nameFocus,
                   textCapitalization: TextCapitalization.sentences,
-                  onChanged: (v) {
-                    final list = [
-                      for (final x in draft.ingredients) x.copyWith(),
-                    ];
-                    list[i].name = v;
-                    ctrl.update(draft.copyWith(ingredients: list));
-                  },
+                  onChanged: (_) => ctrl.markDirty(),
                   decoration: InputDecoration(
                     labelText: l10n.recipeIngName,
                     errorText: _errText(l10n, errors['ingName.$i']),
@@ -504,13 +513,7 @@ class _RecipeEditScreenState extends ConsumerState<RecipeEditScreen> {
                   keyboardType: const TextInputType.numberWithOptions(
                     decimal: true,
                   ),
-                  onChanged: (v) {
-                    final list = [
-                      for (final x in draft.ingredients) x.copyWith(),
-                    ];
-                    list[i].qtyText = v;
-                    ctrl.update(draft.copyWith(ingredients: list));
-                  },
+                  onChanged: (_) => ctrl.markDirty(),
                   decoration: InputDecoration(
                     labelText: l10n.recipeIngQty,
                     errorText: _errText(l10n, errors['ingQty.$i']),
@@ -601,11 +604,7 @@ class _RecipeEditScreenState extends ConsumerState<RecipeEditScreen> {
             minLines: 2,
             maxLines: 5,
             textCapitalization: TextCapitalization.sentences,
-            onChanged: (v) {
-              final list = [...draft.steps];
-              list[i] = v;
-              ctrl.update(draft.copyWith(steps: list));
-            },
+            onChanged: (_) => ctrl.markDirty(),
             decoration: InputDecoration(
               labelText: l10n.recipeStepLabel(i + 1),
               errorText: _errText(l10n, errors['step.$i']),

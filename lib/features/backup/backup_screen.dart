@@ -5,6 +5,7 @@ import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/features/backup/backup_controller.dart';
 import 'package:nm_flat/features/backup/backup_more_parts.dart';
+import 'package:nm_flat/features/backup/backup_password_sheet.dart';
 import 'package:nm_flat/features/backup/backup_setup_parts.dart';
 import 'package:nm_flat/features/backup/backup_status_parts.dart';
 import 'package:nm_flat/features/backup/backup_texts.dart';
@@ -57,6 +58,31 @@ class BackupScreen extends ConsumerWidget {
           final hasDestinations =
               config != null && config.destinations.isNotEmpty;
           if (hasDestinations) {
+            final pw = config.password;
+            if (pw == null || pw.isEmpty) {
+              return ListView(
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
+                children: [
+                  AlertLine(
+                    icon: Icons.warning_amber_rounded,
+                    danger: true,
+                    text: l.backupPwMissing,
+                  ),
+                  const SizedBox(height: 12),
+                  NestButton(
+                    label: l.backupPwTitle,
+                    size: NestButtonSize.block,
+                    onPressed: () => showBackupPasswordSheet(context, ref),
+                  ),
+                  const SizedBox(height: 20),
+                  BackupPlacesSection(
+                    homeId: homeId,
+                    homeName: homeName,
+                    config: config,
+                  ),
+                ],
+              );
+            }
             return ListView(
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
               children: [

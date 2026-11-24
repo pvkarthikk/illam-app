@@ -47,7 +47,9 @@ DayCell cellFor({
     );
   }
   if (visits.isNotEmpty) {
-    final minutes = liveMinutes(visits, nowMs);
+    final minutes = isToday
+        ? liveMinutes(visits, nowMs)
+        : mergedMinutes(visits);
     final intensity = min(1.0, 0.25 + minutes / 240);
     return DayCell(date, CellKind.worked, minutes, intensity, isToday);
   }

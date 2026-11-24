@@ -24,8 +24,15 @@ class RestorePickScreen extends ConsumerStatefulWidget {
 class _RestorePickScreenState extends ConsumerState<RestorePickScreen> {
   bool _keepBackingUp = true;
   bool _deadSheetShown = false;
+  bool _unlocking = false;
 
-  void _back() => context.go(Routes.onboardingStep('restore'));
+  Future<void> _back() async {
+    if (ref.read(restoreControllerProvider).outcome ==
+        RestoreOutcome.deadKit) {
+      await ref.read(restoreControllerProvider.notifier).removeDeadRestore();
+    }
+    if (mounted) context.go(Routes.onboardingStep('restore'));
+  }
 
   Future<void> _showUnlockSheet() async {
     final ctrl = TextEditingController();
@@ -109,17 +116,21 @@ class _RestorePickScreenState extends ConsumerState<RestorePickScreen> {
                               unlocking = true;
                               wrongPw = false;
                             });
+                            if (mounted) setState(() => _unlocking = true);
                             final ok = await ref
                                 .read(restoreControllerProvider.notifier)
                                 .unlock(ctrl.text);
-                            if (!ctx.mounted) return;
-                            if (ok) {
-                              Navigator.of(ctx).pop();
+                            if (mounted) setState(() => _unlocking = false);
+                            if (ok && mounted) {
                               unawaited(
                                 ref
                                     .read(restoreControllerProvider.notifier)
                                     .runRestore(),
                               );
+                            }
+                            if (!ctx.mounted) return;
+                            if (ok) {
+                              Navigator.of(ctx).pop();
                             } else if (ref
                                     .read(restoreControllerProvider)
                                     .error !=
@@ -469,7 +480,9 @@ class _RestorePickScreenState extends ConsumerState<RestorePickScreen> {
               label: l.restoreUnlockTitle,
               kind: NestButtonKind.primary,
               size: NestButtonSize.block,
-              onPressed: ui.selected == null ? null : _showUnlockSheet,
+              onPressed: ui.selected == null || _unlocking
+                  ? null
+                  : _showUnlockSheet,
             ),
           ],
         ],
@@ -479,7 +492,7 @@ class _RestorePickScreenState extends ConsumerState<RestorePickScreen> {
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, _) {
-        if (!didPop) _back();
+        if (!didPop) unawaited(_back());
       },
       child: Scaffold(
         appBar: AppBar(

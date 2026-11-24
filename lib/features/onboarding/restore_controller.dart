@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui' show Locale;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -115,17 +116,28 @@ class RestoreController extends Notifier<RestoreUi> {
     try {
       final dest = await destinationFor(destCfg, ref.read(secureStoreProvider));
       final files = await dest.list();
-      final entries = <FoundBackup>[];
-      for (final f in files) {
+      Future<FoundBackup?> readOne(RemoteBackupFile f) async {
         try {
           final head = await dest.readHead(f.name, maxHeaderLength);
           final parsed = parseHeader(
             head,
             fileLength: f.size > 0 ? f.size : null,
           );
-          entries.add(FoundBackup(f, parsed.header));
+          return FoundBackup(f, parsed.header);
         } on Object {
           // Skip non-backups, newer formats, or unreadable headers.
+          return null;
+        }
+      }
+
+      final entries = <FoundBackup>[];
+      for (var i = 0; i < files.length; i += 4) {
+        final end = i + 4 < files.length ? i + 4 : files.length;
+        final batch = await Future.wait([
+          for (var j = i; j < end; j++) readOne(files[j]),
+        ]);
+        for (final entry in batch) {
+          if (entry != null) entries.add(entry);
         }
       }
       entries.sort((a, b) => b.header.createdAt.compareTo(a.header.createdAt));
@@ -215,6 +227,12 @@ class RestoreController extends Notifier<RestoreUi> {
           }
         }
         deadAtMs ??= ref.read(clockProvider).nowMs;
+        await ref
+            .read(prefsProvider)
+            .setText(
+              'recoverDead_${snap.homeId}',
+              jsonEncode({'reason': 'deadKit', 'at': deadAtMs}),
+            );
       }
 
       state = state.copyWith(

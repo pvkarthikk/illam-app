@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'package:nm_flat/core/data/db/database.dart';
+import 'package:nm_flat/core/data/ops/undo.dart';
+import 'package:nm_flat/core/data/repo/lists_repo.dart';
 import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/domain/channels.dart';
 import 'package:nm_flat/core/domain/list_groups.dart';
@@ -131,6 +135,7 @@ class ChannelGroupCard extends ConsumerWidget {
             for (final g in groups)
               if (byId[g.survivor.id] case final survivor?)
                 _GroupItemRow(
+                  key: ValueKey(survivor.id),
                   group: g,
                   survivor: survivor,
                   onOpenItem: onOpenItem,
@@ -144,35 +149,10 @@ class ChannelGroupCard extends ConsumerWidget {
           ],
           if (doneRows.isNotEmpty) ...[
             const SizedBox(height: 8),
-            Container(
-              padding: const EdgeInsets.only(top: 12),
-              decoration: BoxDecoration(
-                border: Border(top: BorderSide(color: c.line)),
-              ),
-              child: Row(
-                children: [
-                  Icon(Icons.check_rounded, size: 18, color: c.primary),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      l10n.listsGotFooter(doneNames.join(', ')),
-                      style: NestText.meta13.copyWith(color: c.ink2),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  TextButton(
-                    onPressed: () async {
-                      final (res, count) = await ref
-                          .read(listsRepoProvider)
-                          .clearChannel(list, channel);
-                      ref
-                          .read(snackbarProvider)
-                          .show(l10n.listsCleared(count), undo: res.undo);
-                    },
-                    child: Text(l10n.listsClear),
-                  ),
-                ],
-              ),
+            _BoughtFooter(
+              list: list,
+              channel: channel,
+              names: doneNames.join(', '),
             ),
           ],
         ],
@@ -181,8 +161,82 @@ class ChannelGroupCard extends ConsumerWidget {
   }
 }
 
-class _GroupItemRow extends ConsumerWidget {
+class _BoughtFooter extends ConsumerStatefulWidget {
+  const _BoughtFooter({
+    required this.list,
+    required this.channel,
+    required this.names,
+  });
+
+  final String list;
+  final String channel;
+  final String names;
+
+  @override
+  ConsumerState<_BoughtFooter> createState() => _BoughtFooterState();
+}
+
+class _BoughtFooterState extends ConsumerState<_BoughtFooter> {
+  bool _clearing = false;
+
+  @override
+  void didUpdateWidget(covariant _BoughtFooter oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.names != widget.names) {
+      _clearing = false;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_clearing) return const SizedBox.shrink();
+    final l10n = AppLocalizations.of(context);
+    final c = context.nest;
+    return Container(
+      padding: const EdgeInsets.only(top: 12),
+      decoration: BoxDecoration(
+        border: Border(top: BorderSide(color: c.line)),
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.check_rounded, size: 18, color: c.primary),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              l10n.listsGotFooter(widget.names),
+              style: NestText.meta13.copyWith(color: c.ink2),
+            ),
+          ),
+          const SizedBox(width: 8),
+          TextButton(
+            onPressed: () async {
+              if (_clearing) return;
+              final snack = ref.read(snackbarProvider);
+              final repo = ref.read(listsRepoProvider);
+              final list = widget.list;
+              final channel = widget.channel;
+              setState(() => _clearing = true);
+              try {
+                final (res, count) = await repo.clearChannel(list, channel);
+                snack.show(l10n.listsCleared(count), undo: res.undo);
+                if (res.undo == null && mounted) {
+                  setState(() => _clearing = false);
+                }
+              } on Object {
+                if (mounted) setState(() => _clearing = false);
+              }
+            },
+            child: Text(l10n.listsClear),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _GroupItemRow extends ConsumerStatefulWidget {
   const _GroupItemRow({
+    super.key,
     required this.group,
     required this.survivor,
     required this.onOpenItem,
@@ -193,11 +247,84 @@ class _GroupItemRow extends ConsumerWidget {
   final ValueChanged<ItemGroup> onOpenItem;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_GroupItemRow> createState() => _GroupItemRowState();
+}
+
+class _GroupItemRowState extends ConsumerState<_GroupItemRow> {
+  bool _ticking = false;
+  int _pendingMilli = 0;
+  int _sentMilli = 0;
+  Timer? _timer;
+  late final ListsRepo _repo;
+
+  @override
+  void initState() {
+    super.initState();
+    _repo = ref.read(listsRepoProvider);
+  }
+
+  @override
+  void didUpdateWidget(covariant _GroupItemRow oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.group.totalMilli != widget.group.totalMilli) {
+      _sentMilli = 0;
+    }
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    if (_pendingMilli != 0) {
+      _writeDelta(_pendingMilli).ignore();
+    }
+    super.dispose();
+  }
+
+  Future<ChangeResult> _writeDelta(int delta) => delta > 0
+      ? _repo.stepQty(widget.survivor.id, delta)
+      : _repo.takeFromGroup(widget.group.ids, -delta);
+
+  void _restartTimer() {
+    _timer?.cancel();
+    _timer = Timer(const Duration(milliseconds: 400), _flush);
+  }
+
+  void _nudge(int delta) {
+    setState(() => _pendingMilli += delta);
+    _restartTimer();
+  }
+
+  Future<void> _flush() async {
+    if (_sentMilli != 0) {
+      _restartTimer();
+      return;
+    }
+    if (_pendingMilli == 0) return;
+    final delta = _pendingMilli;
+    _pendingMilli = 0;
+    _sentMilli = delta;
+    try {
+      final res = await _writeDelta(delta);
+      if (res.undo == null && mounted) {
+        setState(() => _sentMilli = 0);
+      }
+    } on Object {
+      if (mounted) setState(() => _sentMilli = 0);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final c = context.nest;
+    final group = widget.group;
+    final survivor = widget.survivor;
     final step = stepMilli(survivor.unit);
-    final shownMilli = group.checkQty ? step : group.totalMilli;
+    final displayedMilli = group.totalMilli + _pendingMilli + _sentMilli;
+    final shownMilli =
+        group.checkQty && _pendingMilli == 0 && _sentMilli == 0
+        ? step
+        : displayedMilli;
 
     return ConstrainedBox(
       constraints: const BoxConstraints(minHeight: 56),
@@ -206,20 +333,29 @@ class _GroupItemRow extends ConsumerWidget {
         child: Row(
           children: [
             NestCheckbox(
-              value: false,
+              value: _ticking,
               semanticLabel: l10n.listsGotSemantics(survivor.name),
               onChanged: (_) async {
-                final res = await ref
-                    .read(listsRepoProvider)
-                    .tickGroup(group.ids, true);
-                ref
-                    .read(snackbarProvider)
-                    .show(l10n.listsGot(survivor.name), undo: res.undo);
+                if (_ticking) return;
+                final snack = ref.read(snackbarProvider);
+                final repo = ref.read(listsRepoProvider);
+                final ids = group.ids;
+                final msg = l10n.listsGot(survivor.name);
+                setState(() => _ticking = true);
+                try {
+                  final res = await repo.tickGroup(ids, true);
+                  snack.show(msg, undo: res.undo);
+                  if (res.undo == null && mounted) {
+                    setState(() => _ticking = false);
+                  }
+                } on Object {
+                  if (mounted) setState(() => _ticking = false);
+                }
               },
             ),
             Expanded(
               child: InkWell(
-                onTap: () => onOpenItem(group),
+                onTap: () => widget.onOpenItem(group),
                 borderRadius: BorderRadius.circular(8),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
@@ -255,13 +391,8 @@ class _GroupItemRow extends ConsumerWidget {
               semanticLabel: survivor.name,
               minusTooltip: l10n.listsLess,
               plusTooltip: l10n.listsMore,
-              onMinus: group.totalMilli <= step
-                  ? null
-                  : () => ref
-                        .read(listsRepoProvider)
-                        .takeFromGroup(group.ids, step),
-              onPlus: () =>
-                  ref.read(listsRepoProvider).stepQty(survivor.id, step),
+              onMinus: displayedMilli <= step ? null : () => _nudge(-step),
+              onPlus: () => _nudge(step),
             ),
           ],
         ),

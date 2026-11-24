@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:nm_flat/core/data/repo/expenses_repo.dart';
@@ -163,6 +165,7 @@ class QuickAddController extends Notifier<QuickAddState> {
     if (trimmed.isEmpty) return QaOutcome.stayOpen;
 
     state = state.copyWith(busy: true);
+    var added = false;
     try {
       final today = Dates.today(ref.read(clockProvider));
       switch (state.type) {
@@ -174,14 +177,6 @@ class QuickAddController extends Notifier<QuickAddState> {
           ];
           final parsed = parseTodo(trimmed, today: today, people: people);
           final title = parsed.title.isEmpty ? trimmed : parsed.title;
-          final res = await ref
-              .read(tasksRepoProvider)
-              .createTodo(
-                title: title,
-                due: parsed.due,
-                assigneeType: parsed.assignee?.type ?? 'member',
-                assignee: parsed.assignee?.id ?? ref.read(myMemberIdProvider),
-              );
           final tomorrow = Dates.addDays(today, 1);
           final msg = parsed.due == today
               ? l10n.qaTodoAddedToday
@@ -190,7 +185,20 @@ class QuickAddController extends Notifier<QuickAddState> {
                     : l10n.qaTodoAddedOn(
                         Formatters.dayLabel(parsed.due, today, l10n),
                       ));
-          ref.read(snackbarProvider).show(msg, undo: res.undo);
+          final snack = ref.read(snackbarProvider);
+          unawaited(
+            ref
+                .read(tasksRepoProvider)
+                .createTodo(
+                  title: title,
+                  due: parsed.due,
+                  assigneeType: parsed.assignee?.type ?? 'member',
+                  assignee: parsed.assignee?.id ?? ref.read(myMemberIdProvider),
+                )
+                .then((res) => snack.show(msg, undo: res.undo))
+                .catchError((Object _) => snack.show(rejectText('other'))),
+          );
+          added = true;
           return QaOutcome.added;
 
         case QaType.grocery:
@@ -200,29 +208,38 @@ class QuickAddController extends Notifier<QuickAddState> {
               ref.read(prefsProvider).currentHomeId;
           if (homeId == null || homeId.isEmpty) return QaOutcome.stayOpen;
           final list = state.type == QaType.shopping ? 'shopping' : 'grocery';
-          final outcome = await ref
-              .read(listsRepoProvider)
-              .addItem(
-                homeId: homeId,
-                list: list,
-                text: trimmed,
-                source: 'quickAdd',
-              );
           final sb = ref.read(snackbarProvider);
-          switch (outcome.kind) {
-            case AddKind.added:
-              sb.show(
-                l10n.listsAdded(outcome.name, channelName(l10n, outcome.channel)),
-                undo: outcome.undo,
-              );
-            case AddKind.merged:
-              sb.show(
-                l10n.listsMerged(outcome.name, outcome.qtyText),
-                undo: outcome.undo,
-              );
-            case AddKind.incompatible:
-              sb.show(l10n.listsAlready(outcome.name, outcome.qtyText));
-          }
+          unawaited(
+            ref
+                .read(listsRepoProvider)
+                .addItem(
+                  homeId: homeId,
+                  list: list,
+                  text: trimmed,
+                  source: 'quickAdd',
+                )
+                .then((outcome) {
+                  switch (outcome.kind) {
+                    case AddKind.added:
+                      sb.show(
+                        l10n.listsAdded(
+                          outcome.name,
+                          channelName(l10n, outcome.channel),
+                        ),
+                        undo: outcome.undo,
+                      );
+                    case AddKind.merged:
+                      sb.show(
+                        l10n.listsMerged(outcome.name, outcome.qtyText),
+                        undo: outcome.undo,
+                      );
+                    case AddKind.incompatible:
+                      sb.show(l10n.listsAlready(outcome.name, outcome.qtyText));
+                  }
+                })
+                .catchError((Object _) => sb.show(rejectText('other'))),
+          );
+          added = true;
           return QaOutcome.added;
 
         case QaType.spend:
@@ -250,28 +267,29 @@ class QuickAddController extends Notifier<QuickAddState> {
               return QaOutcome.stayOpen;
             }
           }
-          final res = await ref
-              .read(moneyRepoProvider)
-              .addSpend(
-                NewExpense(
-                  amountPaise: parsed.amountPaise,
-                  merchant: parsed.merchant,
-                  category: parsed.category,
-                  method: 'upi',
-                  date: today,
-                  source: 'manual',
-                ),
-              );
-          ref
-              .read(snackbarProvider)
-              .show(
-                l10n.qaSpendAdded(Money.format(parsed.amountPaise)),
-                undo: res.undo,
-              );
+          final snack = ref.read(snackbarProvider);
+          final msg = l10n.qaSpendAdded(Money.format(parsed.amountPaise));
+          unawaited(
+            ref
+                .read(moneyRepoProvider)
+                .addSpend(
+                  NewExpense(
+                    amountPaise: parsed.amountPaise,
+                    merchant: parsed.merchant,
+                    category: parsed.category,
+                    method: 'upi',
+                    date: today,
+                    source: 'manual',
+                  ),
+                )
+                .then((res) => snack.show(msg, undo: res.undo))
+                .catchError((Object _) => snack.show(rejectText('other'))),
+          );
+          added = true;
           return QaOutcome.added;
       }
     } finally {
-      state = state.copyWith(busy: false);
+      if (!added) state = state.copyWith(busy: false);
     }
   }
 }

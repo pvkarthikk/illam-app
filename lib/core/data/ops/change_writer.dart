@@ -48,6 +48,7 @@ class ChangeBuilder {
     final newId = id ?? Ids.newId();
     set(tbl, newId, 'deleted', false);
     for (final entry in fields.entries) {
+      if (id == null && entry.value == null) continue;
       set(tbl, newId, entry.key, entry.value);
     }
     return newId;
@@ -190,10 +191,7 @@ class ChangeWriter {
           }
         }
 
-        final signed = <OpRecord>[];
-        for (final rec in recs) {
-          signed.add(_signer != null ? await _signer.sign(rec) : rec);
-        }
+        final signed = _signer != null ? await _signer.signAll(recs) : recs;
         await _applier.applyLocal(signed);
       });
     } on ChangeRejected catch (e) {

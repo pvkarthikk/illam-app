@@ -5,7 +5,6 @@ import 'package:material_ui/material_ui.dart';
 import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/domain/merchant_key.dart';
-import 'package:nm_flat/core/domain/money_math.dart';
 import 'package:nm_flat/core/domain/spend_category.dart';
 import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/providers.dart';
@@ -195,13 +194,16 @@ class _SpendSheetState extends ConsumerState<SpendSheet> {
   ) async {
     if (_saving) return;
     setState(() => _saving = true);
+    var closed = false;
     try {
       final ctrl = ref.read(spendSheetControllerProvider.notifier);
-      final (kind, res) = await ctrl.save(
-        amountText: _amountCtrl.text,
-        merchant: _merchantCtrl.text,
+      final amountText = _amountCtrl.text;
+      final merchantText = _merchantCtrl.text;
+      final noteText = _noteCtrl.text;
+      final kind = await ctrl.check(
+        amountText: amountText,
+        merchant: merchantText,
         rules: rules,
-        note: _noteCtrl.text,
       );
       if (!mounted) return;
       final state = ref.read(spendSheetControllerProvider);
@@ -221,8 +223,8 @@ class _SpendSheetState extends ConsumerState<SpendSheet> {
         case SpendSaveKind.addedBill:
         case SpendSaveKind.learned:
         case SpendSaveKind.updated:
-          final paise = Money.parseRupees(_amountCtrl.text) ?? 0;
-          final merchant = _merchantCtrl.text.trim();
+          final paise = Money.parseRupees(amountText) ?? 0;
+          final merchant = merchantText.trim();
           final msg = switch (kind) {
             SpendSaveKind.added => l10n.moneyAdded(Money.format(paise)),
             SpendSaveKind.addedBill => l10n.moneyAddedBill(
@@ -236,11 +238,23 @@ class _SpendSheetState extends ConsumerState<SpendSheet> {
             SpendSaveKind.updated => l10n.moneySpendUpdated,
             _ => '',
           };
+          final snack = ref.read(snackbarProvider);
+          closed = true;
           Navigator.of(context).pop();
-          ref.read(snackbarProvider).show(msg, undo: res?.undo);
+          try {
+            final res = await ctrl.write(
+              amountText: amountText,
+              merchant: merchantText,
+              rules: rules,
+              note: noteText,
+            );
+            snack.show(msg, undo: res.undo);
+          } on Object {
+            snack.show(rejectText('other'));
+          }
       }
     } finally {
-      if (mounted) setState(() => _saving = false);
+      if (!closed && mounted) setState(() => _saving = false);
     }
   }
 
@@ -275,22 +289,10 @@ class _SpendSheetState extends ConsumerState<SpendSheet> {
     );
     final isNew = widget.existing == null;
 
-    final repo = ref.watch(moneyRepoProvider);
     final recentRows =
         ref.watch(recentSpendsProvider).value ?? const <ExpenseRow>[];
     final suggestions = isNew
-        ? topMerchants(
-            [for (final r in recentRows) repo.toSpendLite(r)],
-            today,
-            const [
-              'Zepto',
-              'Amazon',
-              'Milkman',
-              'Swiggy',
-              'D-Mart',
-              'Electricity',
-            ],
-          )
+        ? ref.watch(spendSuggestionsProvider)
         : const <String>[];
 
     final members = ref.watch(membersProvider).value ?? const <Member>[];

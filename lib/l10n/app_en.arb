@@ -3441,6 +3441,7 @@
   "backupPwSaved": "I’ve saved this password somewhere safe",
   "backupPwSave": "Save password & back up",
   "backupPwMismatch": "The two passwords don’t match.",
+  "backupPwMissing": "Nothing is backed up yet. Set a backup password to start.",
   "backupStatusOk": "Backed up {ago}",
   "@backupStatusOk": {
     "placeholders": {

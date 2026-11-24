@@ -120,4 +120,26 @@ void main() {
     final afterUndo = await e.db.select(e.db.staff).getSingle();
     expect(afterUndo.active, isTrue);
   });
+
+  test(
+    'two markIn calls leave one visit both concurrently and sequentially',
+    () async {
+      final e = await _env();
+      await Future.wait([
+        e.repo.markIn('s1', 'mem-1'),
+        e.repo.markIn('s1', 'mem-1'),
+      ]);
+      final s1Visits = await (e.db.select(
+        e.db.visits,
+      )..where((v) => v.staffId.equals('s1'))).get();
+      expect(s1Visits.length, 1);
+
+      await e.repo.markIn('s2', 'mem-1');
+      await e.repo.markIn('s2', 'mem-1');
+      final s2Visits = await (e.db.select(
+        e.db.visits,
+      )..where((v) => v.staffId.equals('s2'))).get();
+      expect(s2Visits.length, 1);
+    },
+  );
 }

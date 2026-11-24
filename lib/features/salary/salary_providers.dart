@@ -72,6 +72,15 @@ PayRulesData rulesFromRow(PayRuleRow r) => PayRulesData(
   id: r.id,
 );
 
+final workDaysProvider = Provider.family<List<int>?, (String, String)>((
+  ref,
+  arg,
+) {
+  final rows = ref.watch(salaryRulesProvider(arg.$1)).value;
+  if (rows == null) return null;
+  return workDaysForMonth([for (final r in rows) rulesFromRow(r)], arg.$2);
+});
+
 final settledMonthsProvider = StreamProvider.family<Set<String>, String>((
   ref,
   staffId,

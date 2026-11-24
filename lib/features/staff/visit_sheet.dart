@@ -33,32 +33,51 @@ class _VisitSheet extends ConsumerStatefulWidget {
 class _VisitSheetState extends ConsumerState<_VisitSheet> {
   Visit? _editing;
   bool _adding = false;
+  bool _saving = false;
 
   Future<void> _save(
     AppLocalizations l10n,
     int inAt,
     int? outAt,
   ) async {
+    if (_saving) return;
+    _saving = true;
+    final repo = ref.read(staffRepoProvider);
+    final snack = ref.read(snackbarProvider);
     final me = ref.read(myMemberIdProvider);
-    final res = await ref
-        .read(staffRepoProvider)
-        .saveVisit(
-          id: _editing?.id,
-          staffId: widget.staffId,
-          inAt: inAt,
-          outAt: outAt,
-          memberId: me,
-        );
-    if (!mounted) return;
+    final editId = _editing?.id;
+    final staffId = widget.staffId;
     Navigator.of(context).pop();
-    ref.read(snackbarProvider).show(l10n.staffVisitUpdated, undo: res.undo);
+    try {
+      final res = await repo.saveVisit(
+        id: editId,
+        staffId: staffId,
+        inAt: inAt,
+        outAt: outAt,
+        memberId: me,
+      );
+      if (res.undo != null) {
+        snack.show(l10n.staffVisitUpdated, undo: res.undo);
+      }
+    } on Object {
+      // Ignore write error after closing the sheet.
+    }
   }
 
   Future<void> _remove(AppLocalizations l10n, String visitId) async {
-    final res = await ref.read(staffRepoProvider).removeVisit(visitId);
-    if (!mounted) return;
+    if (_saving) return;
+    _saving = true;
+    final repo = ref.read(staffRepoProvider);
+    final snack = ref.read(snackbarProvider);
     Navigator.of(context).pop();
-    ref.read(snackbarProvider).show(l10n.staffVisitRemoved, undo: res.undo);
+    try {
+      final res = await repo.removeVisit(visitId);
+      if (res.undo != null) {
+        snack.show(l10n.staffVisitRemoved, undo: res.undo);
+      }
+    } on Object {
+      // Ignore write error after closing the sheet.
+    }
   }
 
   Future<void> _toggleLeave(
@@ -66,23 +85,32 @@ class _VisitSheetState extends ConsumerState<_VisitSheet> {
     String today,
     bool hasLeave,
   ) async {
+    if (_saving) return;
+    _saving = true;
+    final repo = ref.read(staffRepoProvider);
+    final snack = ref.read(snackbarProvider);
     final me = ref.read(myMemberIdProvider);
-    final res = await ref
-        .read(staffRepoProvider)
-        .setLeave(
-          staffId: widget.staffId,
-          date: widget.date,
-          on: !hasLeave,
-          memberId: me,
-        );
-    if (!mounted) return;
-    Navigator.of(context).pop();
+    final staffId = widget.staffId;
+    final date = widget.date;
     final msg = hasLeave
         ? l10n.staffLeaveRemoved
         : l10n.staffLeaveMarked(
-            Formatters.dayLabel(widget.date, today, l10n),
+            Formatters.dayLabel(date, today, l10n),
           );
-    ref.read(snackbarProvider).show(msg, undo: res.undo);
+    Navigator.of(context).pop();
+    try {
+      final res = await repo.setLeave(
+        staffId: staffId,
+        date: date,
+        on: !hasLeave,
+        memberId: me,
+      );
+      if (res.undo != null) {
+        snack.show(msg, undo: res.undo);
+      }
+    } on Object {
+      // Ignore write error after closing the sheet.
+    }
   }
 
   @override

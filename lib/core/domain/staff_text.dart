@@ -78,6 +78,8 @@ abstract final class IndianMobile {
     var digits = input.replaceAll(RegExp(r'\D'), '');
     if (digits.length == 12 && digits.startsWith('91')) {
       digits = digits.substring(2);
+    } else if (digits.length == 11 && digits.startsWith('0')) {
+      digits = digits.substring(1);
     }
     if (!RegExp(r'^[6-9]\d{9}$').hasMatch(digits)) return null;
     return '+91$digits';

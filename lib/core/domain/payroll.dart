@@ -407,6 +407,9 @@ PayrollResult computePayroll(PayrollInput input) {
   );
 }
 
+List<int>? workDaysForMonth(List<PayRulesData> rules, String month) =>
+    rules.isEmpty ? null : _pickRule(rules, month).workDays;
+
 PayRulesData _pickRule(List<PayRulesData> rules, String month) {
   final eligible = [
     for (final r in rules)

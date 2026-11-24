@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -213,13 +214,20 @@ class BackupPlacesSection extends ConsumerWidget {
             Text(access, style: NestText.meta13.copyWith(color: c.ink3)),
             const SizedBox(height: 16),
           ],
-          NestButton(
-            label: l.backupNow,
-            kind: NestButtonKind.tonal,
-            size: NestButtonSize.block,
-            onPressed: () {
-              Navigator.of(ctx).pop();
-              ref.read(backupControllerProvider.notifier).runNow();
+          Consumer(
+            builder: (_, sheetRef, _) {
+              final running = sheetRef.watch(backupControllerProvider).running;
+              return NestButton(
+                label: l.backupNow,
+                kind: NestButtonKind.tonal,
+                size: NestButtonSize.block,
+                onPressed: running
+                    ? null
+                    : () {
+                        Navigator.of(ctx).pop();
+                        ref.read(backupControllerProvider.notifier).runNow();
+                      },
+              );
             },
           ),
           if (showReauth) ...[
@@ -233,12 +241,7 @@ class BackupPlacesSection extends ConsumerWidget {
                 if (isCloud) {
                   ref
                       .read(cloudConnectControllerProvider.notifier)
-                      .connect(
-                        dest.kind,
-                        ConnectMode.reauth,
-                        reauthDestId: dest.destId,
-                        l10n: l,
-                      );
+                      .reauth(dest.kind, dest.destId, l);
                 } else if (context.mounted) {
                   _openReauthSheet(context, ref, dest);
                 }
@@ -258,40 +261,55 @@ class BackupPlacesSection extends ConsumerWidget {
             style: NestText.meta13.copyWith(color: c.ink3),
           ),
           const SizedBox(height: 8),
-          NestButton(
-            label: l.backupDisconnect,
-            kind: NestButtonKind.dangerGhost,
-            size: NestButtonSize.block,
-            onPressed: () async {
-              final secure = ref.read(secureStoreProvider);
-              try {
-                final remote = await destinationFor(dest, secure);
-                await remote.revokeAccess();
-              } on Object {
-                // Ignore revocation or destination construction errors.
-              }
-              final uri = dest.settings['treeUri'] as String?;
-              if (dest.kind == 'folder' && uri != null && uri.isNotEmpty) {
-                try {
-                  await SafUtil().releasePersistedPermission(
-                    uri,
-                    read: true,
-                    write: true,
-                  );
-                } on Object {
-                  // Ignore release failure.
-                }
-              }
-              final store = ref.read(backupConfigStoreProvider);
-              final latest = await store.load(homeId);
-              latest.destinations.removeWhere((d) => d.destId == dest.destId);
-              await store.save(homeId, latest);
-              if (latest.destinations.isEmpty) {
-                await cancelBackup(homeId);
-              }
-              await DestinationSecrets(secure).delete(dest.destId);
-              ref.invalidate(backupConfigProvider);
-              if (ctx.mounted) Navigator.of(ctx).pop();
+          Consumer(
+            builder: (_, sheetRef, _) {
+              final running = sheetRef.watch(backupControllerProvider).running;
+              return NestButton(
+                label: l.backupDisconnect,
+                kind: NestButtonKind.dangerGhost,
+                size: NestButtonSize.block,
+                onPressed: running
+                    ? null
+                    : () async {
+                        final secure = ref.read(secureStoreProvider);
+                        final store = ref.read(backupConfigStoreProvider);
+                        final container = ProviderScope.containerOf(
+                          context,
+                          listen: false,
+                        );
+                        Navigator.of(ctx).pop();
+                        final latest = await store.load(homeId);
+                        latest.destinations.removeWhere(
+                          (d) => d.destId == dest.destId,
+                        );
+                        await store.save(homeId, latest);
+                        if (latest.destinations.isEmpty) {
+                          await cancelBackup(homeId);
+                        }
+                        container.invalidate(backupConfigProvider);
+                        try {
+                          final remote = await destinationFor(dest, secure);
+                          await remote.revokeAccess();
+                        } on Object {
+                          // Ignore revocation or destination construction errors.
+                        }
+                        final uri = dest.settings['treeUri'] as String?;
+                        if (dest.kind == 'folder' &&
+                            uri != null &&
+                            uri.isNotEmpty) {
+                          try {
+                            await SafUtil().releasePersistedPermission(
+                              uri,
+                              read: true,
+                              write: true,
+                            );
+                          } on Object {
+                            // Ignore release failure.
+                          }
+                        }
+                        await DestinationSecrets(secure).delete(dest.destId);
+                      },
+              );
             },
           ),
         ],
@@ -483,7 +501,7 @@ class _DestRow extends StatelessWidget {
   }
 }
 
-class BackupScheduleSection extends ConsumerWidget {
+class BackupScheduleSection extends ConsumerStatefulWidget {
   const BackupScheduleSection({
     super.key,
     required this.homeId,
@@ -493,107 +511,159 @@ class BackupScheduleSection extends ConsumerWidget {
   final String homeId;
   final BackupConfig config;
 
-  Future<void> _update(
-    WidgetRef ref,
-    void Function(BackupConfig c) mutate,
-  ) async {
+  @override
+  ConsumerState<BackupScheduleSection> createState() =>
+      _BackupScheduleSectionState();
+}
+
+class _BackupScheduleSectionState extends ConsumerState<BackupScheduleSection> {
+  String? _frequency;
+  bool? _wifiOnly;
+  bool? _chargingOnly;
+  int? _keep;
+
+  Future<void> _update() async {
+    if (ref.read(backupControllerProvider).running) return;
     final store = ref.read(backupConfigStoreProvider);
-    final latest = await store.load(homeId);
-    mutate(latest);
-    await store.save(homeId, latest);
-    await scheduleBackup(homeId, latest);
-    ref.invalidate(backupConfigProvider);
+    final container = ProviderScope.containerOf(context, listen: false);
+    final homeId = widget.homeId;
+    try {
+      final latest = await store.load(homeId);
+      final frequency = _frequency;
+      if (frequency != null) latest.frequency = frequency;
+      final wifiOnly = _wifiOnly;
+      if (wifiOnly != null) latest.wifiOnly = wifiOnly;
+      final chargingOnly = _chargingOnly;
+      if (chargingOnly != null) latest.chargingOnly = chargingOnly;
+      final keep = _keep;
+      if (keep != null) latest.keep = keep;
+      await store.save(homeId, latest);
+      await scheduleBackup(homeId, latest);
+      container.invalidate(backupConfigProvider);
+    } on Object {
+      if (mounted) {
+        setState(() {
+          _frequency = null;
+          _wifiOnly = null;
+          _chargingOnly = null;
+          _keep = null;
+        });
+      }
+    }
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final c = context.nest;
+    final running = ref.watch(backupControllerProvider).running;
+    final frequency = _frequency ?? widget.config.frequency;
+    final wifiOnly = _wifiOnly ?? widget.config.wifiOnly;
+    final chargingOnly = _chargingOnly ?? widget.config.chargingOnly;
+    final keep = _keep ?? widget.config.keep;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         SectionHeader(title: l.backupSchedule),
         const SizedBox(height: 8),
-        NestCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 14, 16, 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      l.backupHowOften,
-                      style: NestText.itemTitle16.copyWith(color: c.ink),
-                    ),
-                    const SizedBox(height: 8),
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 4,
+        IgnorePointer(
+          ignoring: running,
+          child: Opacity(
+            opacity: running ? 0.55 : 1.0,
+            child: NestCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 14, 16, 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        for (final (k, lbl) in [
-                          ('daily', l.backupDaily),
-                          ('weekly', l.backupWeekly),
-                          ('monthly', l.backupMonthly),
-                        ])
-                          NestChip(
-                            label: lbl,
-                            selected: config.frequency == k,
-                            onTap: () => _update(ref, (cfg) => cfg.frequency = k),
-                          ),
+                        Text(
+                          l.backupHowOften,
+                          style: NestText.itemTitle16.copyWith(color: c.ink),
+                        ),
+                        const SizedBox(height: 8),
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 4,
+                          children: [
+                            for (final (k, lbl) in [
+                              ('daily', l.backupDaily),
+                              ('weekly', l.backupWeekly),
+                              ('monthly', l.backupMonthly),
+                            ])
+                              NestChip(
+                                label: lbl,
+                                selected: frequency == k,
+                                onTap: () {
+                                  setState(() => _frequency = k);
+                                  unawaited(_update());
+                                },
+                              ),
+                          ],
+                        ),
                       ],
                     ),
-                  ],
-                ),
-              ),
-              Divider(height: 1, color: c.line),
-              SwitchRow(
-                title: l.backupWifiOnly,
-                subtitle: l.backupWifiOnlySub,
-                value: config.wifiOnly,
-                onChanged: (v) => _update(ref, (cfg) => cfg.wifiOnly = v),
-              ),
-              Divider(height: 1, color: c.line),
-              SwitchRow(
-                title: l.backupCharging,
-                subtitle: l.backupChargingSub,
-                value: config.chargingOnly,
-                onChanged: (v) => _update(ref, (cfg) => cfg.chargingOnly = v),
-              ),
-              Divider(height: 1, color: c.line),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      l.backupKeep,
-                      style: NestText.itemTitle16.copyWith(color: c.ink),
-                    ),
-                    const SizedBox(height: 8),
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 4,
+                  ),
+                  Divider(height: 1, color: c.line),
+                  SwitchRow(
+                    title: l.backupWifiOnly,
+                    subtitle: l.backupWifiOnlySub,
+                    value: wifiOnly,
+                    onChanged: (v) {
+                      setState(() => _wifiOnly = v);
+                      unawaited(_update());
+                    },
+                  ),
+                  Divider(height: 1, color: c.line),
+                  SwitchRow(
+                    title: l.backupCharging,
+                    subtitle: l.backupChargingSub,
+                    value: chargingOnly,
+                    onChanged: (v) {
+                      setState(() => _chargingOnly = v);
+                      unawaited(_update());
+                    },
+                  ),
+                  Divider(height: 1, color: c.line),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        for (final n in const [5, 10, 30])
-                          NestChip(
-                            label: l.backupKeepN(n),
-                            selected: config.keep == n,
-                            onTap: () => _update(ref, (cfg) => cfg.keep = n),
-                          ),
+                        Text(
+                          l.backupKeep,
+                          style: NestText.itemTitle16.copyWith(color: c.ink),
+                        ),
+                        const SizedBox(height: 8),
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 4,
+                          children: [
+                            for (final n in const [5, 10, 30])
+                              NestChip(
+                                label: l.backupKeepN(n),
+                                selected: keep == n,
+                                onTap: () {
+                                  setState(() => _keep = n);
+                                  unawaited(_update());
+                                },
+                              ),
+                          ],
+                        ),
+                        const SizedBox(height: 6),
+                        Text(
+                          l.backupKeepSub,
+                          style: NestText.meta13.copyWith(color: c.ink3),
+                        ),
                       ],
                     ),
-                    const SizedBox(height: 6),
-                    Text(
-                      l.backupKeepSub,
-                      style: NestText.meta13.copyWith(color: c.ink3),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ],

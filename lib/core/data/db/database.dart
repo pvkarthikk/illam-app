@@ -72,6 +72,7 @@ class NestDatabase extends _$NestDatabase {
             'sqlite3mc missing: check hooks in pubspec.yaml',
           );
           db.execute("PRAGMA key = '$keyHex';");
+          db.execute('PRAGMA journal_mode = WAL;');
         },
       ),
     ),

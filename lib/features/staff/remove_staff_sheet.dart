@@ -24,19 +24,19 @@ Future<void> showRemoveStaffSheet(
 
   final today = ref.read(todayDateProvider);
   final tasksRepo = ref.read(tasksRepoProvider);
+  final staffRepo = ref.read(staffRepoProvider);
+  final snackbar = ref.read(snackbarProvider);
   final me = ref.read(myMemberIdProvider);
   final work = outcome.work ?? await tasksRepo.loadAssigned(staff.id);
-  final res = await ref
-      .read(staffRepoProvider)
-      .removeStaff(
-        staff.id,
-        today,
-        extra: work.isEmpty
-            ? null
-            : (c) => tasksRepo.buildReassignOps(c, work, me),
-      );
+  final res = await staffRepo.removeStaff(
+    staff.id,
+    today,
+    extra: work.isEmpty
+        ? null
+        : (c) => tasksRepo.buildReassignOps(c, work, me),
+  );
   if (context.mounted) context.pop();
-  ref.read(snackbarProvider).show(l10n.staffRemoved(name), undo: res.undo);
+  snackbar.show(l10n.staffRemoved(name), undo: res.undo);
 }
 
 class _RemoveStaffSheet extends ConsumerStatefulWidget {

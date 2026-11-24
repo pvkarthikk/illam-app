@@ -8,6 +8,7 @@ import 'package:nm_flat/core/domain/money_math.dart';
 import 'package:nm_flat/core/domain/spend_category.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/util/money.dart';
+import 'package:nm_flat/features/staff/staff_providers.dart';
 
 enum SpendSaveKind { invalid, duplicate, added, addedBill, learned, updated }
 
@@ -76,6 +77,8 @@ class SpendSheetState {
 }
 
 class SpendSheetController extends Notifier<SpendSheetState> {
+  bool _picked = false;
+
   @override
   SpendSheetState build() => const SpendSheetState();
 
@@ -84,6 +87,7 @@ class SpendSheetController extends Notifier<SpendSheetState> {
     required String today,
     required String me,
   }) {
+    _picked = false;
     if (existing == null) {
       state = SpendSheetState(
         id: null,
@@ -141,6 +145,7 @@ class SpendSheetController extends Notifier<SpendSheetState> {
   }
 
   void pickCategory(String cat) {
+    _picked = true;
     state = state.copyWith(category: cat, categoryLocked: true);
   }
 
@@ -170,33 +175,74 @@ class SpendSheetController extends Notifier<SpendSheetState> {
     state = state.copyWith(confirmedDuplicate: true, dup: null);
   }
 
-  Future<(SpendSaveKind, ChangeResult?)> save({
+  Future<SpendSaveKind> check({
+    required String amountText,
+    required String merchant,
+    required Map<String, String> rules,
+  }) async {
+    final paise = Money.parseRupees(amountText);
+    final amtErr = validateAmount(paise);
+    final merchErr = validateMerchant(merchant);
+    if (paise == null || amtErr != null || merchErr != null) {
+      state = state.copyWith(amountError: amtErr, merchantError: merchErr);
+      return SpendSaveKind.invalid;
+    }
+
+    final trimmed = merchant.trim();
+    final learn =
+        _picked && state.category != guessSpendCategory(trimmed, rules);
+
+    if (state.id != null) {
+      return learn ? SpendSaveKind.learned : SpendSaveKind.updated;
+    }
+
+    if (!state.confirmedDuplicate) {
+      final hit = await ref
+          .read(moneyRepoProvider)
+          .checkDuplicate(
+            amountPaise: paise,
+            merchant: trimmed,
+            date: state.date,
+          );
+      if (hit != null) {
+        state = state.copyWith(
+          dup: hit,
+          amountError: null,
+          merchantError: null,
+        );
+        return SpendSaveKind.duplicate;
+      }
+    }
+
+    return state.repeat
+        ? SpendSaveKind.addedBill
+        : (learn ? SpendSaveKind.learned : SpendSaveKind.added);
+  }
+
+  Future<ChangeResult> write({
     required String amountText,
     required String merchant,
     required Map<String, String> rules,
     String? note,
   }) async {
     final paise = Money.parseRupees(amountText);
-    final amtErr = validateAmount(paise);
-    final merchErr = validateMerchant(merchant);
-    if (amtErr != null || merchErr != null) {
-      state = state.copyWith(amountError: amtErr, merchantError: merchErr);
-      return (SpendSaveKind.invalid, null);
+    if (paise == null) {
+      throw ArgumentError.value(amountText, 'amountText', 'Invalid amount');
     }
-
     final trimmed = merchant.trim();
     final trimmedNote = note?.trim();
     final cleanNote =
         (trimmedNote == null || trimmedNote.isEmpty) ? null : trimmedNote;
-    final learn = state.category != guessSpendCategory(trimmed, rules);
+    final learn =
+        _picked && state.category != guessSpendCategory(trimmed, rules);
     final repo = ref.read(moneyRepoProvider);
 
     final id = state.id;
     if (id != null) {
-      final res = await repo.editSpend(
+      return repo.editSpend(
         id,
         SpendEdit(
-          amountPaise: paise!,
+          amountPaise: paise,
           merchant: trimmed,
           category: state.category,
           method: state.method,
@@ -206,28 +252,11 @@ class SpendSheetController extends Notifier<SpendSheetState> {
         ),
         learn: learn,
       );
-      return (learn ? SpendSaveKind.learned : SpendSaveKind.updated, res);
     }
 
-    if (!state.confirmedDuplicate) {
-      final hit = await repo.checkDuplicate(
-        amountPaise: paise!,
-        merchant: trimmed,
-        date: state.date,
-      );
-      if (hit != null) {
-        state = state.copyWith(
-          dup: hit,
-          amountError: null,
-          merchantError: null,
-        );
-        return (SpendSaveKind.duplicate, null);
-      }
-    }
-
-    final res = await repo.addSpend(
+    return repo.addSpend(
       NewExpense(
-        amountPaise: paise!,
+        amountPaise: paise,
         merchant: trimmed,
         category: state.category,
         method: state.method,
@@ -239,10 +268,6 @@ class SpendSheetController extends Notifier<SpendSheetState> {
       learn: learn,
       repeatMonthly: state.repeat,
     );
-    final kind = state.repeat
-        ? SpendSaveKind.addedBill
-        : (learn ? SpendSaveKind.learned : SpendSaveKind.added);
-    return (kind, res);
   }
 }
 
@@ -250,3 +275,22 @@ final spendSheetControllerProvider =
     NotifierProvider<SpendSheetController, SpendSheetState>(
       SpendSheetController.new,
     );
+
+final spendSuggestionsProvider = Provider<List<String>>((ref) {
+  final recentRows =
+      ref.watch(recentSpendsProvider).value ?? const <ExpenseRow>[];
+  final repo = ref.watch(moneyRepoProvider);
+  final today = ref.watch(todayDateProvider);
+  return topMerchants(
+    [for (final r in recentRows) repo.toSpendLite(r)],
+    today,
+    const [
+      'Zepto',
+      'Amazon',
+      'Milkman',
+      'Swiggy',
+      'D-Mart',
+      'Electricity',
+    ],
+  );
+});

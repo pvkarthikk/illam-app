@@ -6,6 +6,8 @@ import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/domain/names.dart';
 import 'package:nm_flat/core/domain/staff_text.dart';
 import 'package:nm_flat/core/providers.dart';
+import 'package:nm_flat/core/time/dates.dart';
+import 'package:nm_flat/features/salary/salary_providers.dart';
 import 'package:nm_flat/features/staff/widgets/staff_row.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
@@ -43,7 +45,13 @@ class _EditStaffFormState extends ConsumerState<_EditStaffForm> {
     );
     _upi = TextEditingController(text: s.upiId ?? '');
     _role = s.role ?? 'House help';
-    final parsedDays = parseWorkDays(s.workDays).toSet();
+    final curMonth = Dates.month(Dates.today(ref.read(clockProvider)));
+    final rule = ref
+        .read(salaryViewProvider((s.id, curMonth)))
+        .value
+        ?.payroll
+        .rules;
+    final parsedDays = (rule?.workDays ?? parseWorkDays(s.workDays)).toSet();
     _days = parsedDays.isEmpty ? {1, 2, 3, 4, 5, 6} : parsedDays;
     final parsedTimes = parseTimes(s.expectedTimes);
     _times = parsedTimes.isEmpty ? ['09:00'] : parsedTimes.take(2).toList();

@@ -59,6 +59,7 @@ class _OrderAmountSheetState extends ConsumerState<_OrderAmountSheet> {
       _saving = true;
       _error = null;
     });
+    var closed = false;
     try {
       final today = Dates.today(ref.read(clockProvider));
       // Duplicate spend hint check via MoneyRepo.checkDuplicate.
@@ -77,32 +78,36 @@ class _OrderAmountSheetState extends ConsumerState<_OrderAmountSheet> {
           return;
         }
       }
-      final res = await ref.read(changesProvider).write('Order amount', (c) {
-        ref
-            .read(expensesRepoProvider)
-            .createIn(
-              c,
-              NewExpense(
-                amountPaise: paise,
-                merchant: store,
-                category: widget.list == 'grocery' ? 'Groceries' : 'Shopping',
-                method: _method,
-                date: today,
-                source: 'order',
-                orderChannel: widget.channel,
-              ),
-            );
-      });
-      if (!mounted) return;
-      ref
-          .read(snackbarProvider)
-          .show(
-            l10n.storeOrderAdded(Money.format(paise), store),
-            undo: res.undo,
-          );
+      final snack = ref.read(snackbarProvider);
+      final changes = ref.read(changesProvider);
+      final expenses = ref.read(expensesRepoProvider);
+      final channel = widget.channel;
+      final list = widget.list;
+      final method = _method;
+      final msg = l10n.storeOrderAdded(Money.format(paise), store);
+      closed = true;
       Navigator.of(context).pop();
+      try {
+        final res = await changes.write('Order amount', (c) {
+          expenses.createIn(
+            c,
+            NewExpense(
+              amountPaise: paise,
+              merchant: store,
+              category: list == 'grocery' ? 'Groceries' : 'Shopping',
+              method: method,
+              date: today,
+              source: 'order',
+              orderChannel: channel,
+            ),
+          );
+        });
+        snack.show(msg, undo: res.undo);
+      } on Object {
+        snack.show(rejectText('other'));
+      }
     } finally {
-      if (mounted) setState(() => _saving = false);
+      if (!closed && mounted) setState(() => _saving = false);
     }
   }
 

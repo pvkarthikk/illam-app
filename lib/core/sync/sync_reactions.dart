@@ -39,7 +39,8 @@ class SyncReactions {
       if (todo == null ||
           todo.deleted ||
           todo.done ||
-          todo.assigneeType != 'member') {
+          todo.assigneeType != 'member' ||
+          todo.assignee != me) {
         continue;
       }
 

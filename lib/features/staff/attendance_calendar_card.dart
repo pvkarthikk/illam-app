@@ -11,6 +11,7 @@ import 'package:nm_flat/core/domain/staff_text.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/time/dates.dart';
 import 'package:nm_flat/core/ui/formatters.dart';
+import 'package:nm_flat/features/salary/salary_providers.dart';
 import 'package:nm_flat/features/staff/staff_controller.dart';
 import 'package:nm_flat/features/staff/staff_providers.dart';
 import 'package:nm_flat/features/staff/visit_sheet.dart';
@@ -53,8 +54,11 @@ class AttendanceCalendarCard extends ConsumerWidget {
         if (l.date != null) l.date!,
     };
 
-    final workDays = parseWorkDays(staff.workDays);
+    final workDays =
+        ref.watch(workDaysProvider((staff.id, month))) ??
+        parseWorkDays(staff.workDays);
     final start = staff.startDate;
+    final end = staff.endDate;
     final canPrev =
         start == null ||
         start.length < 7 ||
@@ -139,7 +143,8 @@ class AttendanceCalendarCard extends ConsumerWidget {
                   cell: cells[i],
                   tappable:
                       cells[i].date.compareTo(today) <= 0 &&
-                      (start == null || cells[i].date.compareTo(start) >= 0),
+                      (start == null || cells[i].date.compareTo(start) >= 0) &&
+                      (end == null || cells[i].date.compareTo(end) <= 0),
                   onTap: () => showVisitSheet(
                     context,
                     staffId: staff.id,

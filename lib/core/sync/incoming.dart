@@ -180,7 +180,7 @@ class IncomingPipeline {
     if (!await OpSigner.verify(op, pub)) {
       return const Decision(Verdict.quarantine, 'badSignature');
     }
-    return validator.check(op, change, v, nowMs: clock.nowMs);
+    return validator.check(op, change, v, nowMs: clock.nowMs, incoming: true);
   }
 
   Future<void> _store(

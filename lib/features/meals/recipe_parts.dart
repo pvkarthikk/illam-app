@@ -96,23 +96,23 @@ class _PlanRecipeSheetState extends ConsumerState<_PlanRecipeSheet> {
   Future<void> _save(AppLocalizations l10n, String today) async {
     if (_saving) return;
     setState(() => _saving = true);
+    final repo = ref.read(mealsRepoProvider);
+    final snack = ref.read(snackbarProvider);
+    final day = _day;
+    final slot = _slot;
+    final recipe = widget.recipe;
+    final msg = l10n.recipePlannedFor(
+      Formatters.dayLabel(day, today, l10n),
+      l10n.mealsSlotLower(slot),
+    );
+    Navigator.of(context).pop();
     try {
-      final res = await ref
-          .read(mealsRepoProvider)
-          .planRecipe(_day, _slot, widget.recipe);
-      if (!mounted) return;
-      Navigator.of(context).pop();
-      ref
-          .read(snackbarProvider)
-          .show(
-            l10n.recipePlannedFor(
-              Formatters.dayLabel(_day, today, l10n),
-              l10n.mealsSlotLower(_slot),
-            ),
-            undo: res.undo,
-          );
-    } finally {
-      if (mounted) setState(() => _saving = false);
+      final res = await repo.planRecipe(day, slot, recipe);
+      if (res.undo != null) {
+        snack.show(msg, undo: res.undo);
+      }
+    } on Object {
+      // Ignore write error after closing the sheet.
     }
   }
 

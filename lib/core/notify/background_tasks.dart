@@ -13,6 +13,7 @@ import 'package:nm_flat/core/data/prefs/device_prefs.dart';
 import 'package:nm_flat/core/data/prefs/notification_prefs.dart';
 import 'package:nm_flat/core/data/secure/secure_store.dart';
 import 'package:nm_flat/core/domain/bills.dart';
+import 'package:nm_flat/core/domain/payroll.dart';
 import 'package:nm_flat/core/domain/reminder_rules.dart';
 import 'package:nm_flat/core/domain/routine_state.dart';
 import 'package:nm_flat/core/domain/salary_months.dart';
@@ -22,6 +23,7 @@ import 'package:nm_flat/core/notify/notifications.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/sync/background_sync.dart';
 import 'package:nm_flat/core/time/dates.dart';
+import 'package:nm_flat/features/salary/salary_providers.dart';
 import 'package:nm_flat/features/staff/staff_providers.dart';
 
 @pragma('vm:entry-point')
@@ -155,6 +157,15 @@ Future<ReminderInputs?> loadReminderInputs(Reader read) async {
     (e) => e.addedBy == me && e.date == today,
   );
   final notif = read(notificationPrefsProvider);
+  final workDaysByStaff = <String, List<int>>{};
+  for (final s in staffRows) {
+    final ruleRows = await read(salaryRulesProvider(s.id).future);
+    final days = workDaysForMonth(
+      [for (final r in ruleRows) rulesFromRow(r)],
+      month,
+    );
+    if (days != null) workDaysByStaff[s.id] = days;
+  }
 
   return ReminderInputs(
     today: today,
@@ -167,7 +178,7 @@ Future<ReminderInputs?> loadReminderInputs(Reader read) async {
           startDate: s.startDate ?? '',
           endDate: s.endDate,
           active: s.active,
-          workDays: parseWorkDays(s.workDays),
+          workDays: workDaysByStaff[s.id] ?? parseWorkDays(s.workDays),
           expectedTimes: parseTimes(s.expectedTimes),
         ),
     ],

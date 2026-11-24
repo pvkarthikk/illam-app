@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:nm_flat/core/crypto/device_keys.dart';
 import 'package:nm_flat/core/crypto/sign.dart';
+import 'package:nm_flat/core/crypto/sign_worker.dart';
 import 'package:nm_flat/core/data/ops/op_record.dart';
 
 /// The 14-field canonical map included in every op signature.
@@ -48,9 +49,10 @@ OpRecord opFromWire(Map<String, Object?> m) => OpRecord(
 
 /// Signs and verifies [OpRecord]s under [SignDomain.env].
 class OpSigner {
-  const OpSigner(this._keys);
+  const OpSigner(this._keys, {this.worker});
 
   final Future<DeviceKeys> _keys;
+  final SignWorker? worker;
 
   /// Returns a copy of [o] signed by the current device's signing key pair.
   Future<OpRecord> sign(OpRecord o) async {
@@ -58,6 +60,28 @@ class OpSigner {
     final kp = await k.signKeyPair();
     final sig = await Signer.sign(kp, SignDomain.env, opSigningBytes(o));
     return o.copyWith(sig: sig);
+  }
+
+  /// Signs [records] using [worker] when available, falling back to [sign].
+  Future<List<OpRecord>> signAll(List<OpRecord> records) async {
+    if (records.isEmpty) return const [];
+    final w = worker;
+    if (w != null) {
+      try {
+        final sigs = await w.signAll(SignDomain.env, [
+          for (final r in records) opSigningBytes(r),
+        ]);
+        if (sigs.length == records.length) {
+          return [
+            for (var i = 0; i < records.length; i++)
+              records[i].copyWith(sig: sigs[i]),
+          ];
+        }
+      } on Object {
+        // Fall through to sequential in-isolate signing on worker failure.
+      }
+    }
+    return [for (final r in records) await sign(r)];
   }
 
   /// Verifies [o.sig] under Ed25519 public key [pub] and [SignDomain.env].

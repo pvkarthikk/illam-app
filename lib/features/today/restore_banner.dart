@@ -96,9 +96,11 @@ class _RestoreBannerState extends ConsumerState<RestoreBanner> {
             kind: NestButtonKind.dangerGhost,
             size: NestButtonSize.block,
             onPressed: () async {
+              final eraser = ref.read(homeEraserProvider);
+              final prefs = ref.read(prefsProvider);
               Navigator.of(ctx).pop();
-              await ref.read(homeEraserProvider).erase(homeId);
-              await ref.read(prefsProvider).setText('recoverDead_$homeId', null);
+              await eraser.erase(homeId);
+              await prefs.setText('recoverDead_$homeId', null);
             },
           ),
         ],

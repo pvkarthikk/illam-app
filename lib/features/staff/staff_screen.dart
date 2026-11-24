@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
+import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/domain/payroll.dart';
 import 'package:nm_flat/core/domain/salary_months.dart';
@@ -65,56 +66,17 @@ class StaffScreen extends ConsumerWidget {
       l10n.weekdayShortSat,
       l10n.weekdayShortSun,
     ];
+    final workDays =
+        ref.watch(
+          workDaysProvider((
+            staffId,
+            Dates.month(ref.watch(todayDateProvider)),
+          )),
+        ) ??
+        parseWorkDays(staff.workDays);
     final window =
-        '${daysText(parseWorkDays(staff.workDays), short: shortDays, daily: l10n.staffDaily)} · '
+        '${daysText(workDays, short: shortDays, daily: l10n.staffDaily)} · '
         '${timesText(parseTimes(staff.expectedTimes), staff.usualEndTime)}';
-    final today = ref.watch(todayDateProvider);
-    final curMonth = Dates.month(today);
-    final curRules = ref
-        .watch(salaryViewProvider((staffId, curMonth)))
-        .value
-        ?.payroll
-        .rules;
-    String? payLine;
-    if (curRules != null) {
-      payLine = switch (curRules.type) {
-        PayType.hourly =>
-          curRules.roundingMin == 1
-              ? l10n.salaryRuleHourlyExact(
-                  Money.format(curRules.ratePerHourPaise),
-                )
-              : l10n.salaryRuleHourlyRounded(
-                  Money.format(curRules.ratePerHourPaise),
-                  curRules.roundingMin,
-                ),
-        PayType.monthly => l10n.salaryRuleMonthly(
-          Money.format(curRules.amountPerMonthPaise),
-          curRules.paidLeavesPerMonth,
-        ),
-      };
-    }
-
-    final settled =
-        ref.watch(settledMonthsProvider(staffId)).value ?? const <String>{};
-    final rawMonths = salaryMonths(
-      startDate: staff.startDate ?? today,
-      endDate: staff.endDate,
-      today: today,
-    );
-    final months = rawMonths.isEmpty ? <String>[curMonth] : rawMonths;
-    final btnMonth = defaultSalaryMonth(
-      today: today,
-      months: months,
-      isSettled: settled.contains,
-    );
-    final btnMonthName = Formatters.monthName(btnMonth);
-    final btnView = ref.watch(salaryViewProvider((staffId, btnMonth))).value;
-    final salaryBtnLabel = btnView != null && !btnView.shown.noRules
-        ? l10n.salaryStaffButton(
-            btnMonthName,
-            Money.format(btnView.shown.toPayRupees * 100),
-          )
-        : l10n.staffSalaryButton(btnMonthName);
 
     return Scaffold(
       appBar: NestTopBar.sub(
@@ -176,19 +138,7 @@ class StaffScreen extends ConsumerWidget {
                         ),
                         style: NestText.meta13.copyWith(color: c.ink3),
                       ),
-                      if (payLine != null) ...[
-                        const SizedBox(height: 4),
-                        Text(
-                          payLine,
-                          style: TextStyle(
-                            fontFamily: NestText.sans,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w700,
-                            fontVariations: const [FontVariation.weight(700)],
-                            color: c.ink2,
-                          ),
-                        ),
-                      ],
+                      _PayLine(staffId: staffId),
                     ],
                   ),
                 ),
@@ -215,15 +165,14 @@ class StaffScreen extends ConsumerWidget {
                           kind: NestButtonKind.ghost,
                           size: NestButtonSize.sm,
                           onPressed: () async {
+                            final snackbar = ref.read(snackbarProvider);
                             final res = await ref
                                 .read(staffRepoProvider)
                                 .restoreStaff(staff.id);
-                            ref
-                                .read(snackbarProvider)
-                                .show(
-                                  l10n.staffRestored(name),
-                                  undo: res.undo,
-                                );
+                            snackbar.show(
+                              l10n.staffRestored(name),
+                              undo: res.undo,
+                            );
                           },
                         ),
                       ],
@@ -245,13 +194,7 @@ class StaffScreen extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                NestButton(
-                  label: salaryBtnLabel,
-                  icon: Icons.currency_rupee_rounded,
-                  kind: NestButtonKind.primary,
-                  size: NestButtonSize.block,
-                  onPressed: () => context.push(Routes.staffSalary(staffId)),
-                ),
+                _SalaryButton(staff: staff),
                 if (isAdmin && staff.active) ...[
                   const SizedBox(height: 12),
                   Center(
@@ -271,6 +214,100 @@ class StaffScreen extends ConsumerWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _PayLine extends ConsumerWidget {
+  const _PayLine({required this.staffId});
+
+  final String staffId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final c = context.nest;
+    final today = ref.watch(todayDateProvider);
+    final curMonth = Dates.month(today);
+    final curRules = ref
+        .watch(salaryViewProvider((staffId, curMonth)))
+        .value
+        ?.payroll
+        .rules;
+    if (curRules == null) return const SizedBox.shrink();
+
+    final payLine = switch (curRules.type) {
+      PayType.hourly =>
+        curRules.roundingMin == 1
+            ? l10n.salaryRuleHourlyExact(
+                Money.format(curRules.ratePerHourPaise),
+              )
+            : l10n.salaryRuleHourlyRounded(
+                Money.format(curRules.ratePerHourPaise),
+                curRules.roundingMin,
+              ),
+      PayType.monthly => l10n.salaryRuleMonthly(
+        Money.format(curRules.amountPerMonthPaise),
+        curRules.paidLeavesPerMonth,
+      ),
+    };
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 4),
+      child: Text(
+        payLine,
+        style: TextStyle(
+          fontFamily: NestText.sans,
+          fontSize: 13,
+          fontWeight: FontWeight.w700,
+          fontVariations: const [FontVariation.weight(700)],
+          color: c.ink2,
+        ),
+      ),
+    );
+  }
+}
+
+class _SalaryButton extends ConsumerWidget {
+  const _SalaryButton({required this.staff});
+
+  final StaffData staff;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final today = ref.watch(todayDateProvider);
+    final curMonth = Dates.month(today);
+    final settled =
+        ref.watch(settledMonthsProvider(staff.id)).value ?? const <String>{};
+    final rawMonths = salaryMonths(
+      startDate: staff.startDate ?? today,
+      endDate: staff.endDate,
+      today: today,
+    );
+    final months = rawMonths.isEmpty ? <String>[curMonth] : rawMonths;
+    final btnMonth = defaultSalaryMonth(
+      today: today,
+      months: months,
+      isSettled: settled.contains,
+    );
+    final btnMonthName = Formatters.monthName(btnMonth);
+    final btnView = ref
+        .watch(salaryViewProvider((staff.id, btnMonth)))
+        .value;
+    final salaryBtnLabel = btnView != null && !btnView.shown.noRules
+        ? l10n.salaryStaffButton(
+            btnMonthName,
+            Money.format(btnView.shown.toPayRupees * 100),
+          )
+        : l10n.staffSalaryButton(btnMonthName);
+
+    return NestButton(
+      label: salaryBtnLabel,
+      icon: Icons.currency_rupee_rounded,
+      kind: NestButtonKind.primary,
+      size: NestButtonSize.block,
+      onPressed: () => context.push(Routes.staffSalary(staff.id)),
     );
   }
 }

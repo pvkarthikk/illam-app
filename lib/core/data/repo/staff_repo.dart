@@ -16,6 +16,7 @@ class StaffRepo {
   final NestDatabase db;
   final ChangeWriter changes;
   final Clock clock;
+  final Map<String, Future<ChangeResult>> _markingIn = {};
 
   Stream<List<StaffData>> watchActive(String homeId) =>
       (db.select(db.staff)
@@ -98,7 +99,17 @@ class StaffRepo {
           ))
           .watch();
 
-  Future<ChangeResult> markIn(String staffId, String memberId) async {
+  Future<ChangeResult> markIn(String staffId, String memberId) {
+    final existing = _markingIn[staffId];
+    if (existing != null) return existing;
+    final f = _markIn(staffId, memberId).whenComplete(() {
+      _markingIn.remove(staffId);
+    });
+    _markingIn[staffId] = f;
+    return f;
+  }
+
+  Future<ChangeResult> _markIn(String staffId, String memberId) async {
     final today = Dates.today(clock);
     final now = clock.nowMs;
     final leaveId = '${staffId}_$today';
@@ -108,14 +119,28 @@ class StaffRepo {
               ..limit(1))
             .getSingleOrNull() !=
         null;
+    final hasOpen =
+        await (db.select(db.visits)
+              ..where(
+                (v) =>
+                    v.staffId.equals(staffId) &
+                    v.date.equals(today) &
+                    v.deleted.equals(false) &
+                    v.outAt.isNull(),
+              )
+              ..limit(1))
+            .getSingleOrNull() !=
+        null;
 
     return changes.write('Marked in', (c) {
-      c.create('visits', {
-        'staff_id': staffId,
-        'date': today,
-        'in_at': now,
-        'in_by': memberId,
-      });
+      if (!hasOpen) {
+        c.create('visits', {
+          'staff_id': staffId,
+          'date': today,
+          'in_at': now,
+          'in_by': memberId,
+        });
+      }
       if (hasLeave) {
         c.delete('leaves', leaveId);
       }
@@ -136,8 +161,16 @@ class StaffRepo {
     required int inAt,
     int? outAt,
     required String memberId,
-  }) {
+  }) async {
     final date = Dates.dateOfMs(inAt);
+    final leaveId = '${staffId}_$date';
+    final hasLeave =
+        id == null &&
+        (await (db.select(db.leaves)
+                  ..where((l) => l.id.equals(leaveId) & l.deleted.equals(false))
+                  ..limit(1))
+                .getSingleOrNull() !=
+            null);
     return changes.write('Visit', (c) {
       if (id == null) {
         c.create('visits', {
@@ -148,6 +181,9 @@ class StaffRepo {
           'in_by': memberId,
           'out_by': outAt != null ? memberId : null,
         });
+        if (hasLeave) {
+          c.delete('leaves', leaveId);
+        }
       } else {
         c.setAll('visits', id, {
           'in_at': inAt,
@@ -220,8 +256,60 @@ class StaffRepo {
     });
   });
 
-  Future<ChangeResult> updateDetails(String id, Map<String, Object?> fields) =>
-      changes.write('Staff details', (c) => c.setAll('staff', id, fields));
+  Future<ChangeResult> updateDetails(
+    String id,
+    Map<String, Object?> fields,
+  ) async {
+    PayRuleRow? rule;
+    String? curMonth;
+    final rawDays = fields['work_days'];
+    final newDays = fields.containsKey('work_days') && rawDays is String
+        ? rawDays
+        : null;
+    if (newDays != null) {
+      final month = Dates.month(Dates.today(clock));
+      curMonth = month;
+      rule =
+          await (db.select(db.payRules)
+                ..where(
+                  (r) =>
+                      r.staffId.equals(id) &
+                      r.deleted.equals(false) &
+                      r.effectiveMonth.isSmallerOrEqualValue(month),
+                )
+                ..orderBy([
+                  (r) => OrderingTerm.desc(r.effectiveMonth),
+                  (r) => OrderingTerm.desc(r.createdAt),
+                  (r) => OrderingTerm.desc(r.id),
+                ])
+                ..limit(1))
+              .getSingleOrNull();
+    }
+
+    return changes.write('Staff details', (c) {
+      c.setAll('staff', id, fields);
+      if (rule != null &&
+          newDays != null &&
+          curMonth != null &&
+          rule.workDays != newDays) {
+        if (rule.effectiveMonth == curMonth) {
+          c.set('pay_rules', rule.id, 'work_days', newDays);
+        } else {
+          c.create('pay_rules', {
+            'staff_id': id,
+            'effective_month': curMonth,
+            'work_days': newDays,
+            'pay_type': rule.payType,
+            'rate_per_hour_paise': rule.ratePerHourPaise,
+            'rounding_min': rule.roundingMin,
+            'min_hours_per_visit': rule.minHoursPerVisit,
+            'amount_per_month_paise': rule.amountPerMonthPaise,
+            'paid_leaves_per_month': rule.paidLeavesPerMonth,
+          });
+        }
+      }
+    });
+  }
 
   Future<ChangeResult> removeStaff(
     String id,

@@ -19,14 +19,29 @@ class MemberInfo {
     required this.role,
     required this.status,
     this.endedHlc,
+    this.roleLog = const [],
   });
 
   final String memberId;
   final String role;
   final String status;
   final String? endedHlc;
+  final List<(String, String)> roleLog;
 
   bool get isAdmin => role == 'admin';
+
+  bool adminAt(String hlc) {
+    if (roleLog.isEmpty) return isAdmin;
+    var r = roleLog.first.$2;
+    for (final (entryHlc, entryRole) in roleLog) {
+      if (entryHlc.compareTo(hlc) <= 0) {
+        r = entryRole;
+      } else {
+        break;
+      }
+    }
+    return r == 'admin';
+  }
 }
 
 abstract class ValidationView {
@@ -99,6 +114,7 @@ class Validator {
     List<OpRecord> change,
     ValidationView v, {
     required int nowMs,
+    bool incoming = false,
   }) async {
     if (op.opId != '${op.deviceId}:${op.seq}') return _q('badId');
 
@@ -145,8 +161,8 @@ class Validator {
         ? jsonDecode(op.valueJson!)
         : null;
 
-    Object? after(String f) {
-      var res = row?[f];
+    Object? after(String f, {bool fromRow = true}) {
+      var res = fromRow && row != null ? row[f] : null;
       for (final cOp in change) {
         if (cOp.kind == 'set' &&
             cOp.tbl == op.tbl &&
@@ -161,7 +177,7 @@ class Validator {
     bool changesImmutable(Set<String> f) =>
         f.contains(op.field) && !creating && row[op.field] != value;
 
-    final admin = m.isAdmin;
+    final admin = m.adminAt(op.hlc);
 
     switch (op.tbl) {
       case 'homes':
@@ -193,8 +209,8 @@ class Validator {
             return _q('tooOld');
           }
         }
-        final i = after(visitIn);
-        final o = after(visitOut);
+        final i = after(visitIn, fromRow: !incoming);
+        final o = after(visitOut, fromRow: !incoming);
         if (i is int && o is int && (o <= i || o - i > _h16)) {
           return _q('range');
         }

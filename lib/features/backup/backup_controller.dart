@@ -55,6 +55,8 @@ class BackupUi {
 }
 
 class BackupController extends Notifier<BackupUi> {
+  Future<BackupRunResult>? _run;
+
   @override
   BackupUi build() => const BackupUi();
 
@@ -152,7 +154,15 @@ class BackupController extends Notifier<BackupUi> {
     }
   }
 
-  Future<BackupRunResult> runNow() async {
+  Future<BackupRunResult> runNow() {
+    final existing = _run;
+    if (existing != null) return existing;
+    final f = _runNow().whenComplete(() => _run = null);
+    _run = f;
+    return f;
+  }
+
+  Future<BackupRunResult> _runNow() async {
     final homeId =
         ref.read(currentHomeIdProvider).value ??
         ref.read(prefsProvider).currentHomeId ??

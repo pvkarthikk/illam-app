@@ -76,66 +76,72 @@ class _SlotPickerSheetState extends ConsumerState<_SlotPickerSheet> {
   }) async {
     if (_saving) return;
     setState(() => _saving = true);
+    final repo = ref.read(mealsRepoProvider);
+    final snack = ref.read(snackbarProvider);
+    final date = widget.date;
+    final slot = widget.slot;
+    final what = switch (kind) {
+      'eatingOut' => l10n.mealsEatingOut,
+      'leftovers' => l10n.mealsLeftovers,
+      _ => text ?? '',
+    };
+    final msg = l10n.mealsPlannedKind(l10n.mealsSlotTitle(slot), what);
+    Navigator.of(context).pop();
     try {
-      final res = await ref
-          .read(mealsRepoProvider)
-          .planKind(widget.date, widget.slot, kind, text: text);
-      if (!mounted) return;
-      final what = switch (kind) {
-        'eatingOut' => l10n.mealsEatingOut,
-        'leftovers' => l10n.mealsLeftovers,
-        _ => text ?? '',
-      };
-      Navigator.of(context).pop();
-      ref
-          .read(snackbarProvider)
-          .show(
-            l10n.mealsPlannedKind(l10n.mealsSlotTitle(widget.slot), what),
-            undo: res.undo,
-          );
-    } finally {
-      if (mounted) setState(() => _saving = false);
+      final res = await repo.planKind(date, slot, kind, text: text);
+      if (res.undo != null) {
+        snack.show(msg, undo: res.undo);
+      }
+    } on Object {
+      // Ignore write error after closing the sheet.
     }
   }
 
   Future<void> _pickRecipe(AppLocalizations l10n, RecipeView r) async {
     if (_saving) return;
     setState(() => _saving = true);
+    final repo = ref.read(mealsRepoProvider);
+    final snack = ref.read(snackbarProvider);
+    final openKeys =
+        ref.read(openGroceryKeysProvider).value ?? const <String>{};
+    final pantryKeys = ref.read(pantryKeysProvider).value ?? const <String>{};
+    final n = recipeMissing(
+      r.toPlanned(),
+      r.serves,
+      openKeys,
+      pantryKeys,
+    ).length;
+    final date = widget.date;
+    final slot = widget.slot;
+    final msg = n > 0
+        ? l10n.mealsPlannedMissing(r.name, n)
+        : l10n.mealsPlanned(r.name);
+    Navigator.of(context).pop();
     try {
-      final res = await ref
-          .read(mealsRepoProvider)
-          .planRecipe(widget.date, widget.slot, r);
-      if (!mounted) return;
-      final openKeys =
-          ref.read(openGroceryKeysProvider).value ?? const <String>{};
-      final pantryKeys = ref.read(pantryKeysProvider).value ?? const <String>{};
-      final n = recipeMissing(r.toPlanned(), r.serves, openKeys, pantryKeys).length;
-      Navigator.of(context).pop();
-      ref
-          .read(snackbarProvider)
-          .show(
-            n > 0 ? l10n.mealsPlannedMissing(r.name, n) : l10n.mealsPlanned(r.name),
-            undo: res.undo,
-          );
-    } finally {
-      if (mounted) setState(() => _saving = false);
+      final res = await repo.planRecipe(date, slot, r);
+      if (res.undo != null) {
+        snack.show(msg, undo: res.undo);
+      }
+    } on Object {
+      // Ignore write error after closing the sheet.
     }
   }
 
   Future<void> _clearSlot(AppLocalizations l10n) async {
     if (_saving) return;
     setState(() => _saving = true);
+    final repo = ref.read(mealsRepoProvider);
+    final snack = ref.read(snackbarProvider);
+    final date = widget.date;
+    final slot = widget.slot;
+    Navigator.of(context).pop();
     try {
-      final res = await ref
-          .read(mealsRepoProvider)
-          .clearSlot(widget.date, widget.slot);
-      if (!mounted) return;
-      Navigator.of(context).pop();
-      ref
-          .read(snackbarProvider)
-          .show(l10n.mealsSlotCleared, undo: res.undo);
-    } finally {
-      if (mounted) setState(() => _saving = false);
+      final res = await repo.clearSlot(date, slot);
+      if (res.undo != null) {
+        snack.show(l10n.mealsSlotCleared, undo: res.undo);
+      }
+    } on Object {
+      // Ignore write error after closing the sheet.
     }
   }
 

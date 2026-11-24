@@ -9,9 +9,11 @@ import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/domain/staff_text.dart';
 import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/providers.dart';
+import 'package:nm_flat/core/time/dates.dart';
 import 'package:nm_flat/features/account/home_sheets.dart';
 import 'package:nm_flat/features/account/member_sheet.dart';
 import 'package:nm_flat/features/backup/backup_texts.dart';
+import 'package:nm_flat/features/salary/salary_providers.dart';
 import 'package:nm_flat/features/staff/add_staff_sheet.dart';
 import 'package:nm_flat/features/staff/former_staff_section.dart';
 import 'package:nm_flat/features/staff/staff_providers.dart';
@@ -245,6 +247,7 @@ class HomeHouseHelpSection extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final c = context.nest;
     final staff = ref.watch(activeStaffProvider).value ?? const <StaffData>[];
+    final month = Dates.month(ref.watch(todayDateProvider));
     final shorts = [
       l10n.weekdayShortMon,
       l10n.weekdayShortTue,
@@ -286,12 +289,14 @@ class HomeHouseHelpSection extends ConsumerWidget {
                   if (roleLabel(l10n, s.role).isNotEmpty)
                     roleLabel(l10n, s.role),
                   if (daysText(
-                    parseWorkDays(s.workDays),
+                    ref.watch(workDaysProvider((s.id, month))) ??
+                        parseWorkDays(s.workDays),
                     short: shorts,
                     daily: l10n.staffDaily,
                   ).isNotEmpty)
                     daysText(
-                      parseWorkDays(s.workDays),
+                      ref.watch(workDaysProvider((s.id, month))) ??
+                          parseWorkDays(s.workDays),
                       short: shorts,
                       daily: l10n.staffDaily,
                     ),

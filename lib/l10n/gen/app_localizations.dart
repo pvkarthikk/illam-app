@@ -7299,6 +7299,12 @@ abstract class AppLocalizations {
   /// **'The two passwords don’t match.'**
   String get backupPwMismatch;
 
+  /// No description provided for @backupPwMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is backed up yet. Set a backup password to start.'**
+  String get backupPwMissing;
+
   /// No description provided for @backupStatusOk.
   ///
   /// In en, this message translates to:

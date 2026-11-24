@@ -241,9 +241,18 @@ class _StoreModeScreenState extends ConsumerState<StoreModeScreen> {
                           ]) ...[
                             _StoreItemTile(
                               entry: entry,
-                              onTap: () => ref
-                                  .read(listsRepoProvider)
-                                  .tickGroup(entry.group.ids, !entry.picked),
+                              onTap: () async {
+                                final repo = ref.read(listsRepoProvider);
+                                try {
+                                  final res = await repo.tickGroup(
+                                    entry.group.ids,
+                                    !entry.picked,
+                                  );
+                                  return res.undo != null;
+                                } on Object {
+                                  return false;
+                                }
+                              },
                             ),
                             const SizedBox(height: 8),
                           ],
@@ -273,23 +282,49 @@ class _StoreRowEntry {
   final bool picked;
 }
 
-class _StoreItemTile extends StatelessWidget {
+class _StoreItemTile extends StatefulWidget {
   const _StoreItemTile({required this.entry, required this.onTap});
 
   final _StoreRowEntry entry;
-  final VoidCallback onTap;
+  final Future<bool> Function() onTap;
+
+  @override
+  State<_StoreItemTile> createState() => _StoreItemTileState();
+}
+
+class _StoreItemTileState extends State<_StoreItemTile> {
+  bool _busy = false;
+
+  @override
+  void didUpdateWidget(covariant _StoreItemTile oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.entry.survivor.id != widget.entry.survivor.id ||
+        oldWidget.entry.picked != widget.entry.picked) {
+      _busy = false;
+    }
+  }
+
+  Future<void> _handleTap() async {
+    if (_busy) return;
+    setState(() => _busy = true);
+    final ok = await widget.onTap();
+    if (!ok && mounted) {
+      setState(() => _busy = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final entry = widget.entry;
     final qtyText = formatQty(entry.group.totalMilli, entry.survivor.unit);
     final name = entry.survivor.name;
-    final picked = entry.picked;
+    final picked = entry.picked != _busy;
 
     return Semantics(
       checked: picked,
       label: '$name, $qtyText',
       excludeSemantics: true,
-      onTap: onTap,
+      onTap: _handleTap,
       child: Opacity(
         opacity: picked ? 0.5 : 1.0,
         child: Material(
@@ -297,7 +332,7 @@ class _StoreItemTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           clipBehavior: Clip.antiAlias,
           child: InkWell(
-            onTap: onTap,
+            onTap: _handleTap,
             child: ConstrainedBox(
               constraints: const BoxConstraints(minHeight: 72),
               child: Padding(

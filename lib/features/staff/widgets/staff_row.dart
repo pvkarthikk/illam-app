@@ -8,7 +8,9 @@ import 'package:nm_flat/core/domain/attendance.dart';
 import 'package:nm_flat/core/domain/staff_text.dart';
 import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/providers.dart';
+import 'package:nm_flat/core/time/dates.dart';
 import 'package:nm_flat/core/ui/formatters.dart';
+import 'package:nm_flat/features/salary/salary_providers.dart';
 import 'package:nm_flat/features/staff/staff_actions.dart';
 import 'package:nm_flat/features/staff/staff_providers.dart';
 import 'package:nm_flat/features/staff/visit_sheet.dart';
@@ -43,7 +45,9 @@ class StaffRow extends ConsumerWidget {
     final lites = [for (final v in visits) toLite(v)];
     final status = staffStatusToday(
       today: today,
-      workDays: parseWorkDays(staff.workDays),
+      workDays:
+          ref.watch(workDaysProvider((staff.id, Dates.month(today)))) ??
+          parseWorkDays(staff.workDays),
       visitsToday: lites,
       leaveToday: leaveToday,
     );

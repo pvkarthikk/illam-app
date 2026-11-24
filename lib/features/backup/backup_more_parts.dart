@@ -119,6 +119,7 @@ class _BackupMoreSectionState extends ConsumerState<BackupMoreSection> {
     ).format(DateTime.fromMillisecondsSinceEpoch(pwSetAt));
     final kits = ref.watch(recoveryKitsViewProvider).value ?? const <KitView>[];
     final myKitDead = ref.watch(myKitDeadProvider).value ?? false;
+    final running = ref.watch(backupControllerProvider).running;
     final isAdmin = ref.watch(isAdminProvider);
     final myMemberId = ref.watch(myMemberIdProvider);
     final myRole = (ref.watch(myMemberProvider).value?.role == 'admin')
@@ -140,7 +141,9 @@ class _BackupMoreSectionState extends ConsumerState<BackupMoreSection> {
               SettingsRow(
                 label: l.backupPwRow,
                 value: l.backupPwRowSub(pwDate),
-                onTap: () => showBackupPasswordSheet(context, ref, change: true),
+                onTap: running
+                    ? null
+                    : () => showBackupPasswordSheet(context, ref, change: true),
               ),
               Divider(height: 1, color: c.line),
               SettingsRow(

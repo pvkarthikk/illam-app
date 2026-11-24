@@ -231,6 +231,29 @@ class CloudConnectController extends Notifier<CloudConnectState> {
       state = state.copyWith(clearBusy: true);
     }
   }
+
+  Future<void> reauth(
+    String kind,
+    String destId,
+    AppLocalizations l10n,
+  ) async {
+    await connect(
+      kind,
+      ConnectMode.reauth,
+      reauthDestId: destId,
+      l10n: l10n,
+    );
+    final key = state.errorKey;
+    if (key == null) return;
+    final name = state.errorProvider ?? _providerName(kind, l10n);
+    final msg = switch (key) {
+      'bkCloudNotConfigured' => l10n.bkCloudNotConfigured(name),
+      'bkCloudOrgApproval' => l10n.bkCloudOrgApproval,
+      _ => l10n.bkCloudSignInFailed(name),
+    };
+    ref.read(snackbarProvider).show(msg);
+    state = state.copyWith(clearError: true);
+  }
 }
 
 final cloudConnectControllerProvider =

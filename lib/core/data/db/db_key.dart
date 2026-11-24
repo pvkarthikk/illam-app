@@ -22,4 +22,7 @@ class DbKey {
     await s.write(_storeKey, hex);
     return hex;
   }
+
+  static Future<void> save(SecureStore s, String hex) =>
+      s.write(_storeKey, hex);
 }
