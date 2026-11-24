@@ -120,21 +120,21 @@ class JoinController extends Notifier<JoinUi> {
 
   void usePhrase(String phrase, {int? debugPort}) {
     final np = JoinPhrase.nameplate(phrase);
-    state = state.copyWith(
+    state = JoinUi(
+      name: state.name,
       secret: JoinSecret(
         mode: 'phrase',
         password: JoinPhrase.password(phrase),
         context: JoinPhrase.context(np),
         nameplate: np,
       ),
-      clearTicket: true,
       debugPort: debugPort,
-      clearDebugPort: debugPort == null,
     );
   }
 
   void useTicket(JoinTicket t) {
-    state = state.copyWith(
+    state = JoinUi(
+      name: state.name,
       secret: JoinSecret(
         mode: 'qr',
         password: t.secret,
@@ -143,7 +143,6 @@ class JoinController extends Notifier<JoinUi> {
         expectedHomeId: t.homeId,
       ),
       ticket: t,
-      clearDebugPort: true,
     );
   }
 

@@ -46,6 +46,20 @@ Future<void> _syncHomeAndNudge(Reader read) async {
       if (p.lastSyncAt > newestSyncAt) newestSyncAt = p.lastSyncAt;
     }
 
+    int? earliestOtherAddedAt;
+    for (final d in activeDevices) {
+      if (d.deviceId == keys.deviceId) {
+        if (d.addedAt > newestSyncAt) newestSyncAt = d.addedAt;
+      } else {
+        if (earliestOtherAddedAt == null || d.addedAt < earliestOtherAddedAt) {
+          earliestOtherAddedAt = d.addedAt;
+        }
+      }
+    }
+    if (earliestOtherAddedAt != null && earliestOtherAddedAt > newestSyncAt) {
+      newestSyncAt = earliestOtherAddedAt;
+    }
+
     final now = read(clockProvider).nowMs;
     if (now - newestSyncAt <= _threeDaysMs) return;
     if (now - prefs.lastOutOfSyncNoticeAt <= _threeDaysMs) return;

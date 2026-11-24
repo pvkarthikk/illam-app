@@ -250,11 +250,32 @@ class ControlStore {
     await _save(data.outbox, next);
   });
 
+  Future<({bool outbox, bool tombstones})> pendingKinds() => _run(() async {
+    final data = await _load();
+    return (
+      outbox: data.outbox.any((e) => !e.acked),
+      tombstones: data.tombstones.any(
+        (t) =>
+            t.reason == 'deleted' &&
+            _alive(t.at) &&
+            (t.opJson?.isNotEmpty ?? false),
+      ),
+    );
+  });
+
+  Future<bool> hasPending() async {
+    final p = await pendingKinds();
+    return p.outbox || p.tombstones;
+  }
+
   Future<List<Tombstone>> tombstonesToPass() => _run(() async {
     final data = await _load();
     return [
       for (final t in data.tombstones)
-        if (t.reason == 'deleted' && _alive(t.at)) t,
+        if (t.reason == 'deleted' &&
+            _alive(t.at) &&
+            (t.opJson?.isNotEmpty ?? false))
+          t,
     ];
   });
 

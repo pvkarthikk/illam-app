@@ -23,15 +23,25 @@ class MenuSection extends ConsumerWidget {
     final today = ref.watch(todayDateProvider);
     final monday = Dates.addDays(today, 1 - Dates.weekdayIso(today));
     final slots = ref.watch(weekSlotsProvider(monday)).value ?? const <MealSlot>[];
-    final recipes = ref.watch(recipesProvider).value ?? const <RecipeView>[];
     final openKeys = ref.watch(openGroceryKeysProvider).value ?? const <String>{};
     final pantryKeys = ref.watch(pantryKeysProvider).value ?? const <String>{};
 
-    final recipesById = {for (final r in recipes) r.id: r};
     final todayBySlot = <String, MealSlot>{
       for (final s in slots)
         if (s.date == today && s.kind.isNotEmpty) s.slot: s,
     };
+    final recipeIds = <String>{};
+    for (final s in todayBySlot.values) {
+      final id = s.recipeId;
+      if (s.kind == 'recipe' && id != null) {
+        recipeIds.add(id);
+      }
+    }
+    final recipesById = <String, RecipeView>{};
+    for (final id in recipeIds) {
+      final recipe = ref.watch(recipeProvider(id)).value;
+      if (recipe != null) recipesById[id] = recipe;
+    }
 
     const slotOrder = ['breakfast', 'lunch', 'dinner'];
     final todayPlanned = <PlannedRecipe>[];

@@ -215,8 +215,9 @@ final salaryViewProvider =
       final rulesAsync = ref.watch(salaryRulesProvider(staffId));
       final adjAsync = ref.watch(salaryAdjustmentsProvider(staffId));
       final attemptsAsync = ref.watch(salaryAttemptsProvider(staffId));
-      final visitsAsync = ref.watch(salaryVisitsProvider(staffId));
-      final leavesAsync = ref.watch(salaryLeavesProvider(staffId));
+      final rangeKey = (staffId, '$month-01', '$month-31');
+      final visitsAsync = ref.watch(staffVisitsProvider(rangeKey));
+      final leavesAsync = ref.watch(staffLeavesProvider(rangeKey));
 
       for (final a in <AsyncValue<Object?>>[
         staffAsync,

@@ -64,30 +64,31 @@ class _AddStaffFormState extends ConsumerState<_AddStaffForm> {
   Future<void> _add(AppLocalizations l10n, int amountPaise, String? e164) async {
     if (_saving) return;
     setState(() => _saving = true);
+    final repo = ref.read(staffRepoProvider);
+    final snackbar = ref.read(snackbarProvider);
+    final count = (ref.read(activeStaffProvider).value ?? const []).length;
+    final color = _palette[count % _palette.length];
+    final today = Dates.today(ref.read(clockProvider));
+    final rawName = _name.text;
+    Navigator.of(context).pop();
     try {
-      final count = (ref.read(activeStaffProvider).value ?? const []).length;
-      final color = _palette[count % _palette.length];
-      final rawName = _name.text;
-      final res = await ref
-          .read(staffRepoProvider)
-          .addStaff(
-            name: rawName,
-            role: _role,
-            payType: _payType,
-            amountPaise: amountPaise,
-            expectedTime: _time,
-            color: color,
-            phoneE164: e164,
-            today: Dates.today(ref.read(clockProvider)),
-          );
-      if (!mounted) return;
-      Navigator.of(context).pop();
-      ref
-          .read(snackbarProvider)
-          .show(l10n.staffAdded(Names.titleCase(rawName)), undo: res.undo);
-    } finally {
-      if (mounted) setState(() => _saving = false);
-    }
+      final res = await repo.addStaff(
+        name: rawName,
+        role: _role,
+        payType: _payType,
+        amountPaise: amountPaise,
+        expectedTime: _time,
+        color: color,
+        phoneE164: e164,
+        today: today,
+      );
+      if (res.undo != null) {
+        snackbar.show(
+          l10n.staffAdded(Names.titleCase(rawName)),
+          undo: res.undo,
+        );
+      }
+    } catch (_) {}
   }
 
   @override

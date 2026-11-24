@@ -138,6 +138,16 @@ class RecipesRepo {
         if (s.trim().isNotEmpty) s.trim(),
     ]);
 
+    final existing = id == null
+        ? null
+        : await (db.select(db.recipes)..where(
+                (r) =>
+                    r.id.equals(id) &
+                    r.homeId.equals(homeId) &
+                    r.deleted.equals(false),
+              ))
+              .getSingleOrNull();
+
     late String outId;
     await changes.write('Saved recipe', (c) {
       final fields = <String, Object?>{
@@ -156,8 +166,22 @@ class RecipesRepo {
         outId = c.create('recipes', {...fields, 'color': color});
       } else {
         outId = id;
+        final stored = existing == null
+            ? null
+            : <String, Object?>{
+                'name': existing.name,
+                'glyph': existing.glyph,
+                'time_min': existing.timeMin,
+                'serves': existing.serves,
+                'meal_types': existing.mealTypes,
+                'tags': existing.tags,
+                'ingredients_json': existing.ingredientsJson,
+                'steps_json': existing.stepsJson,
+              };
         for (final entry in fields.entries) {
-          c.set('recipes', id, entry.key, entry.value);
+          if (stored == null || stored[entry.key] != entry.value) {
+            c.set('recipes', id, entry.key, entry.value);
+          }
         }
       }
     }, homeId: homeId);

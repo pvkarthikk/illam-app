@@ -99,25 +99,29 @@ class _EditStaffFormState extends ConsumerState<_EditStaffForm> {
   Future<void> _save(AppLocalizations l10n, String? e164) async {
     if (_saving) return;
     setState(() => _saving = true);
+    final s = widget.staff;
+    final name = Names.titleCase(_name.text);
+    final upiTrimmed = _upi.text.trim();
+    final upi = upiTrimmed.isEmpty ? null : upiTrimmed;
+    final workDays = workDaysCsv(_days.toList());
+    final expectedTimes = (_times..sort()).join(',');
+    final fields = <String, Object?>{
+      if (name != s.name) 'name': name,
+      if (_role != s.role) 'role': _role,
+      if (e164 != s.phoneE164) 'phone_e164': e164,
+      if (upi != s.upiId) 'upi_id': upi,
+      if (workDays != s.workDays) 'work_days': workDays,
+      if (expectedTimes != s.expectedTimes) 'expected_times': expectedTimes,
+    };
+    final repo = ref.read(staffRepoProvider);
+    final snackbar = ref.read(snackbarProvider);
+    Navigator.of(context).pop();
     try {
-      final upi = _upi.text.trim();
-      final res = await ref.read(staffRepoProvider).updateDetails(
-        widget.staff.id,
-        {
-          'name': Names.titleCase(_name.text),
-          'role': _role,
-          'phone_e164': e164,
-          'upi_id': upi.isEmpty ? null : upi,
-          'work_days': workDaysCsv(_days.toList()),
-          'expected_times': (_times..sort()).join(','),
-        },
-      );
-      if (!mounted) return;
-      Navigator.of(context).pop();
-      ref.read(snackbarProvider).show(l10n.staffDetailsSaved, undo: res.undo);
-    } finally {
-      if (mounted) setState(() => _saving = false);
-    }
+      final res = await repo.updateDetails(s.id, fields);
+      if (res.undo != null) {
+        snackbar.show(l10n.staffDetailsSaved, undo: res.undo);
+      }
+    } catch (_) {}
   }
 
   @override
@@ -275,7 +279,7 @@ class _EditStaffFormState extends ConsumerState<_EditStaffForm> {
             NestButton(
               label: l10n.commonCancel,
               kind: NestButtonKind.ghost,
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: _saving ? null : () => Navigator.of(context).pop(),
             ),
             NestButton(
               label: l10n.commonSave,

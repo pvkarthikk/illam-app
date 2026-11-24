@@ -49,7 +49,5 @@ class StaffController extends Notifier<String> {
   }
 }
 
-final staffControllerProvider =
-    NotifierProvider.family<StaffController, String, String>(
-      StaffController.new,
-    );
+final staffControllerProvider = NotifierProvider.autoDispose
+    .family<StaffController, String, String>(StaffController.new);

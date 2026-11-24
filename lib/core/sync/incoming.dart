@@ -193,13 +193,25 @@ class IncomingPipeline {
     switch (d.verdict) {
       case Verdict.accept:
         await hlc.observe(op.hlc, persist: false);
-        await db.transaction(() async {
-          if (wasPending) {
-            await applier.applyPending(op);
-          } else {
-            await applier.applyOne(op);
-          }
-        });
+        try {
+          await db.transaction(() async {
+            if (wasPending) {
+              await applier.applyPending(op);
+            } else {
+              await applier.applyOne(op);
+            }
+          });
+        } catch (e) {
+          await db
+              .into(db.ops)
+              .insert(
+                op.toCompanion().copyWith(status: const Value('quarantined')),
+                mode: InsertMode.insertOrReplace,
+              );
+          rep.quarantined++;
+          rep.notes.add('${op.opId}: applyFailed: $e');
+          return;
+        }
         rep.applied++;
         onApplied?.call(op);
 

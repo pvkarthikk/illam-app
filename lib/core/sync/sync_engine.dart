@@ -121,8 +121,9 @@ class SyncEngine {
     )..where((h) => h.id.equals(hId))).getSingleOrNull();
     if (home == null) return;
 
-    final currentKey = await _ring.current(hId);
-    if (currentKey == null) return;
+    final homeKeys = await _ring.all(hId);
+    if (homeKeys.isEmpty) return;
+    final currentKey = homeKeys.first;
 
     _resolvedKeys = await keys;
     _started = true;
@@ -139,8 +140,12 @@ class SyncEngine {
       // mDNS advertisement unavailable in headless environments.
     }
     try {
+      final tags = <String>{};
+      for (final k in homeKeys) {
+        tags.addAll(await lanTagsFor(k.bytes, nowUtc));
+      }
       await _lan.discover(
-        await _allLanTags(hId, nowUtc),
+        tags,
         (host, port) => unawaited(_dial(host, port)),
       );
     } on Object {

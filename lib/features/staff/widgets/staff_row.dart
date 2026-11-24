@@ -59,6 +59,9 @@ class StaffRow extends ConsumerWidget {
         ? NestPalette.fromHex(staff.color!)
         : c.primary;
     final actions = ref.read(staffActionsProvider.notifier);
+    final pending = ref.watch(
+      staffActionsProvider.select((ids) => ids.contains(staff.id)),
+    );
 
     Visit? newestOpen;
     for (final v in visits) {
@@ -122,14 +125,14 @@ class StaffRow extends ConsumerWidget {
         icon: Icons.login_rounded,
         kind: NestButtonKind.primary,
         size: NestButtonSize.sm,
-        onPressed: () => actions.markIn(staff),
+        onPressed: pending ? null : () => actions.markIn(staff),
       ),
       StatusIn() => NestButton(
         label: l10n.staffMarkOut,
         icon: Icons.logout_rounded,
         kind: NestButtonKind.accent,
         size: NestButtonSize.sm,
-        onPressed: newestOpen == null
+        onPressed: pending || newestOpen == null
             ? null
             : () => actions.markOut(staff, newestOpen!),
       ),
@@ -138,7 +141,7 @@ class StaffRow extends ConsumerWidget {
         kind: NestButtonKind.ghost,
         size: NestButtonSize.sm,
         semanticLabel: l10n.staffStartAnother(staff.name ?? ''),
-        onPressed: () => actions.markIn(staff),
+        onPressed: pending ? null : () => actions.markIn(staff),
       ),
       StatusLeave() => NestButton(
         label: l10n.staffChange,
@@ -151,7 +154,7 @@ class StaffRow extends ConsumerWidget {
         label: l10n.staffMarkIn,
         kind: NestButtonKind.primary,
         size: NestButtonSize.sm,
-        onPressed: () => actions.markIn(staff),
+        onPressed: pending ? null : () => actions.markIn(staff),
       ),
     };
 

@@ -31,6 +31,8 @@ class _NestAppState extends ConsumerState<NestApp> {
   StreamSubscription<String>? _ignoredSub;
   StreamSubscription<void>? _controlSub;
   Timer? _dialTimer;
+  Duration? _dialPeriod;
+  Timer? _planTimer;
   String? _handlingTombstoneHomeId;
 
   @override
@@ -44,7 +46,6 @@ class _NestAppState extends ConsumerState<NestApp> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       _schedulePlan();
-      unawaited(_syncDialTimer());
     });
   }
 
@@ -59,24 +60,33 @@ class _NestAppState extends ConsumerState<NestApp> {
   Future<void> _syncDialTimer() async {
     try {
       final cs = ref.read(controlStoreProvider);
-      final hasPending =
-          (await cs.allPendingOutbox()).isNotEmpty ||
-          (await cs.tombstonesToPass()).isNotEmpty;
+      final pending = await cs.pendingKinds();
       if (!mounted) return;
-      if (hasPending) {
-        _dialTimer ??= Timer.periodic(
-          const Duration(seconds: 30),
-          (_) => unawaited(ref.read(controlDialerProvider).runOnce()),
-        );
+      final Duration? period = pending.outbox
+          ? const Duration(seconds: 30)
+          : (pending.tombstones ? const Duration(minutes: 5) : null);
+      if (period != null) {
+        if (_dialTimer == null || _dialPeriod != period) {
+          _dialTimer?.cancel();
+          _dialPeriod = period;
+          _dialTimer = Timer.periodic(
+            period,
+            (_) => unawaited(ref.read(controlDialerProvider).runOnce()),
+          );
+        }
       } else {
         _dialTimer?.cancel();
         _dialTimer = null;
+        _dialPeriod = null;
       }
     } catch (_) {}
   }
 
   void _schedulePlan() {
-    unawaited(_runPlan());
+    _planTimer?.cancel();
+    _planTimer = Timer(const Duration(seconds: 2), () {
+      unawaited(_runPlan());
+    });
     unawaited(_syncDialTimer());
   }
 
@@ -90,6 +100,7 @@ class _NestAppState extends ConsumerState<NestApp> {
 
   @override
   void dispose() {
+    _planTimer?.cancel();
     _dialTimer?.cancel();
     _controlSub?.cancel();
     _ignoredSub?.cancel();
