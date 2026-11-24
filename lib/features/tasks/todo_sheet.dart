@@ -106,20 +106,28 @@ class _TodoSheetState extends ConsumerState<_TodoSheet> {
     final (assigneeId, assigneeType) = _resolvedAssignee(people);
 
     setState(() => _saving = true);
+    var closed = false;
     try {
       final repo = ref.read(tasksRepoProvider);
       final ex = widget.existing;
       if (ex == null) {
-        final res = await repo.createTodo(
-          title: title,
-          due: _due,
-          assigneeType: assigneeType,
-          assignee: assigneeId,
-        );
-        if (!mounted) return;
+        final snack = ref.read(snackbarProvider);
+        final ctrl = ref.read(tasksControllerProvider.notifier);
+        final due = _due;
+        closed = true;
         Navigator.of(context).pop();
-        ref.read(snackbarProvider).show(l10n.tasksTodoAdded, undo: res.undo);
-        ref.read(tasksControllerProvider.notifier).setTab('todos');
+        try {
+          final res = await repo.createTodo(
+            title: title,
+            due: due,
+            assigneeType: assigneeType,
+            assignee: assigneeId,
+          );
+          snack.show(l10n.tasksTodoAdded, undo: res.undo);
+          ctrl.setTab('todos');
+        } on Object {
+          snack.show(rejectText('other'));
+        }
       } else {
         final diff = <String, Object?>{
           if (title != ex.title) 'title': title,
@@ -128,16 +136,19 @@ class _TodoSheetState extends ConsumerState<_TodoSheet> {
           if (assigneeId != ex.assignee) 'assignee': assigneeId,
         };
         if (diff.isEmpty) {
+          closed = true;
           Navigator.of(context).pop();
           return;
         }
         final res = await repo.updateTodo(ex.id, diff);
         if (!mounted) return;
+        final snack = ref.read(snackbarProvider);
+        closed = true;
         Navigator.of(context).pop();
-        ref.read(snackbarProvider).show(l10n.tasksTodoUpdated, undo: res.undo);
+        snack.show(l10n.tasksTodoUpdated, undo: res.undo);
       }
     } finally {
-      if (mounted) setState(() => _saving = false);
+      if (!closed && mounted) setState(() => _saving = false);
     }
   }
 

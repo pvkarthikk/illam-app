@@ -35,6 +35,7 @@ class SyncSession {
   final Set<String> _theirMemberOps = <String>{};
   final List<String> _receivedMemberOpIds = <String>[];
   bool _controlOnly = false;
+  bool _stranger = false;
   ({String reason, String? byName})? _pendingErase;
   bool _closed = false;
   Future<void> _sendChain = Future<void>.value();
@@ -46,6 +47,7 @@ class SyncSession {
       ctx is RestoreSyncContext ? ctx as RestoreSyncContext : null;
 
   Future<void> run() async {
+    Timer? pingTimer;
     try {
       await ch.send(
         HelloMsg(
@@ -111,12 +113,19 @@ class SyncSession {
       }
 
       await ctx.noteSeen(auth.deviceId);
+      await _refreshSituation();
 
       final vec = await ctx.myVector();
       final mIds = await ctx.memberOpIds();
       await ch.send(
         HaveMsg(vector: vec.toJson(), memberOpIds: mIds).toJson(),
       );
+
+      pingTimer = Timer.periodic(const Duration(minutes: 5), (_) {
+        if (!_closed) {
+          unawaited(_trySend(const {'t': 'ping'}).catchError((_) {}));
+        }
+      });
 
       await _loop();
     } on TimeoutException {
@@ -128,6 +137,7 @@ class SyncSession {
     } on Object {
       await _closeQuietly();
     } finally {
+      pingTimer?.cancel();
       final erase = _pendingErase;
       final ctrl = _ctrl;
       if (erase != null && ctrl != null) {
@@ -170,6 +180,23 @@ class SyncSession {
             continue;
           }
           await ctx.ingest(ops: o.batch);
+          final sent = _sent;
+          if (sent != null && o.batch.isNotEmpty) {
+            final maxByDev = <String, int>{};
+            for (final op in o.batch) {
+              final dev = op['deviceId'] as String?;
+              final seq = (op['seq'] as num?)?.toInt();
+              if (dev != null && seq != null) {
+                final cur = maxByDev[dev];
+                if (cur == null || seq > cur) {
+                  maxByDev[dev] = seq;
+                }
+              }
+            }
+            if (maxByDev.isNotEmpty) {
+              _sent = sent.merge(VersionVector(maxByDev));
+            }
+          }
 
         case 'opsDone':
           await _sendChain;
@@ -212,6 +239,7 @@ class SyncSession {
           }
 
         case 'ack':
+          if (_stranger) continue;
           final a = AckMsg.fromJson(msg);
           final v = VersionVector.fromJson(a.vector);
           _sent = (_sent ?? v).merge(v);
@@ -235,6 +263,7 @@ class SyncSession {
           if (!ready.isCompleted) ready.complete();
 
         case 'notice':
+          if (_stranger) continue;
           receivedNotice = NoticeMsg.fromJson(msg);
           if (receivedNotice!.kind == 'recoverDead') {
             await _restore?.onRecoverDead(
@@ -264,6 +293,7 @@ class SyncSession {
     }
     final sit = await ctrl.evaluateSituation(peer);
     _controlOnly = !sit.isFull;
+    _stranger = sit.stranger;
     if (!sit.meActive && sit.myEraseReason != null) {
       _pendingErase ??= (reason: sit.myEraseReason!, byName: sit.myEraseByName);
     }
@@ -287,6 +317,9 @@ class SyncSession {
   Future<void> _sendMissing(VersionVector theirs) {
     final op = _sendChain.then((_) async {
       if (_closed) return;
+      final sit = await _refreshSituation();
+      if (_closed || _stranger) return;
+
       final mo = await ctx.memberOpsWire(except: _theirMemberOps);
       if (mo.isNotEmpty) {
         if (_closed) return;
@@ -296,17 +329,27 @@ class SyncSession {
         }
       }
 
-      final sit = await _refreshSituation();
       if (sit == null || sit.isFull) {
         _sentDataOps = true;
         final ops = await ctx.opsAfter(theirs);
+        var sentCount = 0;
         for (var i = 0; i < ops.length; i += 200) {
           if (_closed || _controlOnly) break;
           final end = (i + 200 < ops.length) ? i + 200 : ops.length;
           await _trySend(OpsMsg(batch: ops.sublist(i, end)).toJson());
+          sentCount = end;
           await Future<void>.delayed(Duration.zero);
         }
-        _sent = theirs.merge(await ctx.myVector());
+        final sentMap = Map<String, int>.of(theirs.map);
+        for (var i = 0; i < sentCount; i++) {
+          final op = ops[i];
+          final dev = op['deviceId'] as String?;
+          final seq = (op['seq'] as num?)?.toInt();
+          if (dev != null && seq != null && seq == (sentMap[dev] ?? 0) + 1) {
+            sentMap[dev] = seq;
+          }
+        }
+        _sent = (_sent ?? theirs).merge(VersionVector(sentMap));
       }
 
       if (_closed) return;

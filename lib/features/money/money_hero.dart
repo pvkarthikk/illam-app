@@ -1,8 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
-import 'package:nm_flat/core/data/db/database.dart';
-import 'package:nm_flat/core/data/repo/money_repo.dart';
 import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/domain/money_math.dart';
 import 'package:nm_flat/core/domain/salary_months.dart';
@@ -14,6 +12,12 @@ import 'package:nm_flat/features/money/budget_sheet.dart';
 import 'package:nm_flat/features/salary/salary_providers.dart';
 import 'package:nm_flat/features/staff/staff_providers.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
+
+final _prevTotalProvider = StreamProvider.family<int, String>((ref, month) {
+  final skip =
+      ref.watch(duplicateSalaryAttemptIdsProvider).value ?? const <String>{};
+  return ref.watch(moneyRepoProvider).watchMonthTotal(month, skip);
+});
 
 class MoneyHero extends ConsumerWidget {
   const MoneyHero({super.key});
@@ -29,16 +33,7 @@ class MoneyHero extends ConsumerWidget {
     final today = ref.watch(todayDateProvider);
     final month = Dates.month(today);
     final prev = prevMonth(month);
-    final prevRows =
-        ref.watch(monthExpensesProvider(prev)).value ?? const <ExpenseRow>[];
-    final dupAttempts =
-        ref.watch(duplicateSalaryAttemptIdsProvider).value ?? const <String>{};
-    final repo = ref.watch(moneyRepoProvider);
-    final prevTotal = monthTotal(
-      [for (final r in prevRows) repo.toSpendLite(r)],
-      prev,
-      duplicateSalaryExpenseIds(prevRows, dupAttempts),
-    );
+    final prevTotal = ref.watch(_prevTotalProvider(prev)).value ?? 0;
 
     final fg = cs.onPrimary;
     final onPrimaryMuted = fg.withValues(alpha: 0.85);

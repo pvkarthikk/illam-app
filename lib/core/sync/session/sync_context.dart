@@ -22,6 +22,7 @@ class PeerSituation {
   const PeerSituation({
     required this.peerActive,
     required this.meActive,
+    this.stranger = false,
     this.peerNoticeKind,
     this.peerNoticeOpId,
     this.peerNoticeReason,
@@ -32,6 +33,7 @@ class PeerSituation {
 
   final bool peerActive;
   final bool meActive;
+  final bool stranger;
   final String? peerNoticeKind;
   final String? peerNoticeOpId;
   final String? peerNoticeReason;
@@ -280,6 +282,9 @@ class DbSyncContext
     final r = await membership.replayState(homeId);
     final peerActive = r.isActiveDevice(peerDeviceId);
     final meActive = r.isActiveDevice(myDeviceId);
+    final prov = prefs?.getText('provisionalRestore_$homeId');
+    final stranger =
+        !r.devices.containsKey(peerDeviceId) && (prov == null || prov.isEmpty);
 
     String? peerKind;
     String? peerOpId;
@@ -369,6 +374,7 @@ class DbSyncContext
     return PeerSituation(
       peerActive: peerActive,
       meActive: meActive,
+      stranger: stranger,
       peerNoticeKind: peerKind,
       peerNoticeOpId: peerOpId,
       peerNoticeReason: peerReason,

@@ -92,8 +92,25 @@ class TasksRepo {
 
   Stream<List<TodoRow>> watchTodos(String homeId) =>
       (db.select(db.todos)
-            ..where((t) => t.homeId.equals(homeId) & t.deleted.equals(false))
+            ..where(
+              (t) =>
+                  t.homeId.equals(homeId) &
+                  t.deleted.equals(false) &
+                  t.done.equals(false),
+            )
             ..orderBy([(t) => OrderingTerm.asc(t.due)]))
+          .watch();
+
+  Stream<List<TodoRow>> watchDoneTodos(String homeId) =>
+      (db.select(db.todos)
+            ..where(
+              (t) =>
+                  t.homeId.equals(homeId) &
+                  t.deleted.equals(false) &
+                  t.done.equals(true),
+            )
+            ..orderBy([(t) => OrderingTerm.desc(t.doneAt)])
+            ..limit(50))
           .watch();
 
   Future<ChangeResult> markRoutineDone(String id, String today) =>

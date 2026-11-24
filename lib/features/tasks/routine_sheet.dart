@@ -140,23 +140,30 @@ class _RoutineSheetState extends ConsumerState<_RoutineSheet> {
     }
 
     setState(() => _saving = true);
+    var closed = false;
     try {
       final repo = ref.read(tasksRepoProvider);
+      final snack = ref.read(snackbarProvider);
+      final ctrl = ref.read(tasksControllerProvider.notifier);
       final ex = widget.existing;
       if (ex == null) {
         final today = ref.read(todayDateProvider);
-        final res = await repo.createRoutine(
-          name: name,
-          room: room,
-          everyDays: everyDays,
-          assigneeType: assigneeType,
-          assignee: assigneeId,
-          today: today,
-        );
-        if (!mounted) return;
+        closed = true;
         Navigator.of(context).pop();
-        ref.read(snackbarProvider).show(l10n.tasksRoutineAdded, undo: res.undo);
-        ref.read(tasksControllerProvider.notifier).setTab('routines');
+        try {
+          final res = await repo.createRoutine(
+            name: name,
+            room: room,
+            everyDays: everyDays,
+            assigneeType: assigneeType,
+            assignee: assigneeId,
+            today: today,
+          );
+          snack.show(l10n.tasksRoutineAdded, undo: res.undo);
+          ctrl.setTab('routines');
+        } on Object {
+          snack.show(rejectText('other'));
+        }
       } else {
         final diff = <String, Object?>{
           if (name != ex.name) 'name': name,
@@ -166,18 +173,22 @@ class _RoutineSheetState extends ConsumerState<_RoutineSheet> {
           if (assigneeId != ex.assignee) 'assignee': assigneeId,
         };
         if (diff.isEmpty) {
+          closed = true;
           Navigator.of(context).pop();
           return;
         }
-        final res = await repo.updateRoutine(ex.id, diff);
-        if (!mounted) return;
+        final exId = ex.id;
+        closed = true;
         Navigator.of(context).pop();
-        ref
-            .read(snackbarProvider)
-            .show(l10n.tasksRoutineUpdated, undo: res.undo);
+        try {
+          final res = await repo.updateRoutine(exId, diff);
+          snack.show(l10n.tasksRoutineUpdated, undo: res.undo);
+        } on Object {
+          snack.show(rejectText('other'));
+        }
       }
     } finally {
-      if (mounted) setState(() => _saving = false);
+      if (!closed && mounted) setState(() => _saving = false);
     }
   }
 

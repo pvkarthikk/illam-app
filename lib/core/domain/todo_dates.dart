@@ -3,6 +3,7 @@ import 'package:nm_flat/core/time/dates.dart';
 enum TodoGroup { overdue, today, tomorrow, later }
 
 TodoGroup todoGroup(String due, String today) {
+  if (due.isEmpty) return TodoGroup.later;
   final diff = Dates.daysBetween(today, due);
   if (diff < 0) return TodoGroup.overdue;
   if (diff == 0) return TodoGroup.today;

@@ -84,7 +84,9 @@ class HelpAtHomeSection extends ConsumerWidget {
                 for (final alert in alertsFor(
                   openVisits: [
                     for (final v in openVisits)
-                      if (v.staffId == staff.id) toLite(v),
+                      if (v.staffId == staff.id &&
+                          (v.date?.isNotEmpty ?? false))
+                        toLite(v),
                   ],
                   today: today,
                 ))

@@ -88,6 +88,7 @@ class SyncEngine {
   bool _started = false;
   bool _disposed = false;
   Timer? _wifiTipTimer;
+  Timer? _redialTimer;
   Timer? _pushTimer;
   DeviceKeys? _resolvedKeys;
 
@@ -164,6 +165,19 @@ class SyncEngine {
       if (activeDevs.any((d) => d.deviceId != myDev) &&
           _state.connected.isEmpty) {
         _emit(_state.copyWith(wifiTip: true));
+      }
+    });
+
+    _redialTimer?.cancel();
+    _redialTimer = Timer.periodic(const Duration(minutes: 2), (_) async {
+      if (_disposed || !_started) return;
+      for (final peer in await SyncStore(db).peers(hId)) {
+        if (_disposed || !_started) return;
+        if (peer.lastHost != null &&
+            peer.lastPort != null &&
+            !_state.connected.contains(peer.deviceId)) {
+          unawaited(_dial(peer.lastHost!, peer.lastPort!));
+        }
       }
     });
   }
@@ -414,6 +428,7 @@ class SyncEngine {
   Future<void> stopForeground() async {
     _started = false;
     _wifiTipTimer?.cancel();
+    _redialTimer?.cancel();
     _pushTimer?.cancel();
     for (final s in [..._sessions]) {
       await s.close();

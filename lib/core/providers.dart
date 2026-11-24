@@ -558,6 +558,11 @@ final todosProvider = StreamProvider<List<TodoRow>>((ref) {
   if (home == null) return Stream.value(const <TodoRow>[]);
   return ref.watch(tasksRepoProvider).watchTodos(home);
 });
+final doneTodosProvider = StreamProvider<List<TodoRow>>((ref) {
+  final home = ref.watch(currentHomeIdProvider).value;
+  if (home == null) return Stream.value(const <TodoRow>[]);
+  return ref.watch(tasksRepoProvider).watchDoneTodos(home);
+});
 final taskPeopleProvider = Provider<AsyncValue<List<TaskPerson>>>((ref) {
   final mAsync = ref.watch(membersProvider);
   final sAsync = ref.watch(activeStaffProvider);

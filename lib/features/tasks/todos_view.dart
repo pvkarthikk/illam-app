@@ -28,6 +28,7 @@ final groupedTodosProvider = Provider.family<GroupedTodos, String?>((
   filterId,
 ) {
   final allTodos = ref.watch(todosProvider).value ?? const <TodoRow>[];
+  final doneRows = ref.watch(doneTodosProvider).value ?? const <TodoRow>[];
   final today = ref.watch(todayDateProvider);
   final grouped = <TodoGroup, List<TodoRow>>{
     for (final g in TodoGroup.values) g: <TodoRow>[],
@@ -40,6 +41,10 @@ final groupedTodosProvider = Provider.family<GroupedTodos, String?>((
     } else {
       grouped[todoGroup(t.due, today)]!.add(t);
     }
+  }
+  for (final t in doneRows) {
+    if (filterId != null && t.assignee != filterId) continue;
+    doneTodos.add(t);
   }
   for (final list in grouped.values) {
     list.sort((a, b) {
@@ -64,16 +69,18 @@ class TodosView extends ConsumerStatefulWidget {
 class _TodosViewState extends ConsumerState<TodosView> {
   bool _completedOpen = false;
 
-  Future<void> _toggleDone(TodoRow row, bool done) async {
+  Future<bool> _toggleDone(TodoRow row, bool done) async {
     final l10n = AppLocalizations.of(context);
-    final res = await ref.read(tasksRepoProvider).setTodoDone(row.id, done);
-    if (!mounted) return;
-    ref
-        .read(snackbarProvider)
-        .show(
-          done ? l10n.tasksTodoDone(row.title) : l10n.tasksMovedBack,
-          undo: res.undo,
-        );
+    final snackbar = ref.read(snackbarProvider);
+    final repo = ref.read(tasksRepoProvider);
+    final text = done ? l10n.tasksTodoDone(row.title) : l10n.tasksMovedBack;
+    try {
+      final res = await repo.setTodoDone(row.id, done);
+      snackbar.show(text, undo: res.undo);
+      return res.undo != null;
+    } catch (_) {
+      return false;
+    }
   }
 
   @override
@@ -288,7 +295,7 @@ class _GroupHeader extends StatelessWidget {
   }
 }
 
-class _TodoTile extends StatelessWidget {
+class _TodoTile extends StatefulWidget {
   const _TodoTile({
     required this.row,
     required this.who,
@@ -301,16 +308,41 @@ class _TodoTile extends StatelessWidget {
   final TaskPerson? who;
   final String today;
   final bool completed;
-  final VoidCallback onCheck;
+  final Future<bool> Function() onCheck;
+
+  @override
+  State<_TodoTile> createState() => _TodoTileState();
+}
+
+class _TodoTileState extends State<_TodoTile> {
+  bool _busy = false;
+
+  @override
+  void didUpdateWidget(covariant _TodoTile oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.row.id != widget.row.id ||
+        oldWidget.completed != widget.completed) {
+      _busy = false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final c = context.nest;
-    final whoLabel = who != null ? personName(l10n, who!) : l10n.tasksAnyone;
+    final row = widget.row;
+    final who = widget.who;
+    final today = widget.today;
+    final shownCompleted = widget.completed != _busy;
+    final whoLabel = who != null ? personName(l10n, who) : l10n.tasksAnyone;
     final avatarColor = who?.color ?? c.ink3;
     final avatarName = who?.firstName ?? whoLabel;
-    final day = '📅 ${Formatters.dayLabel(row.due, today, l10n)}';
+    final meta = row.due.isEmpty
+        ? whoLabel
+        : l10n.tasksTodoMeta(
+            '📅 ${Formatters.dayLabel(row.due, today, l10n)}',
+            whoLabel,
+          );
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
@@ -318,11 +350,18 @@ class _TodoTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           RoundCheck(
-            value: completed,
-            semanticLabel: completed
+            value: shownCompleted,
+            semanticLabel: shownCompleted
                 ? l10n.tasksReopenTodo(row.title)
                 : l10n.tasksCompleteTodo(row.title),
-            onChanged: (_) => onCheck(),
+            onChanged: (_) async {
+              if (_busy) return;
+              setState(() => _busy = true);
+              final ok = await widget.onCheck();
+              if (!ok && mounted) {
+                setState(() => _busy = false);
+              }
+            },
           ),
           Expanded(
             child: InkWell(
@@ -339,9 +378,10 @@ class _TodoTile extends StatelessWidget {
                     Text(
                       row.title,
                       style: NestText.itemTitle16.copyWith(
-                        color: completed ? c.ink3 : c.ink,
-                        decoration:
-                            completed ? TextDecoration.lineThrough : null,
+                        color: shownCompleted ? c.ink3 : c.ink,
+                        decoration: shownCompleted
+                            ? TextDecoration.lineThrough
+                            : null,
                       ),
                     ),
                     const SizedBox(height: 6),
@@ -355,7 +395,7 @@ class _TodoTile extends StatelessWidget {
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
-                            l10n.tasksTodoMeta(day, whoLabel),
+                            meta,
                             style: NestText.meta13.copyWith(color: c.ink3),
                           ),
                         ),

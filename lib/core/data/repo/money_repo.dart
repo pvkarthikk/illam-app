@@ -120,13 +120,46 @@ class MoneyRepo {
               (e) =>
                   e.homeId.equals(homeId) &
                   e.deleted.equals(false) &
-                  e.date.like('$month-%'),
+                  e.date.isBetweenValues('$month-01', '$month-31'),
             )
             ..orderBy([
               (e) => OrderingTerm.desc(e.date),
               (e) => OrderingTerm.desc(e.createdAt),
             ]))
           .watch();
+
+  Stream<List<String>> watchExpenseMonths(String fromIso) => db
+      .customSelect(
+        'SELECT DISTINCT substr(date, 1, 7) AS m FROM expenses '
+        'WHERE home_id = ? AND deleted = 0 AND date >= ? AND length(date) >= 7 '
+        'ORDER BY m DESC',
+        variables: [
+          Variable.withString(homeId),
+          Variable.withString(fromIso),
+        ],
+        readsFrom: {db.expenses},
+      )
+      .watch()
+      .map((rows) => [for (final r in rows) r.read<String>('m')]);
+
+  Stream<int> watchMonthTotal(String month, Set<String> skipAttemptIds) {
+    final total = db.expenses.amountPaise.sum();
+    var pred =
+        db.expenses.homeId.equals(homeId) &
+        db.expenses.deleted.equals(false) &
+        db.expenses.date.isBetweenValues('$month-01', '$month-31');
+    if (skipAttemptIds.isNotEmpty) {
+      pred =
+          pred &
+          (db.expenses.source.equals('salary').not() |
+              db.expenses.settlementAttemptId.isNull() |
+              db.expenses.settlementAttemptId.isNotIn(skipAttemptIds));
+    }
+    final q = db.selectOnly(db.expenses)
+      ..addColumns([total])
+      ..where(pred);
+    return q.watchSingle().map((row) => row.read(total) ?? 0);
+  }
 
   Stream<List<Bill>> watchBills() =>
       (db.select(db.bills)
@@ -225,8 +258,11 @@ class MoneyRepo {
   }) => changes.write('Add spend', (c) {
     if (repeatMonthly) {
       final month = s.date.substring(0, 7);
+      final billName = s.merchant.length > 40
+          ? s.merchant.substring(0, 40)
+          : s.merchant;
       final billId = c.create('bills', {
-        'name': s.merchant,
+        'name': billName,
         'category': s.category,
         'usual_amount_paise': s.amountPaise,
         'due_day': Dates.parse(s.date).day,

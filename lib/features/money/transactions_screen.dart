@@ -12,11 +12,17 @@ import 'package:nm_flat/features/money/spend_sheet.dart';
 import 'package:nm_flat/features/staff/staff_providers.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
-final _txExpensesProvider = StreamProvider<List<ExpenseRow>>((ref) {
+final _txMonthsProvider = StreamProvider.autoDispose<List<String>>((ref) {
   final today = ref.watch(todayDateProvider);
   final minDate = Dates.monthStart(Dates.addMonths(Dates.month(today), -13));
-  return ref.watch(moneyRepoProvider).watchExpensesSince(minDate);
+  return ref.watch(moneyRepoProvider).watchExpenseMonths(minDate);
 });
+
+final _txRowsProvider = StreamProvider.autoDispose
+    .family<List<ExpenseRow>, String>(
+      (ref, month) =>
+          ref.watch(moneyRepoProvider).watchExpensesInMonth(month),
+    );
 
 class TransactionsScreen extends ConsumerStatefulWidget {
   const TransactionsScreen({super.key, this.category});
@@ -52,24 +58,17 @@ class _TransactionsScreenState extends ConsumerState<TransactionsScreen> {
     final c = context.nest;
     final today = ref.watch(todayDateProvider);
     final thisMonth = Dates.month(today);
-    final all = ref.watch(_txExpensesProvider).value ?? const <ExpenseRow>[];
+    final dbMonths = ref.watch(_txMonthsProvider).value ?? const <String>[];
+    final rows =
+        ref.watch(_txRowsProvider(_month)).value ?? const <ExpenseRow>[];
 
-    final monthSet = <String>{
-      thisMonth,
-      for (final e in all)
-        if (e.date.length >= 7) Dates.month(e.date),
-    };
+    final monthSet = <String>{thisMonth, _month, ...dbMonths};
     final months = monthSet.toList()..sort((a, b) => b.compareTo(a));
-    if (!months.contains(_month)) {
-      months.add(_month);
-      months.sort((a, b) => b.compareTo(a));
-    }
 
     final q = _query.trim().toLowerCase();
     final filtered = [
-      for (final e in all)
-        if (e.date.startsWith('$_month-') &&
-            (_category == null || e.category == _category) &&
+      for (final e in rows)
+        if ((_category == null || e.category == _category) &&
             (q.isEmpty ||
                 e.merchant.toLowerCase().contains(q) ||
                 e.category.toLowerCase().contains(q) ||
@@ -89,90 +88,116 @@ class _TransactionsScreenState extends ConsumerState<TransactionsScreen> {
       appBar: NestTopBar.sub(title: l10n.moneyAllSpends),
       body: SafeArea(
         bottom: false,
-        child: ListView(
-          padding: const EdgeInsets.only(bottom: 32),
-          children: [
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-              child: Row(
-                children: [
-                  for (var i = 0; i < months.length; i++) ...[
-                    if (i > 0) const SizedBox(width: 8),
-                    NestChip(
-                      label: Formatters.monthName(months[i]),
-                      selected: months[i] == _month,
-                      onTap: () => setState(() => _month = months[i]),
-                    ),
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 4,
+                ),
+                child: Row(
+                  children: [
+                    for (var i = 0; i < months.length; i++) ...[
+                      if (i > 0) const SizedBox(width: 8),
+                      NestChip(
+                        label: Formatters.monthName(months[i]),
+                        selected: months[i] == _month,
+                        onTap: () => setState(() => _month = months[i]),
+                      ),
+                    ],
                   ],
-                ],
+                ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
-              child: TextField(
-                controller: _searchCtrl,
-                onChanged: (v) => setState(() => _query = v),
-                decoration: InputDecoration(
-                  hintText: l10n.moneySearch,
-                  prefixIcon: const Icon(Icons.search_rounded),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
+                child: TextField(
+                  controller: _searchCtrl,
+                  onChanged: (v) => setState(() => _query = v),
+                  decoration: InputDecoration(
+                    hintText: l10n.moneySearch,
+                    prefixIcon: const Icon(Icons.search_rounded),
+                  ),
                 ),
               ),
             ),
             if (_category != null)
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Semantics(
-                    label: l10n.moneyClearFilter(_category!),
-                    button: true,
-                    child: NestChip(
-                      label: '× ${_category!}',
-                      selected: true,
-                      onTap: () => setState(() => _category = null),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Semantics(
+                      label: l10n.moneyClearFilter(_category!),
+                      button: true,
+                      child: NestChip(
+                        label: '× ${_category!}',
+                        selected: true,
+                        onTap: () => setState(() => _category = null),
+                      ),
                     ),
                   ),
                 ),
               ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 4, 20, 8),
-              child: Text(
-                l10n.moneyCount(filtered.length, Money.format(sum)),
-                style: NestText.meta13.copyWith(color: c.ink3),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 4, 20, 8),
+                child: Text(
+                  l10n.moneyCount(filtered.length, Money.format(sum)),
+                  style: NestText.meta13.copyWith(color: c.ink3),
+                ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: filtered.isEmpty
-                  ? Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 32),
-                      child: Center(
-                        child: Text(
-                          l10n.moneyNoMatch,
-                          style: NestText.body15.copyWith(color: c.ink3),
-                        ),
-                      ),
-                    )
-                  : NestCard(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          for (var i = 0; i < filtered.length; i++) ...[
+            if (filtered.isEmpty)
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 32,
+                  ),
+                  child: Center(
+                    child: Text(
+                      l10n.moneyNoMatch,
+                      style: NestText.body15.copyWith(color: c.ink3),
+                    ),
+                  ),
+                ),
+              )
+            else
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                sliver: DecoratedSliver(
+                  decoration: NestCard.cardDecoration(context),
+                  sliver: SliverPadding(
+                    padding: const EdgeInsets.all(1),
+                    sliver: SliverList.builder(
+                      itemCount: filtered.length,
+                      itemBuilder: (context, i) {
+                        final row = filtered[i];
+                        return Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
                             if (i > 0) Container(height: 1, color: c.line),
                             SpendRow(
-                              e: filtered[i],
+                              e: row,
                               onTap: () => showSpendSheet(
                                 context,
                                 ref,
-                                existing: filtered[i],
+                                existing: row,
                               ),
                             ),
                           ],
-                        ],
-                      ),
+                        );
+                      },
                     ),
-            ),
+                  ),
+                ),
+              ),
+            const SliverToBoxAdapter(child: SizedBox(height: 32)),
           ],
         ),
       ),

@@ -128,7 +128,7 @@ class RoutinesView extends ConsumerWidget {
   }
 }
 
-class _RoutineTile extends ConsumerWidget {
+class _RoutineTile extends ConsumerStatefulWidget {
   const _RoutineTile({
     required this.row,
     required this.state,
@@ -142,10 +142,36 @@ class _RoutineTile extends ConsumerWidget {
   final String today;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_RoutineTile> createState() => _RoutineTileState();
+}
+
+class _RoutineTileState extends ConsumerState<_RoutineTile> {
+  bool _busy = false;
+
+  @override
+  void didUpdateWidget(covariant _RoutineTile oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.row.id != widget.row.id ||
+        oldWidget.row.lastDone != widget.row.lastDone) {
+      _busy = false;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final c = context.nest;
-    final whoLabel = who != null ? personName(l10n, who!) : l10n.tasksAnyone;
+    final row = widget.row;
+    final who = widget.who;
+    final today = widget.today;
+    final state = _busy
+        ? routineState(
+            lastDone: today,
+            everyDays: row.everyDays,
+            today: today,
+          )
+        : widget.state;
+    final whoLabel = who != null ? personName(l10n, who) : l10n.tasksAnyone;
     final avatarColor = who?.color ?? c.ink3;
     final avatarName = who?.firstName ?? whoLabel;
 
@@ -221,18 +247,33 @@ class _RoutineTile extends ConsumerWidget {
                       kind: NestButtonKind.ghost,
                       size: NestButtonSize.sm,
                       semanticLabel: l10n.tasksMarkDone(row.name),
-                      onPressed: () async {
-                        final res = await ref
-                            .read(tasksRepoProvider)
-                            .markRoutineDone(row.id, today);
-                        if (!context.mounted) return;
-                        ref
-                            .read(snackbarProvider)
-                            .show(
-                              l10n.tasksRoutineDone(row.name, row.everyDays),
-                              undo: res.undo,
-                            );
-                      },
+                      onPressed: _busy
+                          ? null
+                          : () async {
+                              final snackbar = ref.read(snackbarProvider);
+                              final repo = ref.read(tasksRepoProvider);
+                              setState(() => _busy = true);
+                              try {
+                                final res = await repo.markRoutineDone(
+                                  row.id,
+                                  today,
+                                );
+                                if (res.undo == null && mounted) {
+                                  setState(() => _busy = false);
+                                }
+                                snackbar.show(
+                                  l10n.tasksRoutineDone(
+                                    row.name,
+                                    row.everyDays,
+                                  ),
+                                  undo: res.undo,
+                                );
+                              } catch (_) {
+                                if (mounted) {
+                                  setState(() => _busy = false);
+                                }
+                              }
+                            },
                     ),
                   ),
                 ],
