@@ -24,6 +24,7 @@ import 'package:nm_flat/core/data/prefs/device_prefs.dart';
 import 'package:nm_flat/core/data/repo/home_eraser.dart';
 import 'package:nm_flat/core/data/secure/secure_store.dart';
 import 'package:nm_flat/core/domain/widget_snapshot.dart';
+import 'package:nm_flat/core/gmail/gmail_import_config.dart';
 import 'package:nm_flat/core/notify/background_tasks.dart';
 import 'package:nm_flat/core/notify/notifications.dart';
 import 'package:nm_flat/core/providers.dart';
@@ -94,6 +95,7 @@ Future<void> main() async {
     await cancelBackup(homeId);
     await BackupConfigStore(secure).delete(homeId);
     await RemoteSyncConfigStore(secure).delete(homeId);
+    await GmailImportStore(secure).delete(homeId);
   });
   HomeEraser.onErase.add((_) async {
     await WidgetBridge.instance.updateSnapshots(

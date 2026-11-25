@@ -8750,6 +8750,576 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Synced phones and remote relay'**
   String get remoteSyncCombinedSynced;
+
+  /// No description provided for @gmailImportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Gmail invoice import'**
+  String get gmailImportTitle;
+
+  /// No description provided for @gmailImportExperimental.
+  ///
+  /// In en, this message translates to:
+  /// **'Experimental'**
+  String get gmailImportExperimental;
+
+  /// No description provided for @gmailImportCardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Gmail invoice import'**
+  String get gmailImportCardTitle;
+
+  /// No description provided for @gmailImportToggleTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Gmail invoice import'**
+  String get gmailImportToggleTitle;
+
+  /// No description provided for @gmailImportToggleSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan Zepto, Blinkit, Amazon, and Flipkart emails and PDF invoices into Drafts before adding to your ledger.'**
+  String get gmailImportToggleSubtitle;
+
+  /// No description provided for @gmailImportOffHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on Gmail invoice import to connect your Google Desktop App OAuth client, scan store order emails, and review draft expenses.'**
+  String get gmailImportOffHint;
+
+  /// No description provided for @gmailImportProfileSubOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get gmailImportProfileSubOff;
+
+  /// No description provided for @gmailImportProfileSubNeedsSetup.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs setup'**
+  String get gmailImportProfileSubNeedsSetup;
+
+  /// No description provided for @gmailImportProfileSubConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected · {email}'**
+  String gmailImportProfileSubConnected(Object email);
+
+  /// No description provided for @gmailImportProfileSubDrafts.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 draft to review} other{{count} drafts to review}}'**
+  String gmailImportProfileSubDrafts(num count);
+
+  /// No description provided for @gmailImportStatusTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Gmail connection'**
+  String get gmailImportStatusTitle;
+
+  /// No description provided for @gmailImportStatusNeedsOAuth.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your Desktop OAuth client ID and secret below.'**
+  String get gmailImportStatusNeedsOAuth;
+
+  /// No description provided for @gmailImportStatusReadyToConnect.
+  ///
+  /// In en, this message translates to:
+  /// **'OAuth credentials saved — connect your Gmail account.'**
+  String get gmailImportStatusReadyToConnect;
+
+  /// No description provided for @gmailImportStatusConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected as {email}'**
+  String gmailImportStatusConnected(Object email);
+
+  /// No description provided for @gmailImportStatusConnectedFallback.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected to Gmail'**
+  String get gmailImportStatusConnectedFallback;
+
+  /// No description provided for @gmailImportLastScan.
+  ///
+  /// In en, this message translates to:
+  /// **'Last scanned {ago}'**
+  String gmailImportLastScan(Object ago);
+
+  /// No description provided for @gmailImportNeverScanned.
+  ///
+  /// In en, this message translates to:
+  /// **'Never scanned yet'**
+  String get gmailImportNeverScanned;
+
+  /// No description provided for @gmailImportConnectBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect Gmail'**
+  String get gmailImportConnectBtn;
+
+  /// No description provided for @gmailImportConnectingBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for Google sign-in…'**
+  String get gmailImportConnectingBtn;
+
+  /// No description provided for @gmailImportCancelAuthBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel sign-in'**
+  String get gmailImportCancelAuthBtn;
+
+  /// No description provided for @gmailImportScanNowBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan emails'**
+  String get gmailImportScanNowBtn;
+
+  /// No description provided for @gmailImportScanningBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Scanning…'**
+  String get gmailImportScanningBtn;
+
+  /// No description provided for @gmailImportDisconnectBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect Gmail'**
+  String get gmailImportDisconnectBtn;
+
+  /// No description provided for @gmailImportDisconnectedSnack.
+  ///
+  /// In en, this message translates to:
+  /// **'Gmail account disconnected'**
+  String get gmailImportDisconnectedSnack;
+
+  /// No description provided for @gmailImportConnectedSnack.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected to {email}'**
+  String gmailImportConnectedSnack(Object email);
+
+  /// No description provided for @gmailImportWindowLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan window'**
+  String get gmailImportWindowLabel;
+
+  /// No description provided for @gmailImportWindowDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Last {days} days'**
+  String gmailImportWindowDays(Object days);
+
+  /// No description provided for @gmailImportScanSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Scanned emails — no new invoices found} =1{Added 1 new draft expense from Gmail} other{Added {count} new draft expenses from Gmail}}'**
+  String gmailImportScanSummary(num count);
+
+  /// No description provided for @gmailImportGuideTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How to set up your Google Desktop OAuth'**
+  String get gmailImportGuideTitle;
+
+  /// No description provided for @gmailImportGuideStep1.
+  ///
+  /// In en, this message translates to:
+  /// **'1. Open console.cloud.google.com, create a project, and enable the Gmail API.'**
+  String get gmailImportGuideStep1;
+
+  /// No description provided for @gmailImportGuideStep2.
+  ///
+  /// In en, this message translates to:
+  /// **'2. Under Google Auth platform → Audience, add your Gmail address as a Test user.'**
+  String get gmailImportGuideStep2;
+
+  /// No description provided for @gmailImportGuideStep3.
+  ///
+  /// In en, this message translates to:
+  /// **'3. Under Clients → Create client → choose Desktop app (required for local loopback sign-in).'**
+  String get gmailImportGuideStep3;
+
+  /// No description provided for @gmailImportGuideStep4.
+  ///
+  /// In en, this message translates to:
+  /// **'4. Paste the downloaded JSON (or client ID & secret) below, tap Connect Gmail, and review Drafts before accounting.'**
+  String get gmailImportGuideStep4;
+
+  /// No description provided for @gmailImportOAuthTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Google Desktop OAuth'**
+  String get gmailImportOAuthTitle;
+
+  /// No description provided for @gmailImportOAuthLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Your credentials and Gmail tokens stay encrypted on this phone.'**
+  String get gmailImportOAuthLead;
+
+  /// No description provided for @gmailImportPasteJsonBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste OAuth JSON'**
+  String get gmailImportPasteJsonBtn;
+
+  /// No description provided for @gmailImportPasteJsonTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste OAuth client JSON'**
+  String get gmailImportPasteJsonTitle;
+
+  /// No description provided for @gmailImportPasteJsonLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste the downloaded Desktop app client JSON from Google Cloud Console.'**
+  String get gmailImportPasteJsonLead;
+
+  /// No description provided for @gmailImportPasteJsonField.
+  ///
+  /// In en, this message translates to:
+  /// **'Desktop app JSON'**
+  String get gmailImportPasteJsonField;
+
+  /// No description provided for @gmailImportApplyJsonBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill fields'**
+  String get gmailImportApplyJsonBtn;
+
+  /// No description provided for @gmailImportJsonApplied.
+  ///
+  /// In en, this message translates to:
+  /// **'OAuth credentials filled'**
+  String get gmailImportJsonApplied;
+
+  /// No description provided for @gmailImportClientIdLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Client ID'**
+  String get gmailImportClientIdLabel;
+
+  /// No description provided for @gmailImportClientIdHint.
+  ///
+  /// In en, this message translates to:
+  /// **'123456-abc.apps.googleusercontent.com'**
+  String get gmailImportClientIdHint;
+
+  /// No description provided for @gmailImportClientSecretLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Client secret'**
+  String get gmailImportClientSecretLabel;
+
+  /// No description provided for @gmailImportClientSecretHint.
+  ///
+  /// In en, this message translates to:
+  /// **'GOCSPX-...'**
+  String get gmailImportClientSecretHint;
+
+  /// No description provided for @gmailImportShowSecret.
+  ///
+  /// In en, this message translates to:
+  /// **'Show client secret'**
+  String get gmailImportShowSecret;
+
+  /// No description provided for @gmailImportHideSecret.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide client secret'**
+  String get gmailImportHideSecret;
+
+  /// No description provided for @gmailImportSaveOAuthBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Save credentials'**
+  String get gmailImportSaveOAuthBtn;
+
+  /// No description provided for @gmailImportOAuthSavedSnack.
+  ///
+  /// In en, this message translates to:
+  /// **'OAuth credentials saved'**
+  String get gmailImportOAuthSavedSnack;
+
+  /// No description provided for @gmailImportRemoveConfigBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear OAuth & drafts'**
+  String get gmailImportRemoveConfigBtn;
+
+  /// No description provided for @gmailImportRemoveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Gmail import data?'**
+  String get gmailImportRemoveTitle;
+
+  /// No description provided for @gmailImportRemoveBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Deletes saved OAuth credentials, tokens, and pending drafts on this phone. Already accounted expenses stay in Money.'**
+  String get gmailImportRemoveBody;
+
+  /// No description provided for @gmailImportRemoveConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get gmailImportRemoveConfirm;
+
+  /// No description provided for @gmailImportPasteInvoiceBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste invoice text'**
+  String get gmailImportPasteInvoiceBtn;
+
+  /// No description provided for @gmailImportPasteInvoiceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Parse pasted invoice'**
+  String get gmailImportPasteInvoiceTitle;
+
+  /// No description provided for @gmailImportPasteInvoiceLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Test parsing offline or import an order by pasting an email or PDF invoice text from Zepto, Blinkit, Amazon, or Flipkart.'**
+  String get gmailImportPasteInvoiceLead;
+
+  /// No description provided for @gmailImportPasteInvoiceField.
+  ///
+  /// In en, this message translates to:
+  /// **'Email or invoice text'**
+  String get gmailImportPasteInvoiceField;
+
+  /// No description provided for @gmailImportParseToDraftBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Create draft'**
+  String get gmailImportParseToDraftBtn;
+
+  /// No description provided for @gmailImportPasteNotMatched.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn’t find a Zepto, Blinkit, Amazon, or Flipkart total in that text.'**
+  String get gmailImportPasteNotMatched;
+
+  /// No description provided for @gmailImportPasteAddedSnack.
+  ///
+  /// In en, this message translates to:
+  /// **'Created draft expense ({channel})'**
+  String gmailImportPasteAddedSnack(Object channel);
+
+  /// No description provided for @gmailImportDraftsSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft expenses ({count})'**
+  String gmailImportDraftsSectionTitle(Object count);
+
+  /// No description provided for @gmailImportDraftsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No pending drafts. Scan your Gmail after shopping on Zepto, Blinkit, Amazon, or Flipkart.'**
+  String get gmailImportDraftsEmpty;
+
+  /// No description provided for @gmailImportDraftBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
+  String get gmailImportDraftBadge;
+
+  /// No description provided for @gmailImportDraftsMoneyNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Not counted in spends or budgets until you review and tap Account it.'**
+  String get gmailImportDraftsMoneyNote;
+
+  /// No description provided for @gmailImportReviewAllAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Open importer'**
+  String get gmailImportReviewAllAction;
+
+  /// No description provided for @gmailImportAccountItBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Account it'**
+  String get gmailImportAccountItBtn;
+
+  /// No description provided for @gmailImportAccountingBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Accounting…'**
+  String get gmailImportAccountingBtn;
+
+  /// No description provided for @gmailImportDiscardBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard'**
+  String get gmailImportDiscardBtn;
+
+  /// No description provided for @gmailImportEditDraftBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Review'**
+  String get gmailImportEditDraftBtn;
+
+  /// No description provided for @gmailImportDraftItemsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Order total only} =1{1 item extracted} other{{count} items extracted}}'**
+  String gmailImportDraftItemsCount(num count);
+
+  /// No description provided for @gmailImportReviewSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{channel} draft'**
+  String gmailImportReviewSheetTitle(Object channel);
+
+  /// No description provided for @gmailImportSplitByItemLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Log each item separately'**
+  String get gmailImportSplitByItemLabel;
+
+  /// No description provided for @gmailImportSplitByItemSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn off to add one combined expense for {channel}.'**
+  String gmailImportSplitByItemSub(Object channel);
+
+  /// No description provided for @gmailImportFeesDiscountInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery/fees {fees} · Discount {discount} (reconciled to paid total)'**
+  String gmailImportFeesDiscountInfo(Object fees, Object discount);
+
+  /// No description provided for @gmailImportOrderTotalLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid total'**
+  String get gmailImportOrderTotalLabel;
+
+  /// No description provided for @gmailImportSelectedTotalLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'To account ({count} {count, plural, =1{entry} other{entries}})'**
+  String gmailImportSelectedTotalLabel(num count);
+
+  /// No description provided for @gmailImportAccountedSnack.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Accounted 1 expense ({total})} other{Accounted {count} expenses ({total})}}'**
+  String gmailImportAccountedSnack(num count, Object total);
+
+  /// No description provided for @gmailImportNothingSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'Select at least one positive item or switch to combined order total.'**
+  String get gmailImportNothingSelected;
+
+  /// No description provided for @gmailImportItemAmountInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a positive amount for every included item.'**
+  String get gmailImportItemAmountInvalid;
+
+  /// No description provided for @gmailImportDuplicateWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'A similar spend already exists around {date}. You can still account it or discard this draft.'**
+  String gmailImportDuplicateWarning(Object date);
+
+  /// No description provided for @gmailImportOrderIdLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Order {id}'**
+  String gmailImportOrderIdLabel(Object id);
+
+  /// No description provided for @gmailImportErrOAuthEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste Google Desktop App OAuth JSON or enter both fields.'**
+  String get gmailImportErrOAuthEmpty;
+
+  /// No description provided for @gmailImportErrOAuthMalformed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn’t read Client ID and Secret from that input.'**
+  String get gmailImportErrOAuthMalformed;
+
+  /// No description provided for @gmailImportErrWebClient.
+  ///
+  /// In en, this message translates to:
+  /// **'That’s a Web OAuth client. Create a Desktop app client in Google Cloud Console.'**
+  String get gmailImportErrWebClient;
+
+  /// No description provided for @gmailImportErrInvalidClientId.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the Client ID format (must end with .apps.googleusercontent.com).'**
+  String get gmailImportErrInvalidClientId;
+
+  /// No description provided for @gmailImportErrMissingSecret.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your Google OAuth Client secret.'**
+  String get gmailImportErrMissingSecret;
+
+  /// No description provided for @gmailImportErrUnauthorized.
+  ///
+  /// In en, this message translates to:
+  /// **'Gmail session expired or access was revoked. Reconnect Gmail.'**
+  String get gmailImportErrUnauthorized;
+
+  /// No description provided for @gmailImportErrForbidden.
+  ///
+  /// In en, this message translates to:
+  /// **'Gmail denied access — make sure Gmail API is enabled and your address is added as a Test user.'**
+  String get gmailImportErrForbidden;
+
+  /// No description provided for @gmailImportErrRateLimited.
+  ///
+  /// In en, this message translates to:
+  /// **'Gmail rate limit reached. Try again in a moment.'**
+  String get gmailImportErrRateLimited;
+
+  /// No description provided for @gmailImportErrNetwork.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not reach Google. Check your internet connection.'**
+  String get gmailImportErrNetwork;
+
+  /// No description provided for @gmailImportErrAuthUnsupported.
+  ///
+  /// In en, this message translates to:
+  /// **'Gmail browser sign-in requires Android or desktop; paste invoice text to test here.'**
+  String get gmailImportErrAuthUnsupported;
+
+  /// No description provided for @gmailImportErrAuthBrowser.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open the browser for Google sign-in.'**
+  String get gmailImportErrAuthBrowser;
+
+  /// No description provided for @gmailImportErrAuthDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Google sign-in was cancelled or denied.'**
+  String get gmailImportErrAuthDenied;
+
+  /// No description provided for @gmailImportErrAuthTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Google sign-in timed out. Tap Connect Gmail to try again.'**
+  String get gmailImportErrAuthTimeout;
+
+  /// No description provided for @gmailImportErrAuthOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Google sign-in did not complete — check your Desktop OAuth client settings.'**
+  String get gmailImportErrAuthOther;
 }
 
 class _AppLocalizationsDelegate

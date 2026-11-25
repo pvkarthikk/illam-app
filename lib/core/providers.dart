@@ -43,6 +43,12 @@ import 'package:nm_flat/core/domain/names.dart';
 import 'package:nm_flat/core/domain/routine_state.dart';
 import 'package:nm_flat/core/domain/salary_months.dart';
 import 'package:nm_flat/core/domain/sync_status.dart';
+import 'package:nm_flat/core/gmail/gmail_import_config.dart';
+import 'package:nm_flat/core/gmail/gmail_invoice_scanner.dart';
+import 'package:nm_flat/core/gmail/gmail_loopback_auth.dart'
+    if (dart.library.js_interop) 'package:nm_flat/core/gmail/gmail_loopback_auth_web.dart';
+import 'package:nm_flat/core/gmail/gmail_rest_client.dart';
+import 'package:nm_flat/core/gmail/pdf_text_extractor.dart';
 import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/sync/control_store.dart';
 import 'package:nm_flat/core/sync/incoming.dart';
@@ -314,6 +320,43 @@ final remoteSyncStateProvider = StreamProvider<RemoteSyncState>((ref) async* {
   final engine = ref.watch(remoteSyncEngineProvider);
   yield engine.state;
   yield* engine.states;
+});
+final gmailImportStoreProvider = Provider<GmailImportStore>((ref) {
+  final store = GmailImportStore(ref.watch(secureStoreProvider));
+  ref.onDispose(() => unawaited(store.dispose()));
+  return store;
+});
+final gmailImportConfigProvider = StreamProvider<GmailImportConfig>((ref) async* {
+  final homeId = ref.watch(currentHomeIdProvider).value;
+  if (homeId == null) {
+    yield GmailImportConfig.empty();
+    return;
+  }
+  final store = ref.watch(gmailImportStoreProvider);
+  yield* store.watch(homeId);
+});
+final gmailDraftOrdersProvider = Provider<List<DraftExpenseOrder>>((ref) {
+  final cfg = ref.watch(gmailImportConfigProvider).value;
+  if (cfg == null || !cfg.enabled) return const [];
+  return cfg.drafts;
+});
+final gmailRestClientProvider = Provider<GmailRestClient>(
+  (ref) => GmailRestClient(nowMs: () => ref.read(clockProvider).nowMs),
+);
+final pdfTextExtractorProvider = Provider<PdfTextExtractor>(
+  (ref) => const MethodChannelPdfTextExtractor(),
+);
+final gmailInvoiceScannerProvider = Provider<GmailInvoiceScanner>(
+  (ref) => GmailInvoiceScanner(
+    client: ref.watch(gmailRestClientProvider),
+    pdfExtractor: ref.watch(pdfTextExtractorProvider),
+    nowMs: () => ref.read(clockProvider).nowMs,
+  ),
+);
+final gmailLoopbackAuthProvider = Provider<GmailLoopbackAuthenticator>((ref) {
+  final auth = GmailLoopbackAuthenticator();
+  ref.onDispose(() => unawaited(auth.cancel()));
+  return auth;
 });
 final connectivityProvider = StreamProvider<List<ConnectivityResult>>((
   ref,

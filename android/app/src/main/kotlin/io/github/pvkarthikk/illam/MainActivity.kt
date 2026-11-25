@@ -21,9 +21,11 @@ class MainActivity : FlutterActivity() {
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
         WidgetBridge.attachForeground(this, flutterEngine)
+        PdfTextChannel.attach(this, flutterEngine)
     }
 
     override fun cleanUpFlutterEngine(flutterEngine: FlutterEngine) {
+        PdfTextChannel.detach()
         WidgetBridge.detachForeground()
         super.cleanUpFlutterEngine(flutterEngine)
     }

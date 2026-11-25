@@ -32,6 +32,14 @@ Remote Sync is **off by default**. If you choose to turn it on and enter credent
 - Encrypted batches are sent **only to the Cloud Firestore project you configured** using Firebase Anonymous Authentication on your own Firebase account.
 - **The developer has no access to your Firebase project, API key, or synced content.**
 
+## Gmail Invoice Import (Experimental — Bring Your Own Google OAuth)
+
+Gmail Invoice Import is **off by default**. If you choose to turn it on and configure your own Google Cloud Desktop App OAuth client:
+
+- Illam signs in via PKCE loopback directly against Google and requests read-only Gmail access (`gmail.readonly`) using **your own OAuth client**.
+- Emails and PDF attachments from Zepto, Blinkit, Amazon, and Flipkart are fetched directly to your phone and parsed **locally on-device** into unapproved Draft expenses.
+- Nothing is added to your household ledger unless you review and tap **Account it**, and **the developer never has access to your emails, OAuth tokens, or client secret.**
+
 ## Household & Staff Details
 
 - Information you enter inside your home, including house-help (staff) names, attendance, salary records, and **phone numbers**, is shared with the members of your home.

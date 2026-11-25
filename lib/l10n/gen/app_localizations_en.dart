@@ -5453,4 +5453,386 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get remoteSyncCombinedSynced => 'Synced phones and remote relay';
+
+  @override
+  String get gmailImportTitle => 'Gmail invoice import';
+
+  @override
+  String get gmailImportExperimental => 'Experimental';
+
+  @override
+  String get gmailImportCardTitle => 'Gmail invoice import';
+
+  @override
+  String get gmailImportToggleTitle => 'Gmail invoice import';
+
+  @override
+  String get gmailImportToggleSubtitle =>
+      'Scan Zepto, Blinkit, Amazon, and Flipkart emails and PDF invoices into Drafts before adding to your ledger.';
+
+  @override
+  String get gmailImportOffHint =>
+      'Turn on Gmail invoice import to connect your Google Desktop App OAuth client, scan store order emails, and review draft expenses.';
+
+  @override
+  String get gmailImportProfileSubOff => 'Off';
+
+  @override
+  String get gmailImportProfileSubNeedsSetup => 'Needs setup';
+
+  @override
+  String gmailImportProfileSubConnected(Object email) {
+    return 'Connected · $email';
+  }
+
+  @override
+  String gmailImportProfileSubDrafts(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count drafts to review',
+      one: '1 draft to review',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gmailImportStatusTitle => 'Gmail connection';
+
+  @override
+  String get gmailImportStatusNeedsOAuth =>
+      'Add your Desktop OAuth client ID and secret below.';
+
+  @override
+  String get gmailImportStatusReadyToConnect =>
+      'OAuth credentials saved — connect your Gmail account.';
+
+  @override
+  String gmailImportStatusConnected(Object email) {
+    return 'Connected as $email';
+  }
+
+  @override
+  String get gmailImportStatusConnectedFallback => 'Connected to Gmail';
+
+  @override
+  String gmailImportLastScan(Object ago) {
+    return 'Last scanned $ago';
+  }
+
+  @override
+  String get gmailImportNeverScanned => 'Never scanned yet';
+
+  @override
+  String get gmailImportConnectBtn => 'Connect Gmail';
+
+  @override
+  String get gmailImportConnectingBtn => 'Waiting for Google sign-in…';
+
+  @override
+  String get gmailImportCancelAuthBtn => 'Cancel sign-in';
+
+  @override
+  String get gmailImportScanNowBtn => 'Scan emails';
+
+  @override
+  String get gmailImportScanningBtn => 'Scanning…';
+
+  @override
+  String get gmailImportDisconnectBtn => 'Disconnect Gmail';
+
+  @override
+  String get gmailImportDisconnectedSnack => 'Gmail account disconnected';
+
+  @override
+  String gmailImportConnectedSnack(Object email) {
+    return 'Connected to $email';
+  }
+
+  @override
+  String get gmailImportWindowLabel => 'Scan window';
+
+  @override
+  String gmailImportWindowDays(Object days) {
+    return 'Last $days days';
+  }
+
+  @override
+  String gmailImportScanSummary(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Added $count new draft expenses from Gmail',
+      one: 'Added 1 new draft expense from Gmail',
+      zero: 'Scanned emails — no new invoices found',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gmailImportGuideTitle => 'How to set up your Google Desktop OAuth';
+
+  @override
+  String get gmailImportGuideStep1 =>
+      '1. Open console.cloud.google.com, create a project, and enable the Gmail API.';
+
+  @override
+  String get gmailImportGuideStep2 =>
+      '2. Under Google Auth platform → Audience, add your Gmail address as a Test user.';
+
+  @override
+  String get gmailImportGuideStep3 =>
+      '3. Under Clients → Create client → choose Desktop app (required for local loopback sign-in).';
+
+  @override
+  String get gmailImportGuideStep4 =>
+      '4. Paste the downloaded JSON (or client ID & secret) below, tap Connect Gmail, and review Drafts before accounting.';
+
+  @override
+  String get gmailImportOAuthTitle => 'Google Desktop OAuth';
+
+  @override
+  String get gmailImportOAuthLead =>
+      'Your credentials and Gmail tokens stay encrypted on this phone.';
+
+  @override
+  String get gmailImportPasteJsonBtn => 'Paste OAuth JSON';
+
+  @override
+  String get gmailImportPasteJsonTitle => 'Paste OAuth client JSON';
+
+  @override
+  String get gmailImportPasteJsonLead =>
+      'Paste the downloaded Desktop app client JSON from Google Cloud Console.';
+
+  @override
+  String get gmailImportPasteJsonField => 'Desktop app JSON';
+
+  @override
+  String get gmailImportApplyJsonBtn => 'Fill fields';
+
+  @override
+  String get gmailImportJsonApplied => 'OAuth credentials filled';
+
+  @override
+  String get gmailImportClientIdLabel => 'Client ID';
+
+  @override
+  String get gmailImportClientIdHint => '123456-abc.apps.googleusercontent.com';
+
+  @override
+  String get gmailImportClientSecretLabel => 'Client secret';
+
+  @override
+  String get gmailImportClientSecretHint => 'GOCSPX-...';
+
+  @override
+  String get gmailImportShowSecret => 'Show client secret';
+
+  @override
+  String get gmailImportHideSecret => 'Hide client secret';
+
+  @override
+  String get gmailImportSaveOAuthBtn => 'Save credentials';
+
+  @override
+  String get gmailImportOAuthSavedSnack => 'OAuth credentials saved';
+
+  @override
+  String get gmailImportRemoveConfigBtn => 'Clear OAuth & drafts';
+
+  @override
+  String get gmailImportRemoveTitle => 'Clear Gmail import data?';
+
+  @override
+  String get gmailImportRemoveBody =>
+      'Deletes saved OAuth credentials, tokens, and pending drafts on this phone. Already accounted expenses stay in Money.';
+
+  @override
+  String get gmailImportRemoveConfirm => 'Clear';
+
+  @override
+  String get gmailImportPasteInvoiceBtn => 'Paste invoice text';
+
+  @override
+  String get gmailImportPasteInvoiceTitle => 'Parse pasted invoice';
+
+  @override
+  String get gmailImportPasteInvoiceLead =>
+      'Test parsing offline or import an order by pasting an email or PDF invoice text from Zepto, Blinkit, Amazon, or Flipkart.';
+
+  @override
+  String get gmailImportPasteInvoiceField => 'Email or invoice text';
+
+  @override
+  String get gmailImportParseToDraftBtn => 'Create draft';
+
+  @override
+  String get gmailImportPasteNotMatched =>
+      'Couldn’t find a Zepto, Blinkit, Amazon, or Flipkart total in that text.';
+
+  @override
+  String gmailImportPasteAddedSnack(Object channel) {
+    return 'Created draft expense ($channel)';
+  }
+
+  @override
+  String gmailImportDraftsSectionTitle(Object count) {
+    return 'Draft expenses ($count)';
+  }
+
+  @override
+  String get gmailImportDraftsEmpty =>
+      'No pending drafts. Scan your Gmail after shopping on Zepto, Blinkit, Amazon, or Flipkart.';
+
+  @override
+  String get gmailImportDraftBadge => 'Draft';
+
+  @override
+  String get gmailImportDraftsMoneyNote =>
+      'Not counted in spends or budgets until you review and tap Account it.';
+
+  @override
+  String get gmailImportReviewAllAction => 'Open importer';
+
+  @override
+  String get gmailImportAccountItBtn => 'Account it';
+
+  @override
+  String get gmailImportAccountingBtn => 'Accounting…';
+
+  @override
+  String get gmailImportDiscardBtn => 'Discard';
+
+  @override
+  String get gmailImportEditDraftBtn => 'Review';
+
+  @override
+  String gmailImportDraftItemsCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items extracted',
+      one: '1 item extracted',
+      zero: 'Order total only',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String gmailImportReviewSheetTitle(Object channel) {
+    return '$channel draft';
+  }
+
+  @override
+  String get gmailImportSplitByItemLabel => 'Log each item separately';
+
+  @override
+  String gmailImportSplitByItemSub(Object channel) {
+    return 'Turn off to add one combined expense for $channel.';
+  }
+
+  @override
+  String gmailImportFeesDiscountInfo(Object fees, Object discount) {
+    return 'Delivery/fees $fees · Discount $discount (reconciled to paid total)';
+  }
+
+  @override
+  String get gmailImportOrderTotalLabel => 'Paid total';
+
+  @override
+  String gmailImportSelectedTotalLabel(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'entries',
+      one: 'entry',
+    );
+    return 'To account ($count $_temp0)';
+  }
+
+  @override
+  String gmailImportAccountedSnack(num count, Object total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Accounted $count expenses ($total)',
+      one: 'Accounted 1 expense ($total)',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get gmailImportNothingSelected =>
+      'Select at least one positive item or switch to combined order total.';
+
+  @override
+  String get gmailImportItemAmountInvalid =>
+      'Enter a positive amount for every included item.';
+
+  @override
+  String gmailImportDuplicateWarning(Object date) {
+    return 'A similar spend already exists around $date. You can still account it or discard this draft.';
+  }
+
+  @override
+  String gmailImportOrderIdLabel(Object id) {
+    return 'Order $id';
+  }
+
+  @override
+  String get gmailImportErrOAuthEmpty =>
+      'Paste Google Desktop App OAuth JSON or enter both fields.';
+
+  @override
+  String get gmailImportErrOAuthMalformed =>
+      'Couldn’t read Client ID and Secret from that input.';
+
+  @override
+  String get gmailImportErrWebClient =>
+      'That’s a Web OAuth client. Create a Desktop app client in Google Cloud Console.';
+
+  @override
+  String get gmailImportErrInvalidClientId =>
+      'Check the Client ID format (must end with .apps.googleusercontent.com).';
+
+  @override
+  String get gmailImportErrMissingSecret =>
+      'Enter your Google OAuth Client secret.';
+
+  @override
+  String get gmailImportErrUnauthorized =>
+      'Gmail session expired or access was revoked. Reconnect Gmail.';
+
+  @override
+  String get gmailImportErrForbidden =>
+      'Gmail denied access — make sure Gmail API is enabled and your address is added as a Test user.';
+
+  @override
+  String get gmailImportErrRateLimited =>
+      'Gmail rate limit reached. Try again in a moment.';
+
+  @override
+  String get gmailImportErrNetwork =>
+      'Could not reach Google. Check your internet connection.';
+
+  @override
+  String get gmailImportErrAuthUnsupported =>
+      'Gmail browser sign-in requires Android or desktop; paste invoice text to test here.';
+
+  @override
+  String get gmailImportErrAuthBrowser =>
+      'Could not open the browser for Google sign-in.';
+
+  @override
+  String get gmailImportErrAuthDenied =>
+      'Google sign-in was cancelled or denied.';
+
+  @override
+  String get gmailImportErrAuthTimeout =>
+      'Google sign-in timed out. Tap Connect Gmail to try again.';
+
+  @override
+  String get gmailImportErrAuthOther =>
+      'Google sign-in did not complete — check your Desktop OAuth client settings.';
 }

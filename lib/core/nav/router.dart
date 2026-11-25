@@ -16,6 +16,7 @@ import 'package:nm_flat/features/debug/data_lab_screen.dart';
 import 'package:nm_flat/features/debug/debug_screen.dart';
 import 'package:nm_flat/features/debug/gallery_screen.dart';
 import 'package:nm_flat/features/debug/sync_lab_screen.dart';
+import 'package:nm_flat/features/gmail_import/gmail_import_screen.dart';
 import 'package:nm_flat/features/invite/invite_screen.dart';
 import 'package:nm_flat/features/lists/lists_screen.dart';
 import 'package:nm_flat/features/meals/cook_screen.dart';
@@ -201,6 +202,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: Routes.remoteSync,
         builder: (_, _) => const RemoteSyncScreen(),
+      ),
+      GoRoute(
+        path: Routes.gmailImport,
+        builder: (_, _) => const GmailImportScreen(),
       ),
       GoRoute(
         path: Routes.invite,

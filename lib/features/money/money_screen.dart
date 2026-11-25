@@ -7,6 +7,7 @@ import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/time/dates.dart';
 import 'package:nm_flat/features/money/bills_section.dart';
+import 'package:nm_flat/features/money/draft_expenses_section.dart';
 import 'package:nm_flat/features/money/money_hero.dart';
 import 'package:nm_flat/features/money/money_sections.dart';
 import 'package:nm_flat/features/money/spend_sheet.dart';
@@ -78,6 +79,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                 ],
               ),
             ),
+            const DraftExpensesSection(),
             const BillsSection(),
             if (empty) ...[
               const StaffPaySection(),

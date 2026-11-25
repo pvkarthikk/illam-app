@@ -43,6 +43,18 @@ android {
     buildFeatures {
         resValues = true
     }
+
+    packaging {
+        resources {
+            excludes += setOf(
+                "META-INF/DEPENDENCIES",
+                "META-INF/LICENSE",
+                "META-INF/LICENSE.txt",
+                "META-INF/NOTICE",
+                "META-INF/NOTICE.txt",
+            )
+        }
+    }
     flavorDimensions += "copy"
     productFlavors {
         create("dev") {
@@ -92,4 +104,5 @@ flutter {
 
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
+    implementation("com.tom-roush:pdfbox-android:2.0.27.0")
 }

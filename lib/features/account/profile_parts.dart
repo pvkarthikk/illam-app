@@ -258,6 +258,21 @@ class ProfileOnThisPhoneSection extends ConsumerWidget {
       remoteLabel = l10n.remoteSyncProfileSubConnected(remoteCfg.projectId);
     }
 
+    final gmailCfg = ref.watch(gmailImportConfigProvider).value;
+    final String gmailLabel;
+    if (gmailCfg == null || !gmailCfg.enabled) {
+      gmailLabel = l10n.gmailImportProfileSubOff;
+    } else if (gmailCfg.drafts.isNotEmpty) {
+      gmailLabel = l10n.gmailImportProfileSubDrafts(gmailCfg.drafts.length);
+    } else if (!gmailCfg.isConnected) {
+      gmailLabel = l10n.gmailImportProfileSubNeedsSetup;
+    } else {
+      final email = gmailCfg.connectedEmail;
+      gmailLabel = (email != null && email.isNotEmpty)
+          ? l10n.gmailImportProfileSubConnected(email)
+          : l10n.gmailImportStatusConnectedFallback;
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -352,6 +367,57 @@ class ProfileOnThisPhoneSection extends ConsumerWidget {
                                 const SizedBox(height: 2),
                                 Text(
                                   remoteLabel,
+                                  style: NestText.itemTitle16.copyWith(
+                                    color: c.ink,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Icon(Icons.chevron_right_rounded, color: c.ink3),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Divider(height: 1, color: c.line),
+                InkWell(
+                  onTap: () => context.push(Routes.gmailImport),
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(minHeight: 64),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Wrap(
+                                  spacing: 8,
+                                  runSpacing: 4,
+                                  crossAxisAlignment: WrapCrossAlignment.center,
+                                  children: [
+                                    Text(
+                                      l10n.gmailImportCardTitle,
+                                      style: NestText.meta13.copyWith(
+                                        color: c.ink3,
+                                      ),
+                                    ),
+                                    NestTag(
+                                      label: l10n.gmailImportExperimental,
+                                      kind: NestTagKind.accent,
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  gmailLabel,
                                   style: NestText.itemTitle16.copyWith(
                                     color: c.ink,
                                   ),

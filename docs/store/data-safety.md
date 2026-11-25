@@ -14,6 +14,7 @@ Only the following data ever leaves the device, and only on your local network o
 2. **Pairing (PAKE) Messages** — Ephemeral cryptographic key-exchange messages sent on the local Wi-Fi network when adding a family phone to a home.
 3. **Encrypted Backups** — Password-encrypted household snapshots uploaded **only to a storage provider you choose** (Google Drive app folder, OneDrive app folder, Dropbox app folder, pCloud app folder, WebDAV/Nextcloud, S3-compatible storage, or SFTP).
 4. **Remote Sync (Experimental — Bring Your Own Firebase, Optional)** — Off by default. If you explicitly turn on Remote Sync and configure your own Firebase project, end-to-end encrypted household update batches are relayed through your own Cloud Firestore project using Anonymous Authentication.
+5. **Gmail Invoice Import (Experimental — Bring Your Own Google OAuth, Optional)** — Off by default. If you explicitly turn on Gmail Invoice Import and configure your own Google Cloud Desktop App OAuth client, Illam connects directly over HTTPS from your phone to Google's Gmail API (`gmail.readonly`) to scan store order emails and PDF invoices locally on-device into unapproved Draft expenses. OAuth credentials, tokens, and drafts remain encrypted in local secure storage and are never sent to any developer server.
 
 ## Collection, Sharing, Encryption, and Deletion
 

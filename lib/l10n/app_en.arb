@@ -3949,5 +3949,187 @@
     }
   },
   "remoteSyncNoHomeKey": "Home encryption key not ready yet",
-  "remoteSyncCombinedSynced": "Synced phones and remote relay"
+  "remoteSyncCombinedSynced": "Synced phones and remote relay",
+  "gmailImportTitle": "Gmail invoice import",
+  "gmailImportExperimental": "Experimental",
+  "gmailImportCardTitle": "Gmail invoice import",
+  "gmailImportToggleTitle": "Gmail invoice import",
+  "gmailImportToggleSubtitle": "Scan Zepto, Blinkit, Amazon, and Flipkart emails and PDF invoices into Drafts before adding to your ledger.",
+  "gmailImportOffHint": "Turn on Gmail invoice import to connect your Google Desktop App OAuth client, scan store order emails, and review draft expenses.",
+  "gmailImportProfileSubOff": "Off",
+  "gmailImportProfileSubNeedsSetup": "Needs setup",
+  "gmailImportProfileSubConnected": "Connected · {email}",
+  "@gmailImportProfileSubConnected": {
+    "placeholders": {
+      "email": {}
+    }
+  },
+  "gmailImportProfileSubDrafts": "{count, plural, =1{1 draft to review} other{{count} drafts to review}}",
+  "@gmailImportProfileSubDrafts": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "gmailImportStatusTitle": "Gmail connection",
+  "gmailImportStatusNeedsOAuth": "Add your Desktop OAuth client ID and secret below.",
+  "gmailImportStatusReadyToConnect": "OAuth credentials saved — connect your Gmail account.",
+  "gmailImportStatusConnected": "Connected as {email}",
+  "@gmailImportStatusConnected": {
+    "placeholders": {
+      "email": {}
+    }
+  },
+  "gmailImportStatusConnectedFallback": "Connected to Gmail",
+  "gmailImportLastScan": "Last scanned {ago}",
+  "@gmailImportLastScan": {
+    "placeholders": {
+      "ago": {}
+    }
+  },
+  "gmailImportNeverScanned": "Never scanned yet",
+  "gmailImportConnectBtn": "Connect Gmail",
+  "gmailImportConnectingBtn": "Waiting for Google sign-in…",
+  "gmailImportCancelAuthBtn": "Cancel sign-in",
+  "gmailImportScanNowBtn": "Scan emails",
+  "gmailImportScanningBtn": "Scanning…",
+  "gmailImportDisconnectBtn": "Disconnect Gmail",
+  "gmailImportDisconnectedSnack": "Gmail account disconnected",
+  "gmailImportConnectedSnack": "Connected to {email}",
+  "@gmailImportConnectedSnack": {
+    "placeholders": {
+      "email": {}
+    }
+  },
+  "gmailImportWindowLabel": "Scan window",
+  "gmailImportWindowDays": "Last {days} days",
+  "@gmailImportWindowDays": {
+    "placeholders": {
+      "days": {}
+    }
+  },
+  "gmailImportScanSummary": "{count, plural, =0{Scanned emails — no new invoices found} =1{Added 1 new draft expense from Gmail} other{Added {count} new draft expenses from Gmail}}",
+  "@gmailImportScanSummary": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "gmailImportGuideTitle": "How to set up your Google Desktop OAuth",
+  "gmailImportGuideStep1": "1. Open console.cloud.google.com, create a project, and enable the Gmail API.",
+  "gmailImportGuideStep2": "2. Under Google Auth platform → Audience, add your Gmail address as a Test user.",
+  "gmailImportGuideStep3": "3. Under Clients → Create client → choose Desktop app (required for local loopback sign-in).",
+  "gmailImportGuideStep4": "4. Paste the downloaded JSON (or client ID & secret) below, tap Connect Gmail, and review Drafts before accounting.",
+  "gmailImportOAuthTitle": "Google Desktop OAuth",
+  "gmailImportOAuthLead": "Your credentials and Gmail tokens stay encrypted on this phone.",
+  "gmailImportPasteJsonBtn": "Paste OAuth JSON",
+  "gmailImportPasteJsonTitle": "Paste OAuth client JSON",
+  "gmailImportPasteJsonLead": "Paste the downloaded Desktop app client JSON from Google Cloud Console.",
+  "gmailImportPasteJsonField": "Desktop app JSON",
+  "gmailImportApplyJsonBtn": "Fill fields",
+  "gmailImportJsonApplied": "OAuth credentials filled",
+  "gmailImportClientIdLabel": "Client ID",
+  "gmailImportClientIdHint": "123456-abc.apps.googleusercontent.com",
+  "gmailImportClientSecretLabel": "Client secret",
+  "gmailImportClientSecretHint": "GOCSPX-...",
+  "gmailImportShowSecret": "Show client secret",
+  "gmailImportHideSecret": "Hide client secret",
+  "gmailImportSaveOAuthBtn": "Save credentials",
+  "gmailImportOAuthSavedSnack": "OAuth credentials saved",
+  "gmailImportRemoveConfigBtn": "Clear OAuth & drafts",
+  "gmailImportRemoveTitle": "Clear Gmail import data?",
+  "gmailImportRemoveBody": "Deletes saved OAuth credentials, tokens, and pending drafts on this phone. Already accounted expenses stay in Money.",
+  "gmailImportRemoveConfirm": "Clear",
+  "gmailImportPasteInvoiceBtn": "Paste invoice text",
+  "gmailImportPasteInvoiceTitle": "Parse pasted invoice",
+  "gmailImportPasteInvoiceLead": "Test parsing offline or import an order by pasting an email or PDF invoice text from Zepto, Blinkit, Amazon, or Flipkart.",
+  "gmailImportPasteInvoiceField": "Email or invoice text",
+  "gmailImportParseToDraftBtn": "Create draft",
+  "gmailImportPasteNotMatched": "Couldn’t find a Zepto, Blinkit, Amazon, or Flipkart total in that text.",
+  "gmailImportPasteAddedSnack": "Created draft expense ({channel})",
+  "@gmailImportPasteAddedSnack": {
+    "placeholders": {
+      "channel": {}
+    }
+  },
+  "gmailImportDraftsSectionTitle": "Draft expenses ({count})",
+  "@gmailImportDraftsSectionTitle": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "gmailImportDraftsEmpty": "No pending drafts. Scan your Gmail after shopping on Zepto, Blinkit, Amazon, or Flipkart.",
+  "gmailImportDraftBadge": "Draft",
+  "gmailImportDraftsMoneyNote": "Not counted in spends or budgets until you review and tap Account it.",
+  "gmailImportReviewAllAction": "Open importer",
+  "gmailImportAccountItBtn": "Account it",
+  "gmailImportAccountingBtn": "Accounting…",
+  "gmailImportDiscardBtn": "Discard",
+  "gmailImportEditDraftBtn": "Review",
+  "gmailImportDraftItemsCount": "{count, plural, =0{Order total only} =1{1 item extracted} other{{count} items extracted}}",
+  "@gmailImportDraftItemsCount": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "gmailImportReviewSheetTitle": "{channel} draft",
+  "@gmailImportReviewSheetTitle": {
+    "placeholders": {
+      "channel": {}
+    }
+  },
+  "gmailImportSplitByItemLabel": "Log each item separately",
+  "gmailImportSplitByItemSub": "Turn off to add one combined expense for {channel}.",
+  "@gmailImportSplitByItemSub": {
+    "placeholders": {
+      "channel": {}
+    }
+  },
+  "gmailImportFeesDiscountInfo": "Delivery/fees {fees} · Discount {discount} (reconciled to paid total)",
+  "@gmailImportFeesDiscountInfo": {
+    "placeholders": {
+      "fees": {},
+      "discount": {}
+    }
+  },
+  "gmailImportOrderTotalLabel": "Paid total",
+  "gmailImportSelectedTotalLabel": "To account ({count} {count, plural, =1{entry} other{entries}})",
+  "@gmailImportSelectedTotalLabel": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "gmailImportAccountedSnack": "{count, plural, =1{Accounted 1 expense ({total})} other{Accounted {count} expenses ({total})}}",
+  "@gmailImportAccountedSnack": {
+    "placeholders": {
+      "count": {},
+      "total": {}
+    }
+  },
+  "gmailImportNothingSelected": "Select at least one positive item or switch to combined order total.",
+  "gmailImportItemAmountInvalid": "Enter a positive amount for every included item.",
+  "gmailImportDuplicateWarning": "A similar spend already exists around {date}. You can still account it or discard this draft.",
+  "@gmailImportDuplicateWarning": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "gmailImportOrderIdLabel": "Order {id}",
+  "@gmailImportOrderIdLabel": {
+    "placeholders": {
+      "id": {}
+    }
+  },
+  "gmailImportErrOAuthEmpty": "Paste Google Desktop App OAuth JSON or enter both fields.",
+  "gmailImportErrOAuthMalformed": "Couldn’t read Client ID and Secret from that input.",
+  "gmailImportErrWebClient": "That’s a Web OAuth client. Create a Desktop app client in Google Cloud Console.",
+  "gmailImportErrInvalidClientId": "Check the Client ID format (must end with .apps.googleusercontent.com).",
+  "gmailImportErrMissingSecret": "Enter your Google OAuth Client secret.",
+  "gmailImportErrUnauthorized": "Gmail session expired or access was revoked. Reconnect Gmail.",
+  "gmailImportErrForbidden": "Gmail denied access — make sure Gmail API is enabled and your address is added as a Test user.",
+  "gmailImportErrRateLimited": "Gmail rate limit reached. Try again in a moment.",
+  "gmailImportErrNetwork": "Could not reach Google. Check your internet connection.",
+  "gmailImportErrAuthUnsupported": "Gmail browser sign-in requires Android or desktop; paste invoice text to test here.",
+  "gmailImportErrAuthBrowser": "Could not open the browser for Google sign-in.",
+  "gmailImportErrAuthDenied": "Google sign-in was cancelled or denied.",
+  "gmailImportErrAuthTimeout": "Google sign-in timed out. Tap Connect Gmail to try again.",
+  "gmailImportErrAuthOther": "Google sign-in did not complete — check your Desktop OAuth client settings."
 }
