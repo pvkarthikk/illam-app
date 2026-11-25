@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/services.dart';
-import 'package:saf_stream/saf_stream.dart';
+import 'package:saf_stream/saf_stream.dart'
+    if (dart.library.js_interop) 'package:nm_flat/core/backup/destinations/saf_stream_web.dart';
 import 'package:saf_util/saf_util.dart';
 
 import 'package:nm_flat/core/backup/destinations/backup_destination.dart';

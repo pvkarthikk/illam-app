@@ -1,8 +1,8 @@
 import 'package:drift/drift.dart';
-import 'package:drift/isolate.dart';
-import 'package:drift/native.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:nm_flat/core/backup/backup_check_db.dart'
+    if (dart.library.js_interop) 'package:nm_flat/core/backup/backup_check_db_web.dart';
 import 'package:nm_flat/core/backup/backup_codec.dart';
 import 'package:nm_flat/core/backup/backup_config.dart';
 import 'package:nm_flat/core/backup/destinations/backup_destination.dart';
@@ -72,8 +72,7 @@ class BackupChecker {
       final decoded = await BackupCodec.decode(bytes, password);
       final snap = await Snapshot.decode(decoded.json);
 
-      final isolate = await DriftIsolate.spawn(NativeDatabase.memory);
-      final conn = await isolate.connect(singleClientMode: true);
+      final conn = await openBackupCheckConnection();
       final tempDb = NestDatabase(conn);
       final prefs = read(prefsProvider);
       final tempContainer = ProviderContainer(

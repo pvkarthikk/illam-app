@@ -18,7 +18,8 @@ import 'package:nm_flat/core/crypto/device_keys.dart';
 import 'package:nm_flat/core/data/bootstrap.dart';
 import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/data/db/db_key.dart';
-import 'package:nm_flat/core/data/db/encrypt_existing.dart';
+import 'package:nm_flat/core/data/db/encrypt_existing.dart'
+    if (dart.library.js_interop) 'package:nm_flat/core/data/db/encrypt_existing_web.dart';
 import 'package:nm_flat/core/data/prefs/device_prefs.dart';
 import 'package:nm_flat/core/data/repo/home_eraser.dart';
 import 'package:nm_flat/core/data/secure/secure_store.dart';

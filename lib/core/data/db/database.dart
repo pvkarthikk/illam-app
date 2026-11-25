@@ -75,6 +75,12 @@ class NestDatabase extends _$NestDatabase {
           db.execute('PRAGMA journal_mode = WAL;');
         },
       ),
+      // Browser database is unencrypted and for development only: there is no
+      // sqlite3mc key hook in a browser.
+      web: DriftWebOptions(
+        sqlite3Wasm: Uri.parse('sqlite3.wasm'),
+        driftWorker: Uri.parse('drift_worker.js'),
+      ),
     ),
   );
 
