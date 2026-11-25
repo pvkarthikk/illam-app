@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:workmanager/workmanager.dart';
@@ -25,8 +26,11 @@ import 'package:nm_flat/core/domain/widget_snapshot.dart';
 import 'package:nm_flat/core/notify/background_tasks.dart';
 import 'package:nm_flat/core/notify/notifications.dart';
 import 'package:nm_flat/core/providers.dart';
+import 'package:nm_flat/core/time/clock.dart';
 import 'package:nm_flat/core/widgets/widget_background.dart';
 import 'package:nm_flat/core/widgets/widget_bridge.dart';
+
+const bool kDemoMode = bool.fromEnvironment('DEMO_MODE', defaultValue: false);
 
 @pragma('vm:entry-point')
 Future<void> widgetBackgroundMain() => runWidgetBackground();
@@ -106,12 +110,36 @@ Future<void> main() async {
     runApp(const CantSecureApp());
     return;
   }
+  FixedClock? demoClock;
+  if (kDemoMode) {
+    final now = DateTime.now();
+    demoClock = FixedClock(DateTime(now.year, now.month, now.day, 9, 30));
+    await initializeDateFormatting('en');
+    await prefs.setNotifAsked(true);
+    await prefs.setThemeMode('light');
+    final demoKeys = bootKeys;
+    final seedContainer = ProviderContainer(
+      overrides: [
+        prefsProvider.overrideWithValue(prefs),
+        dbProvider.overrideWithValue(db),
+        secureStoreProvider.overrideWithValue(secure),
+        clockProvider.overrideWithValue(demoClock),
+        deviceKeysProvider.overrideWith((_) async => demoKeys),
+      ],
+    );
+    try {
+      await seedContainer.read(demoSeederProvider).load();
+    } finally {
+      seedContainer.dispose();
+    }
+  }
   runApp(
     ProviderScope(
       overrides: [
         prefsProvider.overrideWithValue(prefs),
         dbProvider.overrideWithValue(db),
         secureStoreProvider.overrideWithValue(secure),
+        if (demoClock != null) clockProvider.overrideWithValue(demoClock),
         deviceKeysProvider.overrideWith((_) {
           final k = bootKeys;
           bootKeys = null;
@@ -122,7 +150,9 @@ Future<void> main() async {
       child: const NestApp(),
     ),
   );
-  unawaited(_initBackground());
+  if (!kDemoMode) {
+    unawaited(_initBackground());
+  }
 }
 
 /// Notifications and background work are not needed for the first frame, so

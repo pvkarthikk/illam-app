@@ -49,16 +49,19 @@ class ShellScaffold extends ConsumerWidget {
           },
           destinations: [
             NavigationDestination(
+              key: const Key('nav_today'),
               icon: const Icon(Icons.home_outlined),
               selectedIcon: const Icon(Icons.home_rounded),
               label: l10n.tabToday,
             ),
             NavigationDestination(
+              key: const Key('nav_lists'),
               icon: const Icon(Icons.list_alt_outlined),
               selectedIcon: const Icon(Icons.list_alt_rounded),
               label: l10n.tabLists,
             ),
             NavigationDestination(
+              key: const Key('nav_tasks'),
               icon: _NavBadgeIcon(
                 provider: tasksBadgeProvider,
                 icon: const Icon(Icons.task_alt_outlined),
@@ -70,11 +73,13 @@ class ShellScaffold extends ConsumerWidget {
               label: l10n.tabTasks,
             ),
             NavigationDestination(
+              key: const Key('nav_meals'),
               icon: const Icon(Icons.restaurant_outlined),
               selectedIcon: const Icon(Icons.restaurant_rounded),
               label: l10n.tabMeals,
             ),
             NavigationDestination(
+              key: const Key('nav_money'),
               icon: _NavBadgeIcon(
                 provider: moneyBadgeProvider,
                 icon: const Icon(Icons.account_balance_wallet_outlined),
