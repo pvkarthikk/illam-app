@@ -4,6 +4,12 @@
 
 *Illam* (இல்லம் — "home") is an open-source, local-first Android app designed to keep daily household routines organized without cloud accounts, subscriptions, or external servers. All data lives directly on your devices and synchronizes peer-to-peer over your home Wi-Fi network.
 
+<p align="left">
+  <a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium://app/%7B%22id%22%3A%22io.github.pvkarthikk.illam%22%2C%22url%22%3A%22https%3A%2F%2Fgithub.com%2Fpvkarthikk%2Fillam-app%22%2C%22author%22%3A%22pvkarthikk%22%2C%22name%22%3A%22Illam%22%7D"><img src="assets/badges/badge_obtainium.png" alt="Get it on Obtainium" height="54"></a>
+  <a href="https://f-droid.org/packages/io.github.pvkarthikk.illam/"><img src="assets/badges/badge_fdroid.png" alt="Get it on F-Droid" height="54"></a>
+  <a href="https://play.google.com/store/apps/details?id=io.github.pvkarthikk.illam"><img src="assets/badges/badge_google_play.png" alt="Get it on Google Play" height="54"></a>
+</p>
+
 ---
 
 ## Core Modules
