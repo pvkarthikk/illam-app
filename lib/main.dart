@@ -21,9 +21,15 @@ import 'package:nm_flat/core/data/db/encrypt_existing.dart';
 import 'package:nm_flat/core/data/prefs/device_prefs.dart';
 import 'package:nm_flat/core/data/repo/home_eraser.dart';
 import 'package:nm_flat/core/data/secure/secure_store.dart';
+import 'package:nm_flat/core/domain/widget_snapshot.dart';
 import 'package:nm_flat/core/notify/background_tasks.dart';
 import 'package:nm_flat/core/notify/notifications.dart';
 import 'package:nm_flat/core/providers.dart';
+import 'package:nm_flat/core/widgets/widget_background.dart';
+import 'package:nm_flat/core/widgets/widget_bridge.dart';
+
+@pragma('vm:entry-point')
+Future<void> widgetBackgroundMain() => runWidgetBackground();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -81,6 +87,12 @@ Future<void> main() async {
   HomeEraser.onErase.add((homeId) async {
     await cancelBackup(homeId);
     await BackupConfigStore(secure).delete(homeId);
+  });
+  HomeEraser.onErase.add((_) async {
+    await WidgetBridge.instance.updateSnapshots(
+      staff: const StaffWidgetSnapshot.noHome().toJson(),
+      todos: const TodoWidgetSnapshot.noHome().toJson(),
+    );
   });
   DeviceKeys? bootKeys;
   try {

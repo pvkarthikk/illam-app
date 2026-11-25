@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_staff_label">Help at home</string>
+    <string name="widget_staff_desc">Mark house help in or out directly from your home screen.</string>
+    <string name="widget_staff_empty_no_home">Open Illam to set up your home.</string>
+    <string name="widget_staff_empty">No house help added yet.</string>
+
+    <string name="widget_todo_label">Today\'s to-dos</string>
+    <string name="widget_todo_desc">Check off today\'s due items and add new to-dos quickly.</string>
+    <string name="widget_todo_header">Due today</string>
+    <string name="widget_todo_empty_no_home">Open Illam to set up your home.</string>
+    <string name="widget_todo_empty">All caught up for today.</string>
+
+    <string name="widget_add_cd">Add to-do</string>
+    <string name="widget_add_title">Add to-do</string>
+    <string name="widget_add_hint">What needs doing?</string>
+    <string name="widget_add_today">Today</string>
+    <string name="widget_add_tomorrow">Tomorrow</string>
+    <string name="widget_add_cancel">Cancel</string>
+    <string name="widget_add_submit">Add</string>
+</resources>

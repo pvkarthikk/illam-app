@@ -16,7 +16,10 @@ import 'package:nm_flat/core/sync/control_dialer.dart';
 import 'package:nm_flat/core/sync/control_store.dart';
 import 'package:nm_flat/core/sync/op_ignored_notifier.dart';
 import 'package:nm_flat/core/sync/sync_engine.dart';
+import 'package:nm_flat/core/widgets/widget_actions.dart';
+import 'package:nm_flat/core/widgets/widget_bridge.dart';
 import 'package:nm_flat/features/account/home_gone_dialog.dart';
+import 'package:nm_flat/features/tasks/tasks_controller.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
 class NestApp extends ConsumerStatefulWidget {
@@ -196,6 +199,7 @@ class _SyncLifecycleState extends ConsumerState<SyncLifecycle> {
   StreamSubscription<void>? _syncedSub;
   Timer? _stopTimer;
   Timer? _startTimer;
+  Timer? _widgetTimer;
   bool _dirty = false;
 
   @override
@@ -204,11 +208,92 @@ class _SyncLifecycleState extends ConsumerState<SyncLifecycle> {
     _lifecycle = AppLifecycleListener(onResume: _onResume, onPause: _onPause);
     final engine = ref.read(syncEngineProvider);
     _startSoon();
-    _syncedSub = engine.synced.listen((_) => _dirty = false);
+    _syncedSub = engine.synced.listen((_) {
+      _dirty = false;
+      _scheduleWidgetPush();
+    });
     _changedSub = ref.read(changesProvider).changed.listen((_) {
       _dirty = true;
       ref.read(syncEngineProvider).onLocalChange();
+      _scheduleWidgetPush();
     });
+    WidgetBridge.instance.setForegroundHandler(
+      onAction: _handleWidgetAction,
+      onOpenRoute: _openWidgetRoute,
+    );
+    unawaited(_syncWidgetsOnResume());
+  }
+
+  Future<void> _handleWidgetAction(Map<String, Object?> action) async {
+    if (!mounted) return;
+    try {
+      final wrote = await executeWidgetAction(ref.read, action);
+      if (!mounted) return;
+      if (wrote) {
+        _dirty = true;
+        ref.read(syncEngineProvider).onLocalChange();
+      }
+      await pushWidgetSnapshots(ref.read);
+    } on Object {
+      // Ignore transient errors while shutting down.
+    }
+  }
+
+  void _openWidgetRoute(String route) {
+    if (!mounted) return;
+    final uri = Uri.tryParse(route);
+    if (uri == null) return;
+    final router = ref.read(routerProvider);
+    if (uri.path == Routes.tasks) {
+      final tab = uri.queryParameters['tab'];
+      if (tab == 'todos' || tab == 'routines') {
+        ref.read(tasksControllerProvider.notifier).setTab(tab!);
+      }
+      router.go(Routes.tasks);
+      return;
+    }
+    if (uri.path.startsWith('/staff/')) {
+      router.go(Routes.today);
+      router.push(uri.path);
+      return;
+    }
+    router.go(uri.path);
+  }
+
+  void _scheduleWidgetPush() {
+    _widgetTimer?.cancel();
+    _widgetTimer = Timer(const Duration(milliseconds: 250), () {
+      if (!mounted) return;
+      unawaited(_pushWidgetsSafe());
+    });
+  }
+
+  Future<void> _pushWidgetsSafe() async {
+    if (!mounted) return;
+    try {
+      await pushWidgetSnapshots(ref.read);
+    } on Object {
+      // Ignore widget push errors when DB is closed or detached.
+    }
+  }
+
+  Future<void> _syncWidgetsOnResume() async {
+    if (!mounted) return;
+    try {
+      final wrote = await drainPendingWidgetActions(ref.read);
+      if (!mounted) return;
+      if (wrote) {
+        _dirty = true;
+        ref.read(syncEngineProvider).onLocalChange();
+      }
+      final route = await WidgetBridge.instance.consumeInitialRoute();
+      if (mounted && route != null && route.isNotEmpty) {
+        _openWidgetRoute(route);
+      }
+      await _pushWidgetsSafe();
+    } on Object {
+      // Ignore startup widget bridge errors in headless/test runs.
+    }
   }
 
   void _startSoon() {
@@ -224,6 +309,7 @@ class _SyncLifecycleState extends ConsumerState<SyncLifecycle> {
     _stopTimer?.cancel();
     _stopTimer = null;
     _startSoon();
+    unawaited(_syncWidgetsOnResume());
   }
 
   void _onPause() {
@@ -253,6 +339,8 @@ class _SyncLifecycleState extends ConsumerState<SyncLifecycle> {
 
   @override
   void dispose() {
+    WidgetBridge.instance.clearForegroundHandler();
+    _widgetTimer?.cancel();
     _startTimer?.cancel();
     _stopTimer?.cancel();
     _changedSub?.cancel();
@@ -263,9 +351,15 @@ class _SyncLifecycleState extends ConsumerState<SyncLifecycle> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<AsyncValue<String?>>(currentHomeIdProvider, (_, _) {
+      _scheduleWidgetPush();
+    });
     ref.listen<SyncEngine>(syncEngineProvider, (prev, next) {
       _syncedSub?.cancel();
-      _syncedSub = next.synced.listen((_) => _dirty = false);
+      _syncedSub = next.synced.listen((_) {
+        _dirty = false;
+        _scheduleWidgetPush();
+      });
       unawaited(next.startForeground());
     });
     ref.listen<AsyncValue<List<ConnectivityResult>>>(connectivityProvider, (

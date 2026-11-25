@@ -23,6 +23,7 @@ import 'package:nm_flat/core/notify/notifications.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/sync/background_sync.dart';
 import 'package:nm_flat/core/time/dates.dart';
+import 'package:nm_flat/core/widgets/widget_actions.dart';
 import 'package:nm_flat/features/salary/salary_providers.dart';
 import 'package:nm_flat/features/staff/staff_providers.dart';
 
@@ -49,6 +50,7 @@ void callbackDispatcher() {
       switch (task) {
         case 'nm.plan':
           await planAndEnqueue(container.read);
+          await _syncWidgetsBestEffort(container.read);
         case 'nm.show':
           await showIfStillValid(
             container.read,
@@ -56,6 +58,7 @@ void callbackDispatcher() {
           );
         case 'nm.sync':
           await runBackgroundSync(container.read);
+          await _syncWidgetsBestEffort(container.read);
         case backupTaskName:
           return await runBackupTask(
             container.read,
@@ -68,6 +71,15 @@ void callbackDispatcher() {
       container.dispose();
     }
   });
+}
+
+Future<void> _syncWidgetsBestEffort(Reader read) async {
+  try {
+    await drainPendingWidgetActions(read);
+    await pushWidgetSnapshots(read);
+  } on Object {
+    // Best-effort widget refresh; never fail background tasks.
+  }
 }
 
 Future<ProviderContainer> openBackgroundContainer() async {

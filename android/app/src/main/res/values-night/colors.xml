@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="widget_bg">#FF0F1612</color>
+    <color name="widget_card">#FF19241D</color>
+    <color name="widget_card_2">#FF1F2C23</color>
+    <color name="widget_ink">#FFEFE7D8</color>
+    <color name="widget_ink2">#FFC3CABF</color>
+    <color name="widget_ink3">#FF9AA498</color>
+    <color name="widget_line">#1AEFE7D8</color>
+    <color name="widget_primary">#FF8FD0A8</color>
+    <color name="widget_on_primary">#FF0D1A12</color>
+    <color name="widget_primary_soft">#FF203828</color>
+    <color name="widget_accent">#FFF0B44E</color>
+    <color name="widget_on_accent">#FF241603</color>
+    <color name="widget_accent_ink">#FFF6D9A2</color>
+    <color name="widget_accent_soft">#FF3A2E17</color>
+    <color name="widget_danger">#FFF08C72</color>
+    <color name="widget_ok">#FF8FD0A8</color>
+</resources>
