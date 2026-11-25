@@ -248,6 +248,15 @@ class ProfileOnThisPhoneSection extends ConsumerWidget {
       backupLabel = l10n.backupProfileRow(provider, freq, ago);
       backupErr = backupAttentionReason(l10n, cfg, nowMs);
     }
+    final remoteCfg = ref.watch(remoteSyncConfigProvider).value;
+    final String remoteLabel;
+    if (remoteCfg == null || !remoteCfg.enabled) {
+      remoteLabel = l10n.remoteSyncProfileSubOff;
+    } else if (!remoteCfg.isConfigured) {
+      remoteLabel = l10n.remoteSyncProfileSubNeedsSetup;
+    } else {
+      remoteLabel = l10n.remoteSyncProfileSubConnected(remoteCfg.projectId);
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -296,6 +305,57 @@ class ProfileOnThisPhoneSection extends ConsumerWidget {
                                     ),
                                   ),
                                 ],
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Icon(Icons.chevron_right_rounded, color: c.ink3),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Divider(height: 1, color: c.line),
+                InkWell(
+                  onTap: () => context.push(Routes.remoteSync),
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(minHeight: 64),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Wrap(
+                                  spacing: 8,
+                                  runSpacing: 4,
+                                  crossAxisAlignment: WrapCrossAlignment.center,
+                                  children: [
+                                    Text(
+                                      l10n.remoteSyncCardTitle,
+                                      style: NestText.meta13.copyWith(
+                                        color: c.ink3,
+                                      ),
+                                    ),
+                                    NestTag(
+                                      label: l10n.remoteSyncExperimental,
+                                      kind: NestTagKind.accent,
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  remoteLabel,
+                                  style: NestText.itemTitle16.copyWith(
+                                    color: c.ink,
+                                  ),
+                                ),
                               ],
                             ),
                           ),

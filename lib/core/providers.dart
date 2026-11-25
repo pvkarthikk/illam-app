@@ -50,6 +50,9 @@ import 'package:nm_flat/core/sync/key_rotation.dart';
 import 'package:nm_flat/core/sync/membership_log.dart';
 import 'package:nm_flat/core/sync/op_ignored_notifier.dart';
 import 'package:nm_flat/core/sync/protocol/op_wire.dart';
+import 'package:nm_flat/core/sync/remote/firebase_rest_client.dart';
+import 'package:nm_flat/core/sync/remote/remote_sync_config.dart';
+import 'package:nm_flat/core/sync/remote/remote_sync_engine.dart';
 import 'package:nm_flat/core/sync/sync_engine.dart';
 import 'package:nm_flat/core/sync/sync_reactions.dart';
 import 'package:nm_flat/core/sync/sync_store.dart';
@@ -256,12 +259,59 @@ final syncEngineProvider = Provider((ref) {
     controlStore: ref.watch(controlStoreProvider),
     homeEraser: ref.watch(homeEraserProvider),
   );
-  membership.onAppended = engine.onLocalChange;
+  membership.onAppended = () {
+    engine.onLocalChange();
+    ref.read(remoteSyncEngineProvider).onLocalChange();
+  };
   ref.onDispose(() => unawaited(engine.dispose()));
   return engine;
 });
 final syncEngineStateProvider = StreamProvider<SyncEngineState>((ref) async* {
   final engine = ref.watch(syncEngineProvider);
+  yield engine.state;
+  yield* engine.states;
+});
+final remoteSyncConfigStoreProvider = Provider<RemoteSyncConfigStore>((ref) {
+  final store = RemoteSyncConfigStore(ref.watch(secureStoreProvider));
+  ref.onDispose(() => unawaited(store.dispose()));
+  return store;
+});
+final remoteSyncConfigProvider = StreamProvider<RemoteSyncConfig>((ref) async* {
+  final homeId = ref.watch(currentHomeIdProvider).value;
+  if (homeId == null) {
+    yield RemoteSyncConfig.empty();
+    return;
+  }
+  final store = ref.watch(remoteSyncConfigStoreProvider);
+  yield await store.load(homeId);
+  await for (final changed in store.changes) {
+    if (changed == homeId) {
+      yield await store.load(homeId);
+    }
+  }
+});
+final firebaseRestClientProvider = Provider<FirebaseRestClient>(
+  (ref) => FirebaseRestClient(),
+);
+final remoteSyncEngineProvider = Provider<RemoteSyncEngine>((ref) {
+  final homeId = ref.watch(currentHomeIdProvider).value;
+  final engine = RemoteSyncEngine(
+    db: ref.watch(dbProvider),
+    prefs: ref.watch(prefsProvider),
+    secure: ref.watch(secureStoreProvider),
+    keys: ref.watch(deviceKeysProvider.future),
+    membership: ref.watch(membershipLogProvider),
+    incoming: ref.watch(incomingProvider),
+    clock: ref.watch(clockProvider),
+    homeId: homeId,
+    configStore: ref.watch(remoteSyncConfigStoreProvider),
+    client: ref.watch(firebaseRestClientProvider),
+  );
+  ref.onDispose(() => unawaited(engine.dispose()));
+  return engine;
+});
+final remoteSyncStateProvider = StreamProvider<RemoteSyncState>((ref) async* {
+  final engine = ref.watch(remoteSyncEngineProvider);
   yield engine.state;
   yield* engine.states;
 });

@@ -9,10 +9,13 @@ import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/domain/staff_text.dart';
 import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/providers.dart';
+import 'package:nm_flat/core/sync/remote/remote_sync_engine.dart';
 import 'package:nm_flat/core/time/dates.dart';
 import 'package:nm_flat/features/account/home_sheets.dart';
 import 'package:nm_flat/features/account/member_sheet.dart';
 import 'package:nm_flat/features/backup/backup_texts.dart';
+import 'package:nm_flat/features/remote_sync/remote_sync_controller.dart';
+import 'package:nm_flat/features/today/sections/sync_tag.dart';
 import 'package:nm_flat/features/salary/salary_providers.dart';
 import 'package:nm_flat/features/staff/add_staff_sheet.dart';
 import 'package:nm_flat/features/staff/former_staff_section.dart';
@@ -144,6 +147,94 @@ class HomeBackupCard extends ConsumerWidget {
                         style: NestText.small12.copyWith(color: c.ink3),
                       ),
                     ],
+                  ],
+                ),
+              ),
+              const SizedBox(width: 8),
+              Icon(Icons.chevron_right_rounded, color: c.ink3),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class HomeRemoteSyncCard extends ConsumerWidget {
+  const HomeRemoteSyncCard({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final c = context.nest;
+    ref.watch(minuteTickProvider);
+    final nowMs = ref.read(clockProvider).nowMs;
+    final cfg = ref.watch(remoteSyncConfigProvider).value;
+    final state =
+        ref.watch(remoteSyncStateProvider).value ?? const RemoteSyncState();
+
+    final enabled = cfg?.enabled ?? state.enabled;
+    final configured = cfg?.isConfigured ?? state.configured;
+    final errorCode = state.lastError ?? cfg?.lastError;
+    final lastAt = state.lastSyncAt ?? cfg?.lastSyncAt;
+    final hasError = enabled && configured && errorCode != null && errorCode.isNotEmpty;
+
+    final String subtitle;
+    if (!enabled) {
+      subtitle = l10n.remoteSyncStatusOff;
+    } else if (!configured) {
+      subtitle = l10n.remoteSyncStatusNeedsSetup;
+    } else if (hasError) {
+      subtitle = remoteSyncErrorText(l10n, errorCode);
+    } else if (lastAt == null || lastAt == 0) {
+      subtitle = l10n.remoteSyncStatusConnected(cfg?.projectId ?? '');
+    } else {
+      subtitle = l10n.remoteSyncStatusLastSynced(agoText(l10n, nowMs, lastAt));
+    }
+
+    final Color bg = !enabled
+        ? c.paper2
+        : (hasError ? c.dangerSoft : c.primarySoft);
+    final Color fg = !enabled
+        ? c.ink2
+        : (hasError ? c.danger : c.primary);
+
+    return _pad(
+      NestCard(
+        onTap: () => context.push(Routes.remoteSync),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Row(
+            children: [
+              _iconTile(Icons.cloud_sync_outlined, bg, fg),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 4,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        Text(
+                          l10n.remoteSyncCardTitle,
+                          style: NestText.itemTitle16.copyWith(color: c.ink),
+                        ),
+                        NestTag(
+                          label: l10n.remoteSyncExperimental,
+                          kind: NestTagKind.accent,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      subtitle,
+                      style: NestText.meta13.copyWith(
+                        color: hasError ? c.danger : c.ink3,
+                      ),
+                    ),
                   ],
                 ),
               ),

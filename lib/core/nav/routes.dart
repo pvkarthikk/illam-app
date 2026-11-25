@@ -22,6 +22,7 @@ abstract final class Routes {
   static const home = '/home';
   static const invite = '/invite';
   static const backup = '/backup';
+  static const remoteSync = '/remote-sync';
 }
 
 enum NestTab { today, lists, tasks, meals, money }

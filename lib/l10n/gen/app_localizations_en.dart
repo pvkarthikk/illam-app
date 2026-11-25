@@ -5170,4 +5170,287 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get debugAdd200Items => 'Add 200 test items';
+
+  @override
+  String get remoteSyncTitle => 'Remote sync';
+
+  @override
+  String get remoteSyncExperimental => 'Experimental';
+
+  @override
+  String get remoteSyncToggleTitle => 'Remote sync (experimental)';
+
+  @override
+  String get remoteSyncToggleSub =>
+      'Relay end-to-end encrypted updates through your own Firebase project';
+
+  @override
+  String get remoteSyncOffTitle => 'Bring Your Own Firebase';
+
+  @override
+  String get remoteSyncOffBody =>
+      'By default, Illam only syncs on home Wi-Fi. Turn on Remote sync to connect your own free Firebase project so family phones can sync over mobile data — with zero developer servers and end-to-end encryption.';
+
+  @override
+  String get remoteSyncStatusTitle => 'Firebase relay';
+
+  @override
+  String remoteSyncStatusConnected(Object projectId) {
+    return 'Connected · $projectId';
+  }
+
+  @override
+  String remoteSyncStatusLastSynced(Object ago) {
+    return 'Last synced $ago';
+  }
+
+  @override
+  String get remoteSyncStatusNever => 'Enabled · not synced yet';
+
+  @override
+  String get remoteSyncStatusNeedsSetup =>
+      'Enabled · add Firebase details below';
+
+  @override
+  String get remoteSyncStatusOff => 'Off · home Wi-Fi only';
+
+  @override
+  String remoteSyncStatusError(Object projectId) {
+    return 'Attention · $projectId';
+  }
+
+  @override
+  String get remoteSyncSyncNow => 'Sync now';
+
+  @override
+  String get remoteSyncSyncing => 'Syncing…';
+
+  @override
+  String remoteSyncSyncedCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Remote sync updated ($count items)',
+      one: 'Remote sync updated (1 item)',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get remoteSyncSyncedNone => 'Remote relay already up to date';
+
+  @override
+  String get remoteSyncShareFamily => 'Share with family';
+
+  @override
+  String get remoteSyncGuideTitle => 'How to set up your Firebase project';
+
+  @override
+  String get remoteSyncGuideStep1 =>
+      '1. Create a free Firebase project at console.firebase.google.com and add a Web app (</>) to view your Project ID and Web API key.';
+
+  @override
+  String get remoteSyncGuideStep2 =>
+      '2. Under Authentication → Sign-in method, turn on Anonymous sign-in.';
+
+  @override
+  String get remoteSyncGuideStep3 =>
+      '3. Under Firestore Database, create a database, open Rules, and paste Illam’s security rules.';
+
+  @override
+  String get remoteSyncGuideStep4 =>
+      '4. Enter your config below, test the connection, and share the QR code with family phones.';
+
+  @override
+  String get remoteSyncCopyRules => 'Copy security rules';
+
+  @override
+  String get remoteSyncRulesCopied => 'Security rules copied';
+
+  @override
+  String get remoteSyncShowRules => 'View security rules';
+
+  @override
+  String get remoteSyncHideRules => 'Hide security rules';
+
+  @override
+  String get remoteSyncConfigTitle => 'Firebase configuration';
+
+  @override
+  String get remoteSyncConfigLead =>
+      'Enter your project details, or paste the firebaseConfig snippet from Firebase Console.';
+
+  @override
+  String get remoteSyncPasteConfig => 'Paste config';
+
+  @override
+  String get remoteSyncScanQr => 'Scan QR';
+
+  @override
+  String get remoteSyncPasteSheetTitle => 'Paste Firebase config';
+
+  @override
+  String get remoteSyncPasteSheetLead =>
+      'Paste a firebaseConfig JS/JSON snippet or an Illam remote sync link.';
+
+  @override
+  String get remoteSyncPasteFieldLabel => 'Config snippet or link';
+
+  @override
+  String get remoteSyncApplyConfig => 'Fill fields';
+
+  @override
+  String get remoteSyncConfigApplied => 'Firebase fields filled';
+
+  @override
+  String get remoteSyncConfigNotFound =>
+      'Couldn’t find projectId and apiKey in pasted text';
+
+  @override
+  String get remoteSyncProjectIdLabel => 'Project ID';
+
+  @override
+  String get remoteSyncProjectIdHint => 'my-family-illam';
+
+  @override
+  String get remoteSyncApiKeyLabel => 'Web API key';
+
+  @override
+  String get remoteSyncApiKeyHint => 'AIzaSy...';
+
+  @override
+  String get remoteSyncShowApiKey => 'Show API key';
+
+  @override
+  String get remoteSyncHideApiKey => 'Hide API key';
+
+  @override
+  String get remoteSyncDatabaseIdLabel => 'Database ID (optional)';
+
+  @override
+  String get remoteSyncDatabaseIdHint => '(default)';
+
+  @override
+  String get remoteSyncErrProjectEmpty => 'Enter your Firebase Project ID';
+
+  @override
+  String get remoteSyncErrProjectInvalid =>
+      'Use lowercase letters, numbers, and hyphens';
+
+  @override
+  String get remoteSyncErrKeyEmpty => 'Enter your Firebase Web API key';
+
+  @override
+  String get remoteSyncErrKeyInvalid => 'Check the Web API key format';
+
+  @override
+  String get remoteSyncErrDbInvalid =>
+      'Leave as (default) or use lowercase letters, numbers, and hyphens';
+
+  @override
+  String get remoteSyncTestBtn => 'Test connection';
+
+  @override
+  String get remoteSyncTestingBtn => 'Testing…';
+
+  @override
+  String get remoteSyncTestOk =>
+      'Connection OK — Anonymous Auth and Firestore rules verified.';
+
+  @override
+  String get remoteSyncSaveBtn => 'Save & connect';
+
+  @override
+  String get remoteSyncSavingBtn => 'Saving…';
+
+  @override
+  String get remoteSyncSavedSnack => 'Firebase configuration saved';
+
+  @override
+  String get remoteSyncRemoveBtn => 'Remove Firebase config';
+
+  @override
+  String get remoteSyncRemoveTitle => 'Remove Firebase config?';
+
+  @override
+  String get remoteSyncRemoveBody =>
+      'This phone will stop using remote sync and clear stored Firebase credentials. Local home data stays untouched.';
+
+  @override
+  String get remoteSyncRemoveConfirm => 'Remove';
+
+  @override
+  String get remoteSyncShareTitle => 'Share Firebase setup';
+
+  @override
+  String get remoteSyncShareLead =>
+      'Scan this QR on another family phone after enabling Remote sync there.';
+
+  @override
+  String get remoteSyncShareWarning =>
+      'Share only with family members of this home — anyone with your Project ID and API key can access your Firebase project’s anonymous relay.';
+
+  @override
+  String get remoteSyncCopyShareLink => 'Copy setup link';
+
+  @override
+  String get remoteSyncShareLinkCopied => 'Setup link copied';
+
+  @override
+  String get remoteSyncScanTitle => 'Scan remote sync QR';
+
+  @override
+  String get remoteSyncScanHint =>
+      'Point at the Remote sync QR code from your family member’s phone.';
+
+  @override
+  String get remoteSyncScanInvalid =>
+      'That QR code isn’t an Illam remote sync config';
+
+  @override
+  String get remoteSyncErrInvalidApiKey => 'Firebase rejected the Web API key.';
+
+  @override
+  String get remoteSyncErrAnonDisabled =>
+      'Turn on Anonymous sign-in under Firebase Authentication → Sign-in method.';
+
+  @override
+  String get remoteSyncErrPermissionDenied =>
+      'Firestore denied access. Paste Illam’s security rules in Firestore → Rules.';
+
+  @override
+  String get remoteSyncErrDatabaseNotFound =>
+      'Firestore database or Project ID not found.';
+
+  @override
+  String get remoteSyncErrQuota =>
+      'Firebase daily Spark quota exceeded. Try again later.';
+
+  @override
+  String get remoteSyncErrNetwork =>
+      'Could not reach Firebase. Check your internet connection.';
+
+  @override
+  String get remoteSyncErrOther =>
+      'Firebase sync failed — check your configuration and rules.';
+
+  @override
+  String get remoteSyncCardTitle => 'Remote sync';
+
+  @override
+  String get remoteSyncProfileSubOff => 'Off';
+
+  @override
+  String get remoteSyncProfileSubNeedsSetup => 'Needs setup';
+
+  @override
+  String remoteSyncProfileSubConnected(Object projectId) {
+    return 'Connected · $projectId';
+  }
+
+  @override
+  String get remoteSyncNoHomeKey => 'Home encryption key not ready yet';
+
+  @override
+  String get remoteSyncCombinedSynced => 'Synced phones and remote relay';
 }

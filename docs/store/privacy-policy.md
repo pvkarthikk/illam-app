@@ -24,6 +24,14 @@ If you choose to turn on backups:
 - Encrypted backup archives are uploaded **only to the storage location you select**: Google Drive (hidden app folder), Microsoft OneDrive (Apps folder), Dropbox (Apps folder), pCloud (app folder), a WebDAV or Nextcloud server, an S3-compatible bucket, an SFTP server, or a local/external folder on your phone.
 - **The developer never receives or has access to your backups, encryption password, or cloud sign-in tokens.**
 
+## Remote Sync (Experimental — Bring Your Own Firebase)
+
+Remote Sync is **off by default**. If you choose to turn it on and enter credentials for your own Firebase project:
+
+- Updates are **compressed and end-to-end encrypted on your phone** with your home's shared key before leaving the device.
+- Encrypted batches are sent **only to the Cloud Firestore project you configured** using Firebase Anonymous Authentication on your own Firebase account.
+- **The developer has no access to your Firebase project, API key, or synced content.**
+
 ## Household & Staff Details
 
 - Information you enter inside your home, including house-help (staff) names, attendance, salary records, and **phone numbers**, is shared with the members of your home.

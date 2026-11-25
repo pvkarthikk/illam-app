@@ -58,6 +58,8 @@ class HomeMembersScreen extends ConsumerWidget {
                 ),
                 const HomeSyncCard(),
                 const SizedBox(height: 12),
+                const HomeRemoteSyncCard(),
+                const SizedBox(height: 12),
                 const HomeBackupCard(),
                 const SizedBox(height: 16),
                 HomeInviteSection(

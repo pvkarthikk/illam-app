@@ -25,6 +25,7 @@ import 'package:nm_flat/features/meals/recipe_screen.dart';
 import 'package:nm_flat/features/money/money_screen.dart';
 import 'package:nm_flat/features/money/transactions_screen.dart';
 import 'package:nm_flat/features/onboarding/onboarding_screen.dart';
+import 'package:nm_flat/features/remote_sync/remote_sync_screen.dart';
 import 'package:nm_flat/features/salary/salary_screen.dart';
 import 'package:nm_flat/features/staff/staff_screen.dart';
 import 'package:nm_flat/features/store/store_mode_screen.dart';
@@ -196,6 +197,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: Routes.backup,
         builder: (_, _) => const BackupScreen(),
+      ),
+      GoRoute(
+        path: Routes.remoteSync,
+        builder: (_, _) => const RemoteSyncScreen(),
       ),
       GoRoute(
         path: Routes.invite,

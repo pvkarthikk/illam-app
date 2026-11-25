@@ -15,6 +15,7 @@ import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/sync/control_dialer.dart';
 import 'package:nm_flat/core/sync/control_store.dart';
 import 'package:nm_flat/core/sync/op_ignored_notifier.dart';
+import 'package:nm_flat/core/sync/remote/remote_sync_engine.dart';
 import 'package:nm_flat/core/sync/sync_engine.dart';
 import 'package:nm_flat/core/widgets/widget_actions.dart';
 import 'package:nm_flat/core/widgets/widget_bridge.dart';
@@ -197,6 +198,7 @@ class _SyncLifecycleState extends ConsumerState<SyncLifecycle> {
   late final AppLifecycleListener _lifecycle;
   StreamSubscription<void>? _changedSub;
   StreamSubscription<void>? _syncedSub;
+  StreamSubscription<void>? _remoteSyncedSub;
   Timer? _stopTimer;
   Timer? _startTimer;
   Timer? _widgetTimer;
@@ -207,14 +209,20 @@ class _SyncLifecycleState extends ConsumerState<SyncLifecycle> {
     super.initState();
     _lifecycle = AppLifecycleListener(onResume: _onResume, onPause: _onPause);
     final engine = ref.read(syncEngineProvider);
+    final remoteEngine = ref.read(remoteSyncEngineProvider);
     _startSoon();
     _syncedSub = engine.synced.listen((_) {
+      _dirty = false;
+      _scheduleWidgetPush();
+    });
+    _remoteSyncedSub = remoteEngine.synced.listen((_) {
       _dirty = false;
       _scheduleWidgetPush();
     });
     _changedSub = ref.read(changesProvider).changed.listen((_) {
       _dirty = true;
       ref.read(syncEngineProvider).onLocalChange();
+      ref.read(remoteSyncEngineProvider).onLocalChange();
       _scheduleWidgetPush();
     });
     WidgetBridge.instance.setForegroundHandler(
@@ -232,6 +240,7 @@ class _SyncLifecycleState extends ConsumerState<SyncLifecycle> {
       if (wrote) {
         _dirty = true;
         ref.read(syncEngineProvider).onLocalChange();
+        ref.read(remoteSyncEngineProvider).onLocalChange();
       }
       await pushWidgetSnapshots(ref.read);
     } on Object {
@@ -285,6 +294,7 @@ class _SyncLifecycleState extends ConsumerState<SyncLifecycle> {
       if (wrote) {
         _dirty = true;
         ref.read(syncEngineProvider).onLocalChange();
+        ref.read(remoteSyncEngineProvider).onLocalChange();
       }
       final route = await WidgetBridge.instance.consumeInitialRoute();
       if (mounted && route != null && route.isNotEmpty) {
@@ -301,6 +311,7 @@ class _SyncLifecycleState extends ConsumerState<SyncLifecycle> {
     _startTimer = Timer(const Duration(seconds: 1), () {
       if (mounted) {
         unawaited(ref.read(syncEngineProvider).startForeground());
+        unawaited(ref.read(remoteSyncEngineProvider).startForeground());
       }
     });
   }
@@ -333,6 +344,7 @@ class _SyncLifecycleState extends ConsumerState<SyncLifecycle> {
     _stopTimer = Timer(const Duration(seconds: 5), () {
       if (mounted) {
         unawaited(ref.read(syncEngineProvider).stopForeground());
+        unawaited(ref.read(remoteSyncEngineProvider).stopForeground());
       }
     });
   }
@@ -345,6 +357,7 @@ class _SyncLifecycleState extends ConsumerState<SyncLifecycle> {
     _stopTimer?.cancel();
     _changedSub?.cancel();
     _syncedSub?.cancel();
+    _remoteSyncedSub?.cancel();
     _lifecycle.dispose();
     super.dispose();
   }
@@ -362,12 +375,21 @@ class _SyncLifecycleState extends ConsumerState<SyncLifecycle> {
       });
       unawaited(next.startForeground());
     });
+    ref.listen<RemoteSyncEngine>(remoteSyncEngineProvider, (prev, next) {
+      _remoteSyncedSub?.cancel();
+      _remoteSyncedSub = next.synced.listen((_) {
+        _dirty = false;
+        _scheduleWidgetPush();
+      });
+      unawaited(next.startForeground());
+    });
     ref.listen<AsyncValue<List<ConnectivityResult>>>(connectivityProvider, (
       prev,
       next,
     ) {
       if (prev != null && prev.hasValue && next.hasValue) {
         unawaited(ref.read(syncEngineProvider).syncNow());
+        unawaited(ref.read(remoteSyncEngineProvider).syncNow());
       }
     });
     return widget.child;

@@ -6,6 +6,7 @@ import 'package:nm_flat/core/domain/sync_status.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/sync/protocol/messages.dart';
 import 'package:nm_flat/core/sync/sync_engine.dart';
+import 'package:nm_flat/features/remote_sync/remote_sync_controller.dart';
 import 'package:nm_flat/features/staff/staff_providers.dart';
 import 'package:nm_flat/features/today/sections/sync_tag.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
@@ -24,6 +25,9 @@ class HomeSyncCard extends ConsumerWidget {
     final c = context.nest;
     final engineState =
         ref.watch(syncEngineStateProvider).value ?? const SyncEngineState();
+    final remoteSyncing =
+        ref.watch(remoteSyncStateProvider).value?.syncing ?? false;
+    final isSyncing = engineState.syncing || remoteSyncing;
     final peers = ref.watch(syncPeersProvider).value ?? const [];
     final nowMs = ref.read(clockProvider).nowMs;
 
@@ -81,17 +85,29 @@ class HomeSyncCard extends ConsumerWidget {
             if (!summary.onlyThisPhone) ...[
               const SizedBox(width: 8),
               NestButton(
-                label: engineState.syncing ? l10n.syncing : l10n.syncNow,
+                label: isSyncing ? l10n.syncing : l10n.syncNow,
                 kind: NestButtonKind.tonal,
                 size: NestButtonSize.sm,
-                onPressed: engineState.syncing
+                onPressed: isSyncing
                     ? null
                     : () async {
                         final n = await ref.read(syncEngineProvider).syncNow();
+                        final r = await ref
+                            .read(remoteSyncEngineProvider)
+                            .syncNow();
                         if (!context.mounted) return;
-                        ref
-                            .read(snackbarProvider)
-                            .show(n > 0 ? l10n.syncedSnack : l10n.syncNoPeers);
+                        final msg = switch ((n > 0, r.ran && r.error == null)) {
+                          (true, true) => l10n.remoteSyncCombinedSynced,
+                          (true, false) => l10n.syncedSnack,
+                          (false, true) => (r.pushed + r.pulled) > 0
+                              ? l10n.remoteSyncSyncedCount(r.pushed + r.pulled)
+                              : l10n.remoteSyncSyncedNone,
+                          (false, false) =>
+                            (r.ran && r.error != null)
+                                ? remoteSyncErrorText(l10n, r.error!.name)
+                                : l10n.syncNoPeers,
+                        };
+                        ref.read(snackbarProvider).show(msg);
                       },
               ),
             ],

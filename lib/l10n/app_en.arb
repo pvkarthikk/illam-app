@@ -3841,5 +3841,113 @@
   "debugBreakTokens": "Break Dropbox/OneDrive refresh token",
   "debugResultOk": "ok",
   "debugResultNeedsSignIn": "needs sign-in",
-  "debugAdd200Items": "Add 200 test items"
+  "debugAdd200Items": "Add 200 test items",
+  "remoteSyncTitle": "Remote sync",
+  "remoteSyncExperimental": "Experimental",
+  "remoteSyncToggleTitle": "Remote sync (experimental)",
+  "remoteSyncToggleSub": "Relay end-to-end encrypted updates through your own Firebase project",
+  "remoteSyncOffTitle": "Bring Your Own Firebase",
+  "remoteSyncOffBody": "By default, Illam only syncs on home Wi-Fi. Turn on Remote sync to connect your own free Firebase project so family phones can sync over mobile data — with zero developer servers and end-to-end encryption.",
+  "remoteSyncStatusTitle": "Firebase relay",
+  "remoteSyncStatusConnected": "Connected · {projectId}",
+  "@remoteSyncStatusConnected": {
+    "placeholders": {
+      "projectId": {}
+    }
+  },
+  "remoteSyncStatusLastSynced": "Last synced {ago}",
+  "@remoteSyncStatusLastSynced": {
+    "placeholders": {
+      "ago": {}
+    }
+  },
+  "remoteSyncStatusNever": "Enabled · not synced yet",
+  "remoteSyncStatusNeedsSetup": "Enabled · add Firebase details below",
+  "remoteSyncStatusOff": "Off · home Wi-Fi only",
+  "remoteSyncStatusError": "Attention · {projectId}",
+  "@remoteSyncStatusError": {
+    "placeholders": {
+      "projectId": {}
+    }
+  },
+  "remoteSyncSyncNow": "Sync now",
+  "remoteSyncSyncing": "Syncing…",
+  "remoteSyncSyncedCount": "{count, plural, =1{Remote sync updated (1 item)} other{Remote sync updated ({count} items)}}",
+  "@remoteSyncSyncedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "remoteSyncSyncedNone": "Remote relay already up to date",
+  "remoteSyncShareFamily": "Share with family",
+  "remoteSyncGuideTitle": "How to set up your Firebase project",
+  "remoteSyncGuideStep1": "1. Create a free Firebase project at console.firebase.google.com and add a Web app (</>) to view your Project ID and Web API key.",
+  "remoteSyncGuideStep2": "2. Under Authentication → Sign-in method, turn on Anonymous sign-in.",
+  "remoteSyncGuideStep3": "3. Under Firestore Database, create a database, open Rules, and paste Illam’s security rules.",
+  "remoteSyncGuideStep4": "4. Enter your config below, test the connection, and share the QR code with family phones.",
+  "remoteSyncCopyRules": "Copy security rules",
+  "remoteSyncRulesCopied": "Security rules copied",
+  "remoteSyncShowRules": "View security rules",
+  "remoteSyncHideRules": "Hide security rules",
+  "remoteSyncConfigTitle": "Firebase configuration",
+  "remoteSyncConfigLead": "Enter your project details, or paste the firebaseConfig snippet from Firebase Console.",
+  "remoteSyncPasteConfig": "Paste config",
+  "remoteSyncScanQr": "Scan QR",
+  "remoteSyncPasteSheetTitle": "Paste Firebase config",
+  "remoteSyncPasteSheetLead": "Paste a firebaseConfig JS/JSON snippet or an Illam remote sync link.",
+  "remoteSyncPasteFieldLabel": "Config snippet or link",
+  "remoteSyncApplyConfig": "Fill fields",
+  "remoteSyncConfigApplied": "Firebase fields filled",
+  "remoteSyncConfigNotFound": "Couldn’t find projectId and apiKey in pasted text",
+  "remoteSyncProjectIdLabel": "Project ID",
+  "remoteSyncProjectIdHint": "my-family-illam",
+  "remoteSyncApiKeyLabel": "Web API key",
+  "remoteSyncApiKeyHint": "AIzaSy...",
+  "remoteSyncShowApiKey": "Show API key",
+  "remoteSyncHideApiKey": "Hide API key",
+  "remoteSyncDatabaseIdLabel": "Database ID (optional)",
+  "remoteSyncDatabaseIdHint": "(default)",
+  "remoteSyncErrProjectEmpty": "Enter your Firebase Project ID",
+  "remoteSyncErrProjectInvalid": "Use lowercase letters, numbers, and hyphens",
+  "remoteSyncErrKeyEmpty": "Enter your Firebase Web API key",
+  "remoteSyncErrKeyInvalid": "Check the Web API key format",
+  "remoteSyncErrDbInvalid": "Leave as (default) or use lowercase letters, numbers, and hyphens",
+  "remoteSyncTestBtn": "Test connection",
+  "remoteSyncTestingBtn": "Testing…",
+  "remoteSyncTestOk": "Connection OK — Anonymous Auth and Firestore rules verified.",
+  "remoteSyncSaveBtn": "Save & connect",
+  "remoteSyncSavingBtn": "Saving…",
+  "remoteSyncSavedSnack": "Firebase configuration saved",
+  "remoteSyncRemoveBtn": "Remove Firebase config",
+  "remoteSyncRemoveTitle": "Remove Firebase config?",
+  "remoteSyncRemoveBody": "This phone will stop using remote sync and clear stored Firebase credentials. Local home data stays untouched.",
+  "remoteSyncRemoveConfirm": "Remove",
+  "remoteSyncShareTitle": "Share Firebase setup",
+  "remoteSyncShareLead": "Scan this QR on another family phone after enabling Remote sync there.",
+  "remoteSyncShareWarning": "Share only with family members of this home — anyone with your Project ID and API key can access your Firebase project’s anonymous relay.",
+  "remoteSyncCopyShareLink": "Copy setup link",
+  "remoteSyncShareLinkCopied": "Setup link copied",
+  "remoteSyncScanTitle": "Scan remote sync QR",
+  "remoteSyncScanHint": "Point at the Remote sync QR code from your family member’s phone.",
+  "remoteSyncScanInvalid": "That QR code isn’t an Illam remote sync config",
+  "remoteSyncErrInvalidApiKey": "Firebase rejected the Web API key.",
+  "remoteSyncErrAnonDisabled": "Turn on Anonymous sign-in under Firebase Authentication → Sign-in method.",
+  "remoteSyncErrPermissionDenied": "Firestore denied access. Paste Illam’s security rules in Firestore → Rules.",
+  "remoteSyncErrDatabaseNotFound": "Firestore database or Project ID not found.",
+  "remoteSyncErrQuota": "Firebase daily Spark quota exceeded. Try again later.",
+  "remoteSyncErrNetwork": "Could not reach Firebase. Check your internet connection.",
+  "remoteSyncErrOther": "Firebase sync failed — check your configuration and rules.",
+  "remoteSyncCardTitle": "Remote sync",
+  "remoteSyncProfileSubOff": "Off",
+  "remoteSyncProfileSubNeedsSetup": "Needs setup",
+  "remoteSyncProfileSubConnected": "Connected · {projectId}",
+  "@remoteSyncProfileSubConnected": {
+    "placeholders": {
+      "projectId": {}
+    }
+  },
+  "remoteSyncNoHomeKey": "Home encryption key not ready yet",
+  "remoteSyncCombinedSynced": "Synced phones and remote relay"
 }

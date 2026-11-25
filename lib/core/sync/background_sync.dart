@@ -25,6 +25,11 @@ Future<void> runBackgroundSync(Reader read) async {
 Future<void> _syncHomeAndNudge(Reader read) async {
   try {
     await read(syncEngineProvider).runOnce(budget: const Duration(seconds: 30));
+    try {
+      await read(remoteSyncEngineProvider).syncNow();
+    } on Object {
+      // Best-effort remote sync in background.
+    }
 
     final prefs = read(prefsProvider);
     final homeId = prefs.currentHomeId;

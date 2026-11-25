@@ -8264,6 +8264,492 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add 200 test items'**
   String get debugAdd200Items;
+
+  /// No description provided for @remoteSyncTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remote sync'**
+  String get remoteSyncTitle;
+
+  /// No description provided for @remoteSyncExperimental.
+  ///
+  /// In en, this message translates to:
+  /// **'Experimental'**
+  String get remoteSyncExperimental;
+
+  /// No description provided for @remoteSyncToggleTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remote sync (experimental)'**
+  String get remoteSyncToggleTitle;
+
+  /// No description provided for @remoteSyncToggleSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Relay end-to-end encrypted updates through your own Firebase project'**
+  String get remoteSyncToggleSub;
+
+  /// No description provided for @remoteSyncOffTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Bring Your Own Firebase'**
+  String get remoteSyncOffTitle;
+
+  /// No description provided for @remoteSyncOffBody.
+  ///
+  /// In en, this message translates to:
+  /// **'By default, Illam only syncs on home Wi-Fi. Turn on Remote sync to connect your own free Firebase project so family phones can sync over mobile data — with zero developer servers and end-to-end encryption.'**
+  String get remoteSyncOffBody;
+
+  /// No description provided for @remoteSyncStatusTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Firebase relay'**
+  String get remoteSyncStatusTitle;
+
+  /// No description provided for @remoteSyncStatusConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected · {projectId}'**
+  String remoteSyncStatusConnected(Object projectId);
+
+  /// No description provided for @remoteSyncStatusLastSynced.
+  ///
+  /// In en, this message translates to:
+  /// **'Last synced {ago}'**
+  String remoteSyncStatusLastSynced(Object ago);
+
+  /// No description provided for @remoteSyncStatusNever.
+  ///
+  /// In en, this message translates to:
+  /// **'Enabled · not synced yet'**
+  String get remoteSyncStatusNever;
+
+  /// No description provided for @remoteSyncStatusNeedsSetup.
+  ///
+  /// In en, this message translates to:
+  /// **'Enabled · add Firebase details below'**
+  String get remoteSyncStatusNeedsSetup;
+
+  /// No description provided for @remoteSyncStatusOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off · home Wi-Fi only'**
+  String get remoteSyncStatusOff;
+
+  /// No description provided for @remoteSyncStatusError.
+  ///
+  /// In en, this message translates to:
+  /// **'Attention · {projectId}'**
+  String remoteSyncStatusError(Object projectId);
+
+  /// No description provided for @remoteSyncSyncNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync now'**
+  String get remoteSyncSyncNow;
+
+  /// No description provided for @remoteSyncSyncing.
+  ///
+  /// In en, this message translates to:
+  /// **'Syncing…'**
+  String get remoteSyncSyncing;
+
+  /// No description provided for @remoteSyncSyncedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Remote sync updated (1 item)} other{Remote sync updated ({count} items)}}'**
+  String remoteSyncSyncedCount(int count);
+
+  /// No description provided for @remoteSyncSyncedNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Remote relay already up to date'**
+  String get remoteSyncSyncedNone;
+
+  /// No description provided for @remoteSyncShareFamily.
+  ///
+  /// In en, this message translates to:
+  /// **'Share with family'**
+  String get remoteSyncShareFamily;
+
+  /// No description provided for @remoteSyncGuideTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How to set up your Firebase project'**
+  String get remoteSyncGuideTitle;
+
+  /// No description provided for @remoteSyncGuideStep1.
+  ///
+  /// In en, this message translates to:
+  /// **'1. Create a free Firebase project at console.firebase.google.com and add a Web app (</>) to view your Project ID and Web API key.'**
+  String get remoteSyncGuideStep1;
+
+  /// No description provided for @remoteSyncGuideStep2.
+  ///
+  /// In en, this message translates to:
+  /// **'2. Under Authentication → Sign-in method, turn on Anonymous sign-in.'**
+  String get remoteSyncGuideStep2;
+
+  /// No description provided for @remoteSyncGuideStep3.
+  ///
+  /// In en, this message translates to:
+  /// **'3. Under Firestore Database, create a database, open Rules, and paste Illam’s security rules.'**
+  String get remoteSyncGuideStep3;
+
+  /// No description provided for @remoteSyncGuideStep4.
+  ///
+  /// In en, this message translates to:
+  /// **'4. Enter your config below, test the connection, and share the QR code with family phones.'**
+  String get remoteSyncGuideStep4;
+
+  /// No description provided for @remoteSyncCopyRules.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy security rules'**
+  String get remoteSyncCopyRules;
+
+  /// No description provided for @remoteSyncRulesCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Security rules copied'**
+  String get remoteSyncRulesCopied;
+
+  /// No description provided for @remoteSyncShowRules.
+  ///
+  /// In en, this message translates to:
+  /// **'View security rules'**
+  String get remoteSyncShowRules;
+
+  /// No description provided for @remoteSyncHideRules.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide security rules'**
+  String get remoteSyncHideRules;
+
+  /// No description provided for @remoteSyncConfigTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Firebase configuration'**
+  String get remoteSyncConfigTitle;
+
+  /// No description provided for @remoteSyncConfigLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your project details, or paste the firebaseConfig snippet from Firebase Console.'**
+  String get remoteSyncConfigLead;
+
+  /// No description provided for @remoteSyncPasteConfig.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste config'**
+  String get remoteSyncPasteConfig;
+
+  /// No description provided for @remoteSyncScanQr.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan QR'**
+  String get remoteSyncScanQr;
+
+  /// No description provided for @remoteSyncPasteSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste Firebase config'**
+  String get remoteSyncPasteSheetTitle;
+
+  /// No description provided for @remoteSyncPasteSheetLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste a firebaseConfig JS/JSON snippet or an Illam remote sync link.'**
+  String get remoteSyncPasteSheetLead;
+
+  /// No description provided for @remoteSyncPasteFieldLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Config snippet or link'**
+  String get remoteSyncPasteFieldLabel;
+
+  /// No description provided for @remoteSyncApplyConfig.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill fields'**
+  String get remoteSyncApplyConfig;
+
+  /// No description provided for @remoteSyncConfigApplied.
+  ///
+  /// In en, this message translates to:
+  /// **'Firebase fields filled'**
+  String get remoteSyncConfigApplied;
+
+  /// No description provided for @remoteSyncConfigNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn’t find projectId and apiKey in pasted text'**
+  String get remoteSyncConfigNotFound;
+
+  /// No description provided for @remoteSyncProjectIdLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Project ID'**
+  String get remoteSyncProjectIdLabel;
+
+  /// No description provided for @remoteSyncProjectIdHint.
+  ///
+  /// In en, this message translates to:
+  /// **'my-family-illam'**
+  String get remoteSyncProjectIdHint;
+
+  /// No description provided for @remoteSyncApiKeyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Web API key'**
+  String get remoteSyncApiKeyLabel;
+
+  /// No description provided for @remoteSyncApiKeyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'AIzaSy...'**
+  String get remoteSyncApiKeyHint;
+
+  /// No description provided for @remoteSyncShowApiKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Show API key'**
+  String get remoteSyncShowApiKey;
+
+  /// No description provided for @remoteSyncHideApiKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide API key'**
+  String get remoteSyncHideApiKey;
+
+  /// No description provided for @remoteSyncDatabaseIdLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Database ID (optional)'**
+  String get remoteSyncDatabaseIdLabel;
+
+  /// No description provided for @remoteSyncDatabaseIdHint.
+  ///
+  /// In en, this message translates to:
+  /// **'(default)'**
+  String get remoteSyncDatabaseIdHint;
+
+  /// No description provided for @remoteSyncErrProjectEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your Firebase Project ID'**
+  String get remoteSyncErrProjectEmpty;
+
+  /// No description provided for @remoteSyncErrProjectInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Use lowercase letters, numbers, and hyphens'**
+  String get remoteSyncErrProjectInvalid;
+
+  /// No description provided for @remoteSyncErrKeyEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your Firebase Web API key'**
+  String get remoteSyncErrKeyEmpty;
+
+  /// No description provided for @remoteSyncErrKeyInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the Web API key format'**
+  String get remoteSyncErrKeyInvalid;
+
+  /// No description provided for @remoteSyncErrDbInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave as (default) or use lowercase letters, numbers, and hyphens'**
+  String get remoteSyncErrDbInvalid;
+
+  /// No description provided for @remoteSyncTestBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Test connection'**
+  String get remoteSyncTestBtn;
+
+  /// No description provided for @remoteSyncTestingBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Testing…'**
+  String get remoteSyncTestingBtn;
+
+  /// No description provided for @remoteSyncTestOk.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection OK — Anonymous Auth and Firestore rules verified.'**
+  String get remoteSyncTestOk;
+
+  /// No description provided for @remoteSyncSaveBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Save & connect'**
+  String get remoteSyncSaveBtn;
+
+  /// No description provided for @remoteSyncSavingBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving…'**
+  String get remoteSyncSavingBtn;
+
+  /// No description provided for @remoteSyncSavedSnack.
+  ///
+  /// In en, this message translates to:
+  /// **'Firebase configuration saved'**
+  String get remoteSyncSavedSnack;
+
+  /// No description provided for @remoteSyncRemoveBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Firebase config'**
+  String get remoteSyncRemoveBtn;
+
+  /// No description provided for @remoteSyncRemoveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Firebase config?'**
+  String get remoteSyncRemoveTitle;
+
+  /// No description provided for @remoteSyncRemoveBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This phone will stop using remote sync and clear stored Firebase credentials. Local home data stays untouched.'**
+  String get remoteSyncRemoveBody;
+
+  /// No description provided for @remoteSyncRemoveConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get remoteSyncRemoveConfirm;
+
+  /// No description provided for @remoteSyncShareTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Share Firebase setup'**
+  String get remoteSyncShareTitle;
+
+  /// No description provided for @remoteSyncShareLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan this QR on another family phone after enabling Remote sync there.'**
+  String get remoteSyncShareLead;
+
+  /// No description provided for @remoteSyncShareWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Share only with family members of this home — anyone with your Project ID and API key can access your Firebase project’s anonymous relay.'**
+  String get remoteSyncShareWarning;
+
+  /// No description provided for @remoteSyncCopyShareLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy setup link'**
+  String get remoteSyncCopyShareLink;
+
+  /// No description provided for @remoteSyncShareLinkCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Setup link copied'**
+  String get remoteSyncShareLinkCopied;
+
+  /// No description provided for @remoteSyncScanTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan remote sync QR'**
+  String get remoteSyncScanTitle;
+
+  /// No description provided for @remoteSyncScanHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Point at the Remote sync QR code from your family member’s phone.'**
+  String get remoteSyncScanHint;
+
+  /// No description provided for @remoteSyncScanInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'That QR code isn’t an Illam remote sync config'**
+  String get remoteSyncScanInvalid;
+
+  /// No description provided for @remoteSyncErrInvalidApiKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Firebase rejected the Web API key.'**
+  String get remoteSyncErrInvalidApiKey;
+
+  /// No description provided for @remoteSyncErrAnonDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on Anonymous sign-in under Firebase Authentication → Sign-in method.'**
+  String get remoteSyncErrAnonDisabled;
+
+  /// No description provided for @remoteSyncErrPermissionDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Firestore denied access. Paste Illam’s security rules in Firestore → Rules.'**
+  String get remoteSyncErrPermissionDenied;
+
+  /// No description provided for @remoteSyncErrDatabaseNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Firestore database or Project ID not found.'**
+  String get remoteSyncErrDatabaseNotFound;
+
+  /// No description provided for @remoteSyncErrQuota.
+  ///
+  /// In en, this message translates to:
+  /// **'Firebase daily Spark quota exceeded. Try again later.'**
+  String get remoteSyncErrQuota;
+
+  /// No description provided for @remoteSyncErrNetwork.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not reach Firebase. Check your internet connection.'**
+  String get remoteSyncErrNetwork;
+
+  /// No description provided for @remoteSyncErrOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Firebase sync failed — check your configuration and rules.'**
+  String get remoteSyncErrOther;
+
+  /// No description provided for @remoteSyncCardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remote sync'**
+  String get remoteSyncCardTitle;
+
+  /// No description provided for @remoteSyncProfileSubOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get remoteSyncProfileSubOff;
+
+  /// No description provided for @remoteSyncProfileSubNeedsSetup.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs setup'**
+  String get remoteSyncProfileSubNeedsSetup;
+
+  /// No description provided for @remoteSyncProfileSubConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected · {projectId}'**
+  String remoteSyncProfileSubConnected(Object projectId);
+
+  /// No description provided for @remoteSyncNoHomeKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Home encryption key not ready yet'**
+  String get remoteSyncNoHomeKey;
+
+  /// No description provided for @remoteSyncCombinedSynced.
+  ///
+  /// In en, this message translates to:
+  /// **'Synced phones and remote relay'**
+  String get remoteSyncCombinedSynced;
 }
 
 class _AppLocalizationsDelegate
