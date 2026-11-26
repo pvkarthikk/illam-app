@@ -1,0 +1,1 @@
+Offline-first household app: chores, shopping, meals, spends and house-help pay.

@@ -3,17 +3,21 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data' show BytesBuilder;
 
-import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sign_in_as_googleapis_auth.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
 import 'package:nm_flat/core/backup/cloud/google_auth.dart';
+import 'package:nm_flat/core/backup/cloud/token_keeper.dart';
 import 'package:nm_flat/core/backup/destinations/backup_destination.dart';
 import 'package:nm_flat/core/backup/destinations/http_tools.dart';
 import 'package:nm_flat/core/backup/file_format.dart';
 
 /// Backup destination stored in Google Drive's hidden `appDataFolder`.
 class GdriveDestination extends BackupDestination {
+  GdriveDestination(this.keeper);
+
+  final TokenKeeper keeper;
+
   @override
   String get kind => 'gdrive';
 
@@ -22,12 +26,31 @@ class GdriveDestination extends BackupDestination {
     return "name = '$escaped' and trashed = false";
   }
 
-  Future<drive.DriveApi> _api() async {
-    final authz = await GoogleAuth.silent();
-    if (authz == null) {
-      throw const DestinationException(DestError.auth);
+  Future<T> _withApi<T>(Future<T> Function(drive.DriveApi api) fn) async {
+    final client = KeeperHttpClient(keeper);
+    try {
+      return await fn(drive.DriveApi(client));
+    } finally {
+      client.close();
     }
-    return drive.DriveApi(authz.authClient(scopes: GoogleAuth.scopes));
+  }
+
+  static Future<String> accountEmail(TokenKeeper k) async {
+    final res = await k.authed<dynamic>(
+      (tok) => k.dio.getUri<dynamic>(
+        Uri.parse('https://openidconnect.googleapis.com/v1/userinfo'),
+        options: Options(headers: {'Authorization': 'Bearer $tok'}),
+      ),
+    );
+    final status = res.statusCode ?? 0;
+    if (status < 200 || status >= 300) {
+      throw statusError(status) ?? const DestinationException(DestError.other);
+    }
+    final raw = res.data;
+    final map = Map<String, Object?>.from(
+      (raw is String ? jsonDecode(raw) : raw) as Map,
+    );
+    return (map['email'] as String?) ?? '';
   }
 
   Future<T> _guard<T>(Future<T> Function() fn) async {
@@ -90,121 +113,134 @@ class GdriveDestination extends BackupDestination {
   }
 
   @override
-  Future<void> upload(String name, Uint8List bytes) => _guard(() async {
-    final api = await _api();
-    final created = await api.files.create(
-      drive.File(name: '$name.part', parents: const ['appDataFolder']),
-      uploadMedia: drive.Media(
-        Stream<List<int>>.value(bytes),
-        bytes.length,
-      ),
-      $fields: 'id,size',
-    );
-    final uploadedSize = int.tryParse(created.size ?? '') ?? -1;
-    if (created.id == null || uploadedSize != bytes.length) {
-      if (created.id != null) {
-        try {
-          await api.files.delete(created.id!);
-        } on Object {
-          // Best-effort partial cleanup.
+  Future<void> upload(String name, Uint8List bytes) => _guard(
+    () => _withApi((api) async {
+      final created = await api.files.create(
+        drive.File(name: '$name.part', parents: const ['appDataFolder']),
+        uploadMedia: drive.Media(
+          Stream<List<int>>.value(bytes),
+          bytes.length,
+        ),
+        $fields: 'id,size',
+      );
+      final uploadedSize = int.tryParse(created.size ?? '') ?? -1;
+      if (created.id == null || uploadedSize != bytes.length) {
+        if (created.id != null) {
+          try {
+            await api.files.delete(created.id!);
+          } on Object {
+            // Best-effort partial cleanup.
+          }
         }
+        throw const DestinationException(DestError.other);
       }
-      throw const DestinationException(DestError.other);
-    }
-    await api.files.update(drive.File(name: name), created.id!);
-  });
+      await api.files.update(drive.File(name: name), created.id!);
+    }),
+  );
 
   @override
-  Future<List<RemoteBackupFile>> list() => _guard(() async {
-    final api = await _api();
-    final files = await _all(api);
-    return [
-      for (final f in files)
-        if (f.name != null && backupNameRe.hasMatch(f.name!))
-          RemoteBackupFile(
-            f.name!,
-            int.tryParse(f.size ?? '') ?? 0,
-            f.modifiedTime?.millisecondsSinceEpoch ?? 0,
-          ),
-    ];
-  });
+  Future<List<RemoteBackupFile>> list() => _guard(
+    () => _withApi((api) async {
+      final files = await _all(api);
+      return [
+        for (final f in files)
+          if (f.name != null && backupNameRe.hasMatch(f.name!))
+            RemoteBackupFile(
+              f.name!,
+              int.tryParse(f.size ?? '') ?? 0,
+              f.modifiedTime?.millisecondsSinceEpoch ?? 0,
+            ),
+      ];
+    }),
+  );
 
   @override
-  Future<List<RemoteBackupFile>> staleParts(Duration olderThan) =>
-      _guard(() async {
-        final api = await _api();
-        final cutoff = DateTime.now().toUtc().subtract(olderThan);
-        final files = await _all(api);
-        return [
-          for (final f in files)
-            if (f.name != null &&
-                f.name!.endsWith('.nmbak.part') &&
-                (f.modifiedTime == null || f.modifiedTime!.isBefore(cutoff)))
-              RemoteBackupFile(
-                f.name!,
-                int.tryParse(f.size ?? '') ?? 0,
-                f.modifiedTime?.millisecondsSinceEpoch ?? 0,
-              ),
-        ];
-      });
+  Future<List<RemoteBackupFile>> staleParts(Duration olderThan) => _guard(
+    () => _withApi((api) async {
+      final cutoff = DateTime.now().toUtc().subtract(olderThan);
+      final files = await _all(api);
+      return [
+        for (final f in files)
+          if (f.name != null &&
+              f.name!.endsWith('.nmbak.part') &&
+              (f.modifiedTime == null || f.modifiedTime!.isBefore(cutoff)))
+            RemoteBackupFile(
+              f.name!,
+              int.tryParse(f.size ?? '') ?? 0,
+              f.modifiedTime?.millisecondsSinceEpoch ?? 0,
+            ),
+      ];
+    }),
+  );
 
   @override
-  Future<Uint8List> download(String name) => _guard(() async {
-    final api = await _api();
-    final id = await _idOf(api, name);
-    if (id == null) {
-      throw const DestinationException(DestError.notFound);
-    }
-    final obj = await api.files.get(
-      id,
-      downloadOptions: drive.DownloadOptions.fullMedia,
-    );
-    if (obj is! drive.Media) {
-      throw const DestinationException(DestError.other);
-    }
-    final bb = BytesBuilder(copy: false);
-    await for (final chunk in obj.stream) {
-      bb.add(chunk);
-    }
-    return bb.takeBytes();
-  });
+  Future<Uint8List> download(String name) => _guard(
+    () => _withApi((api) async {
+      final id = await _idOf(api, name);
+      if (id == null) {
+        throw const DestinationException(DestError.notFound);
+      }
+      final obj = await api.files.get(
+        id,
+        downloadOptions: drive.DownloadOptions.fullMedia,
+      );
+      if (obj is! drive.Media) {
+        throw const DestinationException(DestError.other);
+      }
+      final bb = BytesBuilder(copy: false);
+      await for (final chunk in obj.stream) {
+        bb.add(chunk);
+      }
+      return bb.takeBytes();
+    }),
+  );
 
   @override
-  Future<void> delete(String name) => _guard(() async {
-    final api = await _api();
-    final id = await _idOf(api, name);
-    if (id == null) return;
-    try {
-      await api.files.delete(id);
-    } on drive.DetailedApiRequestError catch (e) {
-      if (e.status == 404) return;
-      rethrow;
-    }
-  });
+  Future<void> delete(String name) => _guard(
+    () => _withApi((api) async {
+      final id = await _idOf(api, name);
+      if (id == null) return;
+      try {
+        await api.files.delete(id);
+      } on drive.DetailedApiRequestError catch (e) {
+        if (e.status == 404) return;
+        rethrow;
+      }
+    }),
+  );
 
   @override
-  Future<void> testWrite() => _guard(() async {
-    final api = await _api();
-    final data = utf8.encode('NMBK test');
-    final created = await api.files.create(
-      drive.File(
-        name: 'Illam_test_${randomHex(4)}.tmp',
-        parents: const ['appDataFolder'],
-      ),
-      uploadMedia: drive.Media(
-        Stream<List<int>>.value(data),
-        data.length,
-      ),
-      $fields: 'id',
-    );
-    if (created.id != null) {
-      await api.files.delete(created.id!);
-    }
-  });
+  Future<void> testWrite() => _guard(
+    () => _withApi((api) async {
+      final data = utf8.encode('NMBK test');
+      final created = await api.files.create(
+        drive.File(
+          name: 'Illam_test_${randomHex(4)}.tmp',
+          parents: const ['appDataFolder'],
+        ),
+        uploadMedia: drive.Media(
+          Stream<List<int>>.value(data),
+          data.length,
+        ),
+        $fields: 'id',
+      );
+      if (created.id != null) {
+        await api.files.delete(created.id!);
+      }
+    }),
+  );
 
   @override
   Future<void> revokeAccess() async {
-    await GoogleAuth.ensureInitialized();
-    await GoogleSignIn.instance.disconnect();
+    try {
+      final token = await keeper.accessToken();
+      await keeper.dio.postUri<dynamic>(
+        Uri.parse('https://oauth2.googleapis.com/revoke'),
+        data: {'token': token},
+        options: Options(contentType: Headers.formUrlEncodedContentType),
+      );
+    } on Object {
+      // Best-effort revoke; local credentials are removed by the caller.
+    }
   }
 }

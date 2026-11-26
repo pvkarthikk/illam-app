@@ -1,0 +1,4 @@
+• Experimental remote sync (bring your own Firebase)
+• Experimental Gmail invoice import
+• Experimental SMS spend import with draft review
+• Removed all proprietary Google libraries: QR scanning now uses ZXing and Google Drive sign-in uses a browser-based OAuth flow

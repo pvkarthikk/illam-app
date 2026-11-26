@@ -70,4 +70,4 @@ You remain in full control of your data at all times:
 
 ## Contact
 
-If you have any questions about privacy, contact: [contact e-mail]
+If you have any questions about privacy, contact: https://github.com/pvkarthikk/illam-app/issues

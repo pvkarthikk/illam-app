@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
-import 'package:nm_flat/core/backup/cloud/google_auth.dart';
+import 'package:nm_flat/core/backup/backup_config.dart';
+import 'package:nm_flat/core/backup/cloud/gdrive_destination.dart';
 import 'package:nm_flat/core/backup/cloud/oauth_tokens.dart';
 import 'package:nm_flat/core/backup/destination_secrets.dart';
 import 'package:nm_flat/core/design/components/components.dart';
@@ -24,12 +25,28 @@ class _BackupLabScreenState extends ConsumerState<BackupLabScreen> {
 
   Future<void> _testGoogleSilent() async {
     final l = AppLocalizations.of(context);
-    final authz = await GoogleAuth.silent();
+    final homeId =
+        ref.read(currentHomeIdProvider).value ??
+        ref.read(prefsProvider).currentHomeId;
+    var ok = false;
+    if (homeId != null && homeId.isNotEmpty) {
+      final config = await ref.read(backupConfigStoreProvider).load(homeId);
+      final secure = ref.read(secureStoreProvider);
+      for (final d in config.destinations) {
+        if (d.kind != 'gdrive') continue;
+        try {
+          final dest = await destinationFor(d, secure) as GdriveDestination;
+          await dest.keeper.accessToken();
+          ok = true;
+        } on Object {
+          ok = false;
+        }
+        break;
+      }
+    }
     if (!mounted) return;
     setState(() {
-      _googleResult = authz != null
-          ? l.debugResultOk
-          : l.debugResultNeedsSignIn;
+      _googleResult = ok ? l.debugResultOk : l.debugResultNeedsSignIn;
     });
   }
 

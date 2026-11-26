@@ -5,8 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
 
 import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/domain/join_phrase.dart';
@@ -23,9 +23,10 @@ class ScanStep extends ConsumerStatefulWidget {
 
 class _ScanStepState extends ConsumerState<ScanStep>
     with SingleTickerProviderStateMixin {
-  final MobileScannerController _c = MobileScannerController(
-    formats: const [BarcodeFormat.qrCode],
-  );
+  final GlobalKey _qrKey = GlobalKey(debugLabel: 'join-qr');
+  QRViewController? _c;
+  StreamSubscription<Barcode>? _scanSub;
+  bool _permissionDenied = false;
   late final AnimationController _anim;
   bool _handled = false;
 
@@ -51,7 +52,7 @@ class _ScanStepState extends ConsumerState<ScanStep>
   @override
   void dispose() {
     _anim.dispose();
-    _c.dispose();
+    unawaited(_scanSub?.cancel());
     super.dispose();
   }
 
@@ -64,18 +65,20 @@ class _ScanStepState extends ConsumerState<ScanStep>
     await intent.launch();
   }
 
-  void _onDetect(BarcodeCapture capture) {
-    if (_handled) return;
-    for (final barcode in capture.barcodes) {
-      final raw = barcode.rawValue;
-      if (raw == null) continue;
-      final t = JoinTicket.parse(raw);
-      if (t != null) {
-        _handled = true;
-        ref.read(joinControllerProvider.notifier).useTicket(t);
-        context.go(Routes.onboardingStep('connect'));
-        return;
-      }
+  void _onCreated(QRViewController controller) {
+    _c = controller;
+    _scanSub = controller.scannedDataStream.listen(_onDetect);
+  }
+
+  void _onDetect(Barcode barcode) {
+    if (_handled || !mounted) return;
+    final raw = barcode.code;
+    if (raw == null) return;
+    final t = JoinTicket.parse(raw);
+    if (t != null) {
+      _handled = true;
+      ref.read(joinControllerProvider.notifier).useTicket(t);
+      context.go(Routes.onboardingStep('connect'));
     }
   }
 
@@ -112,7 +115,7 @@ class _ScanStepState extends ConsumerState<ScanStep>
               IconButton(
                 tooltip: l.scanTorch,
                 icon: const Icon(Icons.flashlight_on_rounded),
-                onPressed: _c.toggleTorch,
+                onPressed: () => _c?.toggleFlash(),
               ),
             ],
           ),
@@ -133,46 +136,41 @@ class _ScanStepState extends ConsumerState<ScanStep>
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
-                      MobileScanner(
-                        controller: _c,
-                        onDetect: _onDetect,
-                        errorBuilder: (context, error) {
-                          if (error.errorCode ==
-                              MobileScannerErrorCode.permissionDenied) {
-                            return Center(
-                              child: Padding(
-                                padding: const EdgeInsets.all(24),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      l.scanDenied,
-                                      textAlign: TextAlign.center,
-                                      style: NestText.body16.copyWith(
-                                        color: NestPalette.immersiveText,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 16),
-                                    NestButton(
-                                      label: l.scanOpenSettings,
-                                      kind: NestButtonKind.accent,
-                                      onPressed: _openAppSettings,
-                                    ),
-                                  ],
+                      if (_permissionDenied)
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(24),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  l.scanDenied,
+                                  textAlign: TextAlign.center,
+                                  style: NestText.body16.copyWith(
+                                    color: NestPalette.immersiveText,
+                                  ),
                                 ),
-                              ),
-                            );
-                          }
-                          return Center(
-                            child: Text(
-                              error.errorCode.message,
-                              style: NestText.body15.copyWith(
-                                color: NestPalette.immersiveText,
-                              ),
+                                const SizedBox(height: 16),
+                                NestButton(
+                                  label: l.scanOpenSettings,
+                                  kind: NestButtonKind.accent,
+                                  onPressed: _openAppSettings,
+                                ),
+                              ],
                             ),
-                          );
-                        },
-                      ),
+                          ),
+                        )
+                      else
+                        QRView(
+                          key: _qrKey,
+                          onQRViewCreated: _onCreated,
+                          formatsAllowed: const [BarcodeFormat.qrcode],
+                          onPermissionSet: (ctrl, granted) {
+                            if (!granted && mounted) {
+                              setState(() => _permissionDenied = true);
+                            }
+                          },
+                        ),
                       IgnorePointer(
                         child: CustomPaint(
                           painter: _ScanOverlayPainter(

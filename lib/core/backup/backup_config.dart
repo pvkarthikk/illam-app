@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:nm_flat/core/backup/cloud/appauth_sign_in.dart';
 import 'package:nm_flat/core/backup/cloud/dropbox_destination.dart';
 import 'package:nm_flat/core/backup/cloud/gdrive_destination.dart';
+import 'package:nm_flat/core/backup/cloud/google_auth.dart';
 import 'package:nm_flat/core/backup/cloud/onedrive_destination.dart';
 import 'package:nm_flat/core/backup/cloud/pcloud_destination.dart';
 import 'package:nm_flat/core/backup/cloud/token_keeper.dart';
@@ -249,7 +250,14 @@ Future<BackupDestination> destinationFor(
     case 'folder':
       return destinationWithSecret(d, '');
     case 'gdrive':
-      return GdriveDestination();
+      return GdriveDestination(
+        TokenKeeper(
+          buildServerDio(),
+          DestinationSecrets(secure),
+          d.destId,
+          googleOAuth,
+        ),
+      );
     case 'dropbox':
       return DropboxDestination(
         TokenKeeper(

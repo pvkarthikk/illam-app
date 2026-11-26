@@ -44,6 +44,12 @@ android {
         resValues = true
     }
 
+    // F-Droid forbids the Google-encrypted dependency metadata blob.
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
+    }
+
     packaging {
         resources {
             excludes += setOf(
@@ -81,7 +87,11 @@ android {
 
     buildTypes {
         release {
-            signingConfig = signingConfigs.getByName("release")
+            // Without key.properties (e.g. F-Droid) the APK stays unsigned and
+            // the builder signs it.
+            if (keystorePropertiesFile.exists()) {
+                signingConfig = signingConfigs.getByName("release")
+            }
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(

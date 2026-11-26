@@ -1,6 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/services.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import 'package:nm_flat/core/design/components/components.dart';
@@ -97,32 +99,35 @@ class _RemoteSyncScanSheet extends StatefulWidget {
 }
 
 class _RemoteSyncScanSheetState extends State<_RemoteSyncScanSheet> {
-  final MobileScannerController _scanner = MobileScannerController(
-    formats: const [BarcodeFormat.qrCode],
-  );
+  final GlobalKey _qrKey = GlobalKey(debugLabel: 'remote-sync-qr');
+  StreamSubscription<Barcode>? _scanSub;
   bool _handled = false;
   String? _errorText;
 
   @override
   void dispose() {
-    _scanner.dispose();
+    unawaited(_scanSub?.cancel());
     super.dispose();
   }
 
-  void _onDetect(BarcodeCapture capture, AppLocalizations l10n) {
-    if (_handled) return;
-    for (final barcode in capture.barcodes) {
-      final raw = barcode.rawValue;
-      if (raw == null) continue;
-      final parsed = parseFirebaseConfigSnippet(raw);
-      if (parsed != null) {
-        _handled = true;
-        Navigator.of(context).pop(parsed);
-        return;
-      }
-      if (mounted && _errorText != l10n.remoteSyncScanInvalid) {
-        setState(() => _errorText = l10n.remoteSyncScanInvalid);
-      }
+  void _onCreated(QRViewController controller, AppLocalizations l10n) {
+    _scanSub = controller.scannedDataStream.listen(
+      (barcode) => _onDetect(barcode, l10n),
+    );
+  }
+
+  void _onDetect(Barcode barcode, AppLocalizations l10n) {
+    if (_handled || !mounted) return;
+    final raw = barcode.code;
+    if (raw == null) return;
+    final parsed = parseFirebaseConfigSnippet(raw);
+    if (parsed != null) {
+      _handled = true;
+      Navigator.of(context).pop(parsed);
+      return;
+    }
+    if (_errorText != l10n.remoteSyncScanInvalid) {
+      setState(() => _errorText = l10n.remoteSyncScanInvalid);
     }
   }
 
@@ -144,9 +149,10 @@ class _RemoteSyncScanSheetState extends State<_RemoteSyncScanSheet> {
             borderRadius: BorderRadius.circular(16),
             child: SizedBox(
               height: 260,
-              child: MobileScanner(
-                controller: _scanner,
-                onDetect: (cap) => _onDetect(cap, l10n),
+              child: QRView(
+                key: _qrKey,
+                onQRViewCreated: (c) => _onCreated(c, l10n),
+                formatsAllowed: const [BarcodeFormat.qrcode],
               ),
             ),
           ),

@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'package:nm_flat/core/backup/backup_config.dart';
@@ -105,19 +104,13 @@ class CloudConnectController extends Notifier<CloudConnectState> {
 
       switch (kind) {
         case 'gdrive':
-          final signed = await GoogleAuth.signIn();
-          config = DestinationConfig(
-            destId: reauthDestId ?? Ids.newId(),
-            kind: 'gdrive',
-            label: signed.email,
-            settings: {'email': signed.email},
-          );
-          dest = GdriveDestination();
-
         case 'dropbox':
         case 'onedrive':
           final isDropbox = kind == 'dropbox';
-          final oauth = isDropbox ? dropboxOAuth : microsoftOAuth;
+          final isGdrive = kind == 'gdrive';
+          final oauth = isGdrive
+              ? googleOAuth
+              : (isDropbox ? dropboxOAuth : microsoftOAuth);
           final tokens = await appAuthSignIn(oauth);
           if (tokens == null) return;
           final destId = reauthDestId ?? Ids.newId();
@@ -131,7 +124,9 @@ class CloudConnectController extends Notifier<CloudConnectState> {
             destId,
             oauth,
           );
-          final email = isDropbox
+          final email = isGdrive
+              ? await GdriveDestination.accountEmail(keeper)
+              : isDropbox
               ? await DropboxDestination.accountEmail(keeper)
               : await OneDriveDestination.accountEmail(keeper);
           config = DestinationConfig(
@@ -140,7 +135,9 @@ class CloudConnectController extends Notifier<CloudConnectState> {
             label: email,
             settings: {'email': email},
           );
-          dest = isDropbox
+          dest = isGdrive
+              ? GdriveDestination(keeper)
+              : isDropbox
               ? DropboxDestination(keeper)
               : OneDriveDestination(keeper);
 
@@ -185,21 +182,6 @@ class CloudConnectController extends Notifier<CloudConnectState> {
             ? l10n.bkCloudSignedInAgain(provider)
             : l10n.bkCloudConnected(provider),
       );
-    } on GoogleSignInException catch (e) {
-      debugPrint('Google sign-in error (${e.code}): $e');
-      if (e.code == GoogleSignInExceptionCode.canceled) return;
-      if (e.code == GoogleSignInExceptionCode.clientConfigurationError) {
-        debugPrint('Check SHA-1, package name and serverClientId');
-        state = state.copyWith(
-          errorKey: 'bkCloudNotConfigured',
-          errorProvider: provider,
-        );
-      } else {
-        state = state.copyWith(
-          errorKey: 'bkCloudSignInFailed',
-          errorProvider: provider,
-        );
-      }
     } on FlutterAppAuthPlatformException catch (e) {
       debugPrint('AppAuth error (${e.code}): ${e.platformErrorDetails}');
       if (writtenDestId != null && mode != ConnectMode.reauth) {

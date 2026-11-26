@@ -1,0 +1,21 @@
+Illam (இல்லம் — "home") keeps everyday household routines organised without accounts, subscriptions or servers. All data lives on your family's phones and syncs directly between them over your home Wi-Fi.
+
+<b>Features</b>
+• Shared todos and recurring routines with local reminders
+• Grouped shopping lists with store mode
+• Household expenses, monthly budgets and recurring bills
+• Weekly meal planner and recipes that add missing ingredients to your list
+• House-help attendance, leave and monthly salary with pay slips
+
+<b>Private by design</b>
+• Fully offline; encrypted local database
+• Peer-to-peer end-to-end encrypted Wi-Fi sync between family phones
+• Password-encrypted backups to a place you choose: folder, Google Drive, Dropbox, OneDrive, pCloud, Nextcloud/WebDAV, S3 or SFTP
+• No analytics, no ads, no tracking
+
+<b>Experimental, off by default</b>
+• Remote sync through your own Firebase project
+• Gmail invoice import with your own Google OAuth client
+• SMS spend import: payment SMS are parsed on the phone into drafts you approve
+
+Android permissions such as camera (QR pairing) and SMS (optional import) are only used for the features you switch on.
