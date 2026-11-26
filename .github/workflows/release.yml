@@ -75,7 +75,18 @@ jobs:
         env:
           BUILD_NAME: ${{ steps.version.outputs.name }}
           BUILD_NUMBER: ${{ steps.version.outputs.code }}
-        run: flutter build apk --release --flavor dev --build-name="$BUILD_NAME" --build-number="$BUILD_NUMBER"
+        run: |
+          for attempt in 1 2 3; do
+            if flutter build apk --release --flavor dev --build-name="$BUILD_NAME" --build-number="$BUILD_NUMBER"; then
+              exit 0
+            fi
+            if [ "$attempt" -lt 3 ]; then
+              delay=$((attempt * 15))
+              echo "::warning::Release APK build attempt $attempt failed; retrying in ${delay}s..."
+              sleep "$delay"
+            fi
+          done
+          exit 1
 
       - name: Publish GitHub release
         env:

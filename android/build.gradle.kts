@@ -1,7 +1,15 @@
 allprojects {
     repositories {
-        google()
-        mavenCentral()
+        google {
+            content {
+                excludeGroup("io.flutter")
+            }
+        }
+        mavenCentral {
+            content {
+                excludeGroup("io.flutter")
+            }
+        }
     }
 }
 
