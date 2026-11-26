@@ -9,34 +9,44 @@ import 'package:nm_flat/core/util/money.dart';
 import 'package:nm_flat/features/gmail_import/draft_review_sheet.dart';
 import 'package:nm_flat/features/gmail_import/gmail_import_controller.dart';
 import 'package:nm_flat/features/gmail_import/gmail_import_parts.dart';
+import 'package:nm_flat/features/sms_import/sms_draft_review_sheet.dart';
+import 'package:nm_flat/features/sms_import/sms_import_controller.dart';
+import 'package:nm_flat/features/sms_import/sms_import_parts.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
-/// Displays unapproved Gmail invoice drafts on [MoneyScreen].
+/// Displays unapproved Gmail invoice and SMS spend drafts on [MoneyScreen].
 ///
 /// Drafts remain excluded from household spend/budget totals until the user
-/// reviews them and explicitly taps **Account it**.
+/// reviews each entry and explicitly taps **Account it**.
 class DraftExpensesSection extends ConsumerWidget {
   const DraftExpensesSection({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final drafts = ref.watch(gmailDraftOrdersProvider);
-    if (drafts.isEmpty) return const SizedBox.shrink();
+    final gmailDrafts = ref.watch(gmailDraftOrdersProvider);
+    final smsDrafts = ref.watch(smsDraftSpendsProvider);
+    final totalCount = gmailDrafts.length + smsDrafts.length;
+    if (totalCount == 0) return const SizedBox.shrink();
 
     final l10n = AppLocalizations.of(context);
     final c = context.nest;
-    final uiState = ref.watch(gmailImportControllerProvider);
-    final ctrl = ref.read(gmailImportControllerProvider.notifier);
+    final gmailUi = ref.watch(gmailImportControllerProvider);
+    final gmailCtrl = ref.read(gmailImportControllerProvider.notifier);
+    final smsUi = ref.watch(smsImportControllerProvider);
+    final smsCtrl = ref.read(smsImportControllerProvider.notifier);
     final snack = ref.read(snackbarProvider);
+    final openRoute = gmailDrafts.isNotEmpty
+        ? Routes.gmailImport
+        : Routes.smsImport;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const SizedBox(height: 12),
         SectionHeader(
-          title: l10n.gmailImportDraftsSectionTitle(drafts.length),
+          title: l10n.gmailImportDraftsSectionTitle(totalCount),
           actionLabel: l10n.gmailImportReviewAllAction,
-          onAction: () => context.push(Routes.gmailImport),
+          onAction: () => context.push(openRoute),
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 4, 16, 12),
@@ -47,15 +57,15 @@ class DraftExpensesSection extends ConsumerWidget {
                 l10n.gmailImportDraftsMoneyNote,
                 style: NestText.meta13.copyWith(color: c.ink3),
               ),
-              const SizedBox(height: 8),
-              for (var i = 0; i < drafts.length; i++) ...[
-                if (i > 0) const SizedBox(height: 10),
+              for (var i = 0; i < gmailDrafts.length; i++) ...[
+                SizedBox(height: i == 0 ? 8 : 10),
                 GmailDraftCard(
-                  draft: drafts[i],
-                  accounting: uiState.accountingDraftId == drafts[i].id,
-                  onReview: () => showDraftReviewSheet(context, ref, drafts[i]),
+                  draft: gmailDrafts[i],
+                  accounting: gmailUi.accountingDraftId == gmailDrafts[i].id,
+                  onReview: () =>
+                      showDraftReviewSheet(context, ref, gmailDrafts[i]),
                   onAccountIt: () async {
-                    final res = await ctrl.accountDraft(drafts[i]);
+                    final res = await gmailCtrl.accountDraft(gmailDrafts[i]);
                     if (!context.mounted || res == null) return;
                     snack.show(
                       l10n.gmailImportAccountedSnack(
@@ -64,7 +74,27 @@ class DraftExpensesSection extends ConsumerWidget {
                       ),
                     );
                   },
-                  onDiscard: () => ctrl.discardDraft(drafts[i].id),
+                  onDiscard: () => gmailCtrl.discardDraft(gmailDrafts[i].id),
+                ),
+              ],
+              for (var i = 0; i < smsDrafts.length; i++) ...[
+                SizedBox(height: (i == 0 && gmailDrafts.isEmpty) ? 8 : 10),
+                SmsDraftCard(
+                  draft: smsDrafts[i],
+                  accounting: smsUi.accountingDraftId == smsDrafts[i].id,
+                  onReview: () =>
+                      showSmsDraftReviewSheet(context, ref, smsDrafts[i]),
+                  onAccountIt: () async {
+                    final res = await smsCtrl.accountDraft(smsDrafts[i]);
+                    if (!context.mounted || res == null) return;
+                    snack.show(
+                      l10n.smsImportAccountedSnack(
+                        res.merchant,
+                        Money.formatPaise(res.amountPaise),
+                      ),
+                    );
+                  },
+                  onDiscard: () => smsCtrl.discardDraft(smsDrafts[i].id),
                 ),
               ],
             ],

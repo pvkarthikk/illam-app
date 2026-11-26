@@ -5835,4 +5835,186 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get gmailImportErrAuthOther =>
       'Google sign-in did not complete — check your Desktop OAuth client settings.';
+
+  @override
+  String get smsImportTitle => 'SMS spend import';
+
+  @override
+  String get smsImportExperimental => 'Experimental';
+
+  @override
+  String get smsImportCardTitle => 'SMS spend import';
+
+  @override
+  String get smsImportTagLabel => 'SMS';
+
+  @override
+  String get smsImportToggleTitle => 'SMS spend import';
+
+  @override
+  String get smsImportToggleSubtitle =>
+      'Detect bank, UPI, and card payment SMS locally into Drafts before adding to your ledger.';
+
+  @override
+  String get smsImportOffHint =>
+      'Turn on SMS spend import to scan transaction alerts on-device or auto-capture payment SMS in the background. Nothing enters Money until you tap Account it.';
+
+  @override
+  String get smsImportProfileSubOff => 'Off';
+
+  @override
+  String smsImportProfileSubDrafts(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count drafts to review',
+      one: '1 draft to review',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get smsImportProfileSubAuto => 'Auto-capture on';
+
+  @override
+  String get smsImportProfileSubManual => 'Manual scan';
+
+  @override
+  String get smsImportProfileSubPermission => 'Permission needed';
+
+  @override
+  String get smsImportStatusTitle => 'SMS access';
+
+  @override
+  String get smsImportStatusGranted =>
+      'SMS permission granted — alerts stay on this phone.';
+
+  @override
+  String get smsImportStatusPartial =>
+      'Inbox read granted — grant receive permission for background capture.';
+
+  @override
+  String get smsImportStatusNeeded =>
+      'Allow Illam to read transaction SMS alerts on this phone.';
+
+  @override
+  String get smsImportStatusRestricted =>
+      'Android blocked SMS access. On sideloaded builds, open App info → ⋮ → Allow restricted settings, then enable SMS.';
+
+  @override
+  String get smsImportStatusUnsupported =>
+      'SMS reading is available on Android only; use Paste SMS text to test here.';
+
+  @override
+  String get smsImportGrantBtn => 'Grant SMS permission';
+
+  @override
+  String get smsImportOpenSettingsBtn => 'Open App Settings';
+
+  @override
+  String get smsImportAutoCaptureTitle => 'Auto-capture incoming SMS';
+
+  @override
+  String get smsImportAutoCaptureSub =>
+      'Stage new bank, UPI, and card payment alerts into Drafts automatically.';
+
+  @override
+  String get smsImportWindowLabel => 'Scan window';
+
+  @override
+  String smsImportWindowDays(Object days) {
+    return 'Last $days days';
+  }
+
+  @override
+  String smsImportLastScan(Object ago) {
+    return 'Last scanned $ago';
+  }
+
+  @override
+  String get smsImportNeverScanned => 'Never scanned yet';
+
+  @override
+  String get smsImportScanNowBtn => 'Scan SMS';
+
+  @override
+  String get smsImportScanningBtn => 'Scanning…';
+
+  @override
+  String smsImportScanSummary(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Added $count new draft expenses from SMS',
+      one: 'Added 1 new draft expense from SMS',
+      zero: 'Scanned SMS — no new payment alerts found',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get smsImportPasteBtn => 'Paste SMS text';
+
+  @override
+  String get smsImportPasteTitle => 'Parse pasted bank SMS';
+
+  @override
+  String get smsImportPasteLead =>
+      'Paste any Indian bank, UPI, or card debit SMS alert to test extraction into Drafts.';
+
+  @override
+  String get smsImportPasteField => 'Transaction SMS text';
+
+  @override
+  String get smsImportPasteNotMatched =>
+      'No completed debit/spend amount was found in that message (OTPs, credits, promos, and card bill payments are ignored).';
+
+  @override
+  String smsImportPasteAddedSnack(Object merchant) {
+    return 'Created SMS draft ($merchant)';
+  }
+
+  @override
+  String get smsImportDraftsEmpty =>
+      'No pending SMS drafts. Scan your inbox or enable auto-capture for new payment alerts.';
+
+  @override
+  String get smsImportClearBtn => 'Clear SMS import data';
+
+  @override
+  String get smsImportClearTitle => 'Clear SMS import data?';
+
+  @override
+  String get smsImportClearBody =>
+      'Deletes pending SMS drafts and processed history on this phone and turns off background SMS capture. Already accounted expenses stay in Money.';
+
+  @override
+  String get smsImportClearConfirm => 'Clear';
+
+  @override
+  String get smsImportReviewTitle => 'Review SMS spend';
+
+  @override
+  String smsImportAccountMeta(Object bank, Object when) {
+    return '$bank · $when';
+  }
+
+  @override
+  String get smsImportRawLabel => 'Original SMS excerpt';
+
+  @override
+  String smsImportGmailOverlapWarning(Object channel, Object date) {
+    return 'A pending Gmail draft ($channel) matches this amount around $date.';
+  }
+
+  @override
+  String get smsImportErrAmount => 'Enter a positive amount up to ₹10,00,000.';
+
+  @override
+  String get smsImportErrMerchant => 'Enter who or where this payment went to.';
+
+  @override
+  String smsImportAccountedSnack(Object merchant, Object amount) {
+    return 'Accounted $merchant ($amount)';
+  }
 }

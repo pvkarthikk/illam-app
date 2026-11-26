@@ -28,6 +28,7 @@ import 'package:nm_flat/features/money/transactions_screen.dart';
 import 'package:nm_flat/features/onboarding/onboarding_screen.dart';
 import 'package:nm_flat/features/remote_sync/remote_sync_screen.dart';
 import 'package:nm_flat/features/salary/salary_screen.dart';
+import 'package:nm_flat/features/sms_import/sms_import_screen.dart';
 import 'package:nm_flat/features/staff/staff_screen.dart';
 import 'package:nm_flat/features/store/store_mode_screen.dart';
 import 'package:nm_flat/features/tasks/tasks_screen.dart';
@@ -206,6 +207,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: Routes.gmailImport,
         builder: (_, _) => const GmailImportScreen(),
+      ),
+      GoRoute(
+        path: Routes.smsImport,
+        builder: (_, _) => const SmsImportScreen(),
       ),
       GoRoute(
         path: Routes.invite,

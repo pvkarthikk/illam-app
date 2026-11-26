@@ -12,6 +12,7 @@ import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/notify/background_tasks.dart';
 import 'package:nm_flat/core/notify/notifications.dart';
 import 'package:nm_flat/core/providers.dart';
+import 'package:nm_flat/core/sms/sms_platform_bridge.dart';
 import 'package:nm_flat/core/sync/control_dialer.dart';
 import 'package:nm_flat/core/sync/control_store.dart';
 import 'package:nm_flat/core/sync/op_ignored_notifier.dart';
@@ -20,6 +21,7 @@ import 'package:nm_flat/core/sync/sync_engine.dart';
 import 'package:nm_flat/core/widgets/widget_actions.dart';
 import 'package:nm_flat/core/widgets/widget_bridge.dart';
 import 'package:nm_flat/features/account/home_gone_dialog.dart';
+import 'package:nm_flat/features/sms_import/sms_import_controller.dart';
 import 'package:nm_flat/features/tasks/tasks_controller.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
@@ -199,6 +201,7 @@ class _SyncLifecycleState extends ConsumerState<SyncLifecycle> {
   StreamSubscription<void>? _changedSub;
   StreamSubscription<void>? _syncedSub;
   StreamSubscription<void>? _remoteSyncedSub;
+  SmsPlatformBridge? _smsBridge;
   Timer? _stopTimer;
   Timer? _startTimer;
   Timer? _widgetTimer;
@@ -229,7 +232,15 @@ class _SyncLifecycleState extends ConsumerState<SyncLifecycle> {
       onAction: _handleWidgetAction,
       onOpenRoute: _openWidgetRoute,
     );
+    _smsBridge = ref.read(smsPlatformBridgeProvider);
+    _smsBridge!.setIncomingHandler((msg) async {
+      if (!mounted) return;
+      await ref
+          .read(smsImportControllerProvider.notifier)
+          .handleIncomingSms(msg);
+    });
     unawaited(_syncWidgetsOnResume());
+    unawaited(_drainSmsQueueSafe());
   }
 
   Future<void> _handleWidgetAction(Map<String, Object?> action) async {
@@ -321,6 +332,18 @@ class _SyncLifecycleState extends ConsumerState<SyncLifecycle> {
     _stopTimer = null;
     _startSoon();
     unawaited(_syncWidgetsOnResume());
+    unawaited(_drainSmsQueueSafe());
+  }
+
+  Future<void> _drainSmsQueueSafe() async {
+    if (!mounted) return;
+    try {
+      await ref
+          .read(smsImportControllerProvider.notifier)
+          .drainBackgroundQueue();
+    } on Object {
+      // Ignore SMS queue errors in web/headless widget tests.
+    }
   }
 
   void _onPause() {
@@ -351,6 +374,7 @@ class _SyncLifecycleState extends ConsumerState<SyncLifecycle> {
 
   @override
   void dispose() {
+    _smsBridge?.setIncomingHandler(null);
     WidgetBridge.instance.clearForegroundHandler();
     _widgetTimer?.cancel();
     _startTimer?.cancel();

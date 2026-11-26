@@ -273,6 +273,18 @@ class ProfileOnThisPhoneSection extends ConsumerWidget {
           : l10n.gmailImportStatusConnectedFallback;
     }
 
+    final smsCfg = ref.watch(smsImportConfigProvider).value;
+    final String smsLabel;
+    if (smsCfg == null || !smsCfg.enabled) {
+      smsLabel = l10n.smsImportProfileSubOff;
+    } else if (smsCfg.drafts.isNotEmpty) {
+      smsLabel = l10n.smsImportProfileSubDrafts(smsCfg.drafts.length);
+    } else if (smsCfg.autoCapture) {
+      smsLabel = l10n.smsImportProfileSubAuto;
+    } else {
+      smsLabel = l10n.smsImportProfileSubManual;
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -418,6 +430,57 @@ class ProfileOnThisPhoneSection extends ConsumerWidget {
                                 const SizedBox(height: 2),
                                 Text(
                                   gmailLabel,
+                                  style: NestText.itemTitle16.copyWith(
+                                    color: c.ink,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Icon(Icons.chevron_right_rounded, color: c.ink3),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Divider(height: 1, color: c.line),
+                InkWell(
+                  onTap: () => context.push(Routes.smsImport),
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(minHeight: 64),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Wrap(
+                                  spacing: 8,
+                                  runSpacing: 4,
+                                  crossAxisAlignment: WrapCrossAlignment.center,
+                                  children: [
+                                    Text(
+                                      l10n.smsImportCardTitle,
+                                      style: NestText.meta13.copyWith(
+                                        color: c.ink3,
+                                      ),
+                                    ),
+                                    NestTag(
+                                      label: l10n.smsImportExperimental,
+                                      kind: NestTagKind.accent,
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  smsLabel,
                                   style: NestText.itemTitle16.copyWith(
                                     color: c.ink,
                                   ),

@@ -9320,6 +9320,288 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Google sign-in did not complete — check your Desktop OAuth client settings.'**
   String get gmailImportErrAuthOther;
+
+  /// No description provided for @smsImportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'SMS spend import'**
+  String get smsImportTitle;
+
+  /// No description provided for @smsImportExperimental.
+  ///
+  /// In en, this message translates to:
+  /// **'Experimental'**
+  String get smsImportExperimental;
+
+  /// No description provided for @smsImportCardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'SMS spend import'**
+  String get smsImportCardTitle;
+
+  /// No description provided for @smsImportTagLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'SMS'**
+  String get smsImportTagLabel;
+
+  /// No description provided for @smsImportToggleTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'SMS spend import'**
+  String get smsImportToggleTitle;
+
+  /// No description provided for @smsImportToggleSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Detect bank, UPI, and card payment SMS locally into Drafts before adding to your ledger.'**
+  String get smsImportToggleSubtitle;
+
+  /// No description provided for @smsImportOffHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on SMS spend import to scan transaction alerts on-device or auto-capture payment SMS in the background. Nothing enters Money until you tap Account it.'**
+  String get smsImportOffHint;
+
+  /// No description provided for @smsImportProfileSubOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get smsImportProfileSubOff;
+
+  /// No description provided for @smsImportProfileSubDrafts.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 draft to review} other{{count} drafts to review}}'**
+  String smsImportProfileSubDrafts(num count);
+
+  /// No description provided for @smsImportProfileSubAuto.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-capture on'**
+  String get smsImportProfileSubAuto;
+
+  /// No description provided for @smsImportProfileSubManual.
+  ///
+  /// In en, this message translates to:
+  /// **'Manual scan'**
+  String get smsImportProfileSubManual;
+
+  /// No description provided for @smsImportProfileSubPermission.
+  ///
+  /// In en, this message translates to:
+  /// **'Permission needed'**
+  String get smsImportProfileSubPermission;
+
+  /// No description provided for @smsImportStatusTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'SMS access'**
+  String get smsImportStatusTitle;
+
+  /// No description provided for @smsImportStatusGranted.
+  ///
+  /// In en, this message translates to:
+  /// **'SMS permission granted — alerts stay on this phone.'**
+  String get smsImportStatusGranted;
+
+  /// No description provided for @smsImportStatusPartial.
+  ///
+  /// In en, this message translates to:
+  /// **'Inbox read granted — grant receive permission for background capture.'**
+  String get smsImportStatusPartial;
+
+  /// No description provided for @smsImportStatusNeeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow Illam to read transaction SMS alerts on this phone.'**
+  String get smsImportStatusNeeded;
+
+  /// No description provided for @smsImportStatusRestricted.
+  ///
+  /// In en, this message translates to:
+  /// **'Android blocked SMS access. On sideloaded builds, open App info → ⋮ → Allow restricted settings, then enable SMS.'**
+  String get smsImportStatusRestricted;
+
+  /// No description provided for @smsImportStatusUnsupported.
+  ///
+  /// In en, this message translates to:
+  /// **'SMS reading is available on Android only; use Paste SMS text to test here.'**
+  String get smsImportStatusUnsupported;
+
+  /// No description provided for @smsImportGrantBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Grant SMS permission'**
+  String get smsImportGrantBtn;
+
+  /// No description provided for @smsImportOpenSettingsBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Open App Settings'**
+  String get smsImportOpenSettingsBtn;
+
+  /// No description provided for @smsImportAutoCaptureTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-capture incoming SMS'**
+  String get smsImportAutoCaptureTitle;
+
+  /// No description provided for @smsImportAutoCaptureSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Stage new bank, UPI, and card payment alerts into Drafts automatically.'**
+  String get smsImportAutoCaptureSub;
+
+  /// No description provided for @smsImportWindowLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan window'**
+  String get smsImportWindowLabel;
+
+  /// No description provided for @smsImportWindowDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Last {days} days'**
+  String smsImportWindowDays(Object days);
+
+  /// No description provided for @smsImportLastScan.
+  ///
+  /// In en, this message translates to:
+  /// **'Last scanned {ago}'**
+  String smsImportLastScan(Object ago);
+
+  /// No description provided for @smsImportNeverScanned.
+  ///
+  /// In en, this message translates to:
+  /// **'Never scanned yet'**
+  String get smsImportNeverScanned;
+
+  /// No description provided for @smsImportScanNowBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan SMS'**
+  String get smsImportScanNowBtn;
+
+  /// No description provided for @smsImportScanningBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Scanning…'**
+  String get smsImportScanningBtn;
+
+  /// No description provided for @smsImportScanSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Scanned SMS — no new payment alerts found} =1{Added 1 new draft expense from SMS} other{Added {count} new draft expenses from SMS}}'**
+  String smsImportScanSummary(num count);
+
+  /// No description provided for @smsImportPasteBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste SMS text'**
+  String get smsImportPasteBtn;
+
+  /// No description provided for @smsImportPasteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Parse pasted bank SMS'**
+  String get smsImportPasteTitle;
+
+  /// No description provided for @smsImportPasteLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste any Indian bank, UPI, or card debit SMS alert to test extraction into Drafts.'**
+  String get smsImportPasteLead;
+
+  /// No description provided for @smsImportPasteField.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction SMS text'**
+  String get smsImportPasteField;
+
+  /// No description provided for @smsImportPasteNotMatched.
+  ///
+  /// In en, this message translates to:
+  /// **'No completed debit/spend amount was found in that message (OTPs, credits, promos, and card bill payments are ignored).'**
+  String get smsImportPasteNotMatched;
+
+  /// No description provided for @smsImportPasteAddedSnack.
+  ///
+  /// In en, this message translates to:
+  /// **'Created SMS draft ({merchant})'**
+  String smsImportPasteAddedSnack(Object merchant);
+
+  /// No description provided for @smsImportDraftsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No pending SMS drafts. Scan your inbox or enable auto-capture for new payment alerts.'**
+  String get smsImportDraftsEmpty;
+
+  /// No description provided for @smsImportClearBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear SMS import data'**
+  String get smsImportClearBtn;
+
+  /// No description provided for @smsImportClearTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear SMS import data?'**
+  String get smsImportClearTitle;
+
+  /// No description provided for @smsImportClearBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Deletes pending SMS drafts and processed history on this phone and turns off background SMS capture. Already accounted expenses stay in Money.'**
+  String get smsImportClearBody;
+
+  /// No description provided for @smsImportClearConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get smsImportClearConfirm;
+
+  /// No description provided for @smsImportReviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Review SMS spend'**
+  String get smsImportReviewTitle;
+
+  /// No description provided for @smsImportAccountMeta.
+  ///
+  /// In en, this message translates to:
+  /// **'{bank} · {when}'**
+  String smsImportAccountMeta(Object bank, Object when);
+
+  /// No description provided for @smsImportRawLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Original SMS excerpt'**
+  String get smsImportRawLabel;
+
+  /// No description provided for @smsImportGmailOverlapWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'A pending Gmail draft ({channel}) matches this amount around {date}.'**
+  String smsImportGmailOverlapWarning(Object channel, Object date);
+
+  /// No description provided for @smsImportErrAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a positive amount up to ₹10,00,000.'**
+  String get smsImportErrAmount;
+
+  /// No description provided for @smsImportErrMerchant.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter who or where this payment went to.'**
+  String get smsImportErrMerchant;
+
+  /// No description provided for @smsImportAccountedSnack.
+  ///
+  /// In en, this message translates to:
+  /// **'Accounted {merchant} ({amount})'**
+  String smsImportAccountedSnack(Object merchant, Object amount);
 }
 
 class _AppLocalizationsDelegate

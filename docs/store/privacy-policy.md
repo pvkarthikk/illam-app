@@ -40,6 +40,14 @@ Gmail Invoice Import is **off by default**. If you choose to turn it on and conf
 - Emails and PDF attachments from Zepto, Blinkit, Amazon, and Flipkart are fetched directly to your phone and parsed **locally on-device** into unapproved Draft expenses.
 - Nothing is added to your household ledger unless you review and tap **Account it**, and **the developer never has access to your emails, OAuth tokens, or client secret.**
 
+## SMS Spend Import (Experimental — On-Device)
+
+SMS Spend Import is **off by default**. If you choose to turn it on and grant Android SMS permissions (`READ_SMS`, and optionally `RECEIVE_SMS`):
+
+- Bank, UPI, and card debit alerts are scanned and parsed **100% locally on-device** into unapproved Draft expenses stored encrypted on your phone.
+- Personal numeric senders, OTPs, credits, refunds, and promotional SMS are ignored before staging, and raw SMS text is never uploaded or synced to family phones.
+- Only expenses you explicitly review and tap **Account it** on are written to your household ledger.
+
 ## Household & Staff Details
 
 - Information you enter inside your home, including house-help (staff) names, attendance, salary records, and **phone numbers**, is shared with the members of your home.
@@ -48,7 +56,7 @@ Gmail Invoice Import is **off by default**. If you choose to turn it on and conf
 
 - **No analytics, tracking SDKs, or telemetry.**
 - **No advertising.**
-- **No access to SMS messages, call logs, or notification listener services.**
+- **No access to call logs or notification listener services** (SMS permissions remain unused and disabled unless you opt into experimental SMS Spend Import).
 - Android cloud auto-backup and device-to-device transfer of app data are disabled (`allowBackup="false"`).
 
 ## How to Delete Your Data

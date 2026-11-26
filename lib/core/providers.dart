@@ -50,6 +50,9 @@ import 'package:nm_flat/core/gmail/gmail_loopback_auth.dart'
 import 'package:nm_flat/core/gmail/gmail_rest_client.dart';
 import 'package:nm_flat/core/gmail/pdf_text_extractor.dart';
 import 'package:nm_flat/core/nav/routes.dart';
+import 'package:nm_flat/core/sms/sms_import_config.dart';
+import 'package:nm_flat/core/sms/sms_platform_bridge.dart';
+import 'package:nm_flat/core/sms/sms_spend_scanner.dart';
 import 'package:nm_flat/core/sync/control_store.dart';
 import 'package:nm_flat/core/sync/incoming.dart';
 import 'package:nm_flat/core/sync/key_rotation.dart';
@@ -358,6 +361,34 @@ final gmailLoopbackAuthProvider = Provider<GmailLoopbackAuthenticator>((ref) {
   ref.onDispose(() => unawaited(auth.cancel()));
   return auth;
 });
+final smsImportStoreProvider = Provider<SmsImportStore>((ref) {
+  final store = SmsImportStore(ref.watch(secureStoreProvider));
+  ref.onDispose(() => unawaited(store.dispose()));
+  return store;
+});
+final smsImportConfigProvider = StreamProvider<SmsImportConfig>((ref) async* {
+  final homeId = ref.watch(currentHomeIdProvider).value;
+  if (homeId == null) {
+    yield SmsImportConfig.empty();
+    return;
+  }
+  final store = ref.watch(smsImportStoreProvider);
+  yield* store.watch(homeId);
+});
+final smsDraftSpendsProvider = Provider<List<SmsDraftSpend>>((ref) {
+  final cfg = ref.watch(smsImportConfigProvider).value;
+  if (cfg == null || !cfg.enabled) return const [];
+  return cfg.drafts;
+});
+final smsPlatformBridgeProvider = Provider<SmsPlatformBridge>(
+  (ref) => MethodChannelSmsPlatformBridge.instance,
+);
+final smsSpendScannerProvider = Provider<SmsSpendScanner>(
+  (ref) => SmsSpendScanner(
+    bridge: ref.watch(smsPlatformBridgeProvider),
+    nowMs: () => ref.read(clockProvider).nowMs,
+  ),
+);
 final connectivityProvider = StreamProvider<List<ConnectivityResult>>((
   ref,
 ) async* {

@@ -4131,5 +4131,96 @@
   "gmailImportErrAuthBrowser": "Could not open the browser for Google sign-in.",
   "gmailImportErrAuthDenied": "Google sign-in was cancelled or denied.",
   "gmailImportErrAuthTimeout": "Google sign-in timed out. Tap Connect Gmail to try again.",
-  "gmailImportErrAuthOther": "Google sign-in did not complete — check your Desktop OAuth client settings."
+  "gmailImportErrAuthOther": "Google sign-in did not complete — check your Desktop OAuth client settings.",
+  "smsImportTitle": "SMS spend import",
+  "smsImportExperimental": "Experimental",
+  "smsImportCardTitle": "SMS spend import",
+  "smsImportTagLabel": "SMS",
+  "smsImportToggleTitle": "SMS spend import",
+  "smsImportToggleSubtitle": "Detect bank, UPI, and card payment SMS locally into Drafts before adding to your ledger.",
+  "smsImportOffHint": "Turn on SMS spend import to scan transaction alerts on-device or auto-capture payment SMS in the background. Nothing enters Money until you tap Account it.",
+  "smsImportProfileSubOff": "Off",
+  "smsImportProfileSubDrafts": "{count, plural, =1{1 draft to review} other{{count} drafts to review}}",
+  "@smsImportProfileSubDrafts": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "smsImportProfileSubAuto": "Auto-capture on",
+  "smsImportProfileSubManual": "Manual scan",
+  "smsImportProfileSubPermission": "Permission needed",
+  "smsImportStatusTitle": "SMS access",
+  "smsImportStatusGranted": "SMS permission granted — alerts stay on this phone.",
+  "smsImportStatusPartial": "Inbox read granted — grant receive permission for background capture.",
+  "smsImportStatusNeeded": "Allow Illam to read transaction SMS alerts on this phone.",
+  "smsImportStatusRestricted": "Android blocked SMS access. On sideloaded builds, open App info → ⋮ → Allow restricted settings, then enable SMS.",
+  "smsImportStatusUnsupported": "SMS reading is available on Android only; use Paste SMS text to test here.",
+  "smsImportGrantBtn": "Grant SMS permission",
+  "smsImportOpenSettingsBtn": "Open App Settings",
+  "smsImportAutoCaptureTitle": "Auto-capture incoming SMS",
+  "smsImportAutoCaptureSub": "Stage new bank, UPI, and card payment alerts into Drafts automatically.",
+  "smsImportWindowLabel": "Scan window",
+  "smsImportWindowDays": "Last {days} days",
+  "@smsImportWindowDays": {
+    "placeholders": {
+      "days": {}
+    }
+  },
+  "smsImportLastScan": "Last scanned {ago}",
+  "@smsImportLastScan": {
+    "placeholders": {
+      "ago": {}
+    }
+  },
+  "smsImportNeverScanned": "Never scanned yet",
+  "smsImportScanNowBtn": "Scan SMS",
+  "smsImportScanningBtn": "Scanning…",
+  "smsImportScanSummary": "{count, plural, =0{Scanned SMS — no new payment alerts found} =1{Added 1 new draft expense from SMS} other{Added {count} new draft expenses from SMS}}",
+  "@smsImportScanSummary": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "smsImportPasteBtn": "Paste SMS text",
+  "smsImportPasteTitle": "Parse pasted bank SMS",
+  "smsImportPasteLead": "Paste any Indian bank, UPI, or card debit SMS alert to test extraction into Drafts.",
+  "smsImportPasteField": "Transaction SMS text",
+  "smsImportPasteNotMatched": "No completed debit/spend amount was found in that message (OTPs, credits, promos, and card bill payments are ignored).",
+  "smsImportPasteAddedSnack": "Created SMS draft ({merchant})",
+  "@smsImportPasteAddedSnack": {
+    "placeholders": {
+      "merchant": {}
+    }
+  },
+  "smsImportDraftsEmpty": "No pending SMS drafts. Scan your inbox or enable auto-capture for new payment alerts.",
+  "smsImportClearBtn": "Clear SMS import data",
+  "smsImportClearTitle": "Clear SMS import data?",
+  "smsImportClearBody": "Deletes pending SMS drafts and processed history on this phone and turns off background SMS capture. Already accounted expenses stay in Money.",
+  "smsImportClearConfirm": "Clear",
+  "smsImportReviewTitle": "Review SMS spend",
+  "smsImportAccountMeta": "{bank} · {when}",
+  "@smsImportAccountMeta": {
+    "placeholders": {
+      "bank": {},
+      "when": {}
+    }
+  },
+  "smsImportRawLabel": "Original SMS excerpt",
+  "smsImportGmailOverlapWarning": "A pending Gmail draft ({channel}) matches this amount around {date}.",
+  "@smsImportGmailOverlapWarning": {
+    "placeholders": {
+      "channel": {},
+      "date": {}
+    }
+  },
+  "smsImportErrAmount": "Enter a positive amount up to ₹10,00,000.",
+  "smsImportErrMerchant": "Enter who or where this payment went to.",
+  "smsImportAccountedSnack": "Accounted {merchant} ({amount})"
+  ,
+  "@smsImportAccountedSnack": {
+    "placeholders": {
+      "merchant": {},
+      "amount": {}
+    }
+  }
 }

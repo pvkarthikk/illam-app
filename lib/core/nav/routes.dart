@@ -24,6 +24,7 @@ abstract final class Routes {
   static const backup = '/backup';
   static const remoteSync = '/remote-sync';
   static const gmailImport = '/gmail-import';
+  static const smsImport = '/sms-import';
 }
 
 enum NestTab { today, lists, tasks, meals, money }

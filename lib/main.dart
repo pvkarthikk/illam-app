@@ -26,6 +26,8 @@ import 'package:nm_flat/core/data/secure/secure_store.dart';
 import 'package:nm_flat/core/domain/widget_snapshot.dart';
 import 'package:nm_flat/core/gmail/gmail_import_config.dart';
 import 'package:nm_flat/core/notify/background_tasks.dart';
+import 'package:nm_flat/core/sms/sms_import_config.dart';
+import 'package:nm_flat/core/sms/sms_platform_bridge.dart';
 import 'package:nm_flat/core/notify/notifications.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/sync/remote/remote_sync_config.dart';
@@ -96,6 +98,10 @@ Future<void> main() async {
     await BackupConfigStore(secure).delete(homeId);
     await RemoteSyncConfigStore(secure).delete(homeId);
     await GmailImportStore(secure).delete(homeId);
+    await SmsImportStore(secure).delete(homeId);
+    await MethodChannelSmsPlatformBridge.instance.setBackgroundCaptureEnabled(
+      false,
+    );
   });
   HomeEraser.onErase.add((_) async {
     await WidgetBridge.instance.updateSnapshots(
