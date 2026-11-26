@@ -26,7 +26,7 @@ const _roomKeys = [
   'Whole house',
 ];
 
-const _freqPresets = [1, 2, 3, 7, 14, 30];
+const _freqPresets = [1, 2, 3, 7, 14, 30, 90];
 
 class _RoutineSheet extends ConsumerStatefulWidget {
   const _RoutineSheet({this.existing});
@@ -228,6 +228,7 @@ class _RoutineSheetState extends ConsumerState<_RoutineSheet> {
       (7, l10n.tasksFreqWeekly),
       (14, l10n.tasksFreqFortnightly),
       (30, l10n.tasksFreqMonthly),
+      (90, l10n.tasksFreqEvery3Months),
     ];
 
     return Column(

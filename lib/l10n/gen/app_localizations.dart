@@ -2697,7 +2697,7 @@ abstract class AppLocalizations {
   /// No description provided for @tasksCleaningTab.
   ///
   /// In en, this message translates to:
-  /// **'Cleaning'**
+  /// **'Routines'**
   String get tasksCleaningTab;
 
   /// No description provided for @tasksTodosTab.
@@ -2823,13 +2823,13 @@ abstract class AppLocalizations {
   /// No description provided for @tasksNewRoutine.
   ///
   /// In en, this message translates to:
-  /// **'New cleaning routine'**
+  /// **'New routine'**
   String get tasksNewRoutine;
 
   /// No description provided for @tasksNewRoutineTitle.
   ///
   /// In en, this message translates to:
-  /// **'New cleaning routine'**
+  /// **'New routine'**
   String get tasksNewRoutineTitle;
 
   /// No description provided for @tasksRoutineLead.
@@ -2847,7 +2847,7 @@ abstract class AppLocalizations {
   /// No description provided for @tasksRoutinePlaceholder.
   ///
   /// In en, this message translates to:
-  /// **'e.g. Clean kitchen chimney'**
+  /// **'e.g. Check water filter, clean chimney'**
   String get tasksRoutinePlaceholder;
 
   /// No description provided for @tasksNameRequired.
@@ -2907,7 +2907,7 @@ abstract class AppLocalizations {
   /// No description provided for @tasksRoomName.
   ///
   /// In en, this message translates to:
-  /// **'Room'**
+  /// **'Area or place'**
   String get tasksRoomName;
 
   /// No description provided for @tasksHowOften.

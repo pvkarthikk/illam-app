@@ -92,7 +92,7 @@ class RoutinesView extends ConsumerWidget {
           ],
           if (filtered.isEmpty)
             EmptyState(
-              icon: Icons.cleaning_services_outlined,
+              icon: Icons.event_repeat_outlined,
               title: l10n.tasksNoRoutines,
               body: l10n.tasksNoRoutinesBody(emptyWho),
             )

@@ -1604,7 +1604,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tasksTitle => 'Tasks';
 
   @override
-  String get tasksCleaningTab => 'Cleaning';
+  String get tasksCleaningTab => 'Routines';
 
   @override
   String get tasksTodosTab => 'To-dos';
@@ -1687,10 +1687,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tasksAnyone => 'anyone';
 
   @override
-  String get tasksNewRoutine => 'New cleaning routine';
+  String get tasksNewRoutine => 'New routine';
 
   @override
-  String get tasksNewRoutineTitle => 'New cleaning routine';
+  String get tasksNewRoutineTitle => 'New routine';
 
   @override
   String get tasksRoutineLead =>
@@ -1700,7 +1700,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tasksWhatNeedsDoing => 'What needs doing?';
 
   @override
-  String get tasksRoutinePlaceholder => 'e.g. Clean kitchen chimney';
+  String get tasksRoutinePlaceholder =>
+      'e.g. Check water filter, clean chimney';
 
   @override
   String get tasksNameRequired => 'Add what needs doing.';
@@ -1730,7 +1731,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tasksOther => 'Other…';
 
   @override
-  String get tasksRoomName => 'Room';
+  String get tasksRoomName => 'Area or place';
 
   @override
   String get tasksHowOften => 'How often';

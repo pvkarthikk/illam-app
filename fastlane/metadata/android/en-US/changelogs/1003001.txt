@@ -2,3 +2,4 @@
 • Experimental Gmail invoice import
 • Experimental SMS spend import with draft review
 • Removed all proprietary Google libraries: QR scanning now uses ZXing and Google Drive sign-in uses a browser-based OAuth flow
+• Renamed Tasks "Cleaning" tab to "Routines" with a 3-month repeat preset
