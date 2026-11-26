@@ -9,6 +9,7 @@ import 'package:nm_flat/core/domain/spend_category.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/util/money.dart';
 import 'package:nm_flat/features/money/bills_section.dart';
+import 'package:nm_flat/features/money/widgets/spend_category_picker.dart';
 import 'package:nm_flat/features/staff/staff_providers.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
@@ -40,6 +41,7 @@ class _BillSheetState extends ConsumerState<_BillSheet> {
   String? _nameError;
   String? _amountError;
   String? _dayError;
+  String? _categoryError;
   bool _saving = false;
 
   @override
@@ -81,12 +83,17 @@ class _BillSheetState extends ConsumerState<_BillSheet> {
     final day = int.tryParse(_dayCtrl.text.trim());
     final dayErr =
         (day == null || day < 1 || day > 31) ? l10n.moneyBillErrDay : null;
+    final catErr = _category.trim().isEmpty ? l10n.moneyErrCategory : null;
 
-    if (nameErr != null || amountErr != null || dayErr != null) {
+    if (nameErr != null ||
+        amountErr != null ||
+        dayErr != null ||
+        catErr != null) {
       setState(() {
         _nameError = nameErr;
         _amountError = amountErr;
         _dayError = dayErr;
+        _categoryError = catErr;
       });
       return;
     }
@@ -96,6 +103,7 @@ class _BillSheetState extends ConsumerState<_BillSheet> {
       _nameError = null;
       _amountError = null;
       _dayError = null;
+      _categoryError = null;
     });
     var closed = false;
     try {
@@ -105,7 +113,7 @@ class _BillSheetState extends ConsumerState<_BillSheet> {
       final repo = ref.read(moneyRepoProvider);
       final draft = BillDraft(
         name: name,
-        category: _category,
+        category: normalizeSpendCategory(_category),
         usualAmountPaise: paise!,
         dueDay: day!,
         method: _method,
@@ -261,21 +269,15 @@ class _BillSheetState extends ConsumerState<_BillSheet> {
           style: NestText.small12.copyWith(color: c.ink2),
         ),
         const SizedBox(height: 6),
-        Wrap(
-          spacing: 8,
-          runSpacing: 4,
-          children: [
-            for (final cat in spendCategories)
-              NestChip(
-                label: cat,
-                selected: _category == cat,
-                dotColor: NestPalette.categories[cat],
-                onTap: () => setState(() {
-                  _category = cat;
-                  _categoryLocked = true;
-                }),
-              ),
-          ],
+        SpendCategoryPicker(
+          value: _category,
+          categories: ref.watch(customSpendCategoriesProvider),
+          errorText: _categoryError,
+          onChanged: (cat) => setState(() {
+            _category = cat;
+            _categoryLocked = true;
+            _categoryError = null;
+          }),
         ),
         const SizedBox(height: 16),
         Text(

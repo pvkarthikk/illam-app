@@ -14,15 +14,101 @@ import 'package:nm_flat/core/ui/formatters.dart';
 import 'package:nm_flat/core/util/money.dart';
 import 'package:nm_flat/features/money/bills_section.dart';
 import 'package:nm_flat/features/money/spend_sheet.dart';
+import 'package:nm_flat/features/money/widgets/spend_pie_chart.dart';
 import 'package:nm_flat/features/salary/salary_providers.dart';
 import 'package:nm_flat/features/staff/staff_providers.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
-class WhereItWentSection extends ConsumerWidget {
+class WhereItWentSection extends ConsumerStatefulWidget {
   const WhereItWentSection({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<WhereItWentSection> createState() => _WhereItWentSectionState();
+}
+
+class _WhereItWentSectionState extends ConsumerState<WhereItWentSection> {
+  bool _showChart = false;
+  SpendChartMode _chartMode = SpendChartMode.item;
+
+  List<SpendPieSlice> _buildSlices({
+    required AppLocalizations l10n,
+    required List<ExpenseRow> rows,
+    required List<(String, int)> catTotals,
+    required String month,
+    required MoneyRepo repo,
+    required Set<String> dupAttempts,
+  }) {
+    final lites = [for (final r in rows) repo.toSpendLite(r)];
+    final excluded = duplicateSalaryExpenseIds(rows, dupAttempts);
+
+    switch (_chartMode) {
+      case SpendChartMode.category:
+        return [
+          for (final (cat, amt) in catTotals)
+            SpendPieSlice(
+              label: cat,
+              amountPaise: amt,
+              color: NestPalette.categoryColor(cat),
+            ),
+        ];
+      case SpendChartMode.item:
+        final items = itemTotals(
+          lites,
+          month,
+          excluded,
+          otherLabel: l10n.moneyChartOther,
+        );
+        return [
+          for (var i = 0; i < items.length; i++)
+            SpendPieSlice(
+              label: items[i].$1,
+              amountPaise: items[i].$2,
+              color: items[i].$1.toLowerCase() ==
+                      l10n.moneyChartOther.toLowerCase()
+                  ? NestPalette.categories['Other']!
+                  : NestPalette.avatars[i % NestPalette.avatars.length],
+            ),
+        ];
+      case SpendChartMode.people:
+        final members = ref.watch(membersProvider).value ?? const <Member>[];
+        final me = ref.watch(myMemberIdProvider);
+        final memberLabels = <String, String>{};
+        final memberColors = <String, Color>{};
+        for (final m in members) {
+          final rawName = m.id == me
+              ? l10n.moneyYou
+              : ((m.firstName ?? '').trim().isNotEmpty
+                    ? m.firstName!.trim()
+                    : (m.fullName ?? '').trim());
+          if (rawName.isNotEmpty) memberLabels[m.id] = rawName;
+          final hex = m.color ?? '';
+          if (hex.isNotEmpty) memberColors[m.id] = NestPalette.fromHex(hex);
+        }
+        if (me.isNotEmpty) {
+          memberLabels.putIfAbsent(me, () => l10n.moneyYou);
+        }
+        final people = peopleTotals(
+          lites,
+          {for (final r in rows) r.id: r.paidBy},
+          memberLabels,
+          month,
+          excluded,
+          unknownLabel: l10n.moneyChartUnknown,
+        );
+        return [
+          for (var i = 0; i < people.length; i++)
+            SpendPieSlice(
+              label: people[i].label,
+              amountPaise: people[i].amountPaise,
+              color: memberColors[people[i].id] ??
+                  NestPalette.avatars[i % NestPalette.avatars.length],
+            ),
+        ];
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final c = context.nest;
     final today = ref.watch(todayDateProvider);
@@ -33,21 +119,75 @@ class WhereItWentSection extends ConsumerWidget {
     final repo = ref.watch(moneyRepoProvider);
     final dupAttempts =
         ref.watch(duplicateSalaryAttemptIdsProvider).value ?? const <String>{};
+    final lites = [for (final r in rows) repo.toSpendLite(r)];
+    final excluded = duplicateSalaryExpenseIds(rows, dupAttempts);
     final totals = categoryTotals(
-      [for (final r in rows) repo.toSpendLite(r)],
+      lites,
       {for (final r in rows) r.id: r.category},
       month,
-      duplicateSalaryExpenseIds(rows, dupAttempts),
+      excluded,
     );
     if (totals.isEmpty) return const SizedBox.shrink();
 
     final maxAmount = totals.first.$2;
+    final slices = _showChart
+        ? _buildSlices(
+            l10n: l10n,
+            rows: rows,
+            catTotals: totals,
+            month: month,
+            repo: repo,
+            dupAttempts: dupAttempts,
+          )
+        : const <SpendPieSlice>[];
+    final chartTotal = slices.fold<int>(0, (sum, s) => sum + s.amountPaise);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const SizedBox(height: 20),
-        SectionHeader(title: l10n.moneyWhereItWent),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 0, 12, 4),
+          child: Row(
+            children: [
+              Expanded(
+                child: Semantics(
+                  header: true,
+                  child: Text(
+                    l10n.moneyWhereItWent.toUpperCase(),
+                    style: NestText.section13.copyWith(color: c.ink2),
+                  ),
+                ),
+              ),
+              TextButton.icon(
+                style: TextButton.styleFrom(
+                  minimumSize: const Size(48, 48),
+                ),
+                icon: Icon(
+                  _showChart
+                      ? Icons.pie_chart_rounded
+                      : Icons.pie_chart_outline_rounded,
+                  size: 18,
+                ),
+                label: Text(
+                  _showChart ? l10n.moneyHideChart : l10n.moneyShowChart,
+                  style: NestText.small12.copyWith(color: c.primary),
+                ),
+                onPressed: () => setState(() => _showChart = !_showChart),
+              ),
+            ],
+          ),
+        ),
+        if (_showChart)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 12),
+            child: SpendPieChartCard(
+              mode: _chartMode,
+              onModeChanged: (m) => setState(() => _chartMode = m),
+              slices: slices,
+              totalPaise: chartTotal,
+            ),
+          ),
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
           child: NestCard(
@@ -90,8 +230,7 @@ class _CategoryTotalRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = context.nest;
-    final barColor =
-        NestPalette.categories[category] ?? NestPalette.categories['Other']!;
+    final barColor = NestPalette.categoryColor(category);
     final ratio = maxAmountPaise > 0 ? amountPaise / maxAmountPaise : 0.0;
 
     return InkWell(

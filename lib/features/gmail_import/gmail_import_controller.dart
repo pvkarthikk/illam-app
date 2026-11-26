@@ -310,9 +310,10 @@ class GmailImportController extends Notifier<GmailImportUiState> {
       var total = 0;
 
       for (final entry in spends) {
-        final cat = spendCategories.contains(entry.category)
-            ? entry.category
-            : draft.channel.defaultCategory;
+        final cat = normalizeSpendCategory(
+          entry.category,
+          fallback: draft.channel.defaultCategory,
+        );
         await moneyRepo.addSpend(
           NewExpense(
             amountPaise: entry.amountPaise,

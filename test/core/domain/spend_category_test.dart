@@ -44,4 +44,43 @@ void main() {
   test('Rent falls back to Other', () {
     expect(guessSpendCategory('Rent', const {}), 'Other');
   });
+
+  group('normalizeSpendCategory & mergeSpendCategories', () {
+    test('normalizes whitespace, built-in casing, lowercase & clamps length', () {
+      expect(normalizeSpendCategory('  groceries  '), 'Groceries');
+      expect(normalizeSpendCategory('EATING   OUT'), 'Eating out');
+      expect(normalizeSpendCategory('medical'), 'Medical');
+      expect(normalizeSpendCategory('  health   care  '), 'Health care');
+      expect(normalizeSpendCategory('PetCare'), 'PetCare');
+      expect(normalizeSpendCategory('   '), 'Other');
+      expect(normalizeSpendCategory('', fallback: 'Shopping'), 'Shopping');
+      expect(
+        normalizeSpendCategory('A very long custom household category name').length,
+        lessThanOrEqualTo(maxSpendCategoryLength),
+      );
+    });
+
+    test('merges built-ins with sorted distinct custom categories before Other', () {
+      final merged = mergeSpendCategories([
+        'Travel',
+        'medical',
+        'Medical',
+        'utilities',
+        'Fuel',
+        '  ',
+      ]);
+      expect(merged, [
+        'Groceries',
+        'Shopping',
+        'Staff',
+        'Utilities',
+        'Eating out',
+        'Home care',
+        'Fuel',
+        'Medical',
+        'Travel',
+        'Other',
+      ]);
+    });
+  });
 }

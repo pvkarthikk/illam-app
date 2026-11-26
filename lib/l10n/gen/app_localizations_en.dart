@@ -2173,6 +2173,60 @@ class AppLocalizationsEn extends AppLocalizations {
   String get moneyCategory => 'Category';
 
   @override
+  String get moneyCustomCategoryChip => '＋ Custom';
+
+  @override
+  String get moneyCustomCategoryLabel => 'Custom category';
+
+  @override
+  String get moneyCustomCategoryHint => 'e.g. Medical, Travel, Fuel';
+
+  @override
+  String get moneyErrCategory => 'Enter a category name';
+
+  @override
+  String get moneyShowChart => 'Show chart';
+
+  @override
+  String get moneyHideChart => 'Hide chart';
+
+  @override
+  String get moneyChartByItem => 'By item';
+
+  @override
+  String get moneyChartByCategory => 'By category';
+
+  @override
+  String get moneyChartByPeople => 'By people';
+
+  @override
+  String get moneyChartOther => 'Other';
+
+  @override
+  String get moneyChartUnknown => 'Unknown';
+
+  @override
+  String get moneyDraftsCollapse => 'Collapse draft expenses';
+
+  @override
+  String get moneyDraftsExpand => 'Expand draft expenses';
+
+  @override
+  String moneyDraftsShowAll(int count) {
+    return 'Show all ($count)';
+  }
+
+  @override
+  String moneyDraftsShowLess(int count) {
+    return 'Show first $count';
+  }
+
+  @override
+  String moneyDraftsShowingCount(int shown, int total) {
+    return 'Showing $shown of $total';
+  }
+
+  @override
   String get moneyPaidWith => 'Paid with';
 
   @override

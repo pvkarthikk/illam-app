@@ -1497,6 +1497,46 @@
   "moneyAmountLabel": "Amount in rupees",
   "moneyPaidTo": "Paid to / for",
   "moneyCategory": "Category",
+  "moneyCustomCategoryChip": "＋ Custom",
+  "moneyCustomCategoryLabel": "Custom category",
+  "moneyCustomCategoryHint": "e.g. Medical, Travel, Fuel",
+  "moneyErrCategory": "Enter a category name",
+  "moneyShowChart": "Show chart",
+  "moneyHideChart": "Hide chart",
+  "moneyChartByItem": "By item",
+  "moneyChartByCategory": "By category",
+  "moneyChartByPeople": "By people",
+  "moneyChartOther": "Other",
+  "moneyChartUnknown": "Unknown",
+  "moneyDraftsCollapse": "Collapse draft expenses",
+  "moneyDraftsExpand": "Expand draft expenses",
+  "moneyDraftsShowAll": "Show all ({count})",
+  "@moneyDraftsShowAll": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "moneyDraftsShowLess": "Show first {count}",
+  "@moneyDraftsShowLess": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "moneyDraftsShowingCount": "Showing {shown} of {total}",
+  "@moneyDraftsShowingCount": {
+    "placeholders": {
+      "shown": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "moneyPaidWith": "Paid with",
   "moneyWhen": "When",
   "moneyYesterday": "Yesterday",

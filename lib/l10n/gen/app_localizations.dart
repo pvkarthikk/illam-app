@@ -3624,6 +3624,102 @@ abstract class AppLocalizations {
   /// **'Category'**
   String get moneyCategory;
 
+  /// No description provided for @moneyCustomCategoryChip.
+  ///
+  /// In en, this message translates to:
+  /// **'＋ Custom'**
+  String get moneyCustomCategoryChip;
+
+  /// No description provided for @moneyCustomCategoryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom category'**
+  String get moneyCustomCategoryLabel;
+
+  /// No description provided for @moneyCustomCategoryHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Medical, Travel, Fuel'**
+  String get moneyCustomCategoryHint;
+
+  /// No description provided for @moneyErrCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a category name'**
+  String get moneyErrCategory;
+
+  /// No description provided for @moneyShowChart.
+  ///
+  /// In en, this message translates to:
+  /// **'Show chart'**
+  String get moneyShowChart;
+
+  /// No description provided for @moneyHideChart.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide chart'**
+  String get moneyHideChart;
+
+  /// No description provided for @moneyChartByItem.
+  ///
+  /// In en, this message translates to:
+  /// **'By item'**
+  String get moneyChartByItem;
+
+  /// No description provided for @moneyChartByCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'By category'**
+  String get moneyChartByCategory;
+
+  /// No description provided for @moneyChartByPeople.
+  ///
+  /// In en, this message translates to:
+  /// **'By people'**
+  String get moneyChartByPeople;
+
+  /// No description provided for @moneyChartOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get moneyChartOther;
+
+  /// No description provided for @moneyChartUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get moneyChartUnknown;
+
+  /// No description provided for @moneyDraftsCollapse.
+  ///
+  /// In en, this message translates to:
+  /// **'Collapse draft expenses'**
+  String get moneyDraftsCollapse;
+
+  /// No description provided for @moneyDraftsExpand.
+  ///
+  /// In en, this message translates to:
+  /// **'Expand draft expenses'**
+  String get moneyDraftsExpand;
+
+  /// No description provided for @moneyDraftsShowAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Show all ({count})'**
+  String moneyDraftsShowAll(int count);
+
+  /// No description provided for @moneyDraftsShowLess.
+  ///
+  /// In en, this message translates to:
+  /// **'Show first {count}'**
+  String moneyDraftsShowLess(int count);
+
+  /// No description provided for @moneyDraftsShowingCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Showing {shown} of {total}'**
+  String moneyDraftsShowingCount(int shown, int total);
+
   /// No description provided for @moneyPaidWith.
   ///
   /// In en, this message translates to:

@@ -308,5 +308,55 @@ void main() {
       ]);
       expect(top, ['Zepto', 'Milkman', 'Amazon', 'Swiggy', 'D-Mart', 'Electricity']);
     });
+
+    test('itemTotals aggregates by merchantKey and collapses overflow into Other', () {
+      final spends = [
+        _spend(id: '1', merchant: 'zepto', amountPaise: 400, date: '2026-11-01', createdAt: 1),
+        _spend(id: '2', merchant: 'Zepto', amountPaise: 600, date: '2026-11-10', createdAt: 2),
+        _spend(id: '3', merchant: 'Swiggy', amountPaise: 700, date: '2026-11-05'),
+        _spend(id: '4', merchant: 'Apollo', amountPaise: 300, date: '2026-11-06'),
+        _spend(id: '5', merchant: 'Auto', amountPaise: 150, date: '2026-11-07'),
+        _spend(id: '6', merchant: 'Bakery', amountPaise: 100, date: '2026-11-08'),
+        _spend(id: 'excl', merchant: 'Zepto', amountPaise: 9999, date: '2026-11-09'),
+        _spend(id: 'prev', merchant: 'Old', amountPaise: 9999, date: '2026-10-25'),
+      ];
+
+      expect(
+        itemTotals(spends, '2026-11', {'excl'}, maxBuckets: 4, otherLabel: 'Other'),
+        [
+          ('Zepto', 1000),
+          ('Swiggy', 700),
+          ('Apollo', 300),
+          ('Other', 250),
+        ],
+      );
+    });
+
+    test('peopleTotals aggregates by payer and resolves labels with fallback', () {
+      final spends = [
+        _spend(id: '1', amountPaise: 500, date: '2026-11-01'),
+        _spend(id: '2', amountPaise: 700, date: '2026-11-02'),
+        _spend(id: '3', amountPaise: 400, date: '2026-11-03'),
+        _spend(id: '4', amountPaise: 250, date: '2026-11-04'),
+        _spend(id: 'excl', amountPaise: 9000, date: '2026-11-05'),
+      ];
+      final paidBy = {
+        '1': 'm1',
+        '2': 'm2',
+        '3': 'm1',
+        '4': 'm3',
+        'excl': 'm1',
+      };
+      final labels = {'m1': 'You', 'm2': 'Priya'};
+
+      expect(
+        peopleTotals(spends, paidBy, labels, '2026-11', {'excl'}),
+        [
+          (id: 'm1', label: 'You', amountPaise: 900),
+          (id: 'm2', label: 'Priya', amountPaise: 700),
+          (id: 'm3', label: 'Unknown', amountPaise: 250),
+        ],
+      );
+    });
   });
 }

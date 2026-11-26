@@ -42,6 +42,7 @@ import 'package:nm_flat/core/domain/money_math.dart';
 import 'package:nm_flat/core/domain/names.dart';
 import 'package:nm_flat/core/domain/routine_state.dart';
 import 'package:nm_flat/core/domain/salary_months.dart';
+import 'package:nm_flat/core/domain/spend_category.dart';
 import 'package:nm_flat/core/domain/sync_status.dart';
 import 'package:nm_flat/core/gmail/gmail_import_config.dart';
 import 'package:nm_flat/core/gmail/gmail_invoice_scanner.dart';
@@ -766,6 +767,17 @@ final recentSpendsProvider = StreamProvider<List<ExpenseRow>>((ref) {
   final today = ref.watch(todayDateProvider);
   final fromIso = Dates.addDays(today, -90);
   return ref.watch(moneyRepoProvider).watchExpensesSince(fromIso);
+});
+
+final customSpendCategoriesProvider = Provider<List<String>>((ref) {
+  final recent = ref.watch(recentSpendsProvider).value ?? const <ExpenseRow>[];
+  final rules = ref.watch(merchantRulesProvider).value ?? const <String, String>{};
+  final bills = ref.watch(billsProvider).value ?? const <Bill>[];
+  return mergeSpendCategories([
+    for (final e in recent) e.category,
+    ...rules.values,
+    for (final b in bills) b.category,
+  ]);
 });
 
 final billPaymentsProvider = StreamProvider<List<SpendLite>>((ref) {

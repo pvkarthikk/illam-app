@@ -1,0 +1,4 @@
+• User-defined custom expense categories across Money, Bills, SMS drafts, and Gmail drafts
+• Optional Money spending pie chart with By item, By category, and By people toggle
+• Moved Draft expenses to the bottom of Money with collapse toggle and 10-item pagination
+• Improved ICICI bank, card, and UPI SMS spend parsing

@@ -36,6 +36,104 @@ List<(String, int)> categoryTotals(
   return out;
 }
 
+/// Aggregates spend totals by item/merchant for [month], keeping up to
+/// [maxBuckets] entries and rolling overflow into [otherLabel].
+List<(String, int)> itemTotals(
+  List<SpendLite> all,
+  String month,
+  Set<String> excludedIds, {
+  int maxBuckets = 6,
+  String otherLabel = 'Other',
+}) {
+  final prefix = '$month-';
+  final grouped = <String, ({String merchant, String date, int createdAt, int total})>{};
+  for (final e in all) {
+    if (excludedIds.contains(e.id) || !e.date.startsWith(prefix)) continue;
+    final k = e.merchantKey.isNotEmpty ? e.merchantKey : merchantKey(e.merchant);
+    final label = e.merchant.trim().isEmpty ? otherLabel : e.merchant.trim();
+    final cur = grouped[k];
+    if (cur == null) {
+      grouped[k] = (
+        merchant: label,
+        date: e.date,
+        createdAt: e.createdAt,
+        total: e.amountPaise,
+      );
+    } else {
+      final isNewer =
+          e.date.compareTo(cur.date) > 0 ||
+          (e.date == cur.date && e.createdAt > cur.createdAt);
+      grouped[k] = (
+        merchant: isNewer ? label : cur.merchant,
+        date: isNewer ? e.date : cur.date,
+        createdAt: isNewer ? e.createdAt : cur.createdAt,
+        total: cur.total + e.amountPaise,
+      );
+    }
+  }
+
+  final out = [for (final g in grouped.values) (g.merchant, g.total)];
+  out.sort((a, b) {
+    final byAmt = b.$2.compareTo(a.$2);
+    return byAmt != 0 ? byAmt : a.$1.compareTo(b.$1);
+  });
+
+  if (maxBuckets < 2 || out.length <= maxBuckets) {
+    return out;
+  }
+
+  final kept = out.sublist(0, maxBuckets - 1);
+  var remainderSum = 0;
+  for (final item in out.sublist(maxBuckets - 1)) {
+    remainderSum += item.$2;
+  }
+  final otherLower = otherLabel.toLowerCase();
+  final existingIdx = kept.indexWhere((e) => e.$1.toLowerCase() == otherLower);
+  if (existingIdx >= 0) {
+    final existing = kept[existingIdx];
+    kept[existingIdx] = (existing.$1, existing.$2 + remainderSum);
+  } else {
+    kept.add((otherLabel, remainderSum));
+  }
+  return kept;
+}
+
+/// Aggregates spend totals by payer member for [month], sorted descending.
+List<({String id, String label, int amountPaise})> peopleTotals(
+  List<SpendLite> all,
+  Map<String, String> paidByById,
+  Map<String, String> memberLabels,
+  String month,
+  Set<String> excludedIds, {
+  String unknownLabel = 'Unknown',
+}) {
+  final prefix = '$month-';
+  final totalsById = <String, int>{};
+  for (final e in all) {
+    if (excludedIds.contains(e.id) || !e.date.startsWith(prefix)) continue;
+    final id = paidByById[e.id] ?? '';
+    totalsById[id] = (totalsById[id] ?? 0) + e.amountPaise;
+  }
+
+  final out = <({String id, String label, int amountPaise})>[
+    for (final entry in totalsById.entries)
+      (
+        id: entry.key,
+        label: (memberLabels[entry.key] ?? '').trim().isEmpty
+            ? unknownLabel
+            : memberLabels[entry.key]!.trim(),
+        amountPaise: entry.value,
+      ),
+  ];
+  out.sort((a, b) {
+    final byAmt = b.amountPaise.compareTo(a.amountPaise);
+    if (byAmt != 0) return byAmt;
+    final byLabel = a.label.compareTo(b.label);
+    return byLabel != 0 ? byLabel : a.id.compareTo(b.id);
+  });
+  return out;
+}
+
 /// Returns up to 6 frequent recent merchants, topped up from [fallback].
 List<String> topMerchants(
   List<SpendLite> all,

@@ -11,6 +11,7 @@ import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/ui/formatters.dart';
 import 'package:nm_flat/core/util/money.dart';
 import 'package:nm_flat/features/gmail_import/gmail_import_controller.dart';
+import 'package:nm_flat/features/money/widgets/spend_category_picker.dart';
 import 'package:nm_flat/features/staff/staff_providers.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
@@ -117,10 +118,20 @@ class _DraftReviewSheetState extends ConsumerState<_DraftReviewSheet> {
         setState(() => _validationError = l10n.gmailImportItemAmountInvalid);
         return null;
       }
+      if (item.included && item.category.trim().isEmpty) {
+        setState(() => _validationError = l10n.moneyErrCategory);
+        return null;
+      }
       nextItems.add(
         item.copyWith(
           name: name,
           amountPaise: parsedAmount ?? item.amountPaise,
+          category: item.included
+              ? normalizeSpendCategory(
+                  item.category,
+                  fallback: _draft.channel.defaultCategory,
+                )
+              : item.category,
         ),
       );
     }
@@ -180,6 +191,7 @@ class _DraftReviewSheetState extends ConsumerState<_DraftReviewSheet> {
     final activeMembers = members.where((m) => m.status == 'active').toList();
     final me = ref.watch(myMemberIdProvider);
     final selectedPayer = _draft.paidBy ?? me;
+    final categories = ref.watch(customSpendCategoriesProvider);
 
     final subtitleParts = <String>[
       Formatters.dayLabel(_draft.date, today, l10n),
@@ -268,6 +280,7 @@ class _DraftReviewSheetState extends ConsumerState<_DraftReviewSheet> {
           for (var i = 0; i < _draft.items.length; i++)
             _DraftItemRow(
               item: _draft.items[i],
+              categories: categories,
               nameCtrl: _nameCtrls[i],
               amountCtrl: _amountCtrls[i],
               onToggle: (v) => setState(() {
@@ -291,6 +304,7 @@ class _DraftReviewSheetState extends ConsumerState<_DraftReviewSheet> {
                 final next = [..._draft.items];
                 next[i] = next[i].copyWith(category: cat);
                 _draft = _draft.copyWith(items: next);
+                _validationError = null;
               }),
             ),
         ],
@@ -400,6 +414,7 @@ class _DraftReviewSheetState extends ConsumerState<_DraftReviewSheet> {
 class _DraftItemRow extends StatelessWidget {
   const _DraftItemRow({
     required this.item,
+    required this.categories,
     required this.nameCtrl,
     required this.amountCtrl,
     required this.onToggle,
@@ -408,6 +423,7 @@ class _DraftItemRow extends StatelessWidget {
   });
 
   final DraftExpenseItem item;
+  final List<String> categories;
   final TextEditingController nameCtrl;
   final TextEditingController amountCtrl;
   final ValueChanged<bool?> onToggle;
@@ -468,17 +484,11 @@ class _DraftItemRow extends StatelessWidget {
             ),
             if (item.included) ...[
               const SizedBox(height: 6),
-              Wrap(
-                spacing: 6,
-                runSpacing: 4,
-                children: [
-                  for (final cat in spendCategories)
-                    NestChip(
-                      label: cat,
-                      selected: item.category == cat,
-                      onTap: () => onCategoryChanged(cat),
-                    ),
-                ],
+              SpendCategoryPicker(
+                value: item.category,
+                categories: categories,
+                showDots: false,
+                onChanged: onCategoryChanged,
               ),
             ],
           ],

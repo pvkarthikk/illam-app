@@ -79,7 +79,6 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
                 ],
               ),
             ),
-            const DraftExpensesSection(),
             const BillsSection(),
             if (empty) ...[
               const StaffPaySection(),
@@ -98,6 +97,7 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
               const StaffPaySection(),
               const RecentSection(),
             ],
+            const DraftExpensesSection(),
           ],
         ),
       ),

@@ -25,8 +25,7 @@ class CategoryLetterBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bg =
-        NestPalette.categories[category] ?? NestPalette.categories['Other']!;
+    final bg = NestPalette.categoryColor(category);
     final trimmed = name.trim();
     final letter = trimmed.isEmpty
         ? '?'

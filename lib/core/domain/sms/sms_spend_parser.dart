@@ -443,7 +443,7 @@ String _resolveCategory(
   Map<String, String> merchantRules,
 ) {
   final learned = guessSpendCategory(merchant, merchantRules);
-  if (learned != 'Other' && spendCategories.contains(learned)) {
+  if (learned != 'Other' && learned.trim().isNotEmpty) {
     return learned;
   }
   if (matchedOrderChannel == 'zepto' || matchedOrderChannel == 'blinkit') {

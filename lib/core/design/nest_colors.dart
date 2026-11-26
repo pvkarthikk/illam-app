@@ -224,6 +224,19 @@ class NestPalette {
     Color(0xFF5E8A2B),
     Color(0xFFA8362A),
   ];
+
+  /// Returns a palette color for built-in or custom [category] names using a
+  /// deterministic code-unit hash for custom categories.
+  static Color categoryColor(String category) {
+    final builtIn = categories[category];
+    if (builtIn != null) return builtIn;
+    final units = category.trim().toLowerCase().codeUnits;
+    var h = 5381;
+    for (final u in units) {
+      h = ((h * 31) + u) & 0x7fffffff;
+    }
+    return avatars[h % avatars.length];
+  }
   // Store badges: background, letters, foreground (contrast-checked; Flipkart darkened)
   static const channels = <String, ChannelStyle>{
     'zepto': ChannelStyle(Color(0xFF5B1E8C), 'Z', Color(0xFFFFFFFF)),

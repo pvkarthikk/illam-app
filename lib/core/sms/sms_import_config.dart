@@ -55,7 +55,7 @@ class SmsDraftSpend {
 
   factory SmsDraftSpend.fromJson(Map<String, Object?> j) {
     final rawCat = (j['category'] as String?) ?? 'Other';
-    final category = spendCategories.contains(rawCat) ? rawCat : 'Other';
+    final category = normalizeSpendCategory(rawCat);
     final rawMethod = ((j['method'] as String?) ?? 'upi').toLowerCase();
     final method = _validMethods.contains(rawMethod) ? rawMethod : 'upi';
     return SmsDraftSpend(

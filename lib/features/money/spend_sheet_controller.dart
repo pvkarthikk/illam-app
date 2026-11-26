@@ -28,6 +28,7 @@ class SpendSheetState {
     this.dup,
     this.amountError,
     this.merchantError,
+    this.categoryError,
   });
 
   final String? id;
@@ -42,6 +43,7 @@ class SpendSheetState {
   final DuplicateHit? dup;
   final String? amountError;
   final String? merchantError;
+  final String? categoryError;
 
   SpendSheetState copyWith({
     Object? id = _unset,
@@ -56,6 +58,7 @@ class SpendSheetState {
     Object? dup = _unset,
     Object? amountError = _unset,
     Object? merchantError = _unset,
+    Object? categoryError = _unset,
   }) => SpendSheetState(
     id: id == _unset ? this.id : id as String?,
     merchant: merchant ?? this.merchant,
@@ -73,6 +76,9 @@ class SpendSheetState {
     merchantError: merchantError == _unset
         ? this.merchantError
         : merchantError as String?,
+    categoryError: categoryError == _unset
+        ? this.categoryError
+        : categoryError as String?,
   );
 }
 
@@ -146,7 +152,11 @@ class SpendSheetController extends Notifier<SpendSheetState> {
 
   void pickCategory(String cat) {
     _picked = true;
-    state = state.copyWith(category: cat, categoryLocked: true);
+    state = state.copyWith(
+      category: cat,
+      categoryLocked: true,
+      categoryError: null,
+    );
   }
 
   void setMethod(String method) {
@@ -183,14 +193,21 @@ class SpendSheetController extends Notifier<SpendSheetState> {
     final paise = Money.parseRupees(amountText);
     final amtErr = validateAmount(paise);
     final merchErr = validateMerchant(merchant);
-    if (paise == null || amtErr != null || merchErr != null) {
-      state = state.copyWith(amountError: amtErr, merchantError: merchErr);
+    final catErr =
+        state.category.trim().isEmpty ? 'moneyErrCategory' : null;
+    if (paise == null || amtErr != null || merchErr != null || catErr != null) {
+      state = state.copyWith(
+        amountError: amtErr,
+        merchantError: merchErr,
+        categoryError: catErr,
+      );
       return SpendSaveKind.invalid;
     }
 
     final trimmed = merchant.trim();
+    final category = normalizeSpendCategory(state.category);
     final learn =
-        _picked && state.category != guessSpendCategory(trimmed, rules);
+        _picked && category != guessSpendCategory(trimmed, rules);
 
     if (state.id != null) {
       return learn ? SpendSaveKind.learned : SpendSaveKind.updated;
@@ -209,6 +226,7 @@ class SpendSheetController extends Notifier<SpendSheetState> {
           dup: hit,
           amountError: null,
           merchantError: null,
+          categoryError: null,
         );
         return SpendSaveKind.duplicate;
       }
@@ -230,11 +248,12 @@ class SpendSheetController extends Notifier<SpendSheetState> {
       throw ArgumentError.value(amountText, 'amountText', 'Invalid amount');
     }
     final trimmed = merchant.trim();
+    final category = normalizeSpendCategory(state.category);
     final trimmedNote = note?.trim();
     final cleanNote =
         (trimmedNote == null || trimmedNote.isEmpty) ? null : trimmedNote;
     final learn =
-        _picked && state.category != guessSpendCategory(trimmed, rules);
+        _picked && category != guessSpendCategory(trimmed, rules);
     final repo = ref.read(moneyRepoProvider);
 
     final id = state.id;
@@ -244,7 +263,7 @@ class SpendSheetController extends Notifier<SpendSheetState> {
         SpendEdit(
           amountPaise: paise,
           merchant: trimmed,
-          category: state.category,
+          category: category,
           method: state.method,
           date: state.date,
           paidBy: state.paidBy,
@@ -258,7 +277,7 @@ class SpendSheetController extends Notifier<SpendSheetState> {
       NewExpense(
         amountPaise: paise,
         merchant: trimmed,
-        category: state.category,
+        category: category,
         method: state.method,
         date: state.date,
         source: 'manual',

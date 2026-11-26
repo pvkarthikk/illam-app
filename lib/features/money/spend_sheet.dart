@@ -14,6 +14,7 @@ import 'package:nm_flat/core/util/money.dart';
 import 'package:nm_flat/features/money/bills_section.dart';
 import 'package:nm_flat/features/money/spend_sheet_controller.dart';
 import 'package:nm_flat/features/money/widgets/duplicate_hint_box.dart';
+import 'package:nm_flat/features/money/widgets/spend_category_picker.dart';
 import 'package:nm_flat/features/staff/staff_providers.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
@@ -233,7 +234,7 @@ class _SpendSheetState extends ConsumerState<SpendSheet> {
             ),
             SpendSaveKind.learned => l10n.moneyLearned(
               merchant,
-              state.category,
+              normalizeSpendCategory(state.category),
             ),
             SpendSaveKind.updated => l10n.moneySpendUpdated,
             _ => '',
@@ -307,6 +308,9 @@ class _SpendSheetState extends ConsumerState<SpendSheet> {
         : null;
     final merchError = state.merchantError == 'moneyErrMerchant'
         ? l10n.moneyErrMerchant
+        : null;
+    final catError = state.categoryError == 'moneyErrCategory'
+        ? l10n.moneyErrCategory
         : null;
     final isOtherDay = state.date != today && state.date != yesterday;
 
@@ -405,18 +409,11 @@ class _SpendSheetState extends ConsumerState<SpendSheet> {
           style: NestText.small12.copyWith(color: c.ink2),
         ),
         const SizedBox(height: 6),
-        Wrap(
-          spacing: 8,
-          runSpacing: 4,
-          children: [
-            for (final cat in spendCategories)
-              NestChip(
-                label: cat,
-                selected: state.category == cat,
-                dotColor: NestPalette.categories[cat],
-                onTap: () => ctrl.pickCategory(cat),
-              ),
-          ],
+        SpendCategoryPicker(
+          value: state.category,
+          categories: ref.watch(customSpendCategoriesProvider),
+          errorText: catError,
+          onChanged: ctrl.pickCategory,
         ),
         const SizedBox(height: 16),
         Text(

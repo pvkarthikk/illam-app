@@ -13,6 +13,7 @@ import 'package:nm_flat/core/sms/sms_import_config.dart';
 import 'package:nm_flat/core/time/dates.dart';
 import 'package:nm_flat/core/ui/formatters.dart';
 import 'package:nm_flat/core/util/money.dart';
+import 'package:nm_flat/features/money/widgets/spend_category_picker.dart';
 import 'package:nm_flat/features/sms_import/sms_import_controller.dart';
 import 'package:nm_flat/features/staff/staff_providers.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
@@ -59,9 +60,7 @@ class _SmsDraftReviewSheetState extends ConsumerState<_SmsDraftReviewSheet> {
     );
     _merchantCtrl = TextEditingController(text: widget.draft.merchant);
     _noteCtrl = TextEditingController(text: widget.draft.note ?? '');
-    _category = spendCategories.contains(widget.draft.category)
-        ? widget.draft.category
-        : 'Other';
+    _category = normalizeSpendCategory(widget.draft.category);
     _method = widget.draft.method;
     _paidBy = widget.draft.paidBy;
     _checkOverlaps();
@@ -122,6 +121,10 @@ class _SmsDraftReviewSheetState extends ConsumerState<_SmsDraftReviewSheet> {
       setState(() => _validationError = l10n.smsImportErrMerchant);
       return;
     }
+    if (_category.trim().isEmpty) {
+      setState(() => _validationError = l10n.moneyErrCategory);
+      return;
+    }
 
     setState(() {
       _validationError = null;
@@ -129,10 +132,11 @@ class _SmsDraftReviewSheetState extends ConsumerState<_SmsDraftReviewSheet> {
     });
 
     final note = _noteCtrl.text.trim();
+    final category = normalizeSpendCategory(_category);
     final updated = widget.draft.copyWith(
       amountPaise: parsedPaise,
       merchant: clampMerchantName(merchant),
-      category: _category,
+      category: category,
       method: _method,
       paidBy: _paidBy ?? ref.read(myMemberIdProvider),
       note: note,
@@ -144,7 +148,7 @@ class _SmsDraftReviewSheetState extends ConsumerState<_SmsDraftReviewSheet> {
           .read(smsImportControllerProvider.notifier)
           .accountDraft(
             updated,
-            learnCategory: _category != widget.draft.category,
+            learnCategory: category != widget.draft.category,
           );
       if (!mounted) return;
       Navigator.of(context).pop();
@@ -263,17 +267,13 @@ class _SmsDraftReviewSheetState extends ConsumerState<_SmsDraftReviewSheet> {
           style: NestText.meta13.copyWith(color: c.ink3),
         ),
         const SizedBox(height: 6),
-        Wrap(
-          spacing: 8,
-          runSpacing: 6,
-          children: [
-            for (final cat in spendCategories)
-              NestChip(
-                label: cat,
-                selected: _category == cat,
-                onTap: () => setState(() => _category = cat),
-              ),
-          ],
+        SpendCategoryPicker(
+          value: _category,
+          categories: ref.watch(customSpendCategoriesProvider),
+          onChanged: (cat) => setState(() {
+            _category = cat;
+            _validationError = null;
+          }),
         ),
         const SizedBox(height: 12),
         Text(

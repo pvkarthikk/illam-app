@@ -20,9 +20,7 @@ class DraftExpenseItem {
 
   factory DraftExpenseItem.fromJson(Map<String, Object?> j) {
     final rawCategory = (j['category'] as String?) ?? 'Other';
-    final category = spendCategories.contains(rawCategory)
-        ? rawCategory
-        : 'Other';
+    final category = normalizeSpendCategory(rawCategory);
     return DraftExpenseItem(
       id: (j['id'] as String?) ?? '0',
       name: (j['name'] as String?) ?? 'Item',

@@ -276,9 +276,7 @@ class SmsImportController extends Notifier<SmsImportUiState> {
       final moneyRepo = ref.read(moneyRepoProvider);
       final me = ref.read(myMemberIdProvider);
       final merchant = clampMerchantName(draft.merchant);
-      final category = spendCategories.contains(draft.category)
-          ? draft.category
-          : 'Other';
+      final category = normalizeSpendCategory(draft.category);
       final note = draft.note?.trim();
 
       await moneyRepo.addSpend(
