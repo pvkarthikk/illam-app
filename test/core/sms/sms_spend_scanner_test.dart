@@ -146,4 +146,76 @@ void main() {
     expect(loaded.drafts.first.amountPaise, 45000);
     expect(loaded.processedFingerprints, {'sms_ref_123456789'});
   });
+
+  test(
+    'SmsSpendScanner deduplicates duplicate ICICI UPI deliveries and ignores merchant receipts',
+    () {
+      final nowMs = DateTime(2026, 11, 23, 12, 15).millisecondsSinceEpoch;
+      final messages = [
+        RawSmsMessage(
+          sender: 'AD-ICICIT-S',
+          body:
+              'ICICI Bank Acct XX123 debited for Rs 200.00 on 23-Nov-26; '
+              'Test Vendor A credited. UPI:600099887766. Call 18002662 for dispute. SMS BLOCK 123 to 9215676766.',
+          receivedAtMs: nowMs - 120000,
+        ),
+        RawSmsMessage(
+          sender: 'AD-ICICIT-S',
+          body:
+              'ICICI Bank Acct XX123 debited for Rs 200.00 on 23-Nov-26; '
+              'Test Vendor A credited. UPI:600099887766. Call 18002662 for dispute. SMS BLOCK 123 to 9215676766.',
+          receivedAtMs: nowMs,
+        ),
+        RawSmsMessage(
+          sender: 'AX-ICICIT-S',
+          body:
+              'ICICI Bank Acct XX123 debited for Rs 606.52 on 18-Nov-26; '
+              'Hathway credited. UPI:600099887767. Call 18002662 for dispute.',
+          receivedAtMs: nowMs - 400000,
+        ),
+        RawSmsMessage(
+          sender: 'JD-HATHWY-S',
+          body:
+              'We have received payment of Rs606.52 for A/c no:1234567890 by receipt no: R-123456. '
+              'Amt would be credited in next 2 hours.Team Hathway.',
+          receivedAtMs: nowMs - 395000,
+        ),
+        RawSmsMessage(
+          sender: 'AX-ICICIT-S',
+          body:
+              'ICICI Bank Acct XX123 debited for Rs 120.25 on 16-Nov-26; '
+              'APOLLO PHARMACY credited. UPI:600099887768. Call 18002662 for dispute.',
+          receivedAtMs: nowMs - 600000,
+        ),
+        RawSmsMessage(
+          sender: 'CP-APLPHR-S',
+          body:
+              'Dear CUSTOMER NAME ,Thank you for your purchase @ Apollo Pharmacy. '
+              'Click here http://example.com/bill to download your bill for Rs.120.25 APLPHR',
+          receivedAtMs: nowMs - 595000,
+        ),
+      ];
+
+      final scanner = SmsSpendScanner(
+        bridge: _FakeSmsBridge(),
+        nowMs: () => nowMs,
+      );
+      final result = scanner.ingestMessages(
+        messages,
+        const SmsImportConfig(enabled: true),
+      );
+
+      expect(result.messagesExamined, 6);
+      expect(result.skippedCount, 2);
+      expect(result.newDrafts.length, 3);
+      expect(
+        result.newDrafts.map((d) => (d.merchant, d.amountPaise)).toList(),
+        [
+          ('Test Vendor A', 20000),
+          ('Hathway', 60652),
+          ('Apollo Pharmacy', 12025),
+        ],
+      );
+    },
+  );
 }

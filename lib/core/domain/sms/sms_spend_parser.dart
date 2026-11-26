@@ -29,7 +29,12 @@ ParsedSmsSpend? parseSmsSpend(
   final date = _extractSmsDate(body) ?? msg.localDateIso;
   final rawMerchant = _extractRawMerchant(body, method: method);
   final merchant = clampMerchantName(
-    _normalizeMerchant(rawMerchant, method: method, bankName: bankName),
+    _normalizeMerchant(
+      rawMerchant,
+      method: method,
+      bankName: bankName,
+      bodyLower: lower,
+    ),
   );
   final matchedChannel = _detectMatchedOrderChannel(merchant, lower);
   final category = _resolveCategory(merchant, matchedChannel, merchantRules);
@@ -63,6 +68,7 @@ bool _isRejectedNonSpend(String lower) {
   if (_matchesAny(lower, _ccRepaymentOrDuePatterns)) return true;
   if (_isCardBillRepayment(lower)) return true;
   if (_matchesAny(lower, _promoPatterns)) return true;
+  if (_matchesAny(lower, _merchantReceiptPatterns)) return true;
   if (_isIncomingCredit(lower)) return true;
   return false;
 }
@@ -97,25 +103,28 @@ bool _isIncomingCredit(String lower) {
 bool _hasSettledDebitVerb(String lower) {
   return RegExp(
     r'\b(?:debited|spent|paid|deducted|charged|withdrawn|transferred|'
-    r'autopay|auto-?debit|ecs\s+debit|nach\s+debit|purchase\s+(?:of|at)|'
+    r'auto-?debited|auto-?deducted|ecs\s+debit|nach\s+debit|purchase\s+(?:of|at)|'
     r'dr\.?\s+to)\b|\bsent\s+(?:rs\.?|inr|₹)|used\s+(?:at|for)',
   ).hasMatch(lower);
 }
 
+String _maskBalanceAndLimitClauses(String text) => text.replaceAll(
+  RegExp(
+    r'\b(?:(?:the\s+)?avl\.?\s*bal(?:ance)?|(?:the\s+)?avbl\.?\s*bal(?:ance)?|'
+    r'(?:the\s+)?available\s+bal(?:ance)?|curr(?:ent)?\s+bal(?:ance)?|'
+    r'closing\s+bal(?:ance)?|bal(?:ance)?\s*(?::|is)|'
+    r'avl\.?\s*(?:lmt|limit)|avbl\.?\s*(?:lmt|limit)|'
+    r'(?:the\s+)?available\s+(?:credit\s+)?limit|'
+    r'credit\s+limit|total\s+(?:amt\.?\s+)?due|min(?:imum)?\s+due|'
+    r'outstanding)\b[^.;!\n]*',
+    caseSensitive: false,
+  ),
+  ' ',
+);
+
 int? _extractDebitAmountPaise(String body) {
   // Mask balance/limit clauses up to sentence punctuation so we never pick `Avl Bal`.
-  final masked = body.replaceAll(
-    RegExp(
-      r'\b(?:avl\.?\s*bal(?:ance)?|avbl\.?\s*bal(?:ance)?|'
-      r'available\s+bal(?:ance)?|curr(?:ent)?\s+bal(?:ance)?|'
-      r'closing\s+bal(?:ance)?|bal(?:ance)?\s*(?::|is)|'
-      r'avl\.?\s*lmt|avbl\.?\s*lmt|available\s+(?:credit\s+)?limit|'
-      r'credit\s+limit|total\s+(?:amt\.?\s+)?due|min(?:imum)?\s+due|'
-      r'outstanding)\b[^.;!\n]*',
-      caseSensitive: false,
-    ),
-    ' ',
-  );
+  final masked = _maskBalanceAndLimitClauses(body);
 
   final currencyMatch = RegExp(
     r'(?:₹|Rs\.?|INR)\s*([0-9][0-9,]*(?:\.\d{1,2})?)',
@@ -141,7 +150,7 @@ String _detectMethod(String lower) {
     return 'cash';
   }
   if (RegExp(
-    r'\b(?:credit\s+card|debit\s+card|amex|onecard|pos\s+txn)\b|'
+    r'\b(?:credit\s+card|debit\s+card|prepaid\s+card|amex|onecard|pos\s+txn)\b|'
     r'\bcard\s*(?:ending|no\.?\s*|[x*]{1,4}\d{3,4}|\*{2,}\d{3,4}|\d{4}\b)',
   ).hasMatch(lower)) {
     return 'card';
@@ -160,7 +169,7 @@ String _detectMethod(String lower) {
 
 String? _extractAccountLast4(String body) {
   final labeled = RegExp(
-    r'(?:\b(?:a/c|ac|acct|account|onecard|card))\s*(?:no\.?\s*)?(?:ending\s*(?:with\s*)?)?[xX*•\-]*(\d{3,4})\b',
+    r'(?:\b(?:a/c|ac|acc|acct|account|onecard|card))\s*(?:no\.?\s*)?(?:ending\s*(?:with\s*)?)?[xX*•\-]*(\d{3,4})\b',
     caseSensitive: false,
   ).firstMatch(body);
   if (labeled != null) return labeled.group(1);
@@ -217,24 +226,81 @@ String? _extractSmsDate(String body) {
   return '$year-${month.toString().padLeft(2, '0')}-${day.toString().padLeft(2, '0')}';
 }
 
+String _stripMerchantFooter(String body) {
+  final tail = RegExp(
+    r'(?:(?<=[.;!\s])|^)(?:'
+    r'if\s+not\s+(?:you|u)\b|'
+    r'not\s+(?:you|u)\s*\?|'
+    r'to\s+dispute\b|'
+    r'for\s+dispute\b|'
+    r'call\s+1800|'
+    r'sms\s+block\b|'
+    r'to\s+block\b'
+    r')',
+    caseSensitive: false,
+  ).firstMatch(body);
+  final head = tail == null ? body : body.substring(0, tail.start);
+  return _maskBalanceAndLimitClauses(head).replaceAll(RegExp(r'\s+'), ' ').trim();
+}
+
 String? _extractRawMerchant(String body, {required String method}) {
   if (method == 'cash') return 'ATM Withdrawal';
+
+  final cleaned = _stripMerchantFooter(body);
 
   // 1. ICICI semicolon form: `debited for Rs 520; BLINKIT credited.`
   final semiCredited = RegExp(
     r';\s*([A-Za-z0-9][A-Za-z0-9 &._\-/@]{1,50}?)\s+credited\b',
     caseSensitive: false,
-  ).firstMatch(body);
+  ).firstMatch(cleaned);
   if (semiCredited != null) return semiCredited.group(1);
 
   // 2. Axis/HDFC Info UPI slash segment: `Info: UPI/P2M/123456/BIGBASKET`
   final infoSlash = RegExp(
     r'\bInfo\s*:\s*UPI/(?:P2[MA]/)?(?:\d+/)?([A-Za-z0-9@._\- ]{2,45}?)(?=[.;!\n]|\s+(?:Avl|Bal|Ref|If\s+not)|$)',
     caseSensitive: false,
-  ).firstMatch(body);
+  ).firstMatch(cleaned);
   if (infoSlash != null) return infoSlash.group(1);
 
-  // 3. Explicit destination phrases (`trf to`, `to VPA`, `paid to`, `towards`, `at`, `to`).
+  // 2b. ICICI compact star-delimited Info*: `InfoBIL*BPAY*0000`, `InfoACH*...`
+  final infoStar = RegExp(
+    r'\bInfo\s*:?\s*(BIL|ACH|NEFT|IMPS|RTGS|UPI)\*([A-Za-z0-9 &._\-*]+?)(?=[.;!\n]|$)',
+    caseSensitive: false,
+  ).firstMatch(cleaned);
+  if (infoStar != null) {
+    final kind = infoStar.group(1)!.toUpperCase();
+    final parts = infoStar
+        .group(2)!
+        .split('*')
+        .map((s) => s.trim())
+        .where((s) => s.isNotEmpty)
+        .toList();
+    for (final part in parts) {
+      final upper = part.toUpperCase();
+      if (upper == 'BPAY' || upper == 'BILLPAY' || upper == 'BILL PAY') {
+        return 'Bill Pay';
+      }
+    }
+    for (final part in parts) {
+      if (!RegExp(r'^\d+$').hasMatch(part) && !_isNoiseDestination(part)) {
+        return part;
+      }
+    }
+    if (kind == 'BIL') return 'Bill Pay';
+  }
+
+  // 3. Card `on <date> on <MERCHANT>`: checked before generic `to` patterns so
+  // numeric or downstream `to ...` phrases never shadow the card merchant.
+  final onMerchant = RegExp(
+    r'\bon\s+\d{1,2}[-/A-Za-z0-9]+\s+on\s+([A-Za-z][A-Za-z0-9 &._\-]{1,45}?)'
+    r'(?=\s+(?:avl|avbl|available|if\s+not)|[.;!\n]|$)',
+    caseSensitive: false,
+  ).firstMatch(cleaned);
+  if (onMerchant != null && !_isNoiseDestination(onMerchant.group(1)!)) {
+    return onMerchant.group(1);
+  }
+
+  // 4. Explicit destination phrases (`trf to`, `to VPA`, `paid to`, `towards`, `at`, `to`).
   final patterns = [
     RegExp(
       r'\b(?:trf\s+to|transfer\s+to|to\s+vpa|paid\s+to|credited\s+to\s+(?:vpa\s+)?)\s*'
@@ -255,21 +321,11 @@ String? _extractRawMerchant(String body, {required String method}) {
   ];
 
   for (final pattern in patterns) {
-    final m = pattern.firstMatch(body);
+    final m = pattern.firstMatch(cleaned);
     if (m != null) {
       final candidate = m.group(1)!.trim();
       if (!_isNoiseDestination(candidate)) return candidate;
     }
-  }
-
-  // 4. Card fallback after date (`spent on ICICI Card XX123 on 25-Nov-26 on AMAZON PAY INDIA`).
-  final onMerchant = RegExp(
-    r'\bon\s+\d{1,2}[-/A-Za-z0-9]+\s+on\s+([A-Za-z][A-Za-z0-9 &._\-]{2,45}?)'
-    r'(?=\s+(?:avl|avbl|available|if\s+not)|[.;!\n]|$)',
-    caseSensitive: false,
-  ).firstMatch(body);
-  if (onMerchant != null && !_isNoiseDestination(onMerchant.group(1)!)) {
-    return onMerchant.group(1);
   }
   return null;
 }
@@ -277,9 +333,17 @@ String? _extractRawMerchant(String body, {required String method}) {
 bool _isNoiseDestination(String candidate) {
   final lower = candidate.trim().toLowerCase();
   return lower.isEmpty ||
+      lower == 'card debit' ||
+      lower == 'dispute' ||
+      lower == 'block' ||
+      lower == 'report' ||
+      lower == 'modify' ||
       lower.startsWith('your ') ||
       lower.startsWith('a/c') ||
+      lower.startsWith('acc ') ||
       lower.startsWith('acct') ||
+      lower.startsWith('block ') ||
+      RegExp(r'^\d+$').hasMatch(lower) ||
       RegExp(r'^\d{1,2}[-/]').hasMatch(lower);
 }
 
@@ -298,6 +362,9 @@ const _knownBrands = <(String, String)>[
   ('rapido', 'Rapido'),
   ('airtel', 'Airtel'),
   ('jio', 'Jio'),
+  ('hathway', 'Hathway'),
+  ('google play', 'Google Play'),
+  ('apollo pharmacy', 'Apollo Pharmacy'),
   ('bescom', 'BESCOM'),
   ('bwssb', 'BWSSB'),
   ('myntra', 'Myntra'),
@@ -311,9 +378,13 @@ const _knownBrands = <(String, String)>[
 String _normalizeMerchant(
   String? raw, {
   required String method,
+  required String bodyLower,
   String? bankName,
 }) {
   if (raw == null || raw.trim().isEmpty) {
+    if (method == 'card' && bodyLower.contains('prepaid card')) {
+      return bankName != null ? '$bankName Prepaid Card' : 'Prepaid Card';
+    }
     final fallbackSuffix = switch (method) {
       'upi' => 'UPI payment',
       'card' => 'Card spend',
@@ -340,14 +411,16 @@ String _normalizeMerchant(
     }
   }
 
-  // Convert noisy ALL-CAPS merchant tags to readable Title Case.
-  if (s == s.toUpperCase() && RegExp(r'[A-Z]{3,}').hasMatch(s)) {
+  // Convert noisy ALL-CAPS or all-lowercase merchant tags to readable Title Case.
+  final isAllCaps = s == s.toUpperCase() && RegExp(r'[A-Z]{3,}').hasMatch(s);
+  final isAllLower = s == s.toLowerCase() && RegExp(r'[a-z]{3,}').hasMatch(s);
+  if (isAllCaps || isAllLower) {
     s = s
         .split(' ')
         .where((w) => w.isNotEmpty)
         .map(
           (w) => w.length == 1
-              ? w
+              ? w.toUpperCase()
               : '${w[0].toUpperCase()}${w.substring(1).toLowerCase()}',
         )
         .join(' ');
@@ -389,6 +462,12 @@ String _resolveCategory(
     'milk',
     'kirana',
     'fresh',
+    'rice ',
+    'provision',
+    'grocery',
+    'groceries',
+    'veggie',
+    'vegetable',
   ])) {
     return 'Groceries';
   }
@@ -398,6 +477,7 @@ String _resolveCategory(
     'cafe',
     'coffee',
     'restaurant',
+    'restaur',
     'bakery',
     'pizza',
     'biryani',
@@ -413,6 +493,12 @@ String _resolveCategory(
     'bescom',
     'bwssb',
     'tneb',
+    'hathway',
+    'act fibernet',
+    'jiofiber',
+    'tataplay',
+    'tata sky',
+    'bill pay',
     'electricity',
     'water',
     'broadband',
@@ -471,6 +557,7 @@ const _otpPatterns = [
   'security code',
   'do not share',
   'never share',
+  'do not disclose',
 ];
 
 const _failedOrPendingPatterns = [
@@ -497,10 +584,24 @@ const _failedOrPendingPatterns = [
   'requested inr',
   'pre-debit',
   'will be debited',
+  'will be auto-debited',
+  'will be auto debited',
+  'will auto-debit',
+  'will auto debit',
+  'will be auto-deducted',
+  'will auto-deduct',
+  'will auto deduct',
+  'ensure funds',
   'scheduled to be debited',
   'upcoming auto-debit',
   'mandate created',
   'mandate registered',
+  'activated standing instruction',
+  'standing instruction created',
+  'standing instruction registered',
+  'standing instruction set',
+  'maximum amount:',
+  'mandate id:',
 ];
 
 const _ccRepaymentOrDuePatterns = [
@@ -516,8 +617,32 @@ const _ccRepaymentOrDuePatterns = [
   'minimum amount due',
   'min amount due',
   'min due',
+  'minimum of rs',
+  'minimum of inr',
   'statement generated',
+  'statement is sent',
   'bill is due',
+  'bill reminder',
+  'is due on',
+  'is due by',
+  'is due for renewal',
+  'due for deactivation',
+  'set up autopay',
+  'setup autopay',
+  'set up upi autopay',
+  'please ignore if already paid',
+];
+
+const _merchantReceiptPatterns = [
+  'we have received payment',
+  'received payment of',
+  'payment receipt',
+  'thank you for your purchase',
+  'thank you for shopping',
+  'download your bill',
+  'download your invoice',
+  'view your bill',
+  'view your e-bill',
 ];
 
 const _promoPatterns = [

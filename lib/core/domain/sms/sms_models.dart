@@ -79,6 +79,7 @@ const _dltBankMap = <String, String>{
   'HDFCCC': 'HDFC Bank',
   'ICICIB': 'ICICI Bank',
   'ICICIC': 'ICICI Bank',
+  'ICICIT': 'ICICI Bank',
   'SBIINB': 'SBI',
   'SBIUPI': 'SBI',
   'SBIPSG': 'SBI',

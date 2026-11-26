@@ -177,6 +177,191 @@ void main() {
       expect(parsed, isNotNull);
       expect(parsed!.category, 'Groceries');
     });
+
+    test('parses real ICICI Credit Card formats ignoring Avl Limit and BLOCK tail', () {
+      final cases =
+          <(String body, int paise, String merchant, String cat, String date, String? channel)>[
+            (
+              'INR 387.22 spent using ICICI Bank Card XX1234 on 18-Nov-26 on ZOMATO. '
+                  'Avl Limit: INR 1,51,107.58. If not you, call 1800 2662/SMS BLOCK 1234 to 9215676766.',
+              38722,
+              'Zomato',
+              'Eating out',
+              '2026-11-18',
+              null,
+            ),
+            (
+              'INR 489.00 spent using ICICI Bank Card XX1234 on 21-Nov-26 on GOOGLE PLAY. '
+                  'Avl Limit: INR 1,50,618.58. If not you, call 1800 2662/SMS BLOCK 1234 to 9215676766.',
+              48900,
+              'Google Play',
+              'Other',
+              '2026-11-21',
+              null,
+            ),
+            (
+              'INR 547.00 spent using ICICI Bank Card XX1234 on 22-Nov-26 on AMAZON PAY IN E. '
+                  'Avl Limit: INR 1,50,071.58. If not you, call 1800 2662/SMS BLOCK 1234 to 9215676766.',
+              54700,
+              'Amazon',
+              'Shopping',
+              '2026-11-22',
+              'amazon',
+            ),
+            (
+              'INR 339.00 spent using ICICI Bank Card XX1234 on 25-Nov-26 on ZEPTO MARKETPLA. '
+                  'Avl Limit: INR 1,49,350.04. If not you, call 1800 2662/SMS BLOCK 1234 to 9215676766.',
+              33900,
+              'Zepto',
+              'Groceries',
+              '2026-11-25',
+              'zepto',
+            ),
+            (
+              'INR 436.00 spent using ICICI Bank Card XX1234 on 25-Nov-26 on FLIPKART INTERN. '
+                  'Avl Limit: INR 1,48,914.04. If not you, call 1800 2662/SMS BLOCK 1234 to 9215676766.',
+              43600,
+              'Flipkart',
+              'Shopping',
+              '2026-11-25',
+              'flipkart',
+            ),
+            (
+              'INR 791.76 spent using ICICI Bank Card XX1234 on 25-Nov-26 on ORBGEN TECHNOLO. '
+                  'Avl Limit: INR 1,48,122.28. If not you, call 1800 2662/SMS BLOCK 1234 to 9215676766.',
+              79176,
+              'Orbgen Technolo',
+              'Other',
+              '2026-11-25',
+              null,
+            ),
+          ];
+
+      for (final (body, paise, merchant, cat, date, channel) in cases) {
+        final parsed = parseSmsSpend(sms('BP-ICICIT-S', body));
+        expect(parsed, isNotNull, reason: body);
+        expect(parsed!.amountPaise, paise, reason: body);
+        expect(parsed.merchant, merchant, reason: body);
+        expect(parsed.category, cat, reason: body);
+        expect(parsed.method, 'card', reason: body);
+        expect(parsed.bankName, 'ICICI Bank', reason: body);
+        expect(parsed.accountLast4, '1234', reason: body);
+        expect(parsed.date, date, reason: body);
+        expect(parsed.matchedOrderChannel, channel, reason: body);
+      }
+    });
+
+    test('parses ICICI Prepaid Card debit cleanly', () {
+      final parsed = parseSmsSpend(
+        sms(
+          'BP-ICICIT-S',
+          'Your ICICI Bank Prepaid Card XX7788 has been debited with Rs 29.50 '
+          'on 19-Nov-2026 towards Card Debit. The Available Balance is Rs 46.50 .',
+        ),
+      );
+      expect(parsed, isNotNull);
+      expect(parsed!.amountPaise, 2950);
+      expect(parsed.merchant, 'ICICI Bank Prepaid Card');
+      expect(parsed.method, 'card');
+      expect(parsed.bankName, 'ICICI Bank');
+      expect(parsed.accountLast4, '7788');
+      expect(parsed.date, '2026-11-19');
+    });
+
+    test('parses ICICI Account InfoBIL*BPAY*0000 debit without dispute noise', () {
+      final parsed = parseSmsSpend(
+        sms(
+          'BP-ICICIT-S',
+          'ICICI Bank Acc XX123 debited Rs. 1,240.18 on 25-Nov-26 '
+          'InfoBIL*BPAY*0000.Avl Bal Rs. 161.43.To dispute call 18002662 or SMS BLOCK 123 to 9215676766',
+        ),
+      );
+      expect(parsed, isNotNull);
+      expect(parsed!.amountPaise, 124018);
+      expect(parsed.merchant, 'Bill Pay');
+      expect(parsed.category, 'Utilities');
+      expect(parsed.method, 'bank');
+      expect(parsed.bankName, 'ICICI Bank');
+      expect(parsed.accountLast4, '123');
+      expect(parsed.date, '2026-11-25');
+    });
+
+    test('parses ICICI UPI formats with 15-char truncated, lowercase & leading-zero refs', () {
+      final mishkat = parseSmsSpend(
+        sms(
+          'AX-ICICIT-S',
+          'ICICI Bank Acct XX123 debited for Rs 452.00 on 16-Nov-26; '
+          'MISHKAT RESTAUR credited. UPI:600011112222. Call 18002662 for dispute. SMS BLOCK 123 to 9215676766.',
+        ),
+      );
+      expect(mishkat?.merchant, 'Mishkat Restaur');
+      expect(mishkat?.category, 'Eating out');
+      expect(mishkat?.method, 'upi');
+      expect(mishkat?.bankName, 'ICICI Bank');
+      expect(mishkat?.accountLast4, '123');
+
+      final apollo = parseSmsSpend(
+        sms(
+          'AX-ICICIT-S',
+          'ICICI Bank Acct XX123 debited for Rs 120.25 on 16-Nov-26; '
+          'APOLLO PHARMACY credited. UPI:600011112223. Call 18002662 for dispute. SMS BLOCK 123 to 9215676766.',
+        ),
+      );
+      expect(apollo?.merchant, 'Apollo Pharmacy');
+      expect(apollo?.category, 'Home care');
+
+      final hathway = parseSmsSpend(
+        sms(
+          'AX-ICICIT-S',
+          'ICICI Bank Acct XX123 debited for Rs 606.52 on 18-Nov-26; '
+          'Hathway credited. UPI:600011112224. Call 18002662 for dispute. SMS BLOCK 123 to 9215676766.',
+        ),
+      );
+      expect(hathway?.merchant, 'Hathway');
+      expect(hathway?.category, 'Utilities');
+
+      final rice = parseSmsSpend(
+        sms(
+          'AX-ICICIT-S',
+          'ICICI Bank Acct XX123 debited for Rs 1595.00 on 22-Nov-26; '
+          'MALRAJA RICE MA credited. UPI:600011112225. Call 18002662 for dispute. SMS BLOCK 123 to 9215676766.',
+        ),
+      );
+      expect(rice?.merchant, 'Malraja Rice Ma');
+      expect(rice?.category, 'Groceries');
+
+      final zepto = parseSmsSpend(
+        sms(
+          'AD-ICICIT-S',
+          'ICICI Bank Acct XX123 debited for Rs 246.00 on 16-Nov-26; '
+          'ZEPTO MARKETPLA credited. UPI:075300112233. Call 18002662 for dispute. SMS BLOCK 123 to 9215676766.',
+        ),
+      );
+      expect(zepto?.merchant, 'Zepto');
+      expect(zepto?.category, 'Groceries');
+      expect(zepto?.refNumber, '075300112233');
+      expect(zepto?.fingerprint, 'sms_ref_075300112233');
+
+      final lowerShop = parseSmsSpend(
+        sms(
+          'AX-ICICIT-S',
+          'ICICI Bank Acct XX123 debited for Rs 1000.00 on 22-Nov-26; '
+          'fush shop credited. UPI:600011112226. Call 18002662 for dispute. SMS BLOCK 123 to 9215676766.',
+        ),
+      );
+      expect(lowerShop?.merchant, 'Fush Shop');
+      expect(lowerShop?.category, 'Other');
+
+      final googleAsia = parseSmsSpend(
+        sms(
+          'AX-ICICIT-S',
+          'ICICI Bank Acct XX123 debited for Rs 40.90 on 18-Nov-26; '
+          'Google Asia Pac credited. UPI:600011112227. Call 18002662 for dispute. SMS BLOCK 123 to 9215676766.',
+        ),
+      );
+      expect(googleAsia?.merchant, 'Google Asia Pac');
+      expect(googleAsia?.category, 'Other');
+    });
   });
 
   group('parseSmsSpend — non-spend filtering', () {
@@ -222,6 +407,116 @@ void main() {
           '+919876543210',
           'Sent Rs.500.00 to Ramesh via UPI Ref 123456789012.',
         ),
+      ];
+
+      for (final msg in ignored) {
+        expect(parseSmsSpend(msg), isNull, reason: 'Should ignore: ${msg.body}');
+      }
+    });
+
+    test('rejects real-world ICICI upcoming mandates, Airtel/Hathway reminders, receipts & promos', () {
+      final ignored = <RawSmsMessage>[
+        sms(
+          'BP-ICICIT-S',
+          'AIRTEL POSTPAID bill of Rs 1240.18 for 9876543210 due on 2026-11-28, '
+          'will be auto-debited on 2026-11-25-ICICI Bank.',
+        ),
+        sms(
+          'BP-ICICIT-S',
+          'AIRTEL POSTPAID bill of Rs 1240.18 for 9876543210 will auto-deduct on 25-11-2026. '
+          'Ensure funds in Acc. Visit icici.co/ICICIT/k/sample to modify-ICICI Bank.',
+        ),
+        sms(
+          'BP-ICICIT-S',
+          'We have activated Standing Instruction on ICICI Bank Credit Card 1234. '
+          'Merchant: Google Play, Maximum Amount: INR 1950.00, Frequency: monthly, '
+          'Start Date: 21/11/2026, End Date: 31/12/2036, Mandate ID: MND12345.',
+        ),
+        sms(
+          'BP-ICICIT-S',
+          'Payment of Airtel Postpaid (Fetch and Pay) bill of Rs 1240.18 was unsuccessful. '
+          'Amount debited will be refunded within 7 working days. To pay, visit icici.co/sample -ICICI Bank.',
+        ),
+        sms(
+          'BP-ICICIT-S',
+          'ICICI Bank Credit Card XX1234 Statement is sent to ab********12@example.com. '
+          'Total of Rs 959.94 or minimum of Rs 100.00 is due by 06-DEC-26.',
+        ),
+        sms(
+          'BP-ICICIT-S',
+          'ICICI Bank Account XX123 credited:Rs. 164.00 on 19-Nov-26. '
+          'Info ACH*SAMPLE CORP*1234. Available Balance is Rs. 6,033.17.',
+        ),
+        sms(
+          'AD-ICICIO-T',
+          '727304 is One-Time Password for INR 436.00 transaction towards FLIPKART IN '
+          'using ICICI Bank Credit Card XX1234. OTPs are SECRET. DO NOT disclose',
+        ),
+        sms(
+          'AD-AIRBIL-S',
+          'Airtel Mobile bill reminder: Bill of Rs. 1240 for your Airtel Mobile 9876543210 '
+          'is due on 28-NOV-26. Pay on Airtel app now: i.airtel.in/PPpayBills . '
+          'Never miss a bill - set up AutoPay and pay on time, every time https://i.airtel.in/Auto-Pay . '
+          'Please ignore if already paid.',
+        ),
+        sms(
+          'JD-HATHWY-S',
+          'Your Hathway Ac 1234567890 is due for renewal on 17thNov.Pls pay Rs.607to enjoy uninterrupted services.',
+        ),
+        sms(
+          'JD-HATHWY-S',
+          'Your Hathway A/c-1234567890 is due for deactivation tonight pay Rs-607/-*For queries pls call 9000000000',
+        ),
+        sms(
+          'JD-HATHWY-S',
+          'Hi! Set up UPI AutoPay in 1 click & enjoy uninterrupted internet. AC No 1234567890.',
+        ),
+        sms(
+          'JD-HATHWY-S',
+          'We have received payment of Rs606.52 for A/c no:1234567890 by receipt no: R-123456. '
+          'Amt would be credited in next 2 hours.Team Hathway.',
+        ),
+        sms(
+          'CP-APLPHR-S',
+          'Dear CUSTOMER NAME ,Thank you for your purchase @ Apollo Pharmacy. '
+          'Click here http://example.com/bill to download your bill for Rs.120.25 APLPHR',
+        ),
+        sms(
+          'VA-BATAIn-S',
+          'Hi Member, Thank you for being a Bata\'s valuable customer. '
+          'Use 300 bonus points on Rs. 1500 bill till 24 Nov. at store. T&C',
+        ),
+        sms(
+          'JX-DTTHPL-S',
+          'Dear Customer, You\'ve earned 39.87 rewards points on your recent order. '
+          'Your current balance is 97.92 coins.',
+        ),
+        sms(
+          'JX-620020-P',
+          'JioHome Special Offer! Pay bill now and get 1 month extra Free on your JioHome number 4000012345.',
+        ),
+        sms(
+          'AT-AIRMCA-S',
+          'The person you were calling at 20:09 is now available for calls. You can call again now.',
+        ),
+        sms(
+          'BP-LPUREC-S',
+          'Dear Customer Our service engineer (Tech A) is at your door step for call ID JS-1234 '
+          'and call closure code is 2253.',
+        ),
+        sms(
+          'AD-UNITAS-S',
+          'Mr/Ms CUSTOMER A, Please Do Not miss your Follow-up at Hospital on 20/11/2026.',
+        ),
+        sms(
+          'VA-CDSLEV-S',
+          'Dear Investor, e-Voting for SAMPLE CO begins from 18-11-2026 09:00 and ends at 17-12-2026 17:00.-CDSL',
+        ),
+        sms(
+          'AD-TRAIND-G',
+          'ஸ்பேம் அழைப்புகளால் சோர்வடைந்துவிட்டீர்களா? TRAI DND செயலியில் புகாரளிக்கவும்.',
+        ),
+        sms('+919000012345', "Can't talk now. Call me back later."),
       ];
 
       for (final msg in ignored) {
