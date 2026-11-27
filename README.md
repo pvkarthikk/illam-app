@@ -12,6 +12,17 @@
 
 ---
 
+## Screenshots
+
+<p align="center">
+  <img src="docs/assets/screenshot/01_today.png" width="200" alt="Home" />
+  <img src="docs/assets/screenshot/02_lists.png" width="200" alt="Todo List" />
+  <img src="docs/assets/screenshot/03_tasks.png" width="200" alt="Tasks" />
+  <img src="docs/assets/screenshot/04_meals.png" width="200" alt="Meal Planner" />
+  <img src="docs/assets/screenshot/05_money.png" width="200" alt="Money Tracking" />
+  <img src="docs/assets/screenshot/06_staff_attendance.png" width="200" alt="Staff Attendance" />
+</p>
+
 ## Core Modules
 
 - **Shared Todos:** Track household chores, maintenance tasks, and daily reminders. Assign one-time or recurring routines to family members or household helpers, surface due items automatically on the Today screen, and receive timely local notifications.
