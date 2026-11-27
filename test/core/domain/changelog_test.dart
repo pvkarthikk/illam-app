@@ -49,5 +49,12 @@ void main() {
       ),
       isEmpty,
     );
+
+    final patchUpgrade = unseenReleaseNotes(
+      currentVersion: '1.7.1',
+      lastSeenVersion: '1.7.0',
+      hasCompletedOnboarding: true,
+    );
+    expect(patchUpgrade.map((e) => e.version), ['1.7.1']);
   });
 }

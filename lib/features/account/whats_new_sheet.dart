@@ -7,6 +7,8 @@ import 'package:nm_flat/l10n/gen/app_localizations.dart';
 /// Resolves a [ReleaseNoteEntry.highlightKeys] key into its localized text.
 String resolveReleaseHighlight(AppLocalizations l10n, String key) =>
     switch (key) {
+      'v171TodoDoneNotif' => l10n.whatsNewV171TodoDoneNotif,
+      'v171TodoWidgetMine' => l10n.whatsNewV171TodoWidgetMine,
       'v170Changelog' => l10n.whatsNewV170Changelog,
       'v170SpendWidget' => l10n.whatsNewV170SpendWidget,
       'v170Languages' => l10n.whatsNewV170Languages,

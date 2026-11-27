@@ -172,6 +172,76 @@ void main() {
     expect(snap.items[3].meta, contains('Kitchen'));
   });
 
+  test('todo snapshot filters strictly to onlyMemberId when provided', () {
+    final snap = buildTodoWidgetSnapshot(
+      hasHome: true,
+      homeName: 'Home',
+      today: today,
+      onlyMemberId: 'm1',
+      todos: const [
+        TodoWidgetInput(
+          id: 't_mine',
+          title: 'My due task',
+          due: today,
+          assigneeType: 'member',
+          assigneeId: 'm1',
+          assigneeName: 'You',
+        ),
+        TodoWidgetInput(
+          id: 't_wife',
+          title: 'Wife due task',
+          due: today,
+          assigneeType: 'member',
+          assigneeId: 'm2',
+          assigneeName: 'Priya',
+        ),
+        TodoWidgetInput(
+          id: 't_staff',
+          title: 'Helper task',
+          due: today,
+          assigneeType: 'staff',
+          assigneeId: 's1',
+          assigneeName: 'Lakshmi',
+        ),
+      ],
+      routines: const [
+        RoutineWidgetInput(
+          id: 'r_mine',
+          name: 'Check filter',
+          room: 'Kitchen',
+          lastDone: '2026-11-10',
+          everyDays: 7,
+          assigneeType: 'member',
+          assigneeId: 'm1',
+          assigneeName: 'You',
+        ),
+        RoutineWidgetInput(
+          id: 'r_other',
+          name: 'Mop floors',
+          room: 'Living',
+          lastDone: '2026-11-10',
+          everyDays: 7,
+          assigneeType: 'member',
+          assigneeId: 'm2',
+          assigneeName: 'Priya',
+        ),
+        RoutineWidgetInput(
+          id: 'r_staff_id_collision',
+          name: 'Garden watering',
+          room: 'Balcony',
+          lastDone: '2026-11-10',
+          everyDays: 7,
+          assigneeType: 'staff',
+          assigneeId: 'm1',
+          assigneeName: 'Lakshmi',
+        ),
+      ],
+    );
+
+    expect(snap.totalCount, 2);
+    expect(snap.items.map((e) => e.id), ['t_mine', 'r_mine']);
+  });
+
   test('buildMoneyWidgetSnapshot computes month total, budget status & deduped merchants', () {
     final noHome = buildMoneyWidgetSnapshot(
       hasHome: false,

@@ -4352,6 +4352,14 @@ class AppLocalizationsTa extends AppLocalizations {
   }
 
   @override
+  String get notifTodoDoneTitle => 'பணி முடிந்தது எனக் குறிக்கப்பட்டது';
+
+  @override
+  String notifTodoDoneBody(String title, String name) {
+    return '$title · $name முடித்ததாகக் குறித்தார்';
+  }
+
+  @override
   String notifJoinedTitle(String name, String home) {
     return '$home-ல் $name இணைந்தார்';
   }
@@ -6607,6 +6615,14 @@ class AppLocalizationsTa extends AppLocalizations {
   String whatsNewVersionHeader(Object version) {
     return 'பதிப்பு $version';
   }
+
+  @override
+  String get whatsNewV171TodoDoneNotif =>
+      'குடும்ப உறுப்பினர் ஒருவர் உங்கள் பணியை முடித்ததாகக் குறித்தால், பணி உரிமையாளருக்கு அறிவிப்பு வரும்.';
+
+  @override
+  String get whatsNewV171TodoWidgetMine =>
+      'இன்றைய பணிகள் முகப்புத் திரை விட்ஜெட் இனி உங்கள் பணிகளை மட்டுமே காட்டும்; செயலியின் \'இன்று\' திரையில் முழு வீட்டின் பணிகளும் தொடரும்.';
 
   @override
   String get whatsNewV170Changelog =>

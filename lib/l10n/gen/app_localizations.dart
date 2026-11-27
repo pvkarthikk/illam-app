@@ -6873,6 +6873,18 @@ abstract class AppLocalizations {
   /// **'{title} · from {name}'**
   String notifTodoAssignedBody(String title, String name);
 
+  /// No description provided for @notifTodoDoneTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'To-do marked done'**
+  String get notifTodoDoneTitle;
+
+  /// No description provided for @notifTodoDoneBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{title} · checked off by {name}'**
+  String notifTodoDoneBody(String title, String name);
+
   /// No description provided for @notifJoinedTitle.
   ///
   /// In en, this message translates to:
@@ -10460,6 +10472,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Version {version}'**
   String whatsNewVersionHeader(Object version);
+
+  /// No description provided for @whatsNewV171TodoDoneNotif.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifies the task owner when another family member checks off their to-do.'**
+  String get whatsNewV171TodoDoneNotif;
+
+  /// No description provided for @whatsNewV171TodoWidgetMine.
+  ///
+  /// In en, this message translates to:
+  /// **'The Due today home-screen widget now shows only your own tasks, while the in-app Today screen continues showing the whole home.'**
+  String get whatsNewV171TodoWidgetMine;
 
   /// No description provided for @whatsNewV170Changelog.
   ///

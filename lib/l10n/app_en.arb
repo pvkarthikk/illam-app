@@ -3263,6 +3263,18 @@
       }
     }
   },
+  "notifTodoDoneTitle": "To-do marked done",
+  "notifTodoDoneBody": "{title} · checked off by {name}",
+  "@notifTodoDoneBody": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "notifJoinedTitle": "{name} joined {home}",
   "@notifJoinedTitle": {
     "placeholders": {
@@ -4520,6 +4532,8 @@
       "version": {}
     }
   },
+  "whatsNewV171TodoDoneNotif": "Notifies the task owner when another family member checks off their to-do.",
+  "whatsNewV171TodoWidgetMine": "The Due today home-screen widget now shows only your own tasks, while the in-app Today screen continues showing the whole home.",
   "whatsNewV170Changelog": "What's New sheet automatically shows release notes after an update — and stays accessible anytime under Profile → Version.",
   "whatsNewV170SpendWidget": "New Money Spend home-screen widget for one-tap expense entry, month spend at a glance, and quick bill scan.",
   "whatsNewV170Languages": "Added Tamil and Hindi app languages, following your phone language automatically or selectable under Profile → Language.",

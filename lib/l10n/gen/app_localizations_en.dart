@@ -4317,6 +4317,14 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get notifTodoDoneTitle => 'To-do marked done';
+
+  @override
+  String notifTodoDoneBody(String title, String name) {
+    return '$title · checked off by $name';
+  }
+
+  @override
   String notifJoinedTitle(String name, String home) {
     return '$name joined $home';
   }
@@ -6538,6 +6546,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String whatsNewVersionHeader(Object version) {
     return 'Version $version';
   }
+
+  @override
+  String get whatsNewV171TodoDoneNotif =>
+      'Notifies the task owner when another family member checks off their to-do.';
+
+  @override
+  String get whatsNewV171TodoWidgetMine =>
+      'The Due today home-screen widget now shows only your own tasks, while the in-app Today screen continues showing the whole home.';
 
   @override
   String get whatsNewV170Changelog =>

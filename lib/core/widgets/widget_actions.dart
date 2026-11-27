@@ -295,12 +295,15 @@ Future<void> pushWidgetSnapshots(Reader read, {WidgetBridge? bridge}) async {
     hasHome: true,
     homeName: home.name ?? '',
     today: today,
+    onlyMemberId: me,
     todos: [
       for (final t in todos)
         TodoWidgetInput(
           id: t.id,
           title: t.title,
           due: t.due,
+          assigneeType: t.assigneeType,
+          assigneeId: t.assignee,
           assigneeName: personNameById[t.assignee] ?? '',
           done: t.done,
         ),
@@ -313,6 +316,8 @@ Future<void> pushWidgetSnapshots(Reader read, {WidgetBridge? bridge}) async {
           room: r.room,
           lastDone: r.lastDone,
           everyDays: r.everyDays,
+          assigneeType: r.assigneeType,
+          assigneeId: r.assignee,
           assigneeName: personNameById[r.assignee] ?? '',
         ),
     ],

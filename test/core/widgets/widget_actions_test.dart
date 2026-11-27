@@ -234,4 +234,69 @@ void main() {
     expect(rows.single.source, 'manual');
     expect(rows.single.category, 'Groceries');
   });
+
+  test('pushWidgetSnapshots includes only my todos and routines in Due today widget while repo keeps all', () async {
+    final clock = FixedClock(DateTime(2026, 11, 25, 9, 0));
+    final c = await _openTestContainer(clock);
+    final bridge = _FakeBridge();
+
+    await c.read(changesProvider).write('Seed other assignee & staff', (b) {
+      b.create('members', {
+        'full_name': 'Priya',
+        'first_name': 'Priya',
+        'role': 'member',
+        'status': 'active',
+      }, id: 'm2');
+      b.create('staff', {'name': 'Lakshmi', 'role': 'Cook', 'active': true}, id: 's1');
+    });
+
+    final repo = c.read(tasksRepoProvider);
+    await repo.createTodo(
+      title: 'My task',
+      due: '2026-11-25',
+      assigneeType: 'member',
+      assignee: 'm1',
+    );
+    await repo.createTodo(
+      title: 'Wife task',
+      due: '2026-11-25',
+      assigneeType: 'member',
+      assignee: 'm2',
+    );
+    await repo.createTodo(
+      title: 'Cook task',
+      due: '2026-11-25',
+      assigneeType: 'staff',
+      assignee: 's1',
+    );
+
+    await repo.createRoutine(
+      name: 'My routine',
+      room: 'Study',
+      everyDays: 7,
+      assigneeType: 'member',
+      assignee: 'm1',
+      today: '2026-11-25',
+    );
+    await repo.createRoutine(
+      name: 'Other routine',
+      room: 'Kitchen',
+      everyDays: 7,
+      assigneeType: 'member',
+      assignee: 'm2',
+      today: '2026-11-25',
+    );
+
+    await pushWidgetSnapshots(c.read, bridge: bridge);
+    expect(bridge.lastTodos!['totalCount'], 2);
+    final items = (bridge.lastTodos!['items']! as List)
+        .cast<Map<String, Object?>>();
+    expect(items.map((e) => e['title']), ['My task', 'My routine']);
+
+    // In-app home/tasks data still sees all household items.
+    final allTodos = await repo.watchTodos('H1').first;
+    final allRoutines = await repo.watchRoutines('H1').first;
+    expect(allTodos.length, 3);
+    expect(allRoutines.length, 2);
+  });
 }

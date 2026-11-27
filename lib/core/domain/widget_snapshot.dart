@@ -106,6 +106,8 @@ class TodoWidgetInput {
     required this.id,
     required this.title,
     required this.due,
+    this.assigneeType = 'member',
+    this.assigneeId = '',
     this.assigneeName = '',
     this.done = false,
   });
@@ -113,6 +115,8 @@ class TodoWidgetInput {
   final String id;
   final String title;
   final String due;
+  final String assigneeType;
+  final String assigneeId;
   final String assigneeName;
   final bool done;
 }
@@ -125,6 +129,8 @@ class RoutineWidgetInput {
     this.room = '',
     required this.lastDone,
     required this.everyDays,
+    this.assigneeType = 'member',
+    this.assigneeId = '',
     this.assigneeName = '',
   });
 
@@ -133,6 +139,8 @@ class RoutineWidgetInput {
   final String room;
   final String lastDone;
   final int everyDays;
+  final String assigneeType;
+  final String assigneeId;
   final String assigneeName;
 }
 
@@ -349,13 +357,19 @@ TodoWidgetSnapshot buildTodoWidgetSnapshot({
   required String today,
   required List<TodoWidgetInput> todos,
   required List<RoutineWidgetInput> routines,
+  String? onlyMemberId,
   int maxItems = 25,
 }) {
   if (!hasHome) return TodoWidgetSnapshot.noHome(date: today);
 
+  final filterMine = onlyMemberId != null && onlyMemberId.isNotEmpty;
   final dueTodos = [
     for (final t in todos)
-      if (!t.done && t.due.isNotEmpty && Dates.daysBetween(t.due, today) >= 0)
+      if (!t.done &&
+          (!filterMine ||
+              (t.assigneeType == 'member' && t.assigneeId == onlyMemberId)) &&
+          t.due.isNotEmpty &&
+          Dates.daysBetween(t.due, today) >= 0)
         t,
   ]..sort((a, b) {
       final cmp = a.due.compareTo(b.due);
@@ -364,6 +378,10 @@ TodoWidgetSnapshot buildTodoWidgetSnapshot({
 
   final dueRoutines = <({RoutineWidgetInput row, RoutineState st})>[];
   for (final r in routines) {
+    if (filterMine &&
+        (r.assigneeType != 'member' || r.assigneeId != onlyMemberId)) {
+      continue;
+    }
     final st = routineState(
       lastDone: r.lastDone,
       everyDays: r.everyDays,

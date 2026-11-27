@@ -4326,6 +4326,14 @@ class AppLocalizationsHi extends AppLocalizations {
   }
 
   @override
+  String get notifTodoDoneTitle => 'काम पूरा चिह्नित किया गया';
+
+  @override
+  String notifTodoDoneBody(String title, String name) {
+    return '$title · $name ने पूरा किया';
+  }
+
+  @override
   String notifJoinedTitle(String name, String home) {
     return '$name $home में जुड़े';
   }
@@ -6555,6 +6563,14 @@ class AppLocalizationsHi extends AppLocalizations {
   String whatsNewVersionHeader(Object version) {
     return 'वर्ज़न $version';
   }
+
+  @override
+  String get whatsNewV171TodoDoneNotif =>
+      'जब परिवार का कोई अन्य सदस्य आपका काम पूरा चिह्नित करता है, तो काम के मालिक को सूचना मिलती है।';
+
+  @override
+  String get whatsNewV171TodoWidgetMine =>
+      '\'आज के काम\' होम-स्क्रीन विजेट अब केवल आपके काम दिखाता है, जबकि ऐप की \'आज\' स्क्रीन पर पूरे घर के काम पहले की तरह दिखते हैं।';
 
   @override
   String get whatsNewV170Changelog =>
