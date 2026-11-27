@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_staff_label">வீட்டு உதவி</string>
+    <string name="widget_staff_desc">முகப்புத் திரையிலிருந்தே வீட்டு உதவியாளரின் வருகையைப் பதிவு செய்யவும்.</string>
+    <string name="widget_staff_empty_no_home">உங்கள் இல்லத்தை அமைக்க இல்லம் செயலியைத் திறக்கவும்.</string>
+    <string name="widget_staff_empty">வீட்டு உதவியாளர் இன்னும் சேர்க்கப்படவில்லை.</string>
+
+    <string name="widget_todo_label">இன்றைய பணிகள்</string>
+    <string name="widget_todo_desc">இன்றைய பணிகளைச் சரிபார்த்து புதிய பணிகளை விரைவாகச் சேர்க்கவும்.</string>
+    <string name="widget_todo_header">இன்று நிலுவை</string>
+    <string name="widget_todo_empty_no_home">உங்கள் இல்லத்தை அமைக்க இல்லம் செயலியைத் திறக்கவும்.</string>
+    <string name="widget_todo_empty">இன்றைய பணிகள் அனைத்தும் முடிந்துவிட்டன.</string>
+
+    <string name="widget_add_cd">பணி சேர்</string>
+    <string name="widget_add_title">பணி சேர்க்க</string>
+    <string name="widget_add_hint">என்ன செய்ய வேண்டும்?</string>
+    <string name="widget_add_today">இன்று</string>
+    <string name="widget_add_tomorrow">நாளை</string>
+    <string name="widget_add_cancel">ரத்து</string>
+    <string name="widget_add_submit">சேர்</string>
+
+    <string name="widget_money_label">மாதச் செலவு</string>
+    <string name="widget_money_desc">இந்த மாதச் செலவைப் பார்த்து, விரைவாகச் செலவைச் சேர்க்கவும் அல்லது பில்லை ஸ்கேன் செய்யவும்.</string>
+    <string name="widget_money_header">மாதச் செலவு</string>
+    <string name="widget_money_empty_no_home">உங்கள் இல்லத்தை அமைக்க இல்லம் செயலியைத் திறக்கவும்.</string>
+    <string name="widget_money_empty">இந்த மாதம் செலவுகள் எதுவும் பதிவாகவில்லை.</string>
+    <string name="widget_money_add_cd">செலவு சேர்</string>
+    <string name="widget_money_scan_cd">பில் ஸ்கேன்</string>
+
+    <string name="widget_spend_dialog_title">செலவு சேர்க்க</string>
+    <string name="widget_spend_amount_hint">0</string>
+    <string name="widget_spend_merchant_hint">செலுத்திய இடம் / குறிப்பு</string>
+    <string name="widget_spend_category_label">வகை</string>
+    <string name="widget_spend_yesterday">நேற்று</string>
+    <string name="widget_spend_save">சேமி</string>
+
+    <string name="widget_cat_groceries">மளிகை</string>
+    <string name="widget_cat_eating_out">வெளி உணவு</string>
+    <string name="widget_cat_shopping">ஷாப்பிங்</string>
+    <string name="widget_cat_utilities">பயன்பாடுகள்</string>
+    <string name="widget_cat_home_care">வீட்டுப் பராமரிப்பு</string>
+    <string name="widget_cat_other">மற்றவை</string>
+
+    <string name="widget_method_upi">UPI</string>
+    <string name="widget_method_cash">பணம்</string>
+    <string name="widget_method_card">கார்டு</string>
+    <string name="widget_method_bank">வங்கி</string>
+</resources>

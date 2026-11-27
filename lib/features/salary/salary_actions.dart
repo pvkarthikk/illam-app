@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'package:nm_flat/core/data/db/database.dart';
@@ -145,23 +144,26 @@ class _SalaryActionsState extends ConsumerState<SalaryActions> {
             ? null
             : ref.watch(salaryExpenseProvider(effective.expenseId!)).value;
         final dateIso = exp?.date ?? Dates.dateOfMs(effective.createdAt);
-        final dateText = DateFormat('d MMM', 'en').format(Dates.parse(dateIso));
+        final dateText = Formatters.safeDateFormat(
+          'd MMM',
+          l10n.localeName,
+        ).format(Dates.parse(dateIso));
         paidTagLabel = l10n.salaryPaidTag(
           Money.format(effective.amountPaise),
           dateText,
           _methodLabel(l10n, effective.method),
         );
       } else {
-        final dateText = DateFormat(
+        final dateText = Formatters.safeDateFormat(
           'd MMM',
-          'en',
+          l10n.localeName,
         ).format(Dates.parse(Dates.dateOfMs(effective.createdAt)));
         paidTagLabel = l10n.salaryClosedTag(dateText);
       }
     }
 
     final nextM = nextMonth(month);
-    final nextMonthName = Formatters.monthName(nextM);
+    final nextMonthName = Formatters.monthName(nextM, l10n.localeName);
     final endDate = view.staff.endDate;
     final canCarry =
         endDate == null || nextM.compareTo(Dates.month(endDate)) <= 0;

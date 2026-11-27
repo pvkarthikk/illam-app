@@ -1,12 +1,19 @@
 import 'package:nm_flat/core/data/db/database.dart';
+import 'package:nm_flat/core/data/repo/expenses_repo.dart';
+import 'package:nm_flat/core/data/repo/money_repo.dart';
 import 'package:nm_flat/core/domain/attendance.dart';
+import 'package:nm_flat/core/domain/invoice/parsed_invoice.dart';
+import 'package:nm_flat/core/domain/money_widget_snapshot.dart';
 import 'package:nm_flat/core/domain/names.dart';
 import 'package:nm_flat/core/domain/payroll.dart';
+import 'package:nm_flat/core/domain/spend_category.dart';
 import 'package:nm_flat/core/domain/widget_snapshot.dart';
 import 'package:nm_flat/core/notify/notifications.dart' show Reader;
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/time/dates.dart';
+import 'package:nm_flat/core/ui/spend_category_labels.dart';
 import 'package:nm_flat/core/widgets/widget_bridge.dart';
+import 'package:nm_flat/features/account/appearance_controller.dart';
 import 'package:nm_flat/features/salary/salary_providers.dart';
 
 String _capitaliseTitle(String raw) {
@@ -102,6 +109,40 @@ Future<bool> executeWidgetAction(
       );
       return true;
 
+    case 'add_spend':
+      final rawAmount = action['amountPaise'];
+      final amountPaise = rawAmount is num ? rawAmount.toInt() : 0;
+      if (amountPaise <= 0 || amountPaise > 100000000) return false;
+
+      final category = normalizeSpendCategory(
+        (action['category'] as String?) ?? '',
+      );
+      final rawMerchant = (action['merchant'] as String? ?? '').trim();
+      final merchant = clampMerchantName(
+        rawMerchant.isEmpty ? category : rawMerchant,
+      );
+      final rawMethod = (action['method'] as String? ?? '').trim();
+      const allowedMethods = {'upi', 'cash', 'card', 'bank'};
+      final method = allowedMethods.contains(rawMethod) ? rawMethod : 'upi';
+      final rawDate = action['date'] as String?;
+      final date =
+          (rawDate != null && RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(rawDate))
+          ? rawDate
+          : today;
+
+      await read(moneyRepoProvider).addSpend(
+        NewExpense(
+          amountPaise: amountPaise,
+          merchant: merchant,
+          category: category,
+          method: method,
+          date: date,
+          source: 'manual',
+          paidBy: me,
+        ),
+      );
+      return true;
+
     case 'refresh':
       return false;
 
@@ -147,10 +188,19 @@ Future<void> pushWidgetSnapshots(Reader read, {WidgetBridge? bridge}) async {
   final homeId =
       read(currentHomeIdProvider).value ?? read(prefsProvider).currentHomeId;
 
+  final l10n = lookupUserLocalizations(read(prefsProvider));
+
   if (homeId == null) {
     await target.updateSnapshots(
       staff: StaffWidgetSnapshot.noHome(date: today).toJson(),
       todos: TodoWidgetSnapshot.noHome(date: today).toJson(),
+      money: MoneyWidgetSnapshot.noHome(
+        date: today,
+        headerTitle: l10n.widgetMoneyHeader,
+        addLabel: l10n.widgetMoneyAdd,
+        scanLabel: l10n.widgetMoneyScan,
+        emptyText: l10n.widgetMoneyNoHome,
+      ).toJson(),
     );
     return;
   }
@@ -160,6 +210,13 @@ Future<void> pushWidgetSnapshots(Reader read, {WidgetBridge? bridge}) async {
     await target.updateSnapshots(
       staff: StaffWidgetSnapshot.noHome(date: today).toJson(),
       todos: TodoWidgetSnapshot.noHome(date: today).toJson(),
+      money: MoneyWidgetSnapshot.noHome(
+        date: today,
+        headerTitle: l10n.widgetMoneyHeader,
+        addLabel: l10n.widgetMoneyAdd,
+        scanLabel: l10n.widgetMoneyScan,
+        emptyText: l10n.widgetMoneyNoHome,
+      ).toJson(),
     );
     return;
   }
@@ -261,8 +318,49 @@ Future<void> pushWidgetSnapshots(Reader read, {WidgetBridge? bridge}) async {
     ],
   );
 
+  final moneyRepo = read(moneyRepoProvider);
+  final monthExpenses = await moneyRepo.watchExpensesInMonth(month).first;
+  final recentExpenses = await moneyRepo
+      .watchExpensesSince(Dates.addDays(today, -90))
+      .first;
+  final rulesMap = await moneyRepo.watchMerchantRules().first;
+  final bills = await moneyRepo.watchBills().first;
+  final attemptRows = await salaryRepo.watchAllAttempts().first;
+  final dupAttemptIds = duplicateSettleAttemptIdsFromRows(attemptRows);
+  final excludedSalaryIds = duplicateSalaryExpenseIds(
+    monthExpenses,
+    dupAttemptIds,
+  );
+  final categoryLabels = {
+    for (final cat in spendCategories)
+      cat: localizedSpendCategory(l10n, cat),
+  };
+  final moneySnap = buildMoneyWidgetSnapshot(
+    hasHome: true,
+    homeName: home.name ?? '',
+    today: today,
+    monthExpenses: [for (final e in monthExpenses) moneyRepo.toSpendLite(e)],
+    recentSpends: [for (final e in recentExpenses) moneyRepo.toSpendLite(e)],
+    excludedSalaryExpenseIds: excludedSalaryIds,
+    budgetMonthlyPaise: home.budgetMonthlyPaise,
+    extraCategories: [
+      for (final e in recentExpenses) e.category,
+      ...rulesMap.values,
+      for (final b in bills) b.category,
+    ],
+    localizedCategoryLabels: categoryLabels,
+    headerTitle: l10n.widgetMoneyHeader,
+    addLabel: l10n.widgetMoneyAdd,
+    scanLabel: l10n.widgetMoneyScan,
+    emptyText: l10n.widgetMoneyEmpty,
+    noHomeText: l10n.widgetMoneyNoHome,
+    budgetLeftText: l10n.widgetMoneyBudgetLeft,
+    budgetOverText: l10n.widgetMoneyBudgetOver,
+  );
+
   await target.updateSnapshots(
     staff: staffSnap.toJson(),
     todos: todoSnap.toJson(),
+    money: moneySnap.toJson(),
   );
 }

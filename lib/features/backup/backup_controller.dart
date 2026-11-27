@@ -10,6 +10,7 @@ import 'package:nm_flat/core/domain/names.dart';
 import 'package:nm_flat/core/notify/notifications.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/sync/membership_replay.dart';
+import 'package:nm_flat/features/account/appearance_controller.dart';
 import 'package:nm_flat/features/backup/backup_setup_parts.dart';
 import 'package:nm_flat/features/onboarding/restore_controller.dart';
 
@@ -123,7 +124,7 @@ class BackupController extends Notifier<BackupUi> {
 
   Future<void> _showProgress(String homeId, String homeName, int pct) async {
     try {
-      final l = enLocalizations();
+      final l = lookupUserLocalizations(ref.read(prefsProvider));
       await plugin.show(
         id: stableId('backup.progress.$homeId'),
         title: l.backupProgressNotif(homeName),

@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'package:nm_flat/core/data/db/database.dart';
@@ -54,9 +53,9 @@ class MealsScreen extends ConsumerWidget {
     }
     final weekMissing = missingFor(planned, openKeys, pantryKeys);
 
-    final eyebrowDate = DateFormat(
+    final eyebrowDate = Formatters.safeDateFormat(
       'd MMM',
-      'en',
+      l10n.localeName,
     ).format(Dates.parse(ui.weekStart));
 
     return Scaffold(

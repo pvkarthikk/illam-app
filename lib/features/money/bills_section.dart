@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'package:nm_flat/core/data/db/database.dart';
@@ -8,6 +7,7 @@ import 'package:nm_flat/core/domain/bills.dart';
 import 'package:nm_flat/core/domain/duplicate_hint.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/time/dates.dart';
+import 'package:nm_flat/core/ui/formatters.dart';
 import 'package:nm_flat/core/util/money.dart';
 import 'package:nm_flat/features/money/bill_paid_sheet.dart';
 import 'package:nm_flat/features/money/bill_sheet.dart';
@@ -190,8 +190,8 @@ class _BillRow extends ConsumerWidget {
   final Bill bill;
   final BillStatus status;
 
-  String _fmtDate(String iso) =>
-      DateFormat('d MMM', 'en').format(Dates.parse(iso));
+  String _fmtDate(String iso, String locale) =>
+      Formatters.safeDateFormat('d MMM', locale).format(Dates.parse(iso));
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -211,15 +211,15 @@ class _BillRow extends ConsumerWidget {
 
     final String sub = switch (kind) {
       BillDue.paid when latest != null => l10n.moneyBillPaidOn(
-        _fmtDate(latest.date),
+        _fmtDate(latest.date, l10n.localeName),
         methodLabel(l10n, latest.method),
       ),
       BillDue.firstDue => l10n.moneyFirstDue(
-        _fmtDate(status.dueDate),
+        _fmtDate(status.dueDate, l10n.localeName),
         Money.format(bill.usualAmountPaise),
       ),
       _ => l10n.moneyBillDue(
-        _fmtDate(status.dueDate),
+        _fmtDate(status.dueDate, l10n.localeName),
         Money.format(bill.usualAmountPaise),
       ),
     };
@@ -274,7 +274,7 @@ class _BillRow extends ConsumerWidget {
                       const SizedBox(height: 4),
                       for (final p in status.payments)
                         Text(
-                          '${_fmtDate(p.date)} · ${methodLabel(l10n, p.method)} · ${Money.format(p.amountPaise)}',
+                          '${_fmtDate(p.date, l10n.localeName)} · ${methodLabel(l10n, p.method)} · ${Money.format(p.amountPaise)}',
                           style: NestText.small12.copyWith(color: c.ink2),
                         ),
                     ],

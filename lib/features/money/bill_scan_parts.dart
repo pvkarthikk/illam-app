@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import 'package:nm_flat/core/design/components/components.dart';
+import 'package:nm_flat/core/ui/spend_category_labels.dart';
 import 'package:nm_flat/core/util/money.dart';
 import 'package:nm_flat/features/money/bill_scan_controller.dart';
 import 'package:nm_flat/features/money/widgets/spend_category_picker.dart';
@@ -177,7 +178,7 @@ class BillScanItemRow extends StatelessWidget {
                   ),
                 ),
                 NestChip(
-                  label: item.category,
+                  label: localizedSpendCategory(l10n, item.category),
                   dotColor: dotColor,
                   selected: false,
                   onTap: item.included ? onPickCategory : null,

@@ -56,7 +56,8 @@ object WidgetBridge {
                 "updateSnapshots" -> {
                     val staffJson = call.argument<String>("staffJson")
                     val todosJson = call.argument<String>("todosJson")
-                    WidgetStore.saveSnapshots(appContext, staffJson, todosJson)
+                    val moneyJson = call.argument<String>("moneyJson")
+                    WidgetStore.saveSnapshots(appContext, staffJson, todosJson, moneyJson)
                     refreshAllWidgets(appContext)
                     result.success(null)
                 }
@@ -163,5 +164,6 @@ object WidgetBridge {
         val appContext = context.applicationContext
         StaffWidgetProvider.updateAll(appContext)
         TodayTodoWidgetProvider.updateAll(appContext)
+        MoneySpendWidgetProvider.updateAll(appContext)
     }
 }

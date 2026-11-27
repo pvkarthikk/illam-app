@@ -2,6 +2,7 @@ import 'package:material_ui/material_ui.dart';
 
 import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/domain/spend_category.dart';
+import 'package:nm_flat/core/ui/spend_category_labels.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
 /// Category chip selector with an inline `＋ Custom` option for user-defined
@@ -84,7 +85,7 @@ class _SpendCategoryPickerState extends State<SpendCategoryPicker> {
           children: [
             for (final cat in options)
               NestChip(
-                label: cat,
+                label: localizedSpendCategory(l10n, cat),
                 selected: !_customMode && widget.value == cat,
                 dotColor: widget.showDots
                     ? NestPalette.categoryColor(cat)

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_staff_label">घर की सहायता</string>
+    <string name="widget_staff_desc">होम स्क्रीन से सीधे घरेलू सहायक की हाज़िरी दर्ज करें।</string>
+    <string name="widget_staff_empty_no_home">अपना घर सेट करने के लिए इल्लम खोलें।</string>
+    <string name="widget_staff_empty">अभी तक कोई सहायक नहीं जोड़ा गया है।</string>
+
+    <string name="widget_todo_label">आज के काम</string>
+    <string name="widget_todo_desc">आज के काम निपटाएँ और तुरंत नए काम जोड़ें।</string>
+    <string name="widget_todo_header">आज देय</string>
+    <string name="widget_todo_empty_no_home">अपना घर सेट करने के लिए इल्लम खोलें।</string>
+    <string name="widget_todo_empty">आज के सभी काम पूरे हो गए हैं।</string>
+
+    <string name="widget_add_cd">काम जोड़ें</string>
+    <string name="widget_add_title">काम जोड़ें</string>
+    <string name="widget_add_hint">क्या करना है?</string>
+    <string name="widget_add_today">आज</string>
+    <string name="widget_add_tomorrow">कल</string>
+    <string name="widget_add_cancel">रद्द करें</string>
+    <string name="widget_add_submit">जोड़ें</string>
+
+    <string name="widget_money_label">मासिक खर्च</string>
+    <string name="widget_money_desc">इस महीने का खर्च देखें और तुरंत खर्च जोड़ें या बिल स्कैन करें।</string>
+    <string name="widget_money_header">मासिक खर्च</string>
+    <string name="widget_money_empty_no_home">अपना घर सेट करने के लिए इल्लम खोलें।</string>
+    <string name="widget_money_empty">इस महीने कोई खर्च दर्ज नहीं है।</string>
+    <string name="widget_money_add_cd">खर्च जोड़ें</string>
+    <string name="widget_money_scan_cd">बिल स्कैन</string>
+
+    <string name="widget_spend_dialog_title">खर्च जोड़ें</string>
+    <string name="widget_spend_amount_hint">0</string>
+    <string name="widget_spend_merchant_hint">कहाँ खर्च किया (दुकान/नाम)</string>
+    <string name="widget_spend_category_label">श्रेणी</string>
+    <string name="widget_spend_yesterday">कल (बीता)</string>
+    <string name="widget_spend_save">सहेजें</string>
+
+    <string name="widget_cat_groceries">किराना</string>
+    <string name="widget_cat_eating_out">बाहर खाना</string>
+    <string name="widget_cat_shopping">खरीदारी</string>
+    <string name="widget_cat_utilities">बिल और उपयोगिताएँ</string>
+    <string name="widget_cat_home_care">घर की देखभाल</string>
+    <string name="widget_cat_other">अन्य</string>
+
+    <string name="widget_method_upi">UPI</string>
+    <string name="widget_method_cash">नकद</string>
+    <string name="widget_method_card">कार्ड</string>
+    <string name="widget_method_bank">बैंक</string>
+</resources>

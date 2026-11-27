@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:nm_flat/core/data/prefs/key_value_store.dart';
+import 'package:nm_flat/core/domain/app_locale.dart';
 import 'package:nm_flat/core/util/ids.dart';
 
 class DevicePrefs {
@@ -105,6 +106,16 @@ class DevicePrefs {
   String get themeMode => getText('themeMode') ?? 'system';
 
   Future<void> setThemeMode(String v) => setText('themeMode', v);
+
+  String get appLanguage => normalizeStoredLanguage(getText('appLanguage'));
+
+  Future<void> setAppLanguage(String code) =>
+      setText('appLanguage', normalizeStoredLanguage(code));
+
+  String? get lastSeenChangelogVersion => getText('lastSeenChangelogVersion');
+
+  Future<void> setLastSeenChangelogVersion(String version) =>
+      setText('lastSeenChangelogVersion', version);
 
   bool get notifArrival => getFlag('notifArrival', fallback: true);
   bool get notifDigest => getFlag('notifDigest', fallback: true);

@@ -1,15 +1,18 @@
-import 'package:intl/intl.dart';
-
 import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/domain/trip_state.dart';
 import 'package:nm_flat/core/time/dates.dart';
+import 'package:nm_flat/core/ui/formatters.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
 /// Formats a trip's single date or `start – end` range cleanly.
-String formatTripDateRange(String startDate, String? endDate) {
+String formatTripDateRange(
+  String startDate,
+  String? endDate, [
+  String locale = 'en',
+]) {
   if (startDate.isEmpty) return '';
-  final fmt = DateFormat('d MMM', 'en');
+  final fmt = Formatters.safeDateFormat('d MMM', locale);
   final startText = fmt.format(Dates.parse(startDate));
   if (endDate == null ||
       endDate.isEmpty ||

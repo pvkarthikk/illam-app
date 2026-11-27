@@ -16,6 +16,7 @@ import 'package:nm_flat/core/widgets/widget_bridge.dart';
 class _FakeBridge extends WidgetBridge {
   Map<String, Object?>? lastStaff;
   Map<String, Object?>? lastTodos;
+  Map<String, Object?>? lastMoney;
   List<Map<String, Object?>> queue = [];
   final List<String> ackedIds = [];
 
@@ -23,9 +24,11 @@ class _FakeBridge extends WidgetBridge {
   Future<void> updateSnapshots({
     required Map<String, Object?> staff,
     required Map<String, Object?> todos,
+    Map<String, Object?>? money,
   }) async {
     lastStaff = staff;
     lastTodos = todos;
+    lastMoney = money;
   }
 
   @override
@@ -190,5 +193,45 @@ void main() {
     await pushWidgetSnapshots(c.read, bridge: bridge);
     expect(bridge.lastTodos!['totalCount'], 0);
     expect(bridge.lastTodos!['items'] as List, isEmpty);
+  });
+
+  test('add_spend drains from queue as manual expense and updates money snapshot', () async {
+    final clock = FixedClock(DateTime(2026, 11, 25, 11, 0));
+    final c = await _openTestContainer(clock);
+    final bridge = _FakeBridge();
+
+    bridge.queue = [
+      {
+        'id': 's1',
+        'action': 'add_spend',
+        'amountPaise': 24500,
+        'merchant': 'Milk Booth',
+        'category': 'Groceries',
+        'method': 'upi',
+        'date': '2026-11-25',
+      },
+      {
+        'id': 's2',
+        'action': 'add_spend',
+        'amountPaise': 0, // invalid zero amount ignored & acked
+        'merchant': 'Invalid',
+      },
+    ];
+
+    expect(await drainPendingWidgetActions(c.read, bridge: bridge), isTrue);
+    expect(bridge.ackedIds, ['s1', 's2']);
+    expect(bridge.queue, isEmpty);
+
+    await pushWidgetSnapshots(c.read, bridge: bridge);
+    expect(bridge.lastMoney, isNotNull);
+    expect(bridge.lastMoney!['hasHome'], isTrue);
+    expect(bridge.lastMoney!['monthSpentPaise'], 24500);
+    expect(bridge.lastMoney!['monthSpentText'], '₹245');
+
+    final rows = await c.read(moneyRepoProvider).watchExpensesInMonth('2026-11').first;
+    expect(rows.length, 1);
+    expect(rows.single.merchant, 'Milk Booth');
+    expect(rows.single.source, 'manual');
+    expect(rows.single.category, 'Groceries');
   });
 }

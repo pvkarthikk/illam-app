@@ -6,6 +6,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_en.dart';
+import 'app_localizations_hi.dart';
+import 'app_localizations_ta.dart';
 
 // ignore_for_file: type=lint
 
@@ -92,7 +94,11 @@ abstract class AppLocalizations {
       ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('en')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('en'),
+    Locale('hi'),
+    Locale('ta'),
+  ];
 
   /// No description provided for @appName.
   ///
@@ -10352,6 +10358,210 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, =1{Saved 1 expense ({total})} other{Saved {count} expenses ({total})}}'**
   String billScanSavedCount(int count, Object total);
+
+  /// No description provided for @profileLangSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System default'**
+  String get profileLangSystem;
+
+  /// No description provided for @profileLangEnglish.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get profileLangEnglish;
+
+  /// No description provided for @profileLangTamil.
+  ///
+  /// In en, this message translates to:
+  /// **'தமிழ் (Tamil)'**
+  String get profileLangTamil;
+
+  /// No description provided for @profileLangHindi.
+  ///
+  /// In en, this message translates to:
+  /// **'हिन्दी (Hindi)'**
+  String get profileLangHindi;
+
+  /// No description provided for @profileLangBadgeTamil.
+  ///
+  /// In en, this message translates to:
+  /// **'தமிழ்'**
+  String get profileLangBadgeTamil;
+
+  /// No description provided for @profileLangBadgeHindi.
+  ///
+  /// In en, this message translates to:
+  /// **'हिन्दी'**
+  String get profileLangBadgeHindi;
+
+  /// No description provided for @spendCatGroceries.
+  ///
+  /// In en, this message translates to:
+  /// **'Groceries'**
+  String get spendCatGroceries;
+
+  /// No description provided for @spendCatShopping.
+  ///
+  /// In en, this message translates to:
+  /// **'Shopping'**
+  String get spendCatShopping;
+
+  /// No description provided for @spendCatStaff.
+  ///
+  /// In en, this message translates to:
+  /// **'Staff'**
+  String get spendCatStaff;
+
+  /// No description provided for @spendCatUtilities.
+  ///
+  /// In en, this message translates to:
+  /// **'Utilities'**
+  String get spendCatUtilities;
+
+  /// No description provided for @spendCatEatingOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Eating out'**
+  String get spendCatEatingOut;
+
+  /// No description provided for @spendCatHomeCare.
+  ///
+  /// In en, this message translates to:
+  /// **'Home care'**
+  String get spendCatHomeCare;
+
+  /// No description provided for @spendCatOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get spendCatOther;
+
+  /// No description provided for @whatsNewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s new'**
+  String get whatsNewTitle;
+
+  /// No description provided for @whatsNewHistoryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Release notes'**
+  String get whatsNewHistoryTitle;
+
+  /// No description provided for @whatsNewGotIt.
+  ///
+  /// In en, this message translates to:
+  /// **'Got it'**
+  String get whatsNewGotIt;
+
+  /// No description provided for @whatsNewVersionHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version}'**
+  String whatsNewVersionHeader(Object version);
+
+  /// No description provided for @whatsNewV170Changelog.
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s New sheet automatically shows release notes after an update — and stays accessible anytime under Profile → Version.'**
+  String get whatsNewV170Changelog;
+
+  /// No description provided for @whatsNewV170SpendWidget.
+  ///
+  /// In en, this message translates to:
+  /// **'New Money Spend home-screen widget for one-tap expense entry, month spend at a glance, and quick bill scan.'**
+  String get whatsNewV170SpendWidget;
+
+  /// No description provided for @whatsNewV170Languages.
+  ///
+  /// In en, this message translates to:
+  /// **'Added Tamil and Hindi app languages, following your phone language automatically or selectable under Profile → Language.'**
+  String get whatsNewV170Languages;
+
+  /// No description provided for @whatsNewV160BillScan.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline Camera Bill Scanner in Money using on-device Tesseract OCR to extract store, date, and itemized prices.'**
+  String get whatsNewV160BillScan;
+
+  /// No description provided for @whatsNewV150Trips.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Planner under Tasks with trip dates, reusable generic checklists, pre-departure tracking, and a Today readiness card.'**
+  String get whatsNewV150Trips;
+
+  /// No description provided for @whatsNewV140MoneyCharts.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom Money categories, a toggleable spend breakdown pie chart (by category, item, or person), and collapsible drafts.'**
+  String get whatsNewV140MoneyCharts;
+
+  /// No description provided for @whatsNewV132SmsParser.
+  ///
+  /// In en, this message translates to:
+  /// **'Improved on-device bank, credit card, prepaid card, and UPI SMS spend parsing.'**
+  String get whatsNewV132SmsParser;
+
+  /// No description provided for @whatsNewV131Routines.
+  ///
+  /// In en, this message translates to:
+  /// **'Renamed Cleaning to Routines so general household maintenance schedules fit naturally.'**
+  String get whatsNewV131Routines;
+
+  /// No description provided for @whatsNewV130SmsImport.
+  ///
+  /// In en, this message translates to:
+  /// **'Experimental offline SMS spend import with draft review before adding entries to Money.'**
+  String get whatsNewV130SmsImport;
+
+  /// No description provided for @whatsNewV120GmailImport.
+  ///
+  /// In en, this message translates to:
+  /// **'Experimental Gmail invoice & PDF receipt import for online grocery and retail orders.'**
+  String get whatsNewV120GmailImport;
+
+  /// No description provided for @widgetMoneyHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Month spend'**
+  String get widgetMoneyHeader;
+
+  /// No description provided for @widgetMoneyAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add spend'**
+  String get widgetMoneyAdd;
+
+  /// No description provided for @widgetMoneyScan.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan'**
+  String get widgetMoneyScan;
+
+  /// No description provided for @widgetMoneyEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No spends recorded this month.'**
+  String get widgetMoneyEmpty;
+
+  /// No description provided for @widgetMoneyNoHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Illam to set up your home.'**
+  String get widgetMoneyNoHome;
+
+  /// No description provided for @widgetMoneyBudgetLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} left of {budget}'**
+  String widgetMoneyBudgetLeft(Object amount, Object budget);
+
+  /// No description provided for @widgetMoneyBudgetOver.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} over {budget} budget'**
+  String widgetMoneyBudgetOver(Object amount, Object budget);
 }
 
 class _AppLocalizationsDelegate
@@ -10365,7 +10575,7 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) =>
-      <String>['en'].contains(locale.languageCode);
+      <String>['en', 'hi', 'ta'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -10376,6 +10586,10 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   switch (locale.languageCode) {
     case 'en':
       return AppLocalizationsEn();
+    case 'hi':
+      return AppLocalizationsHi();
+    case 'ta':
+      return AppLocalizationsTa();
   }
 
   throw FlutterError(

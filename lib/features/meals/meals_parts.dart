@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'package:nm_flat/core/data/db/database.dart';
@@ -11,6 +10,7 @@ import 'package:nm_flat/core/domain/ingredients.dart';
 import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/time/dates.dart';
+import 'package:nm_flat/core/ui/formatters.dart';
 import 'package:nm_flat/features/meals/add_recipe_sheet.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
@@ -118,11 +118,15 @@ class WeekStrip extends StatelessWidget {
                   final selected = iso == selectedDay;
                   final isToday = iso == today;
                   final daySlots = byDay[iso] ?? const <String>{};
-                  final shortDay = DateFormat('EE', 'en')
-                      .format(dt)
-                      .substring(0, 2)
-                      .toUpperCase();
-                  final fullDay = DateFormat('EEEE', 'en').format(dt);
+                  final dayFmt = Formatters.safeDateFormat('E', l10n.localeName)
+                      .format(dt);
+                  final shortDay = l10n.localeName == 'en'
+                      ? dayFmt.characters.take(2).toString().toUpperCase()
+                      : dayFmt;
+                  final fullDay = Formatters.safeDateFormat(
+                    'EEEE',
+                    l10n.localeName,
+                  ).format(dt);
                   final fg = selected ? c.paper : c.ink;
 
                   return Semantics(

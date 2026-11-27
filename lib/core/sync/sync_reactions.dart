@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ui';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -7,7 +6,7 @@ import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/data/prefs/device_prefs.dart';
 import 'package:nm_flat/core/data/ops/op_record.dart';
 import 'package:nm_flat/core/notify/notifications.dart';
-import 'package:nm_flat/l10n/gen/app_localizations.dart';
+import 'package:nm_flat/features/account/appearance_controller.dart';
 
 /// Fires OS notifications for remote changes applied during sync ingest.
 class SyncReactions {
@@ -26,7 +25,7 @@ class SyncReactions {
 
     final me = prefs.memberId;
     if (me == null) return;
-    final l = lookupAppLocalizations(const Locale('en'));
+    final l = lookupUserLocalizations(prefs);
 
     for (final op in ops) {
       if (op.tbl != 'todos' || op.field != 'assignee') continue;
@@ -80,7 +79,7 @@ class SyncReactions {
       db.homes,
     )..where((h) => h.id.equals(homeId))).getSingleOrNull();
     final homeName = home?.name ?? '';
-    final l = lookupAppLocalizations(const Locale('en'));
+    final l = lookupUserLocalizations(prefs);
 
     try {
       await plugin.show(

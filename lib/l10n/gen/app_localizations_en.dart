@@ -6485,4 +6485,122 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get profileLangSystem => 'System default';
+
+  @override
+  String get profileLangEnglish => 'English';
+
+  @override
+  String get profileLangTamil => 'தமிழ் (Tamil)';
+
+  @override
+  String get profileLangHindi => 'हिन्दी (Hindi)';
+
+  @override
+  String get profileLangBadgeTamil => 'தமிழ்';
+
+  @override
+  String get profileLangBadgeHindi => 'हिन्दी';
+
+  @override
+  String get spendCatGroceries => 'Groceries';
+
+  @override
+  String get spendCatShopping => 'Shopping';
+
+  @override
+  String get spendCatStaff => 'Staff';
+
+  @override
+  String get spendCatUtilities => 'Utilities';
+
+  @override
+  String get spendCatEatingOut => 'Eating out';
+
+  @override
+  String get spendCatHomeCare => 'Home care';
+
+  @override
+  String get spendCatOther => 'Other';
+
+  @override
+  String get whatsNewTitle => 'What\'s new';
+
+  @override
+  String get whatsNewHistoryTitle => 'Release notes';
+
+  @override
+  String get whatsNewGotIt => 'Got it';
+
+  @override
+  String whatsNewVersionHeader(Object version) {
+    return 'Version $version';
+  }
+
+  @override
+  String get whatsNewV170Changelog =>
+      'What\'s New sheet automatically shows release notes after an update — and stays accessible anytime under Profile → Version.';
+
+  @override
+  String get whatsNewV170SpendWidget =>
+      'New Money Spend home-screen widget for one-tap expense entry, month spend at a glance, and quick bill scan.';
+
+  @override
+  String get whatsNewV170Languages =>
+      'Added Tamil and Hindi app languages, following your phone language automatically or selectable under Profile → Language.';
+
+  @override
+  String get whatsNewV160BillScan =>
+      'Offline Camera Bill Scanner in Money using on-device Tesseract OCR to extract store, date, and itemized prices.';
+
+  @override
+  String get whatsNewV150Trips =>
+      'Trip Planner under Tasks with trip dates, reusable generic checklists, pre-departure tracking, and a Today readiness card.';
+
+  @override
+  String get whatsNewV140MoneyCharts =>
+      'Custom Money categories, a toggleable spend breakdown pie chart (by category, item, or person), and collapsible drafts.';
+
+  @override
+  String get whatsNewV132SmsParser =>
+      'Improved on-device bank, credit card, prepaid card, and UPI SMS spend parsing.';
+
+  @override
+  String get whatsNewV131Routines =>
+      'Renamed Cleaning to Routines so general household maintenance schedules fit naturally.';
+
+  @override
+  String get whatsNewV130SmsImport =>
+      'Experimental offline SMS spend import with draft review before adding entries to Money.';
+
+  @override
+  String get whatsNewV120GmailImport =>
+      'Experimental Gmail invoice & PDF receipt import for online grocery and retail orders.';
+
+  @override
+  String get widgetMoneyHeader => 'Month spend';
+
+  @override
+  String get widgetMoneyAdd => 'Add spend';
+
+  @override
+  String get widgetMoneyScan => 'Scan';
+
+  @override
+  String get widgetMoneyEmpty => 'No spends recorded this month.';
+
+  @override
+  String get widgetMoneyNoHome => 'Open Illam to set up your home.';
+
+  @override
+  String widgetMoneyBudgetLeft(Object amount, Object budget) {
+    return '$amount left of $budget';
+  }
+
+  @override
+  String widgetMoneyBudgetOver(Object amount, Object budget) {
+    return '$amount over $budget budget';
+  }
 }

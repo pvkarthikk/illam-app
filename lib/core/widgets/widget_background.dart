@@ -5,6 +5,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:workmanager/workmanager.dart';
 
 import 'package:nm_flat/core/data/prefs/key_value_store.dart';
+import 'package:nm_flat/core/domain/money_widget_snapshot.dart';
 import 'package:nm_flat/core/domain/widget_snapshot.dart';
 import 'package:nm_flat/core/notify/background_tasks.dart';
 import 'package:nm_flat/core/providers.dart';
@@ -32,6 +33,7 @@ Future<void> runWidgetBackground() async {
       await WidgetBridge.instance.updateSnapshots(
         staff: StaffWidgetSnapshot.noHome(date: today).toJson(),
         todos: TodoWidgetSnapshot.noHome(date: today).toJson(),
+        money: MoneyWidgetSnapshot.noHome(date: today).toJson(),
       );
       return;
     }

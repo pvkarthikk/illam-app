@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'package:nm_flat/core/data/db/database.dart';
@@ -10,6 +9,7 @@ import 'package:nm_flat/core/domain/greeting.dart';
 import 'package:nm_flat/core/domain/names.dart';
 import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/providers.dart';
+import 'package:nm_flat/core/ui/formatters.dart';
 import 'package:nm_flat/core/ui/rich_text.dart';
 import 'package:nm_flat/features/staff/staff_providers.dart';
 import 'package:nm_flat/features/today/sections/hero_tags.dart';
@@ -66,7 +66,10 @@ class HeroSection extends ConsumerWidget {
                         l10n
                             .todayEyebrow(
                               home.name ?? '',
-                              DateFormat('EEEE, d MMMM', 'en').format(now),
+                              Formatters.safeDateFormat(
+                                'EEEE, d MMMM',
+                                l10n.localeName,
+                              ).format(now),
                             )
                             .toUpperCase(),
                         style: NestText.eyebrow12.copyWith(color: c.ink3),

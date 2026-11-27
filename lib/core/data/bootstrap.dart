@@ -5,6 +5,7 @@ import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/data/prefs/device_prefs.dart';
 import 'package:nm_flat/core/data/secure/secure_store.dart';
 import 'package:nm_flat/core/design/components/components.dart';
+import 'package:nm_flat/core/domain/app_locale.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
 abstract final class Bootstrap {
@@ -39,6 +40,11 @@ class CantSecureApp extends StatelessWidget {
         ...GlobalMaterialLocalizations.delegates,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
+      localeListResolutionCallback: (locales, _) => Locale(
+        resolveLanguageCode(systemLanguageCode, [
+          for (final l in locales ?? const <Locale>[]) l.languageCode,
+        ]),
+      ),
       debugShowCheckedModeBanner: false,
       home: Builder(
         builder: (context) {

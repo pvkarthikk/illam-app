@@ -11,6 +11,7 @@ import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/time/dates.dart';
 import 'package:nm_flat/core/ui/formatters.dart';
+import 'package:nm_flat/core/ui/spend_category_labels.dart';
 import 'package:nm_flat/core/util/money.dart';
 import 'package:nm_flat/features/money/bills_section.dart';
 import 'package:nm_flat/features/money/spend_sheet.dart';
@@ -46,7 +47,7 @@ class _WhereItWentSectionState extends ConsumerState<WhereItWentSection> {
         return [
           for (final (cat, amt) in catTotals)
             SpendPieSlice(
-              label: cat,
+              label: localizedSpendCategory(l10n, cat),
               amountPaise: amt,
               color: NestPalette.categoryColor(cat),
             ),
@@ -229,6 +230,7 @@ class _CategoryTotalRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final c = context.nest;
     final barColor = NestPalette.categoryColor(category);
     final ratio = maxAmountPaise > 0 ? amountPaise / maxAmountPaise : 0.0;
@@ -247,7 +249,7 @@ class _CategoryTotalRow extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      category,
+                      localizedSpendCategory(l10n, category),
                       style: NestText.itemTitle16.copyWith(color: c.ink),
                     ),
                   ),
@@ -291,7 +293,9 @@ class StaffPaySection extends ConsumerWidget {
       children: [
         const SizedBox(height: 20),
         SectionHeader(
-          title: l10n.moneyStaffPay(Formatters.monthName(month)),
+          title: l10n.moneyStaffPay(
+            Formatters.monthName(month, l10n.localeName),
+          ),
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
@@ -462,7 +466,7 @@ class SpendRow extends ConsumerWidget {
                       Text(
                         l10n.moneyRowSub(
                           Formatters.dayLabel(e.date, today, l10n),
-                          e.category,
+                          localizedSpendCategory(l10n, e.category),
                           sourceText,
                         ),
                         style: NestText.meta13.copyWith(color: c.ink3),

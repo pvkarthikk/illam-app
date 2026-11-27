@@ -37,6 +37,7 @@ import 'package:nm_flat/core/data/secure/secure_store.dart';
 import 'package:nm_flat/core/data/seed/demo_seeder.dart';
 import 'package:nm_flat/core/data/wipe.dart';
 import 'package:nm_flat/core/design/nest_colors.dart';
+import 'package:nm_flat/core/domain/app_locale.dart';
 import 'package:nm_flat/core/domain/bills.dart';
 import 'package:nm_flat/core/domain/duplicate_hint.dart';
 import 'package:nm_flat/core/domain/money_math.dart';
@@ -79,8 +80,8 @@ import 'package:nm_flat/features/salary/salary_providers.dart';
 import 'package:nm_flat/features/staff/staff_providers.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
-String rejectText(String reason) {
-  final l = lookupAppLocalizations(const Locale('en'));
+String rejectText(String reason, [AppLocalizations? l10n]) {
+  final l = l10n ?? lookupAppLocalizations(const Locale('en'));
   final text = switch (reason) {
     'adminOnly' => l.syncReasonAdminOnly,
     'ownOnly' => l.syncReasonOwnOnly,
@@ -95,6 +96,14 @@ final snackbarProvider = Provider((ref) => SnackbarService());
 final themeModeProvider = NotifierProvider<ThemeModeController, ThemeMode>(
   ThemeModeController.new,
 );
+final appLanguageProvider = NotifierProvider<LanguageController, String>(
+  LanguageController.new,
+);
+final appLocaleProvider = Provider<Locale?>((ref) {
+  final code = ref.watch(appLanguageProvider);
+  if (code == systemLanguageCode) return null;
+  return Locale(code);
+});
 final _routineClocksProvider =
     StreamProvider<List<({String lastDone, int everyDays})>>((ref) {
       final home = ref.watch(currentHomeIdProvider).value;
@@ -166,15 +175,17 @@ final hlcProvider = Provider(
 );
 final changesProvider = Provider((ref) {
   final snackbar = ref.watch(snackbarProvider);
+  final prefs = ref.watch(prefsProvider);
   return ChangeWriter(
     ref.watch(dbProvider),
     ref.watch(registryProvider),
     ref.watch(hlcProvider),
-    ref.watch(prefsProvider),
+    prefs,
     validator: const Validator(),
     signer: ref.watch(opSignerProvider),
     clock: ref.watch(clockProvider),
-    onRejected: (reason) => snackbar.show(rejectText(reason)),
+    onRejected: (reason) =>
+        snackbar.show(rejectText(reason, lookupUserLocalizations(prefs))),
   );
 });
 final demoSeederProvider = Provider((ref) => DemoSeeder(ref));

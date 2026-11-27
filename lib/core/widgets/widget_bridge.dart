@@ -22,14 +22,16 @@ class WidgetBridge {
     }
   }
 
-  /// Sends updated JSON snapshots for both Android home-screen widgets.
+  /// Sends updated JSON snapshots for Android home-screen widgets.
   Future<void> updateSnapshots({
     required Map<String, Object?> staff,
     required Map<String, Object?> todos,
+    Map<String, Object?>? money,
   }) async {
     await _invoke<void>('updateSnapshots', {
       'staffJson': jsonEncode(staff),
       'todosJson': jsonEncode(todos),
+      if (money != null) 'moneyJson': jsonEncode(money),
     });
   }
 

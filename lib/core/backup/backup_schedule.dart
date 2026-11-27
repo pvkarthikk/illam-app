@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:workmanager/workmanager.dart';
@@ -11,6 +10,7 @@ import 'package:nm_flat/core/data/prefs/notification_prefs.dart';
 import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/notify/notifications.dart';
 import 'package:nm_flat/core/providers.dart';
+import 'package:nm_flat/features/account/appearance_controller.dart';
 import 'package:nm_flat/features/backup/backup_texts.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
@@ -114,7 +114,7 @@ Future<void> checkBackupAttention(Reader read, String homeId, int nowMs) async {
     return;
   }
 
-  final l = lookupAppLocalizations(const Locale('en'));
+  final l = lookupUserLocalizations(read(prefsProvider));
   final reason = backupAttentionReason(l, config, nowMs);
   if (reason == null) return;
 

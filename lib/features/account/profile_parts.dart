@@ -12,12 +12,15 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:nm_flat/core/backup/backup_schedule.dart';
 import 'package:nm_flat/core/data/prefs/notification_prefs.dart';
 import 'package:nm_flat/core/design/components/components.dart';
+import 'package:nm_flat/core/domain/app_locale.dart';
+import 'package:nm_flat/core/domain/changelog.dart';
 import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/notify/background_tasks.dart';
 import 'package:nm_flat/core/notify/notification_permission.dart';
 import 'package:nm_flat/core/notify/notifications.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/features/account/appearance_controller.dart';
+import 'package:nm_flat/features/account/whats_new_sheet.dart';
 import 'package:nm_flat/features/backup/backup_controller.dart';
 import 'package:nm_flat/features/backup/backup_texts.dart';
 import 'package:nm_flat/features/staff/staff_providers.dart';
@@ -168,6 +171,51 @@ class _ProfileNotificationsSectionState
 
 class ProfileOnThisPhoneSection extends ConsumerWidget {
   const ProfileOnThisPhoneSection({super.key});
+
+  Future<void> _pickLanguage(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context);
+    final current = ref.read(appLanguageProvider);
+    await showNestSheet<void>(
+      context,
+      (ctx) => Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          NestSheetHeader(title: l10n.profileLanguage),
+          RadioGroup<String>(
+            groupValue: current,
+            onChanged: (code) async {
+              if (code == null) return;
+              final notifier = ref.read(appLanguageProvider.notifier);
+              Navigator.of(ctx).pop();
+              await notifier.set(code);
+            },
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                RadioListTile<String>(
+                  value: systemLanguageCode,
+                  title: Text(l10n.profileLangSystem),
+                ),
+                RadioListTile<String>(
+                  value: 'en',
+                  title: Text(l10n.profileLangEnglish),
+                ),
+                RadioListTile<String>(
+                  value: 'ta',
+                  title: Text(l10n.profileLangTamil),
+                ),
+                RadioListTile<String>(
+                  value: 'hi',
+                  title: Text(l10n.profileLangHindi),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   Future<void> _pickAppearance(BuildContext context, WidgetRef ref) async {
     final l10n = AppLocalizations.of(context);
@@ -498,7 +546,13 @@ class ProfileOnThisPhoneSection extends ConsumerWidget {
                 Divider(height: 1, color: c.line),
                 SettingsRow(
                   label: l10n.profileLanguage,
-                  value: l10n.profileEnglish,
+                  value: switch (ref.watch(appLanguageProvider)) {
+                    'en' => l10n.profileLangEnglish,
+                    'ta' => l10n.profileLangBadgeTamil,
+                    'hi' => l10n.profileLangBadgeHindi,
+                    _ => l10n.profileLangSystem,
+                  },
+                  onTap: () => _pickLanguage(context, ref),
                 ),
                 Divider(height: 1, color: c.line),
                 SettingsRow(
@@ -564,7 +618,15 @@ class ProfileFooter extends ConsumerWidget {
                   onTap: () => _openUrl(kHelpUrl),
                 ),
                 Divider(height: 1, color: c.line),
-                SettingsRow(label: l10n.profileVersion, value: version),
+                SettingsRow(
+                  label: l10n.profileVersion,
+                  value: version,
+                  onTap: () => showWhatsNewSheet(
+                    context,
+                    releases: kAppReleases,
+                    isHistory: true,
+                  ),
+                ),
               ],
             ),
           ),

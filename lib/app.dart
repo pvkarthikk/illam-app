@@ -7,6 +7,8 @@ import 'package:material_ui/material_ui.dart';
 import 'package:workmanager/workmanager.dart';
 
 import 'package:nm_flat/core/design/components/components.dart';
+import 'package:nm_flat/core/domain/app_locale.dart';
+import 'package:nm_flat/core/domain/changelog.dart';
 import 'package:nm_flat/core/nav/router.dart';
 import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/notify/background_tasks.dart';
@@ -20,7 +22,9 @@ import 'package:nm_flat/core/sync/remote/remote_sync_engine.dart';
 import 'package:nm_flat/core/sync/sync_engine.dart';
 import 'package:nm_flat/core/widgets/widget_actions.dart';
 import 'package:nm_flat/core/widgets/widget_bridge.dart';
+import 'package:nm_flat/features/account/appearance_controller.dart';
 import 'package:nm_flat/features/account/home_gone_dialog.dart';
+import 'package:nm_flat/features/account/whats_new_sheet.dart';
 import 'package:nm_flat/features/sms_import/sms_import_controller.dart';
 import 'package:nm_flat/features/tasks/tasks_controller.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
@@ -40,6 +44,7 @@ class _NestAppState extends ConsumerState<NestApp> {
   Duration? _dialPeriod;
   Timer? _planTimer;
   String? _handlingTombstoneHomeId;
+  bool _changelogChecked = false;
 
   @override
   void initState() {
@@ -52,11 +57,44 @@ class _NestAppState extends ConsumerState<NestApp> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       _schedulePlan();
+      unawaited(_checkChangelogOnUpdate());
     });
   }
 
+  Future<void> _checkChangelogOnUpdate() async {
+    if (_changelogChecked || !mounted) return;
+    _changelogChecked = true;
+    try {
+      final prefs = ref.read(prefsProvider);
+      final version = (await ref.read(appVersionNameProvider.future)).trim();
+      if (!mounted || version.isEmpty) return;
+
+      if (prefs.currentHomeId == null) {
+        if ((prefs.lastSeenChangelogVersion ?? '').isEmpty) {
+          await prefs.setLastSeenChangelogVersion(version);
+        }
+        return;
+      }
+      if (_handlingTombstoneHomeId != null) return;
+
+      final unseen = unseenReleaseNotes(
+        currentVersion: version,
+        lastSeenVersion: prefs.lastSeenChangelogVersion,
+        hasCompletedOnboarding: true,
+      );
+      if (unseen.isEmpty) return;
+
+      final navCtx = rootNavigatorKey.currentContext;
+      if (navCtx == null || !navCtx.mounted) return;
+      await showWhatsNewSheet(navCtx, releases: unseen);
+      await prefs.setLastSeenChangelogVersion(version);
+    } on Object {
+      // Ignore missing PackageInfo channel or disposed provider in headless tests.
+    }
+  }
+
   void _onIgnoredReason(String reason) {
-    final l = lookupAppLocalizations(const Locale('en'));
+    final l = lookupUserLocalizations(ref.read(prefsProvider));
     final text = reason == 'lastAdmin'
         ? l.syncReasonLastAdmin
         : l.opIgnoredRoleChanged;
@@ -134,7 +172,7 @@ class _NestAppState extends ConsumerState<NestApp> {
           if (!stillUnshown) return;
           if (t.reason == 'left') {
             await store.markShown(t.homeId);
-            final l = lookupAppLocalizations(const Locale('en'));
+            final l = lookupUserLocalizations(ref.read(prefsProvider));
             ref.read(snackbarProvider).show(l.homeLeft(t.homeName));
             ref.read(routerProvider).go(Routes.onboardingStep('welcome'));
           } else {
@@ -157,6 +195,7 @@ class _NestAppState extends ConsumerState<NestApp> {
 
     return MaterialApp.router(
       onGenerateTitle: (c) => AppLocalizations.of(c).appName,
+      locale: ref.watch(appLocaleProvider),
       theme: NestTheme.light(),
       darkTheme: NestTheme.dark(),
       themeMode: ref.watch(themeModeProvider),
@@ -167,6 +206,11 @@ class _NestAppState extends ConsumerState<NestApp> {
         ...GlobalMaterialLocalizations.delegates,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
+      localeListResolutionCallback: (locales, _) => Locale(
+        resolveLanguageCode(systemLanguageCode, [
+          for (final l in locales ?? const <Locale>[]) l.languageCode,
+        ]),
+      ),
       debugShowCheckedModeBanner: false,
       builder: (context, child) {
         final dark = Theme.of(context).brightness == Brightness.dark;
@@ -277,7 +321,7 @@ class _SyncLifecycleState extends ConsumerState<SyncLifecycle> {
       router.push(uri.path);
       return;
     }
-    router.go(uri.path);
+    router.go(uri.hasQuery ? uri.toString() : uri.path);
   }
 
   void _scheduleWidgetPush() {
@@ -390,6 +434,9 @@ class _SyncLifecycleState extends ConsumerState<SyncLifecycle> {
   Widget build(BuildContext context) {
     ref.listen<AsyncValue<String?>>(currentHomeIdProvider, (_, _) {
       _scheduleWidgetPush();
+    });
+    ref.listen<String>(appLanguageProvider, (prev, next) {
+      if (prev != null && prev != next) _scheduleWidgetPush();
     });
     ref.listen<SyncEngine>(syncEngineProvider, (prev, next) {
       _syncedSub?.cancel();

@@ -23,6 +23,7 @@ import 'package:nm_flat/core/data/db/encrypt_existing.dart'
 import 'package:nm_flat/core/data/prefs/device_prefs.dart';
 import 'package:nm_flat/core/data/repo/home_eraser.dart';
 import 'package:nm_flat/core/data/secure/secure_store.dart';
+import 'package:nm_flat/core/domain/money_widget_snapshot.dart';
 import 'package:nm_flat/core/domain/widget_snapshot.dart';
 import 'package:nm_flat/core/gmail/gmail_import_config.dart';
 import 'package:nm_flat/core/notify/background_tasks.dart';
@@ -107,6 +108,7 @@ Future<void> main() async {
     await WidgetBridge.instance.updateSnapshots(
       staff: const StaffWidgetSnapshot.noHome().toJson(),
       todos: const TodoWidgetSnapshot.noHome().toJson(),
+      money: const MoneyWidgetSnapshot.noHome().toJson(),
     );
   });
   DeviceKeys? bootKeys;
@@ -121,11 +123,15 @@ Future<void> main() async {
     runApp(const CantSecureApp());
     return;
   }
+  await Future.wait([
+    initializeDateFormatting('en'),
+    initializeDateFormatting('ta'),
+    initializeDateFormatting('hi'),
+  ]);
   FixedClock? demoClock;
   if (kDemoMode) {
     final now = DateTime.now();
     demoClock = FixedClock(DateTime(now.year, now.month, now.day, 9, 30));
-    await initializeDateFormatting('en');
     await prefs.setNotifAsked(true);
     await prefs.setThemeMode('light');
     final demoKeys = bootKeys;

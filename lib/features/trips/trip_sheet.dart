@@ -224,7 +224,7 @@ class _TripSheetState extends ConsumerState<_TripSheet> {
           runSpacing: 4,
           children: [
             NestChip(
-              label: formatTripDateRange(_startDate, null),
+              label: formatTripDateRange(_startDate, null, l10n.localeName),
               leading: Icon(
                 Icons.event_outlined,
                 size: 16,
@@ -236,7 +236,7 @@ class _TripSheetState extends ConsumerState<_TripSheet> {
             NestChip(
               label: _endDate == null
                   ? l10n.tripsAddEndDate
-                  : '${l10n.tripsEndDate}: ${formatTripDateRange(_endDate!, null)}',
+                  : '${l10n.tripsEndDate}: ${formatTripDateRange(_endDate!, null, l10n.localeName)}',
               selected: _endDate != null,
               onTap: () => _pickEndDate(today),
             ),

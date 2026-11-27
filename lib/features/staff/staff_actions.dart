@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -7,8 +6,8 @@ import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/domain/attendance.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/ui/formatters.dart';
+import 'package:nm_flat/features/account/appearance_controller.dart';
 import 'package:nm_flat/features/staff/staff_providers.dart';
-import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
 class StaffActions extends Notifier<Set<String>> {
   @override
@@ -21,13 +20,16 @@ class StaffActions extends Notifier<Set<String>> {
       final repo = ref.read(staffRepoProvider);
       final memberId = ref.read(myMemberIdProvider);
       final clock = ref.read(clockProvider);
-      final l10n = lookupAppLocalizations(const Locale('en'));
+      final l10n = lookupUserLocalizations(ref.read(prefsProvider));
 
       final result = await repo.markIn(s.id, memberId);
       ref
           .read(snackbarProvider)
           .show(
-            l10n.staffMarkedIn(s.name ?? '', Formatters.time12(clock.now())),
+            l10n.staffMarkedIn(
+              s.name ?? '',
+              Formatters.time12(clock.now(), l10n.localeName),
+            ),
             undo: result.undo,
           );
     } finally {
@@ -42,7 +44,7 @@ class StaffActions extends Notifier<Set<String>> {
       final repo = ref.read(staffRepoProvider);
       final memberId = ref.read(myMemberIdProvider);
       final clock = ref.read(clockProvider);
-      final l10n = lookupAppLocalizations(const Locale('en'));
+      final l10n = lookupUserLocalizations(ref.read(prefsProvider));
 
       final nowMs = clock.nowMs;
       final closedOut = max(nowMs, (open.inAt ?? nowMs) + 60000);

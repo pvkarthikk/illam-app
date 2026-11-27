@@ -24,6 +24,7 @@ import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/sync/background_sync.dart';
 import 'package:nm_flat/core/time/dates.dart';
 import 'package:nm_flat/core/widgets/widget_actions.dart';
+import 'package:nm_flat/features/account/appearance_controller.dart';
 import 'package:nm_flat/features/salary/salary_providers.dart';
 import 'package:nm_flat/features/staff/staff_providers.dart';
 
@@ -262,7 +263,7 @@ Future<void> showIfStillValid(Reader read, Map<String, dynamic> input) async {
   final prefs = read(prefsProvider);
   if (!stillValid(r, inputs) || prefs.wasNotifShown(r.key)) return;
 
-  await showReminder(r, enLocalizations());
+  await showReminder(r, lookupUserLocalizations(prefs));
   await prefs.markNotifShown(r.key, inputs.today);
 }
 
@@ -272,7 +273,7 @@ Future<int> runRemindersNow(Reader read) async {
   if (inputs == null) return 0;
 
   final prefs = read(prefsProvider);
-  final l10n = enLocalizations();
+  final l10n = lookupUserLocalizations(prefs);
   var shown = 0;
   for (final r in planToday(inputs)) {
     if (!stillValid(r, inputs)) continue;

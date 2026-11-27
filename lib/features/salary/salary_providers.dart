@@ -98,18 +98,26 @@ final settledMonthsProvider = StreamProvider.family<Set<String>, String>((
   });
 });
 
+/// Extracts settle-attempt IDs marked as duplicates across all staff and months.
+Set<String> duplicateSettleAttemptIdsFromRows(
+  Iterable<SettlementAttemptRow> rows,
+) {
+  final byKey = <(String, String), List<AttemptData>>{};
+  for (final row in rows) {
+    (byKey[(row.staffId, row.month)] ??= []).add(attemptFromRow(row));
+  }
+  return {
+    for (final entry in byKey.entries)
+      for (final dup in computeSettlement(entry.value).duplicates)
+        if (dup.kind == 'settle') dup.id,
+  };
+}
+
 final duplicateSalaryAttemptIdsProvider = StreamProvider<Set<String>>((ref) {
-  return ref.watch(salaryRepoProvider).watchAllAttempts().map((rows) {
-    final byKey = <(String, String), List<AttemptData>>{};
-    for (final row in rows) {
-      (byKey[(row.staffId, row.month)] ??= []).add(attemptFromRow(row));
-    }
-    return {
-      for (final entry in byKey.entries)
-        for (final dup in computeSettlement(entry.value).duplicates)
-          if (dup.kind == 'settle') dup.id,
-    };
-  });
+  return ref
+      .watch(salaryRepoProvider)
+      .watchAllAttempts()
+      .map(duplicateSettleAttemptIdsFromRows);
 });
 
 class SalaryView {

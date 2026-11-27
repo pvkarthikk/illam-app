@@ -3,6 +3,7 @@ package io.github.pvkarthikk.illam.widget
 import android.content.Context
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.Date
@@ -43,10 +44,39 @@ data class TodoSnapData(
     val items: List<TodoRowData>,
 )
 
+data class MoneyRecentItemData(
+    val merchant: String,
+    val amountText: String,
+    val category: String,
+)
+
+data class MoneyCategoryOption(
+    val id: String,
+    val label: String,
+)
+
+data class MoneySnapData(
+    val hasHome: Boolean,
+    val homeName: String,
+    val date: String,
+    val month: String,
+    val monthSpentPaise: Int,
+    val monthSpentText: String,
+    val budgetSubtitle: String,
+    val headerTitle: String,
+    val addLabel: String,
+    val scanLabel: String,
+    val emptyText: String,
+    val categories: List<MoneyCategoryOption>,
+    val recentMerchants: List<String>,
+    val recentItems: List<MoneyRecentItemData>,
+)
+
 object WidgetStore {
     private const val PREFS_NAME = "illam_widgets"
     private const val KEY_STAFF_JSON = "staff_json"
     private const val KEY_TODOS_JSON = "todos_json"
+    private const val KEY_MONEY_JSON = "money_json"
     private const val KEY_PENDING_ACTIONS = "pending_actions"
 
     private val lock = Any()
@@ -54,17 +84,23 @@ object WidgetStore {
     private fun prefs(context: Context) =
         context.applicationContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
-    fun saveSnapshots(context: Context, staffJson: String?, todosJson: String?) {
+    fun saveSnapshots(
+        context: Context,
+        staffJson: String?,
+        todosJson: String?,
+        moneyJson: String? = null,
+    ) {
         synchronized(lock) {
             val edit = prefs(context).edit()
             if (staffJson != null) edit.putString(KEY_STAFF_JSON, staffJson)
             if (todosJson != null) edit.putString(KEY_TODOS_JSON, todosJson)
+            if (moneyJson != null) edit.putString(KEY_MONEY_JSON, moneyJson)
             edit.commit()
         }
     }
 
     fun hasHome(context: Context): Boolean =
-        readStaff(context).hasHome || readTodos(context).hasHome
+        readStaff(context).hasHome || readTodos(context).hasHome || readMoney(context).hasHome
 
     fun readStaff(context: Context): StaffSnapData {
         val raw = synchronized(lock) { prefs(context).getString(KEY_STAFF_JSON, null) }
@@ -128,6 +164,81 @@ object WidgetStore {
         } catch (_: Exception) {
             TodoSnapData(hasHome = false, homeName = "", date = "", totalCount = 0, items = emptyList())
         }
+    }
+
+    fun readMoney(context: Context): MoneySnapData {
+        val raw = synchronized(lock) { prefs(context).getString(KEY_MONEY_JSON, null) }
+            ?: return emptyMoneySnap()
+        return try {
+            val obj = JSONObject(raw)
+            val catsArr = obj.optJSONArray("categories") ?: JSONArray()
+            val cats = ArrayList<MoneyCategoryOption>(catsArr.length())
+            for (i in 0 until catsArr.length()) {
+                val cObj = catsArr.getJSONObject(i)
+                val id = cObj.optString("id")
+                val label = cObj.optString("label", id)
+                if (id.isNotEmpty()) cats.add(MoneyCategoryOption(id, label))
+            }
+            val merchantsArr = obj.optJSONArray("recentMerchants") ?: JSONArray()
+            val merchants = ArrayList<String>(merchantsArr.length())
+            for (i in 0 until merchantsArr.length()) {
+                val m = merchantsArr.optString(i)
+                if (m.isNotEmpty()) merchants.add(m)
+            }
+            val recArr = obj.optJSONArray("recentItems") ?: JSONArray()
+            val recent = ArrayList<MoneyRecentItemData>(recArr.length())
+            for (i in 0 until recArr.length()) {
+                val rObj = recArr.getJSONObject(i)
+                recent.add(
+                    MoneyRecentItemData(
+                        merchant = rObj.optString("merchant"),
+                        amountText = rObj.optString("amountText"),
+                        category = rObj.optString("category"),
+                    ),
+                )
+            }
+            MoneySnapData(
+                hasHome = obj.optBoolean("hasHome", false),
+                homeName = obj.optString("homeName"),
+                date = obj.optString("date"),
+                month = obj.optString("month"),
+                monthSpentPaise = obj.optInt("monthSpentPaise", 0),
+                monthSpentText = obj.optString("monthSpentText", "₹0"),
+                budgetSubtitle = obj.optString("budgetSubtitle"),
+                headerTitle = obj.optString("headerTitle"),
+                addLabel = obj.optString("addLabel"),
+                scanLabel = obj.optString("scanLabel"),
+                emptyText = obj.optString("emptyText"),
+                categories = cats,
+                recentMerchants = merchants,
+                recentItems = recent,
+            )
+        } catch (_: Exception) {
+            emptyMoneySnap()
+        }
+    }
+
+    private fun emptyMoneySnap() = MoneySnapData(
+        hasHome = false,
+        homeName = "",
+        date = "",
+        month = "",
+        monthSpentPaise = 0,
+        monthSpentText = "₹0",
+        budgetSubtitle = "",
+        headerTitle = "",
+        addLabel = "",
+        scanLabel = "",
+        emptyText = "",
+        categories = emptyList(),
+        recentMerchants = emptyList(),
+        recentItems = emptyList(),
+    )
+
+    private fun formatIndianRupees(paise: Long): String {
+        val rupees = (kotlin.math.abs(paise) + 50L) / 100L
+        val fmt = NumberFormat.getNumberInstance(Locale.Builder().setLanguage("en").setRegion("IN").build())
+        return "₹${fmt.format(rupees)}"
     }
 
     fun enqueueAction(context: Context, action: Map<String, Any?>) {
@@ -307,6 +418,41 @@ object WidgetStore {
                         val count = root.optInt("totalCount", arr.length()) + 1
                         root.put("totalCount", count)
                         prefs(context).edit().putString(KEY_TODOS_JSON, root.toString()).commit()
+                    } catch (_: Exception) {
+                    }
+                }
+
+                "add_spend" -> {
+                    val amountPaise = (action["amountPaise"] as? Number)?.toInt() ?: 0
+                    if (amountPaise <= 0) return
+                    val merchant = (action["merchant"] as? String)?.trim()?.ifEmpty { null }
+                        ?: (action["category"] as? String)?.trim()
+                        ?: "Spend"
+                    val raw = prefs(context).getString(KEY_MONEY_JSON, null) ?: return
+                    try {
+                        val root = JSONObject(raw)
+                        if (!root.optBoolean("hasHome", false)) return
+                        val date = (action["date"] as? String)?.trim() ?: ""
+                        val snapMonth = root.optString("month")
+                        if (snapMonth.isEmpty() || date.startsWith(snapMonth)) {
+                            val nextPaise = root.optInt("monthSpentPaise", 0).toLong() + amountPaise
+                            root.put("monthSpentPaise", nextPaise.toInt())
+                            root.put("monthSpentText", formatIndianRupees(nextPaise))
+                        }
+                        val prev = root.optJSONArray("recentItems") ?: JSONArray()
+                        val nextItems = JSONArray()
+                        nextItems.put(
+                            JSONObject().apply {
+                                put("merchant", merchant)
+                                put("amountText", formatIndianRupees(amountPaise.toLong()))
+                                put("category", "")
+                            },
+                        )
+                        if (prev.length() > 0) {
+                            nextItems.put(prev.getJSONObject(0))
+                        }
+                        root.put("recentItems", nextItems)
+                        prefs(context).edit().putString(KEY_MONEY_JSON, root.toString()).commit()
                     } catch (_: Exception) {
                     }
                 }

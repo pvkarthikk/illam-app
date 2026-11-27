@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'dart:ui' show Locale;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import 'package:nm_flat/core/backup/backup_codec.dart';
 import 'package:nm_flat/core/backup/backup_config.dart';
@@ -13,7 +11,8 @@ import 'package:nm_flat/core/backup/separate_copy.dart';
 import 'package:nm_flat/core/backup/snapshot.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/sync/membership_replay.dart';
-import 'package:nm_flat/l10n/gen/app_localizations.dart';
+import 'package:nm_flat/core/ui/formatters.dart';
+import 'package:nm_flat/features/account/appearance_controller.dart';
 
 class FoundBackup {
   const FoundBackup(this.file, this.header);
@@ -278,10 +277,10 @@ class RestoreController extends Notifier<RestoreUi> {
 
   Future<String> keepAsSeparateCopy() async {
     final snap = state.snapshot!;
-    final l = lookupAppLocalizations(const Locale('en'));
-    final dateStr = DateFormat(
+    final l = lookupUserLocalizations(ref.read(prefsProvider));
+    final dateStr = Formatters.safeDateFormat(
       'd MMM yyyy',
-      'en',
+      l.localeName,
     ).format(DateTime.fromMillisecondsSinceEpoch(snap.createdAt));
     final newName = l.restoreSeparateName(snap.homeName, dateStr);
     final fallbackMemberId =

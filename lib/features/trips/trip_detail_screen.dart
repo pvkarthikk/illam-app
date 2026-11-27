@@ -164,7 +164,11 @@ class _TripDetailScreenState extends ConsumerState<TripDetailScreen> {
     return Scaffold(
       appBar: NestTopBar.sub(
         title: trip.title,
-        subtitle: formatTripDateRange(trip.startDate, trip.endDate),
+        subtitle: formatTripDateRange(
+          trip.startDate,
+          trip.endDate,
+          l10n.localeName,
+        ),
         actions: [
           IconButton(
             tooltip: l10n.tripsEditTrip,

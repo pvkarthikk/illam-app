@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ui';
 
 import 'package:drift/drift.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -8,7 +7,7 @@ import 'package:nm_flat/core/notify/notifications.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/sync/control_dialer.dart';
 import 'package:nm_flat/core/sync/sync_store.dart';
-import 'package:nm_flat/l10n/gen/app_localizations.dart';
+import 'package:nm_flat/features/account/appearance_controller.dart';
 
 const _threeDaysMs = 3 * 24 * 60 * 60 * 1000;
 
@@ -69,7 +68,7 @@ Future<void> _syncHomeAndNudge(Reader read) async {
     if (now - newestSyncAt <= _threeDaysMs) return;
     if (now - prefs.lastOutOfSyncNoticeAt <= _threeDaysMs) return;
 
-    final l = lookupAppLocalizations(const Locale('en'));
+    final l = lookupUserLocalizations(prefs);
     await plugin.show(
       id: stableId('outOfSync'),
       title: l.notifAppName,

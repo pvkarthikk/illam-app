@@ -1,5 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nm_flat/core/domain/attendance.dart';
+import 'package:nm_flat/core/domain/duplicate_hint.dart';
+import 'package:nm_flat/core/domain/money_widget_snapshot.dart';
 import 'package:nm_flat/core/domain/widget_snapshot.dart';
 
 void main() {
@@ -168,5 +170,74 @@ void main() {
     expect(snap.items[3].kind, 'routine');
     expect(snap.items[3].overdue, isTrue);
     expect(snap.items[3].meta, contains('Kitchen'));
+  });
+
+  test('buildMoneyWidgetSnapshot computes month total, budget status & deduped merchants', () {
+    final noHome = buildMoneyWidgetSnapshot(
+      hasHome: false,
+      today: today,
+      monthExpenses: const [],
+      recentSpends: const [],
+    );
+    expect(noHome.hasHome, isFalse);
+    expect(noHome.monthSpentText, '₹0');
+
+    final expenses = [
+      const SpendLite(
+        id: 'e1',
+        merchant: 'Reliance Fresh',
+        merchantKey: 'reliance fresh',
+        date: today,
+        source: 'manual',
+        addedBy: 'm1',
+        amountPaise: 125000,
+        createdAt: 20,
+        method: 'upi',
+      ),
+      const SpendLite(
+        id: 'e2',
+        merchant: 'Reliance Fresh',
+        merchantKey: 'reliance fresh',
+        date: '2026-11-24',
+        source: 'manual',
+        addedBy: 'm1',
+        amountPaise: 30000,
+        createdAt: 10,
+        method: 'upi',
+      ),
+      const SpendLite(
+        id: 'e3',
+        merchant: 'Apollo',
+        merchantKey: 'apollo',
+        date: '2026-11-20',
+        source: 'manual',
+        addedBy: 'm1',
+        amountPaise: 50000,
+        createdAt: 5,
+        method: 'card',
+      ),
+    ];
+
+    final snap = buildMoneyWidgetSnapshot(
+      hasHome: true,
+      homeName: 'Home',
+      today: today,
+      monthExpenses: expenses,
+      recentSpends: expenses,
+      budgetMonthlyPaise: 500000,
+      extraCategories: const ['Medical'],
+      localizedCategoryLabels: const {'Groceries': 'மளிகை'},
+    );
+    expect(snap.hasHome, isTrue);
+    expect(snap.monthSpentPaise, 205000);
+    expect(snap.monthSpentText, '₹2,050');
+    expect(snap.budgetSubtitle, '₹2,950 left of ₹5,000');
+    expect(snap.recentMerchants, ['Reliance Fresh', 'Apollo']);
+    expect(snap.recentItems.length, 2);
+    expect(snap.categories.any((c) => c['id'] == 'Medical'), isTrue);
+    expect(
+      snap.categories.firstWhere((c) => c['id'] == 'Groceries')['label'],
+      'மளிகை',
+    );
   });
 }

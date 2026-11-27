@@ -18,4 +18,31 @@
     <string name="widget_add_tomorrow">Tomorrow</string>
     <string name="widget_add_cancel">Cancel</string>
     <string name="widget_add_submit">Add</string>
+
+    <string name="widget_money_label">Money spend</string>
+    <string name="widget_money_desc">See this month\'s spend and add an expense or scan a bill quickly.</string>
+    <string name="widget_money_header">Month spend</string>
+    <string name="widget_money_empty_no_home">Open Illam to set up your home.</string>
+    <string name="widget_money_empty">No spends recorded this month.</string>
+    <string name="widget_money_add_cd">Add spend</string>
+    <string name="widget_money_scan_cd">Scan bill</string>
+
+    <string name="widget_spend_dialog_title">Add spend</string>
+    <string name="widget_spend_amount_hint">0</string>
+    <string name="widget_spend_merchant_hint">Paid to (store or note)</string>
+    <string name="widget_spend_category_label">Category</string>
+    <string name="widget_spend_yesterday">Yesterday</string>
+    <string name="widget_spend_save">Save</string>
+
+    <string name="widget_cat_groceries">Groceries</string>
+    <string name="widget_cat_eating_out">Eating out</string>
+    <string name="widget_cat_shopping">Shopping</string>
+    <string name="widget_cat_utilities">Utilities</string>
+    <string name="widget_cat_home_care">Home care</string>
+    <string name="widget_cat_other">Other</string>
+
+    <string name="widget_method_upi">UPI</string>
+    <string name="widget_method_cash">Cash</string>
+    <string name="widget_method_card">Card</string>
+    <string name="widget_method_bank">Bank</string>
 </resources>

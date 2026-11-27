@@ -23,19 +23,26 @@ class MoneyScreen extends ConsumerStatefulWidget {
 }
 
 class _MoneyScreenState extends ConsumerState<MoneyScreen> {
-  bool _openingAdd = false;
+  bool _openingAction = false;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (!_openingAdd &&
-        GoRouterState.of(context).uri.queryParameters['add'] == '1') {
-      _openingAdd = true;
+    if (_openingAction) return;
+    final qp = GoRouterState.of(context).uri.queryParameters;
+    final openAdd = qp['add'] == '1';
+    final openScan = qp['scan'] == '1';
+    if (openAdd || openScan) {
+      _openingAction = true;
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         if (!mounted) return;
-        await showSpendSheet(context, ref);
+        if (openScan) {
+          await showBillScanSheet(context, ref);
+        } else {
+          await showSpendSheet(context, ref);
+        }
         if (mounted) context.go(Routes.money);
-        _openingAdd = false;
+        _openingAction = false;
       });
     }
   }

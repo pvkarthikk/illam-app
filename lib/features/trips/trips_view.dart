@@ -185,7 +185,11 @@ class _TripSummaryCard extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final c = context.nest;
     final tag = tripBadgeTag(l10n, status);
-    final dateText = formatTripDateRange(trip.startDate, trip.endDate);
+    final dateText = formatTripDateRange(
+      trip.startDate,
+      trip.endDate,
+      l10n.localeName,
+    );
 
     return NestCard(
       onTap: () => context.push(Routes.trip(trip.id)),
@@ -255,7 +259,11 @@ class _PastTripRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final c = context.nest;
-    final dateText = formatTripDateRange(trip.startDate, trip.endDate);
+    final dateText = formatTripDateRange(
+      trip.startDate,
+      trip.endDate,
+      l10n.localeName,
+    );
 
     return InkWell(
       onTap: () => context.push(Routes.trip(trip.id)),

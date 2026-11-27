@@ -4497,5 +4497,56 @@
       },
       "total": {}
     }
+  },
+  "profileLangSystem": "System default",
+  "profileLangEnglish": "English",
+  "profileLangTamil": "தமிழ் (Tamil)",
+  "profileLangHindi": "हिन्दी (Hindi)",
+  "profileLangBadgeTamil": "தமிழ்",
+  "profileLangBadgeHindi": "हिन्दी",
+  "spendCatGroceries": "Groceries",
+  "spendCatShopping": "Shopping",
+  "spendCatStaff": "Staff",
+  "spendCatUtilities": "Utilities",
+  "spendCatEatingOut": "Eating out",
+  "spendCatHomeCare": "Home care",
+  "spendCatOther": "Other",
+  "whatsNewTitle": "What's new",
+  "whatsNewHistoryTitle": "Release notes",
+  "whatsNewGotIt": "Got it",
+  "whatsNewVersionHeader": "Version {version}",
+  "@whatsNewVersionHeader": {
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "whatsNewV170Changelog": "What's New sheet automatically shows release notes after an update — and stays accessible anytime under Profile → Version.",
+  "whatsNewV170SpendWidget": "New Money Spend home-screen widget for one-tap expense entry, month spend at a glance, and quick bill scan.",
+  "whatsNewV170Languages": "Added Tamil and Hindi app languages, following your phone language automatically or selectable under Profile → Language.",
+  "whatsNewV160BillScan": "Offline Camera Bill Scanner in Money using on-device Tesseract OCR to extract store, date, and itemized prices.",
+  "whatsNewV150Trips": "Trip Planner under Tasks with trip dates, reusable generic checklists, pre-departure tracking, and a Today readiness card.",
+  "whatsNewV140MoneyCharts": "Custom Money categories, a toggleable spend breakdown pie chart (by category, item, or person), and collapsible drafts.",
+  "whatsNewV132SmsParser": "Improved on-device bank, credit card, prepaid card, and UPI SMS spend parsing.",
+  "whatsNewV131Routines": "Renamed Cleaning to Routines so general household maintenance schedules fit naturally.",
+  "whatsNewV130SmsImport": "Experimental offline SMS spend import with draft review before adding entries to Money.",
+  "whatsNewV120GmailImport": "Experimental Gmail invoice & PDF receipt import for online grocery and retail orders.",
+  "widgetMoneyHeader": "Month spend",
+  "widgetMoneyAdd": "Add spend",
+  "widgetMoneyScan": "Scan",
+  "widgetMoneyEmpty": "No spends recorded this month.",
+  "widgetMoneyNoHome": "Open Illam to set up your home.",
+  "widgetMoneyBudgetLeft": "{amount} left of {budget}",
+  "@widgetMoneyBudgetLeft": {
+    "placeholders": {
+      "amount": {},
+      "budget": {}
+    }
+  },
+  "widgetMoneyBudgetOver": "{amount} over {budget} budget",
+  "@widgetMoneyBudgetOver": {
+    "placeholders": {
+      "amount": {},
+      "budget": {}
+    }
   }
 }
