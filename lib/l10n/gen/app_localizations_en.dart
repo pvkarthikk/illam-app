@@ -6344,4 +6344,145 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tripsOpenChecklist => 'Checklist';
+
+  @override
+  String get moneyScanBill => 'Scan bill';
+
+  @override
+  String get billScanSheetTitle => 'Scan bill';
+
+  @override
+  String get billScanChooseHint =>
+      'Take a photo of a printed receipt, pick one from your gallery, or paste bill text. OCR runs offline on your phone.';
+
+  @override
+  String get billScanTakePhoto => 'Take photo';
+
+  @override
+  String get billScanFromGallery => 'Choose from gallery';
+
+  @override
+  String get billScanPasteText => 'Paste bill text';
+
+  @override
+  String get billScanPasteHint =>
+      'Paste or type receipt lines with items and prices';
+
+  @override
+  String get billScanExtractAction => 'Extract items';
+
+  @override
+  String get billScanScanning => 'Reading bill text offline...';
+
+  @override
+  String get billScanErrPermission =>
+      'Camera permission is needed to capture a bill photo. You can also choose a photo from your gallery.';
+
+  @override
+  String get billScanErrNoCamera =>
+      'No camera app found on this device. Choose an image from your gallery or paste the text instead.';
+
+  @override
+  String get billScanErrUnsupported =>
+      'On-device camera OCR is only available on Android. Paste bill text below to extract items offline.';
+
+  @override
+  String get billScanErrFailed =>
+      'Could not read that image. Try retaking a clearer photo or pasting the text.';
+
+  @override
+  String get billScanErrEmptyPaste => 'Paste or type some bill text first.';
+
+  @override
+  String get billScanNoTextFound =>
+      'No readable text found. Try rotating 90° and rescanning, or add items manually.';
+
+  @override
+  String get billScanReviewTitle => 'Review scanned bill';
+
+  @override
+  String billScanConfidenceLabel(int percent) {
+    return 'OCR confidence: $percent%';
+  }
+
+  @override
+  String get billScanRotateRescan => 'Rotate 90° & rescan';
+
+  @override
+  String get billScanRawOcrShow => 'Show raw OCR text';
+
+  @override
+  String get billScanRawOcrHide => 'Hide raw OCR text';
+
+  @override
+  String get billScanMerchantLabel => 'Store or merchant';
+
+  @override
+  String get billScanMerchantHint => 'e.g. Reliance Fresh';
+
+  @override
+  String billScanModeSplit(int count) {
+    return 'Split by item ($count)';
+  }
+
+  @override
+  String get billScanModeSingle => 'Single total';
+
+  @override
+  String get billScanSingleAmountLabel => 'Total bill amount';
+
+  @override
+  String get billScanItemsTitle => 'Extracted items';
+
+  @override
+  String get billScanAddItem => '+ Add item';
+
+  @override
+  String get billScanItemNameHint => 'Item name';
+
+  @override
+  String get billScanItemAmountHint => 'Amount';
+
+  @override
+  String get billScanDeleteItemTooltip => 'Remove item';
+
+  @override
+  String billScanSummaryCompare(Object selected, Object billTotal) {
+    return 'Selected: $selected · Bill total: $billTotal';
+  }
+
+  @override
+  String billScanSaveCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Save $count expenses',
+      one: 'Save 1 expense',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get billScanSaveSingle => 'Save expense';
+
+  @override
+  String get billScanErrNoItems =>
+      'Select at least one item with a valid name and positive amount.';
+
+  @override
+  String get billScanErrAmount => 'Enter a valid positive amount.';
+
+  @override
+  String get billScanErrMerchant => 'Enter a store or merchant name.';
+
+  @override
+  String billScanSavedCount(int count, Object total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Saved $count expenses ($total)',
+      one: 'Saved 1 expense ($total)',
+    );
+    return '$_temp0';
+  }
 }

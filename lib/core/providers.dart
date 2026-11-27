@@ -52,6 +52,7 @@ import 'package:nm_flat/core/gmail/gmail_loopback_auth.dart'
 import 'package:nm_flat/core/gmail/gmail_rest_client.dart';
 import 'package:nm_flat/core/gmail/pdf_text_extractor.dart';
 import 'package:nm_flat/core/nav/routes.dart';
+import 'package:nm_flat/core/receipt/receipt_ocr_bridge.dart';
 import 'package:nm_flat/core/sms/sms_import_config.dart';
 import 'package:nm_flat/core/sms/sms_platform_bridge.dart';
 import 'package:nm_flat/core/sms/sms_spend_scanner.dart';
@@ -787,6 +788,10 @@ final moneyRepoProvider = Provider<MoneyRepo>(
         '',
     ref.watch(myMemberIdProvider),
   ),
+);
+
+final receiptOcrBridgeProvider = Provider<ReceiptOcrBridge>(
+  (ref) => const MethodChannelReceiptOcrBridge(),
 );
 
 final merchantRulesProvider = StreamProvider<Map<String, String>>(

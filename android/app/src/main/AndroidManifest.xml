@@ -102,6 +102,15 @@
             android:taskAffinity=""
             android:theme="@style/Theme.Illam.WidgetDialog"
             android:windowSoftInputMode="stateVisible|adjustResize" />
+        <provider
+            android:name=".receipt.ReceiptFileProvider"
+            android:authorities="${applicationId}.receipt_fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/receipt_file_paths" />
+        </provider>
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and
@@ -109,6 +118,9 @@
 
          In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin. -->
     <queries>
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>

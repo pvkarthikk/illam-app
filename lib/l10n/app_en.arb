@@ -4425,5 +4425,77 @@
       }
     }
   },
-  "tripsOpenChecklist": "Checklist"
+  "tripsOpenChecklist": "Checklist",
+  "moneyScanBill": "Scan bill",
+  "billScanSheetTitle": "Scan bill",
+  "billScanChooseHint": "Take a photo of a printed receipt, pick one from your gallery, or paste bill text. OCR runs offline on your phone.",
+  "billScanTakePhoto": "Take photo",
+  "billScanFromGallery": "Choose from gallery",
+  "billScanPasteText": "Paste bill text",
+  "billScanPasteHint": "Paste or type receipt lines with items and prices",
+  "billScanExtractAction": "Extract items",
+  "billScanScanning": "Reading bill text offline...",
+  "billScanErrPermission": "Camera permission is needed to capture a bill photo. You can also choose a photo from your gallery.",
+  "billScanErrNoCamera": "No camera app found on this device. Choose an image from your gallery or paste the text instead.",
+  "billScanErrUnsupported": "On-device camera OCR is only available on Android. Paste bill text below to extract items offline.",
+  "billScanErrFailed": "Could not read that image. Try retaking a clearer photo or pasting the text.",
+  "billScanErrEmptyPaste": "Paste or type some bill text first.",
+  "billScanNoTextFound": "No readable text found. Try rotating 90° and rescanning, or add items manually.",
+  "billScanReviewTitle": "Review scanned bill",
+  "billScanConfidenceLabel": "OCR confidence: {percent}%",
+  "@billScanConfidenceLabel": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "billScanRotateRescan": "Rotate 90° & rescan",
+  "billScanRawOcrShow": "Show raw OCR text",
+  "billScanRawOcrHide": "Hide raw OCR text",
+  "billScanMerchantLabel": "Store or merchant",
+  "billScanMerchantHint": "e.g. Reliance Fresh",
+  "billScanModeSplit": "Split by item ({count})",
+  "@billScanModeSplit": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "billScanModeSingle": "Single total",
+  "billScanSingleAmountLabel": "Total bill amount",
+  "billScanItemsTitle": "Extracted items",
+  "billScanAddItem": "+ Add item",
+  "billScanItemNameHint": "Item name",
+  "billScanItemAmountHint": "Amount",
+  "billScanDeleteItemTooltip": "Remove item",
+  "billScanSummaryCompare": "Selected: {selected} · Bill total: {billTotal}",
+  "@billScanSummaryCompare": {
+    "placeholders": {
+      "selected": {},
+      "billTotal": {}
+    }
+  },
+  "billScanSaveCount": "{count, plural, =1{Save 1 expense} other{Save {count} expenses}}",
+  "@billScanSaveCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "billScanSaveSingle": "Save expense",
+  "billScanErrNoItems": "Select at least one item with a valid name and positive amount.",
+  "billScanErrAmount": "Enter a valid positive amount.",
+  "billScanErrMerchant": "Enter a store or merchant name.",
+  "billScanSavedCount": "{count, plural, =1{Saved 1 expense ({total})} other{Saved {count} expenses ({total})}}",
+  "@billScanSavedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "total": {}
+    }
+  }
 }

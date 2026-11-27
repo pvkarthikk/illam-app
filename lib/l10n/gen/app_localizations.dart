@@ -10130,6 +10130,228 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Checklist'**
   String get tripsOpenChecklist;
+
+  /// No description provided for @moneyScanBill.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan bill'**
+  String get moneyScanBill;
+
+  /// No description provided for @billScanSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan bill'**
+  String get billScanSheetTitle;
+
+  /// No description provided for @billScanChooseHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a photo of a printed receipt, pick one from your gallery, or paste bill text. OCR runs offline on your phone.'**
+  String get billScanChooseHint;
+
+  /// No description provided for @billScanTakePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Take photo'**
+  String get billScanTakePhoto;
+
+  /// No description provided for @billScanFromGallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from gallery'**
+  String get billScanFromGallery;
+
+  /// No description provided for @billScanPasteText.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste bill text'**
+  String get billScanPasteText;
+
+  /// No description provided for @billScanPasteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste or type receipt lines with items and prices'**
+  String get billScanPasteHint;
+
+  /// No description provided for @billScanExtractAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Extract items'**
+  String get billScanExtractAction;
+
+  /// No description provided for @billScanScanning.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading bill text offline...'**
+  String get billScanScanning;
+
+  /// No description provided for @billScanErrPermission.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera permission is needed to capture a bill photo. You can also choose a photo from your gallery.'**
+  String get billScanErrPermission;
+
+  /// No description provided for @billScanErrNoCamera.
+  ///
+  /// In en, this message translates to:
+  /// **'No camera app found on this device. Choose an image from your gallery or paste the text instead.'**
+  String get billScanErrNoCamera;
+
+  /// No description provided for @billScanErrUnsupported.
+  ///
+  /// In en, this message translates to:
+  /// **'On-device camera OCR is only available on Android. Paste bill text below to extract items offline.'**
+  String get billScanErrUnsupported;
+
+  /// No description provided for @billScanErrFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not read that image. Try retaking a clearer photo or pasting the text.'**
+  String get billScanErrFailed;
+
+  /// No description provided for @billScanErrEmptyPaste.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste or type some bill text first.'**
+  String get billScanErrEmptyPaste;
+
+  /// No description provided for @billScanNoTextFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No readable text found. Try rotating 90° and rescanning, or add items manually.'**
+  String get billScanNoTextFound;
+
+  /// No description provided for @billScanReviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Review scanned bill'**
+  String get billScanReviewTitle;
+
+  /// No description provided for @billScanConfidenceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'OCR confidence: {percent}%'**
+  String billScanConfidenceLabel(int percent);
+
+  /// No description provided for @billScanRotateRescan.
+  ///
+  /// In en, this message translates to:
+  /// **'Rotate 90° & rescan'**
+  String get billScanRotateRescan;
+
+  /// No description provided for @billScanRawOcrShow.
+  ///
+  /// In en, this message translates to:
+  /// **'Show raw OCR text'**
+  String get billScanRawOcrShow;
+
+  /// No description provided for @billScanRawOcrHide.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide raw OCR text'**
+  String get billScanRawOcrHide;
+
+  /// No description provided for @billScanMerchantLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Store or merchant'**
+  String get billScanMerchantLabel;
+
+  /// No description provided for @billScanMerchantHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Reliance Fresh'**
+  String get billScanMerchantHint;
+
+  /// No description provided for @billScanModeSplit.
+  ///
+  /// In en, this message translates to:
+  /// **'Split by item ({count})'**
+  String billScanModeSplit(int count);
+
+  /// No description provided for @billScanModeSingle.
+  ///
+  /// In en, this message translates to:
+  /// **'Single total'**
+  String get billScanModeSingle;
+
+  /// No description provided for @billScanSingleAmountLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Total bill amount'**
+  String get billScanSingleAmountLabel;
+
+  /// No description provided for @billScanItemsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Extracted items'**
+  String get billScanItemsTitle;
+
+  /// No description provided for @billScanAddItem.
+  ///
+  /// In en, this message translates to:
+  /// **'+ Add item'**
+  String get billScanAddItem;
+
+  /// No description provided for @billScanItemNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Item name'**
+  String get billScanItemNameHint;
+
+  /// No description provided for @billScanItemAmountHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get billScanItemAmountHint;
+
+  /// No description provided for @billScanDeleteItemTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove item'**
+  String get billScanDeleteItemTooltip;
+
+  /// No description provided for @billScanSummaryCompare.
+  ///
+  /// In en, this message translates to:
+  /// **'Selected: {selected} · Bill total: {billTotal}'**
+  String billScanSummaryCompare(Object selected, Object billTotal);
+
+  /// No description provided for @billScanSaveCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Save 1 expense} other{Save {count} expenses}}'**
+  String billScanSaveCount(int count);
+
+  /// No description provided for @billScanSaveSingle.
+  ///
+  /// In en, this message translates to:
+  /// **'Save expense'**
+  String get billScanSaveSingle;
+
+  /// No description provided for @billScanErrNoItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Select at least one item with a valid name and positive amount.'**
+  String get billScanErrNoItems;
+
+  /// No description provided for @billScanErrAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid positive amount.'**
+  String get billScanErrAmount;
+
+  /// No description provided for @billScanErrMerchant.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a store or merchant name.'**
+  String get billScanErrMerchant;
+
+  /// No description provided for @billScanSavedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Saved 1 expense ({total})} other{Saved {count} expenses ({total})}}'**
+  String billScanSavedCount(int count, Object total);
 }
 
 class _AppLocalizationsDelegate

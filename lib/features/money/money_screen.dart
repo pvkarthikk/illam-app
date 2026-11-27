@@ -6,6 +6,7 @@ import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/core/time/dates.dart';
+import 'package:nm_flat/features/money/bill_scan_sheet.dart';
 import 'package:nm_flat/features/money/bills_section.dart';
 import 'package:nm_flat/features/money/draft_expenses_section.dart';
 import 'package:nm_flat/features/money/money_hero.dart';
@@ -65,10 +66,41 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  NestButton(
-                    label: l10n.moneyAddSpend,
-                    size: NestButtonSize.block,
-                    onPressed: () => showSpendSheet(context, ref),
+                  LayoutBuilder(
+                    builder: (context, constraints) {
+                      final textScale = MediaQuery.textScalerOf(context).scale(1);
+                      final stackButtons =
+                          constraints.maxWidth < 330 || textScale >= 1.4;
+                      final addButton = NestButton(
+                        label: l10n.moneyAddSpend,
+                        size: NestButtonSize.block,
+                        onPressed: () => showSpendSheet(context, ref),
+                      );
+                      final scanButton = NestButton(
+                        label: l10n.moneyScanBill,
+                        icon: Icons.document_scanner_outlined,
+                        kind: NestButtonKind.tonal,
+                        size: NestButtonSize.block,
+                        onPressed: () => showBillScanSheet(context, ref),
+                      );
+                      if (stackButtons) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            addButton,
+                            const SizedBox(height: 10),
+                            scanButton,
+                          ],
+                        );
+                      }
+                      return Row(
+                        children: [
+                          Expanded(child: addButton),
+                          const SizedBox(width: 10),
+                          Expanded(child: scanButton),
+                        ],
+                      );
+                    },
                   ),
                   const SizedBox(height: 8),
                   Text(

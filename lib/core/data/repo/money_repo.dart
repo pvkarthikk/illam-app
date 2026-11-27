@@ -297,6 +297,25 @@ class MoneyRepo {
     }
   }, homeId: homeId);
 
+  /// Records multiple extracted spends inside one atomic [ChangeWriter] batch
+  /// so a single Undo reverts the whole scanned bill cleanly.
+  Future<ChangeResult> addSpendsBatch(
+    List<NewExpense> entries, {
+    String label = 'Scan bill',
+    String? learnMerchant,
+    String? learnCategory,
+  }) => changes.write(label, (c) {
+    for (final entry in entries) {
+      expenses.createIn(c, entry);
+    }
+    if (learnMerchant != null &&
+        learnMerchant.trim().isNotEmpty &&
+        learnCategory != null &&
+        learnCategory.trim().isNotEmpty) {
+      _learnRule(c, learnMerchant, learnCategory);
+    }
+  }, homeId: homeId);
+
   Future<ChangeResult> editSpend(
     String id,
     SpendEdit e, {
