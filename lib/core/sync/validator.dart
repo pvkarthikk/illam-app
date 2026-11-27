@@ -265,6 +265,15 @@ class Validator {
           return _q('range');
         }
 
+      case 'trips':
+        if (op.field == 'title' && !_len(value, 1, 60)) return _q('range');
+
+      case 'trip_items':
+        if (op.field == 'title' && !_len(value, 1, 80)) return _q('range');
+
+      case 'trip_template_items':
+        if (op.field == 'title' && !_len(value, 1, 80)) return _q('range');
+
       case 'backup_status':
         if (op.entityId != op.deviceId) return _q('ownOnly');
     }

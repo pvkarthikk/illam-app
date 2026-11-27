@@ -43,6 +43,9 @@ class CollectionRegistry {
       db.pantry,
       db.routines,
       db.todos,
+      db.trips,
+      db.tripItems,
+      db.tripTemplateItems,
       db.backupStatus,
       // … one line per synced table
     ])

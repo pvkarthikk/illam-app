@@ -24,6 +24,9 @@ import 'package:nm_flat/core/data/db/tables/settlement_attempts.dart';
 import 'package:nm_flat/core/data/db/tables/staff.dart';
 import 'package:nm_flat/core/data/db/tables/sync_peers.dart';
 import 'package:nm_flat/core/data/db/tables/todos.dart';
+import 'package:nm_flat/core/data/db/tables/trip_items.dart';
+import 'package:nm_flat/core/data/db/tables/trip_template_items.dart';
+import 'package:nm_flat/core/data/db/tables/trips.dart';
 
 part 'database.g.dart';
 
@@ -52,6 +55,9 @@ const int kReleaseBaseline = 11;
     Pantry,
     Routines,
     Todos,
+    Trips,
+    TripItems,
+    TripTemplateItems,
     MemberOps,
     MemberDevices,
     SyncPeers,
@@ -88,7 +94,7 @@ class NestDatabase extends _$NestDatabase {
     : super(DatabaseConnection(e, closeStreamsSynchronously: true));
 
   @override
-  int get schemaVersion => 14; // raise by 1 for every table change
+  int get schemaVersion => 15; // raise by 1 for every table change
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -126,6 +132,14 @@ class NestDatabase extends _$NestDatabase {
           await m.createIndex(schema.visitsHomeDate);
           await m.createIndex(schema.visitsHomeOut);
           await m.createIndex(schema.leavesHomeDate);
+        },
+        from14To15: (m, schema) async {
+          await m.createTable(schema.trips);
+          await m.createTable(schema.tripItems);
+          await m.createTable(schema.tripTemplateItems);
+          await m.createIndex(schema.tripsHomeStart);
+          await m.createIndex(schema.tripItemsTripDone);
+          await m.createIndex(schema.tripTemplateHomeSort);
         },
       )(m, from, to);
     },

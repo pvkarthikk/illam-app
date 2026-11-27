@@ -32,6 +32,7 @@ import 'package:nm_flat/core/data/repo/recipes_repo.dart';
 import 'package:nm_flat/core/data/repo/salary_repo.dart';
 import 'package:nm_flat/core/data/repo/staff_repo.dart';
 import 'package:nm_flat/core/data/repo/tasks_repo.dart';
+import 'package:nm_flat/core/data/repo/trips_repo.dart';
 import 'package:nm_flat/core/data/secure/secure_store.dart';
 import 'package:nm_flat/core/data/seed/demo_seeder.dart';
 import 'package:nm_flat/core/data/wipe.dart';
@@ -691,6 +692,43 @@ final doneTodosProvider = StreamProvider<List<TodoRow>>((ref) {
   final home = ref.watch(currentHomeIdProvider).value;
   if (home == null) return Stream.value(const <TodoRow>[]);
   return ref.watch(tasksRepoProvider).watchDoneTodos(home);
+});
+final tripsRepoProvider = Provider<TripsRepo>(
+  (ref) => TripsRepo(
+    ref.watch(dbProvider),
+    ref.watch(changesProvider),
+    ref.watch(prefsProvider),
+  ),
+);
+final tripsProvider = StreamProvider<List<TripRow>>((ref) {
+  final home = ref.watch(currentHomeIdProvider).value;
+  if (home == null) return Stream.value(const <TripRow>[]);
+  return ref.watch(tripsRepoProvider).watchTrips(home);
+});
+final tripByIdProvider = StreamProvider.family<TripRow?, String>((ref, id) {
+  final home = ref.watch(currentHomeIdProvider).value;
+  if (home == null) return Stream.value(null);
+  return ref.watch(tripsRepoProvider).watchTrip(home, id);
+});
+final tripItemsProvider = StreamProvider.family<List<TripItemRow>, String>((
+  ref,
+  tripId,
+) {
+  final home = ref.watch(currentHomeIdProvider).value;
+  if (home == null) return Stream.value(const <TripItemRow>[]);
+  return ref.watch(tripsRepoProvider).watchTripItems(home, tripId);
+});
+final allTripItemsProvider = StreamProvider<List<TripItemRow>>((ref) {
+  final home = ref.watch(currentHomeIdProvider).value;
+  if (home == null) return Stream.value(const <TripItemRow>[]);
+  return ref.watch(tripsRepoProvider).watchAllTripItems(home);
+});
+final tripTemplateItemsProvider = StreamProvider<List<TripTemplateItemRow>>((
+  ref,
+) {
+  final home = ref.watch(currentHomeIdProvider).value;
+  if (home == null) return Stream.value(const <TripTemplateItemRow>[]);
+  return ref.watch(tripsRepoProvider).watchTemplateItems(home);
 });
 final taskPeopleProvider = Provider<AsyncValue<List<TaskPerson>>>((ref) {
   final mAsync = ref.watch(membersProvider);

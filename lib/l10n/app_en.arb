@@ -4262,5 +4262,168 @@
       "merchant": {},
       "amount": {}
     }
-  }
+  },
+  "tripsTab": "Trips",
+  "tripsGenericTitle": "Generic checklist",
+  "tripsGenericSub": "{count, plural, =0{Add items you pack for every trip} =1{1 reusable item · auto-copies to new trips} other{{count} reusable items · auto-copies to new trips}}",
+  "@tripsGenericSub": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tripsGenericLead": "Items here can be copied automatically into every new trip so you never forget essentials.",
+  "tripsGenericAddHint": "Add a generic item (e.g. Chargers, ID cards)…",
+  "tripsGenericEmptyTitle": "No generic items yet",
+  "tripsGenericEmptyBody": "Add essentials you check before every trip, or load a starter list.",
+  "tripsLoadStarter": "Load starter essentials",
+  "tripsStarterLoaded": "Added {count} starter items",
+  "@tripsStarterLoaded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tripsStarterChargers": "Phone chargers & cables",
+  "tripsStarterIds": "ID cards / tickets",
+  "tripsStarterMedicines": "Medicines & first aid",
+  "tripsStarterClothes": "Clothes & toiletries",
+  "tripsStarterWater": "Water bottles & snacks",
+  "tripsStarterKeys": "House keys",
+  "tripsStarterGas": "Turn off gas stove",
+  "tripsStarterLocks": "Lock windows & doors",
+  "tripsNewTrip": "New trip",
+  "tripsNewTripTitle": "New trip",
+  "tripsEditTripTitle": "Edit trip",
+  "tripsNameLabel": "Trip name",
+  "tripsNameHint": "e.g. Goa family trip",
+  "tripsNameRequired": "Add a trip name.",
+  "tripsStartDate": "Trip date",
+  "tripsEndDate": "Return date (optional)",
+  "tripsAddEndDate": "Add return date",
+  "tripsClearEndDate": "Clear return date",
+  "tripsNoteLabel": "Note (optional)",
+  "tripsNoteHint": "e.g. Flight, train, or stay details",
+  "tripsIncludeGeneric": "Include generic checklist ({count})",
+  "@tripsIncludeGeneric": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tripsSaveTrip": "Add trip",
+  "tripsSaveChanges": "Save changes",
+  "tripsDeleteTrip": "Delete trip",
+  "tripsAdded": "Trip added",
+  "tripsUpdated": "Trip updated",
+  "tripsDeleted": "Trip deleted",
+  "tripsEmptyTitle": "No trips planned",
+  "tripsEmptyBody": "Plan a trip with its date and check off items before you leave.",
+  "tripsPastHeader": "Past trips ({count})",
+  "@tripsPastHeader": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tripsReady": "Ready",
+  "tripsOngoing": "On trip",
+  "tripsPast": "Past",
+  "tripsStartsToday": "Starts today",
+  "tripsStartsTomorrow": "Tomorrow",
+  "tripsInDays": "In {n} days",
+  "@tripsInDays": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "tripsCheckedCount": "{done} of {total} checked",
+  "@tripsCheckedCount": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "tripsNoItemsYet": "No checklist items yet",
+  "tripsAllReadyTitle": "All set for your trip!",
+  "tripsRemainingCount": "{count, plural, =1{1 item left before you go} other{{count} items left before you go}}",
+  "@tripsRemainingCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tripsAddItemHint": "Add item to check before leaving…",
+  "tripsAddItem": "Add item",
+  "tripsItemAdded": "Item added",
+  "tripsItemChecked": "Checked: {title}",
+  "@tripsItemChecked": {
+    "placeholders": {
+      "title": {}
+    }
+  },
+  "tripsItemUnchecked": "Moved back: {title}",
+  "@tripsItemUnchecked": {
+    "placeholders": {
+      "title": {}
+    }
+  },
+  "tripsCheckedSection": "Checked ({count})",
+  "@tripsCheckedSection": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tripsImportGeneric": "Import generic checklist",
+  "tripsImportedCount": "{count, plural, =0{All generic items are already in this trip} =1{Added 1 generic item} other{Added {count} generic items}}",
+  "@tripsImportedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tripsResetChecks": "Reset all checks",
+  "tripsChecksReset": "Checklist reset",
+  "tripsCopyGenericBtn": "Copy generic checklist ({count})",
+  "@tripsCopyGenericBtn": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tripsEditItemTitle": "Edit item",
+  "tripsItemLabel": "Item",
+  "tripsSaveToGeneric": "Also add to generic checklist",
+  "tripsSavedToGeneric": "Added to generic checklist",
+  "tripsDeleteItem": "Delete item",
+  "tripsItemDeleted": "Item deleted",
+  "tripsMoreActions": "More trip actions",
+  "tripsEditTrip": "Edit trip",
+  "tripsNotFound": "Trip not found",
+  "tripsTodaySection": "Upcoming trip",
+  "tripsTodayMeta": "{when} · {left, plural, =1{1 item left} other{{left} items left}}",
+  "@tripsTodayMeta": {
+    "placeholders": {
+      "when": {},
+      "left": {
+        "type": "int"
+      }
+    }
+  },
+  "tripsOpenChecklist": "Checklist"
 }

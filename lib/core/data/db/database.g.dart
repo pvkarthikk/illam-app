@@ -16708,6 +16708,1920 @@ class TodosCompanion extends UpdateCompanion<TodoRow> {
   }
 }
 
+class $TripsTable extends Trips with TableInfo<$TripsTable, TripRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TripsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _homeIdMeta = const VerificationMeta('homeId');
+  @override
+  late final GeneratedColumn<String> homeId = GeneratedColumn<String>(
+    'home_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _deletedMeta = const VerificationMeta(
+    'deleted',
+  );
+  @override
+  late final GeneratedColumn<bool> deleted = GeneratedColumn<bool>(
+    'deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _createdByMeta = const VerificationMeta(
+    'createdBy',
+  );
+  @override
+  late final GeneratedColumn<String> createdBy = GeneratedColumn<String>(
+    'created_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _updatedByMeta = const VerificationMeta(
+    'updatedBy',
+  );
+  @override
+  late final GeneratedColumn<String> updatedBy = GeneratedColumn<String>(
+    'updated_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+    'title',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _startDateMeta = const VerificationMeta(
+    'startDate',
+  );
+  @override
+  late final GeneratedColumn<String> startDate = GeneratedColumn<String>(
+    'start_date',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _endDateMeta = const VerificationMeta(
+    'endDate',
+  );
+  @override
+  late final GeneratedColumn<String> endDate = GeneratedColumn<String>(
+    'end_date',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _noteMeta = const VerificationMeta('note');
+  @override
+  late final GeneratedColumn<String> note = GeneratedColumn<String>(
+    'note',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    homeId,
+    deleted,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    title,
+    startDate,
+    endDate,
+    note,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'trips';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TripRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('home_id')) {
+      context.handle(
+        _homeIdMeta,
+        homeId.isAcceptableOrUnknown(data['home_id']!, _homeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_homeIdMeta);
+    }
+    if (data.containsKey('deleted')) {
+      context.handle(
+        _deletedMeta,
+        deleted.isAcceptableOrUnknown(data['deleted']!, _deletedMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('created_by')) {
+      context.handle(
+        _createdByMeta,
+        createdBy.isAcceptableOrUnknown(data['created_by']!, _createdByMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('updated_by')) {
+      context.handle(
+        _updatedByMeta,
+        updatedBy.isAcceptableOrUnknown(data['updated_by']!, _updatedByMeta),
+      );
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
+    }
+    if (data.containsKey('start_date')) {
+      context.handle(
+        _startDateMeta,
+        startDate.isAcceptableOrUnknown(data['start_date']!, _startDateMeta),
+      );
+    }
+    if (data.containsKey('end_date')) {
+      context.handle(
+        _endDateMeta,
+        endDate.isAcceptableOrUnknown(data['end_date']!, _endDateMeta),
+      );
+    }
+    if (data.containsKey('note')) {
+      context.handle(
+        _noteMeta,
+        note.isAcceptableOrUnknown(data['note']!, _noteMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TripRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TripRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      homeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}home_id'],
+      )!,
+      deleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}deleted'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}created_at'],
+      )!,
+      createdBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_by'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      updatedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by'],
+      )!,
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      )!,
+      startDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}start_date'],
+      )!,
+      endDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}end_date'],
+      ),
+      note: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}note'],
+      ),
+    );
+  }
+
+  @override
+  $TripsTable createAlias(String alias) {
+    return $TripsTable(attachedDatabase, alias);
+  }
+}
+
+class TripRow extends DataClass implements Insertable<TripRow> {
+  final String id;
+  final String homeId;
+  final bool deleted;
+  final int createdAt;
+  final String createdBy;
+  final int updatedAt;
+  final String updatedBy;
+  final String title;
+  final String startDate;
+  final String? endDate;
+  final String? note;
+  const TripRow({
+    required this.id,
+    required this.homeId,
+    required this.deleted,
+    required this.createdAt,
+    required this.createdBy,
+    required this.updatedAt,
+    required this.updatedBy,
+    required this.title,
+    required this.startDate,
+    this.endDate,
+    this.note,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['home_id'] = Variable<String>(homeId);
+    map['deleted'] = Variable<bool>(deleted);
+    map['created_at'] = Variable<int>(createdAt);
+    map['created_by'] = Variable<String>(createdBy);
+    map['updated_at'] = Variable<int>(updatedAt);
+    map['updated_by'] = Variable<String>(updatedBy);
+    map['title'] = Variable<String>(title);
+    map['start_date'] = Variable<String>(startDate);
+    if (!nullToAbsent || endDate != null) {
+      map['end_date'] = Variable<String>(endDate);
+    }
+    if (!nullToAbsent || note != null) {
+      map['note'] = Variable<String>(note);
+    }
+    return map;
+  }
+
+  TripsCompanion toCompanion(bool nullToAbsent) {
+    return TripsCompanion(
+      id: Value(id),
+      homeId: Value(homeId),
+      deleted: Value(deleted),
+      createdAt: Value(createdAt),
+      createdBy: Value(createdBy),
+      updatedAt: Value(updatedAt),
+      updatedBy: Value(updatedBy),
+      title: Value(title),
+      startDate: Value(startDate),
+      endDate: endDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(endDate),
+      note: note == null && nullToAbsent ? const Value.absent() : Value(note),
+    );
+  }
+
+  factory TripRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TripRow(
+      id: serializer.fromJson<String>(json['id']),
+      homeId: serializer.fromJson<String>(json['homeId']),
+      deleted: serializer.fromJson<bool>(json['deleted']),
+      createdAt: serializer.fromJson<int>(json['createdAt']),
+      createdBy: serializer.fromJson<String>(json['createdBy']),
+      updatedAt: serializer.fromJson<int>(json['updatedAt']),
+      updatedBy: serializer.fromJson<String>(json['updatedBy']),
+      title: serializer.fromJson<String>(json['title']),
+      startDate: serializer.fromJson<String>(json['startDate']),
+      endDate: serializer.fromJson<String?>(json['endDate']),
+      note: serializer.fromJson<String?>(json['note']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'homeId': serializer.toJson<String>(homeId),
+      'deleted': serializer.toJson<bool>(deleted),
+      'createdAt': serializer.toJson<int>(createdAt),
+      'createdBy': serializer.toJson<String>(createdBy),
+      'updatedAt': serializer.toJson<int>(updatedAt),
+      'updatedBy': serializer.toJson<String>(updatedBy),
+      'title': serializer.toJson<String>(title),
+      'startDate': serializer.toJson<String>(startDate),
+      'endDate': serializer.toJson<String?>(endDate),
+      'note': serializer.toJson<String?>(note),
+    };
+  }
+
+  TripRow copyWith({
+    String? id,
+    String? homeId,
+    bool? deleted,
+    int? createdAt,
+    String? createdBy,
+    int? updatedAt,
+    String? updatedBy,
+    String? title,
+    String? startDate,
+    Value<String?> endDate = const Value.absent(),
+    Value<String?> note = const Value.absent(),
+  }) => TripRow(
+    id: id ?? this.id,
+    homeId: homeId ?? this.homeId,
+    deleted: deleted ?? this.deleted,
+    createdAt: createdAt ?? this.createdAt,
+    createdBy: createdBy ?? this.createdBy,
+    updatedAt: updatedAt ?? this.updatedAt,
+    updatedBy: updatedBy ?? this.updatedBy,
+    title: title ?? this.title,
+    startDate: startDate ?? this.startDate,
+    endDate: endDate.present ? endDate.value : this.endDate,
+    note: note.present ? note.value : this.note,
+  );
+  TripRow copyWithCompanion(TripsCompanion data) {
+    return TripRow(
+      id: data.id.present ? data.id.value : this.id,
+      homeId: data.homeId.present ? data.homeId.value : this.homeId,
+      deleted: data.deleted.present ? data.deleted.value : this.deleted,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      createdBy: data.createdBy.present ? data.createdBy.value : this.createdBy,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      updatedBy: data.updatedBy.present ? data.updatedBy.value : this.updatedBy,
+      title: data.title.present ? data.title.value : this.title,
+      startDate: data.startDate.present ? data.startDate.value : this.startDate,
+      endDate: data.endDate.present ? data.endDate.value : this.endDate,
+      note: data.note.present ? data.note.value : this.note,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TripRow(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('deleted: $deleted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('title: $title, ')
+          ..write('startDate: $startDate, ')
+          ..write('endDate: $endDate, ')
+          ..write('note: $note')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    homeId,
+    deleted,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    title,
+    startDate,
+    endDate,
+    note,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TripRow &&
+          other.id == this.id &&
+          other.homeId == this.homeId &&
+          other.deleted == this.deleted &&
+          other.createdAt == this.createdAt &&
+          other.createdBy == this.createdBy &&
+          other.updatedAt == this.updatedAt &&
+          other.updatedBy == this.updatedBy &&
+          other.title == this.title &&
+          other.startDate == this.startDate &&
+          other.endDate == this.endDate &&
+          other.note == this.note);
+}
+
+class TripsCompanion extends UpdateCompanion<TripRow> {
+  final Value<String> id;
+  final Value<String> homeId;
+  final Value<bool> deleted;
+  final Value<int> createdAt;
+  final Value<String> createdBy;
+  final Value<int> updatedAt;
+  final Value<String> updatedBy;
+  final Value<String> title;
+  final Value<String> startDate;
+  final Value<String?> endDate;
+  final Value<String?> note;
+  final Value<int> rowid;
+  const TripsCompanion({
+    this.id = const Value.absent(),
+    this.homeId = const Value.absent(),
+    this.deleted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.title = const Value.absent(),
+    this.startDate = const Value.absent(),
+    this.endDate = const Value.absent(),
+    this.note = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TripsCompanion.insert({
+    required String id,
+    required String homeId,
+    this.deleted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.title = const Value.absent(),
+    this.startDate = const Value.absent(),
+    this.endDate = const Value.absent(),
+    this.note = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       homeId = Value(homeId);
+  static Insertable<TripRow> custom({
+    Expression<String>? id,
+    Expression<String>? homeId,
+    Expression<bool>? deleted,
+    Expression<int>? createdAt,
+    Expression<String>? createdBy,
+    Expression<int>? updatedAt,
+    Expression<String>? updatedBy,
+    Expression<String>? title,
+    Expression<String>? startDate,
+    Expression<String>? endDate,
+    Expression<String>? note,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (homeId != null) 'home_id': homeId,
+      if (deleted != null) 'deleted': deleted,
+      if (createdAt != null) 'created_at': createdAt,
+      if (createdBy != null) 'created_by': createdBy,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (updatedBy != null) 'updated_by': updatedBy,
+      if (title != null) 'title': title,
+      if (startDate != null) 'start_date': startDate,
+      if (endDate != null) 'end_date': endDate,
+      if (note != null) 'note': note,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  TripsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? homeId,
+    Value<bool>? deleted,
+    Value<int>? createdAt,
+    Value<String>? createdBy,
+    Value<int>? updatedAt,
+    Value<String>? updatedBy,
+    Value<String>? title,
+    Value<String>? startDate,
+    Value<String?>? endDate,
+    Value<String?>? note,
+    Value<int>? rowid,
+  }) {
+    return TripsCompanion(
+      id: id ?? this.id,
+      homeId: homeId ?? this.homeId,
+      deleted: deleted ?? this.deleted,
+      createdAt: createdAt ?? this.createdAt,
+      createdBy: createdBy ?? this.createdBy,
+      updatedAt: updatedAt ?? this.updatedAt,
+      updatedBy: updatedBy ?? this.updatedBy,
+      title: title ?? this.title,
+      startDate: startDate ?? this.startDate,
+      endDate: endDate ?? this.endDate,
+      note: note ?? this.note,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (homeId.present) {
+      map['home_id'] = Variable<String>(homeId.value);
+    }
+    if (deleted.present) {
+      map['deleted'] = Variable<bool>(deleted.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (createdBy.present) {
+      map['created_by'] = Variable<String>(createdBy.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (updatedBy.present) {
+      map['updated_by'] = Variable<String>(updatedBy.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (startDate.present) {
+      map['start_date'] = Variable<String>(startDate.value);
+    }
+    if (endDate.present) {
+      map['end_date'] = Variable<String>(endDate.value);
+    }
+    if (note.present) {
+      map['note'] = Variable<String>(note.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TripsCompanion(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('deleted: $deleted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('title: $title, ')
+          ..write('startDate: $startDate, ')
+          ..write('endDate: $endDate, ')
+          ..write('note: $note, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TripItemsTable extends TripItems
+    with TableInfo<$TripItemsTable, TripItemRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TripItemsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _homeIdMeta = const VerificationMeta('homeId');
+  @override
+  late final GeneratedColumn<String> homeId = GeneratedColumn<String>(
+    'home_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _deletedMeta = const VerificationMeta(
+    'deleted',
+  );
+  @override
+  late final GeneratedColumn<bool> deleted = GeneratedColumn<bool>(
+    'deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _createdByMeta = const VerificationMeta(
+    'createdBy',
+  );
+  @override
+  late final GeneratedColumn<String> createdBy = GeneratedColumn<String>(
+    'created_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _updatedByMeta = const VerificationMeta(
+    'updatedBy',
+  );
+  @override
+  late final GeneratedColumn<String> updatedBy = GeneratedColumn<String>(
+    'updated_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _tripIdMeta = const VerificationMeta('tripId');
+  @override
+  late final GeneratedColumn<String> tripId = GeneratedColumn<String>(
+    'trip_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+    'title',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _doneMeta = const VerificationMeta('done');
+  @override
+  late final GeneratedColumn<bool> done = GeneratedColumn<bool>(
+    'done',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("done" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _doneAtMeta = const VerificationMeta('doneAt');
+  @override
+  late final GeneratedColumn<int> doneAt = GeneratedColumn<int>(
+    'done_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _doneByMeta = const VerificationMeta('doneBy');
+  @override
+  late final GeneratedColumn<String> doneBy = GeneratedColumn<String>(
+    'done_by',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _sortOrderMeta = const VerificationMeta(
+    'sortOrder',
+  );
+  @override
+  late final GeneratedColumn<int> sortOrder = GeneratedColumn<int>(
+    'sort_order',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    homeId,
+    deleted,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    tripId,
+    title,
+    done,
+    doneAt,
+    doneBy,
+    sortOrder,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'trip_items';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TripItemRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('home_id')) {
+      context.handle(
+        _homeIdMeta,
+        homeId.isAcceptableOrUnknown(data['home_id']!, _homeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_homeIdMeta);
+    }
+    if (data.containsKey('deleted')) {
+      context.handle(
+        _deletedMeta,
+        deleted.isAcceptableOrUnknown(data['deleted']!, _deletedMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('created_by')) {
+      context.handle(
+        _createdByMeta,
+        createdBy.isAcceptableOrUnknown(data['created_by']!, _createdByMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('updated_by')) {
+      context.handle(
+        _updatedByMeta,
+        updatedBy.isAcceptableOrUnknown(data['updated_by']!, _updatedByMeta),
+      );
+    }
+    if (data.containsKey('trip_id')) {
+      context.handle(
+        _tripIdMeta,
+        tripId.isAcceptableOrUnknown(data['trip_id']!, _tripIdMeta),
+      );
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
+    }
+    if (data.containsKey('done')) {
+      context.handle(
+        _doneMeta,
+        done.isAcceptableOrUnknown(data['done']!, _doneMeta),
+      );
+    }
+    if (data.containsKey('done_at')) {
+      context.handle(
+        _doneAtMeta,
+        doneAt.isAcceptableOrUnknown(data['done_at']!, _doneAtMeta),
+      );
+    }
+    if (data.containsKey('done_by')) {
+      context.handle(
+        _doneByMeta,
+        doneBy.isAcceptableOrUnknown(data['done_by']!, _doneByMeta),
+      );
+    }
+    if (data.containsKey('sort_order')) {
+      context.handle(
+        _sortOrderMeta,
+        sortOrder.isAcceptableOrUnknown(data['sort_order']!, _sortOrderMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TripItemRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TripItemRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      homeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}home_id'],
+      )!,
+      deleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}deleted'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}created_at'],
+      )!,
+      createdBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_by'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      updatedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by'],
+      )!,
+      tripId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}trip_id'],
+      )!,
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      )!,
+      done: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}done'],
+      )!,
+      doneAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}done_at'],
+      ),
+      doneBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}done_by'],
+      ),
+      sortOrder: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}sort_order'],
+      )!,
+    );
+  }
+
+  @override
+  $TripItemsTable createAlias(String alias) {
+    return $TripItemsTable(attachedDatabase, alias);
+  }
+}
+
+class TripItemRow extends DataClass implements Insertable<TripItemRow> {
+  final String id;
+  final String homeId;
+  final bool deleted;
+  final int createdAt;
+  final String createdBy;
+  final int updatedAt;
+  final String updatedBy;
+  final String tripId;
+  final String title;
+  final bool done;
+  final int? doneAt;
+  final String? doneBy;
+  final int sortOrder;
+  const TripItemRow({
+    required this.id,
+    required this.homeId,
+    required this.deleted,
+    required this.createdAt,
+    required this.createdBy,
+    required this.updatedAt,
+    required this.updatedBy,
+    required this.tripId,
+    required this.title,
+    required this.done,
+    this.doneAt,
+    this.doneBy,
+    required this.sortOrder,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['home_id'] = Variable<String>(homeId);
+    map['deleted'] = Variable<bool>(deleted);
+    map['created_at'] = Variable<int>(createdAt);
+    map['created_by'] = Variable<String>(createdBy);
+    map['updated_at'] = Variable<int>(updatedAt);
+    map['updated_by'] = Variable<String>(updatedBy);
+    map['trip_id'] = Variable<String>(tripId);
+    map['title'] = Variable<String>(title);
+    map['done'] = Variable<bool>(done);
+    if (!nullToAbsent || doneAt != null) {
+      map['done_at'] = Variable<int>(doneAt);
+    }
+    if (!nullToAbsent || doneBy != null) {
+      map['done_by'] = Variable<String>(doneBy);
+    }
+    map['sort_order'] = Variable<int>(sortOrder);
+    return map;
+  }
+
+  TripItemsCompanion toCompanion(bool nullToAbsent) {
+    return TripItemsCompanion(
+      id: Value(id),
+      homeId: Value(homeId),
+      deleted: Value(deleted),
+      createdAt: Value(createdAt),
+      createdBy: Value(createdBy),
+      updatedAt: Value(updatedAt),
+      updatedBy: Value(updatedBy),
+      tripId: Value(tripId),
+      title: Value(title),
+      done: Value(done),
+      doneAt: doneAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(doneAt),
+      doneBy: doneBy == null && nullToAbsent
+          ? const Value.absent()
+          : Value(doneBy),
+      sortOrder: Value(sortOrder),
+    );
+  }
+
+  factory TripItemRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TripItemRow(
+      id: serializer.fromJson<String>(json['id']),
+      homeId: serializer.fromJson<String>(json['homeId']),
+      deleted: serializer.fromJson<bool>(json['deleted']),
+      createdAt: serializer.fromJson<int>(json['createdAt']),
+      createdBy: serializer.fromJson<String>(json['createdBy']),
+      updatedAt: serializer.fromJson<int>(json['updatedAt']),
+      updatedBy: serializer.fromJson<String>(json['updatedBy']),
+      tripId: serializer.fromJson<String>(json['tripId']),
+      title: serializer.fromJson<String>(json['title']),
+      done: serializer.fromJson<bool>(json['done']),
+      doneAt: serializer.fromJson<int?>(json['doneAt']),
+      doneBy: serializer.fromJson<String?>(json['doneBy']),
+      sortOrder: serializer.fromJson<int>(json['sortOrder']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'homeId': serializer.toJson<String>(homeId),
+      'deleted': serializer.toJson<bool>(deleted),
+      'createdAt': serializer.toJson<int>(createdAt),
+      'createdBy': serializer.toJson<String>(createdBy),
+      'updatedAt': serializer.toJson<int>(updatedAt),
+      'updatedBy': serializer.toJson<String>(updatedBy),
+      'tripId': serializer.toJson<String>(tripId),
+      'title': serializer.toJson<String>(title),
+      'done': serializer.toJson<bool>(done),
+      'doneAt': serializer.toJson<int?>(doneAt),
+      'doneBy': serializer.toJson<String?>(doneBy),
+      'sortOrder': serializer.toJson<int>(sortOrder),
+    };
+  }
+
+  TripItemRow copyWith({
+    String? id,
+    String? homeId,
+    bool? deleted,
+    int? createdAt,
+    String? createdBy,
+    int? updatedAt,
+    String? updatedBy,
+    String? tripId,
+    String? title,
+    bool? done,
+    Value<int?> doneAt = const Value.absent(),
+    Value<String?> doneBy = const Value.absent(),
+    int? sortOrder,
+  }) => TripItemRow(
+    id: id ?? this.id,
+    homeId: homeId ?? this.homeId,
+    deleted: deleted ?? this.deleted,
+    createdAt: createdAt ?? this.createdAt,
+    createdBy: createdBy ?? this.createdBy,
+    updatedAt: updatedAt ?? this.updatedAt,
+    updatedBy: updatedBy ?? this.updatedBy,
+    tripId: tripId ?? this.tripId,
+    title: title ?? this.title,
+    done: done ?? this.done,
+    doneAt: doneAt.present ? doneAt.value : this.doneAt,
+    doneBy: doneBy.present ? doneBy.value : this.doneBy,
+    sortOrder: sortOrder ?? this.sortOrder,
+  );
+  TripItemRow copyWithCompanion(TripItemsCompanion data) {
+    return TripItemRow(
+      id: data.id.present ? data.id.value : this.id,
+      homeId: data.homeId.present ? data.homeId.value : this.homeId,
+      deleted: data.deleted.present ? data.deleted.value : this.deleted,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      createdBy: data.createdBy.present ? data.createdBy.value : this.createdBy,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      updatedBy: data.updatedBy.present ? data.updatedBy.value : this.updatedBy,
+      tripId: data.tripId.present ? data.tripId.value : this.tripId,
+      title: data.title.present ? data.title.value : this.title,
+      done: data.done.present ? data.done.value : this.done,
+      doneAt: data.doneAt.present ? data.doneAt.value : this.doneAt,
+      doneBy: data.doneBy.present ? data.doneBy.value : this.doneBy,
+      sortOrder: data.sortOrder.present ? data.sortOrder.value : this.sortOrder,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TripItemRow(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('deleted: $deleted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('tripId: $tripId, ')
+          ..write('title: $title, ')
+          ..write('done: $done, ')
+          ..write('doneAt: $doneAt, ')
+          ..write('doneBy: $doneBy, ')
+          ..write('sortOrder: $sortOrder')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    homeId,
+    deleted,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    tripId,
+    title,
+    done,
+    doneAt,
+    doneBy,
+    sortOrder,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TripItemRow &&
+          other.id == this.id &&
+          other.homeId == this.homeId &&
+          other.deleted == this.deleted &&
+          other.createdAt == this.createdAt &&
+          other.createdBy == this.createdBy &&
+          other.updatedAt == this.updatedAt &&
+          other.updatedBy == this.updatedBy &&
+          other.tripId == this.tripId &&
+          other.title == this.title &&
+          other.done == this.done &&
+          other.doneAt == this.doneAt &&
+          other.doneBy == this.doneBy &&
+          other.sortOrder == this.sortOrder);
+}
+
+class TripItemsCompanion extends UpdateCompanion<TripItemRow> {
+  final Value<String> id;
+  final Value<String> homeId;
+  final Value<bool> deleted;
+  final Value<int> createdAt;
+  final Value<String> createdBy;
+  final Value<int> updatedAt;
+  final Value<String> updatedBy;
+  final Value<String> tripId;
+  final Value<String> title;
+  final Value<bool> done;
+  final Value<int?> doneAt;
+  final Value<String?> doneBy;
+  final Value<int> sortOrder;
+  final Value<int> rowid;
+  const TripItemsCompanion({
+    this.id = const Value.absent(),
+    this.homeId = const Value.absent(),
+    this.deleted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.tripId = const Value.absent(),
+    this.title = const Value.absent(),
+    this.done = const Value.absent(),
+    this.doneAt = const Value.absent(),
+    this.doneBy = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TripItemsCompanion.insert({
+    required String id,
+    required String homeId,
+    this.deleted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.tripId = const Value.absent(),
+    this.title = const Value.absent(),
+    this.done = const Value.absent(),
+    this.doneAt = const Value.absent(),
+    this.doneBy = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       homeId = Value(homeId);
+  static Insertable<TripItemRow> custom({
+    Expression<String>? id,
+    Expression<String>? homeId,
+    Expression<bool>? deleted,
+    Expression<int>? createdAt,
+    Expression<String>? createdBy,
+    Expression<int>? updatedAt,
+    Expression<String>? updatedBy,
+    Expression<String>? tripId,
+    Expression<String>? title,
+    Expression<bool>? done,
+    Expression<int>? doneAt,
+    Expression<String>? doneBy,
+    Expression<int>? sortOrder,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (homeId != null) 'home_id': homeId,
+      if (deleted != null) 'deleted': deleted,
+      if (createdAt != null) 'created_at': createdAt,
+      if (createdBy != null) 'created_by': createdBy,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (updatedBy != null) 'updated_by': updatedBy,
+      if (tripId != null) 'trip_id': tripId,
+      if (title != null) 'title': title,
+      if (done != null) 'done': done,
+      if (doneAt != null) 'done_at': doneAt,
+      if (doneBy != null) 'done_by': doneBy,
+      if (sortOrder != null) 'sort_order': sortOrder,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  TripItemsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? homeId,
+    Value<bool>? deleted,
+    Value<int>? createdAt,
+    Value<String>? createdBy,
+    Value<int>? updatedAt,
+    Value<String>? updatedBy,
+    Value<String>? tripId,
+    Value<String>? title,
+    Value<bool>? done,
+    Value<int?>? doneAt,
+    Value<String?>? doneBy,
+    Value<int>? sortOrder,
+    Value<int>? rowid,
+  }) {
+    return TripItemsCompanion(
+      id: id ?? this.id,
+      homeId: homeId ?? this.homeId,
+      deleted: deleted ?? this.deleted,
+      createdAt: createdAt ?? this.createdAt,
+      createdBy: createdBy ?? this.createdBy,
+      updatedAt: updatedAt ?? this.updatedAt,
+      updatedBy: updatedBy ?? this.updatedBy,
+      tripId: tripId ?? this.tripId,
+      title: title ?? this.title,
+      done: done ?? this.done,
+      doneAt: doneAt ?? this.doneAt,
+      doneBy: doneBy ?? this.doneBy,
+      sortOrder: sortOrder ?? this.sortOrder,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (homeId.present) {
+      map['home_id'] = Variable<String>(homeId.value);
+    }
+    if (deleted.present) {
+      map['deleted'] = Variable<bool>(deleted.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (createdBy.present) {
+      map['created_by'] = Variable<String>(createdBy.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (updatedBy.present) {
+      map['updated_by'] = Variable<String>(updatedBy.value);
+    }
+    if (tripId.present) {
+      map['trip_id'] = Variable<String>(tripId.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (done.present) {
+      map['done'] = Variable<bool>(done.value);
+    }
+    if (doneAt.present) {
+      map['done_at'] = Variable<int>(doneAt.value);
+    }
+    if (doneBy.present) {
+      map['done_by'] = Variable<String>(doneBy.value);
+    }
+    if (sortOrder.present) {
+      map['sort_order'] = Variable<int>(sortOrder.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TripItemsCompanion(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('deleted: $deleted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('tripId: $tripId, ')
+          ..write('title: $title, ')
+          ..write('done: $done, ')
+          ..write('doneAt: $doneAt, ')
+          ..write('doneBy: $doneBy, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TripTemplateItemsTable extends TripTemplateItems
+    with TableInfo<$TripTemplateItemsTable, TripTemplateItemRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TripTemplateItemsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _homeIdMeta = const VerificationMeta('homeId');
+  @override
+  late final GeneratedColumn<String> homeId = GeneratedColumn<String>(
+    'home_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _deletedMeta = const VerificationMeta(
+    'deleted',
+  );
+  @override
+  late final GeneratedColumn<bool> deleted = GeneratedColumn<bool>(
+    'deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _createdByMeta = const VerificationMeta(
+    'createdBy',
+  );
+  @override
+  late final GeneratedColumn<String> createdBy = GeneratedColumn<String>(
+    'created_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _updatedByMeta = const VerificationMeta(
+    'updatedBy',
+  );
+  @override
+  late final GeneratedColumn<String> updatedBy = GeneratedColumn<String>(
+    'updated_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+    'title',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _sortOrderMeta = const VerificationMeta(
+    'sortOrder',
+  );
+  @override
+  late final GeneratedColumn<int> sortOrder = GeneratedColumn<int>(
+    'sort_order',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    homeId,
+    deleted,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    title,
+    sortOrder,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'trip_template_items';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TripTemplateItemRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('home_id')) {
+      context.handle(
+        _homeIdMeta,
+        homeId.isAcceptableOrUnknown(data['home_id']!, _homeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_homeIdMeta);
+    }
+    if (data.containsKey('deleted')) {
+      context.handle(
+        _deletedMeta,
+        deleted.isAcceptableOrUnknown(data['deleted']!, _deletedMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('created_by')) {
+      context.handle(
+        _createdByMeta,
+        createdBy.isAcceptableOrUnknown(data['created_by']!, _createdByMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('updated_by')) {
+      context.handle(
+        _updatedByMeta,
+        updatedBy.isAcceptableOrUnknown(data['updated_by']!, _updatedByMeta),
+      );
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
+    }
+    if (data.containsKey('sort_order')) {
+      context.handle(
+        _sortOrderMeta,
+        sortOrder.isAcceptableOrUnknown(data['sort_order']!, _sortOrderMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TripTemplateItemRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TripTemplateItemRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      homeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}home_id'],
+      )!,
+      deleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}deleted'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}created_at'],
+      )!,
+      createdBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_by'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      updatedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by'],
+      )!,
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      )!,
+      sortOrder: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}sort_order'],
+      )!,
+    );
+  }
+
+  @override
+  $TripTemplateItemsTable createAlias(String alias) {
+    return $TripTemplateItemsTable(attachedDatabase, alias);
+  }
+}
+
+class TripTemplateItemRow extends DataClass
+    implements Insertable<TripTemplateItemRow> {
+  final String id;
+  final String homeId;
+  final bool deleted;
+  final int createdAt;
+  final String createdBy;
+  final int updatedAt;
+  final String updatedBy;
+  final String title;
+  final int sortOrder;
+  const TripTemplateItemRow({
+    required this.id,
+    required this.homeId,
+    required this.deleted,
+    required this.createdAt,
+    required this.createdBy,
+    required this.updatedAt,
+    required this.updatedBy,
+    required this.title,
+    required this.sortOrder,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['home_id'] = Variable<String>(homeId);
+    map['deleted'] = Variable<bool>(deleted);
+    map['created_at'] = Variable<int>(createdAt);
+    map['created_by'] = Variable<String>(createdBy);
+    map['updated_at'] = Variable<int>(updatedAt);
+    map['updated_by'] = Variable<String>(updatedBy);
+    map['title'] = Variable<String>(title);
+    map['sort_order'] = Variable<int>(sortOrder);
+    return map;
+  }
+
+  TripTemplateItemsCompanion toCompanion(bool nullToAbsent) {
+    return TripTemplateItemsCompanion(
+      id: Value(id),
+      homeId: Value(homeId),
+      deleted: Value(deleted),
+      createdAt: Value(createdAt),
+      createdBy: Value(createdBy),
+      updatedAt: Value(updatedAt),
+      updatedBy: Value(updatedBy),
+      title: Value(title),
+      sortOrder: Value(sortOrder),
+    );
+  }
+
+  factory TripTemplateItemRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TripTemplateItemRow(
+      id: serializer.fromJson<String>(json['id']),
+      homeId: serializer.fromJson<String>(json['homeId']),
+      deleted: serializer.fromJson<bool>(json['deleted']),
+      createdAt: serializer.fromJson<int>(json['createdAt']),
+      createdBy: serializer.fromJson<String>(json['createdBy']),
+      updatedAt: serializer.fromJson<int>(json['updatedAt']),
+      updatedBy: serializer.fromJson<String>(json['updatedBy']),
+      title: serializer.fromJson<String>(json['title']),
+      sortOrder: serializer.fromJson<int>(json['sortOrder']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'homeId': serializer.toJson<String>(homeId),
+      'deleted': serializer.toJson<bool>(deleted),
+      'createdAt': serializer.toJson<int>(createdAt),
+      'createdBy': serializer.toJson<String>(createdBy),
+      'updatedAt': serializer.toJson<int>(updatedAt),
+      'updatedBy': serializer.toJson<String>(updatedBy),
+      'title': serializer.toJson<String>(title),
+      'sortOrder': serializer.toJson<int>(sortOrder),
+    };
+  }
+
+  TripTemplateItemRow copyWith({
+    String? id,
+    String? homeId,
+    bool? deleted,
+    int? createdAt,
+    String? createdBy,
+    int? updatedAt,
+    String? updatedBy,
+    String? title,
+    int? sortOrder,
+  }) => TripTemplateItemRow(
+    id: id ?? this.id,
+    homeId: homeId ?? this.homeId,
+    deleted: deleted ?? this.deleted,
+    createdAt: createdAt ?? this.createdAt,
+    createdBy: createdBy ?? this.createdBy,
+    updatedAt: updatedAt ?? this.updatedAt,
+    updatedBy: updatedBy ?? this.updatedBy,
+    title: title ?? this.title,
+    sortOrder: sortOrder ?? this.sortOrder,
+  );
+  TripTemplateItemRow copyWithCompanion(TripTemplateItemsCompanion data) {
+    return TripTemplateItemRow(
+      id: data.id.present ? data.id.value : this.id,
+      homeId: data.homeId.present ? data.homeId.value : this.homeId,
+      deleted: data.deleted.present ? data.deleted.value : this.deleted,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      createdBy: data.createdBy.present ? data.createdBy.value : this.createdBy,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      updatedBy: data.updatedBy.present ? data.updatedBy.value : this.updatedBy,
+      title: data.title.present ? data.title.value : this.title,
+      sortOrder: data.sortOrder.present ? data.sortOrder.value : this.sortOrder,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TripTemplateItemRow(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('deleted: $deleted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('title: $title, ')
+          ..write('sortOrder: $sortOrder')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    homeId,
+    deleted,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    title,
+    sortOrder,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TripTemplateItemRow &&
+          other.id == this.id &&
+          other.homeId == this.homeId &&
+          other.deleted == this.deleted &&
+          other.createdAt == this.createdAt &&
+          other.createdBy == this.createdBy &&
+          other.updatedAt == this.updatedAt &&
+          other.updatedBy == this.updatedBy &&
+          other.title == this.title &&
+          other.sortOrder == this.sortOrder);
+}
+
+class TripTemplateItemsCompanion extends UpdateCompanion<TripTemplateItemRow> {
+  final Value<String> id;
+  final Value<String> homeId;
+  final Value<bool> deleted;
+  final Value<int> createdAt;
+  final Value<String> createdBy;
+  final Value<int> updatedAt;
+  final Value<String> updatedBy;
+  final Value<String> title;
+  final Value<int> sortOrder;
+  final Value<int> rowid;
+  const TripTemplateItemsCompanion({
+    this.id = const Value.absent(),
+    this.homeId = const Value.absent(),
+    this.deleted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.title = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TripTemplateItemsCompanion.insert({
+    required String id,
+    required String homeId,
+    this.deleted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.title = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       homeId = Value(homeId);
+  static Insertable<TripTemplateItemRow> custom({
+    Expression<String>? id,
+    Expression<String>? homeId,
+    Expression<bool>? deleted,
+    Expression<int>? createdAt,
+    Expression<String>? createdBy,
+    Expression<int>? updatedAt,
+    Expression<String>? updatedBy,
+    Expression<String>? title,
+    Expression<int>? sortOrder,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (homeId != null) 'home_id': homeId,
+      if (deleted != null) 'deleted': deleted,
+      if (createdAt != null) 'created_at': createdAt,
+      if (createdBy != null) 'created_by': createdBy,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (updatedBy != null) 'updated_by': updatedBy,
+      if (title != null) 'title': title,
+      if (sortOrder != null) 'sort_order': sortOrder,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  TripTemplateItemsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? homeId,
+    Value<bool>? deleted,
+    Value<int>? createdAt,
+    Value<String>? createdBy,
+    Value<int>? updatedAt,
+    Value<String>? updatedBy,
+    Value<String>? title,
+    Value<int>? sortOrder,
+    Value<int>? rowid,
+  }) {
+    return TripTemplateItemsCompanion(
+      id: id ?? this.id,
+      homeId: homeId ?? this.homeId,
+      deleted: deleted ?? this.deleted,
+      createdAt: createdAt ?? this.createdAt,
+      createdBy: createdBy ?? this.createdBy,
+      updatedAt: updatedAt ?? this.updatedAt,
+      updatedBy: updatedBy ?? this.updatedBy,
+      title: title ?? this.title,
+      sortOrder: sortOrder ?? this.sortOrder,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (homeId.present) {
+      map['home_id'] = Variable<String>(homeId.value);
+    }
+    if (deleted.present) {
+      map['deleted'] = Variable<bool>(deleted.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (createdBy.present) {
+      map['created_by'] = Variable<String>(createdBy.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (updatedBy.present) {
+      map['updated_by'] = Variable<String>(updatedBy.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (sortOrder.present) {
+      map['sort_order'] = Variable<int>(sortOrder.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TripTemplateItemsCompanion(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('deleted: $deleted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('title: $title, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $MemberOpsTable extends MemberOps
     with TableInfo<$MemberOpsTable, MemberOpRow> {
   @override
@@ -19361,6 +21275,10 @@ abstract class _$NestDatabase extends GeneratedDatabase {
   late final $PantryTable pantry = $PantryTable(this);
   late final $RoutinesTable routines = $RoutinesTable(this);
   late final $TodosTable todos = $TodosTable(this);
+  late final $TripsTable trips = $TripsTable(this);
+  late final $TripItemsTable tripItems = $TripItemsTable(this);
+  late final $TripTemplateItemsTable tripTemplateItems =
+      $TripTemplateItemsTable(this);
   late final $MemberOpsTable memberOps = $MemberOpsTable(this);
   late final $MemberDevicesTable memberDevices = $MemberDevicesTable(this);
   late final $SyncPeersTable syncPeers = $SyncPeersTable(this);
@@ -19441,6 +21359,18 @@ abstract class _$NestDatabase extends GeneratedDatabase {
     'todos_done_due',
     'CREATE INDEX todos_done_due ON todos (done, due)',
   );
+  late final Index tripsHomeStart = Index(
+    'trips_home_start',
+    'CREATE INDEX trips_home_start ON trips (home_id, start_date)',
+  );
+  late final Index tripItemsTripDone = Index(
+    'trip_items_trip_done',
+    'CREATE INDEX trip_items_trip_done ON trip_items (trip_id, done)',
+  );
+  late final Index tripTemplateHomeSort = Index(
+    'trip_template_home_sort',
+    'CREATE INDEX trip_template_home_sort ON trip_template_items (home_id, sort_order)',
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -19467,6 +21397,9 @@ abstract class _$NestDatabase extends GeneratedDatabase {
     pantry,
     routines,
     todos,
+    trips,
+    tripItems,
+    tripTemplateItems,
     memberOps,
     memberDevices,
     syncPeers,
@@ -19490,6 +21423,9 @@ abstract class _$NestDatabase extends GeneratedDatabase {
     itemsHomeListNameDone,
     itemHistoryListLast,
     todosDoneDue,
+    tripsHomeStart,
+    tripItemsTripDone,
+    tripTemplateHomeSort,
   ];
 }
 
@@ -27501,6 +29437,979 @@ typedef $$TodosTableProcessedTableManager =
       TodoRow,
       PrefetchHooks Function()
     >;
+typedef $$TripsTableCreateCompanionBuilder = TripsCompanion Function({
+  required String id,
+  required String homeId,
+  Value<bool> deleted,
+  Value<int> createdAt,
+  Value<String> createdBy,
+  Value<int> updatedAt,
+  Value<String> updatedBy,
+  Value<String> title,
+  Value<String> startDate,
+  Value<String?> endDate,
+  Value<String?> note,
+  Value<int> rowid,
+});
+typedef $$TripsTableUpdateCompanionBuilder = TripsCompanion Function({
+  Value<String> id,
+  Value<String> homeId,
+  Value<bool> deleted,
+  Value<int> createdAt,
+  Value<String> createdBy,
+  Value<int> updatedAt,
+  Value<String> updatedBy,
+  Value<String> title,
+  Value<String> startDate,
+  Value<String?> endDate,
+  Value<String?> note,
+  Value<int> rowid,
+});
+
+class $$TripsTableFilterComposer extends Composer<_$NestDatabase, $TripsTable> {
+  $$TripsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get startDate => $composableBuilder(
+    column: $table.startDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get endDate => $composableBuilder(
+    column: $table.endDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$TripsTableOrderingComposer
+    extends Composer<_$NestDatabase, $TripsTable> {
+  $$TripsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get startDate => $composableBuilder(
+    column: $table.startDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get endDate => $composableBuilder(
+    column: $table.endDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$TripsTableAnnotationComposer
+    extends Composer<_$NestDatabase, $TripsTable> {
+  $$TripsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get homeId =>
+      $composableBuilder(column: $table.homeId, builder: (column) => column);
+
+  GeneratedColumn<bool> get deleted =>
+      $composableBuilder(column: $table.deleted, builder: (column) => column);
+
+  GeneratedColumn<int> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<String> get createdBy =>
+      $composableBuilder(column: $table.createdBy, builder: (column) => column);
+
+  GeneratedColumn<int> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get updatedBy =>
+      $composableBuilder(column: $table.updatedBy, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<String> get startDate =>
+      $composableBuilder(column: $table.startDate, builder: (column) => column);
+
+  GeneratedColumn<String> get endDate =>
+      $composableBuilder(column: $table.endDate, builder: (column) => column);
+
+  GeneratedColumn<String> get note =>
+      $composableBuilder(column: $table.note, builder: (column) => column);
+}
+
+class $$TripsTableTableManager
+    extends
+        RootTableManager<
+          _$NestDatabase,
+          $TripsTable,
+          TripRow,
+          $$TripsTableFilterComposer,
+          $$TripsTableOrderingComposer,
+          $$TripsTableAnnotationComposer,
+          $$TripsTableCreateCompanionBuilder,
+          $$TripsTableUpdateCompanionBuilder,
+          (TripRow, BaseReferences<_$NestDatabase, $TripsTable, TripRow>),
+          TripRow,
+          PrefetchHooks Function()
+        > {
+  $$TripsTableTableManager(_$NestDatabase db, $TripsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TripsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TripsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TripsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> homeId = const Value.absent(),
+                Value<bool> deleted = const Value.absent(),
+                Value<int> createdAt = const Value.absent(),
+                Value<String> createdBy = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> updatedBy = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<String> startDate = const Value.absent(),
+                Value<String?> endDate = const Value.absent(),
+                Value<String?> note = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TripsCompanion(
+                id: id,
+                homeId: homeId,
+                deleted: deleted,
+                createdAt: createdAt,
+                createdBy: createdBy,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy,
+                title: title,
+                startDate: startDate,
+                endDate: endDate,
+                note: note,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String homeId,
+                Value<bool> deleted = const Value.absent(),
+                Value<int> createdAt = const Value.absent(),
+                Value<String> createdBy = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> updatedBy = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<String> startDate = const Value.absent(),
+                Value<String?> endDate = const Value.absent(),
+                Value<String?> note = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TripsCompanion.insert(
+                id: id,
+                homeId: homeId,
+                deleted: deleted,
+                createdAt: createdAt,
+                createdBy: createdBy,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy,
+                title: title,
+                startDate: startDate,
+                endDate: endDate,
+                note: note,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$TripsTable, TripRow>(table),
+                  BaseReferences<_$NestDatabase, $TripsTable, TripRow>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$TripsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$NestDatabase,
+      $TripsTable,
+      TripRow,
+      $$TripsTableFilterComposer,
+      $$TripsTableOrderingComposer,
+      $$TripsTableAnnotationComposer,
+      $$TripsTableCreateCompanionBuilder,
+      $$TripsTableUpdateCompanionBuilder,
+      (TripRow, BaseReferences<_$NestDatabase, $TripsTable, TripRow>),
+      TripRow,
+      PrefetchHooks Function()
+    >;
+typedef $$TripItemsTableCreateCompanionBuilder = TripItemsCompanion Function({
+  required String id,
+  required String homeId,
+  Value<bool> deleted,
+  Value<int> createdAt,
+  Value<String> createdBy,
+  Value<int> updatedAt,
+  Value<String> updatedBy,
+  Value<String> tripId,
+  Value<String> title,
+  Value<bool> done,
+  Value<int?> doneAt,
+  Value<String?> doneBy,
+  Value<int> sortOrder,
+  Value<int> rowid,
+});
+typedef $$TripItemsTableUpdateCompanionBuilder = TripItemsCompanion Function({
+  Value<String> id,
+  Value<String> homeId,
+  Value<bool> deleted,
+  Value<int> createdAt,
+  Value<String> createdBy,
+  Value<int> updatedAt,
+  Value<String> updatedBy,
+  Value<String> tripId,
+  Value<String> title,
+  Value<bool> done,
+  Value<int?> doneAt,
+  Value<String?> doneBy,
+  Value<int> sortOrder,
+  Value<int> rowid,
+});
+
+class $$TripItemsTableFilterComposer
+    extends Composer<_$NestDatabase, $TripItemsTable> {
+  $$TripItemsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get tripId => $composableBuilder(
+    column: $table.tripId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get done => $composableBuilder(
+    column: $table.done,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get doneAt => $composableBuilder(
+    column: $table.doneAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get doneBy => $composableBuilder(
+    column: $table.doneBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$TripItemsTableOrderingComposer
+    extends Composer<_$NestDatabase, $TripItemsTable> {
+  $$TripItemsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get tripId => $composableBuilder(
+    column: $table.tripId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get done => $composableBuilder(
+    column: $table.done,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get doneAt => $composableBuilder(
+    column: $table.doneAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get doneBy => $composableBuilder(
+    column: $table.doneBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$TripItemsTableAnnotationComposer
+    extends Composer<_$NestDatabase, $TripItemsTable> {
+  $$TripItemsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get homeId =>
+      $composableBuilder(column: $table.homeId, builder: (column) => column);
+
+  GeneratedColumn<bool> get deleted =>
+      $composableBuilder(column: $table.deleted, builder: (column) => column);
+
+  GeneratedColumn<int> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<String> get createdBy =>
+      $composableBuilder(column: $table.createdBy, builder: (column) => column);
+
+  GeneratedColumn<int> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get updatedBy =>
+      $composableBuilder(column: $table.updatedBy, builder: (column) => column);
+
+  GeneratedColumn<String> get tripId =>
+      $composableBuilder(column: $table.tripId, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<bool> get done =>
+      $composableBuilder(column: $table.done, builder: (column) => column);
+
+  GeneratedColumn<int> get doneAt =>
+      $composableBuilder(column: $table.doneAt, builder: (column) => column);
+
+  GeneratedColumn<String> get doneBy =>
+      $composableBuilder(column: $table.doneBy, builder: (column) => column);
+
+  GeneratedColumn<int> get sortOrder =>
+      $composableBuilder(column: $table.sortOrder, builder: (column) => column);
+}
+
+class $$TripItemsTableTableManager
+    extends
+        RootTableManager<
+          _$NestDatabase,
+          $TripItemsTable,
+          TripItemRow,
+          $$TripItemsTableFilterComposer,
+          $$TripItemsTableOrderingComposer,
+          $$TripItemsTableAnnotationComposer,
+          $$TripItemsTableCreateCompanionBuilder,
+          $$TripItemsTableUpdateCompanionBuilder,
+          (
+            TripItemRow,
+            BaseReferences<_$NestDatabase, $TripItemsTable, TripItemRow>,
+          ),
+          TripItemRow,
+          PrefetchHooks Function()
+        > {
+  $$TripItemsTableTableManager(_$NestDatabase db, $TripItemsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TripItemsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TripItemsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TripItemsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> homeId = const Value.absent(),
+                Value<bool> deleted = const Value.absent(),
+                Value<int> createdAt = const Value.absent(),
+                Value<String> createdBy = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> updatedBy = const Value.absent(),
+                Value<String> tripId = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<bool> done = const Value.absent(),
+                Value<int?> doneAt = const Value.absent(),
+                Value<String?> doneBy = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TripItemsCompanion(
+                id: id,
+                homeId: homeId,
+                deleted: deleted,
+                createdAt: createdAt,
+                createdBy: createdBy,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy,
+                tripId: tripId,
+                title: title,
+                done: done,
+                doneAt: doneAt,
+                doneBy: doneBy,
+                sortOrder: sortOrder,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String homeId,
+                Value<bool> deleted = const Value.absent(),
+                Value<int> createdAt = const Value.absent(),
+                Value<String> createdBy = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> updatedBy = const Value.absent(),
+                Value<String> tripId = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<bool> done = const Value.absent(),
+                Value<int?> doneAt = const Value.absent(),
+                Value<String?> doneBy = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TripItemsCompanion.insert(
+                id: id,
+                homeId: homeId,
+                deleted: deleted,
+                createdAt: createdAt,
+                createdBy: createdBy,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy,
+                tripId: tripId,
+                title: title,
+                done: done,
+                doneAt: doneAt,
+                doneBy: doneBy,
+                sortOrder: sortOrder,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$TripItemsTable, TripItemRow>(table),
+                  BaseReferences<_$NestDatabase, $TripItemsTable, TripItemRow>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$TripItemsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$NestDatabase,
+      $TripItemsTable,
+      TripItemRow,
+      $$TripItemsTableFilterComposer,
+      $$TripItemsTableOrderingComposer,
+      $$TripItemsTableAnnotationComposer,
+      $$TripItemsTableCreateCompanionBuilder,
+      $$TripItemsTableUpdateCompanionBuilder,
+      (
+        TripItemRow,
+        BaseReferences<_$NestDatabase, $TripItemsTable, TripItemRow>,
+      ),
+      TripItemRow,
+      PrefetchHooks Function()
+    >;
+typedef $$TripTemplateItemsTableCreateCompanionBuilder =
+    TripTemplateItemsCompanion Function({
+      required String id,
+      required String homeId,
+      Value<bool> deleted,
+      Value<int> createdAt,
+      Value<String> createdBy,
+      Value<int> updatedAt,
+      Value<String> updatedBy,
+      Value<String> title,
+      Value<int> sortOrder,
+      Value<int> rowid,
+    });
+typedef $$TripTemplateItemsTableUpdateCompanionBuilder =
+    TripTemplateItemsCompanion Function({
+      Value<String> id,
+      Value<String> homeId,
+      Value<bool> deleted,
+      Value<int> createdAt,
+      Value<String> createdBy,
+      Value<int> updatedAt,
+      Value<String> updatedBy,
+      Value<String> title,
+      Value<int> sortOrder,
+      Value<int> rowid,
+    });
+
+class $$TripTemplateItemsTableFilterComposer
+    extends Composer<_$NestDatabase, $TripTemplateItemsTable> {
+  $$TripTemplateItemsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$TripTemplateItemsTableOrderingComposer
+    extends Composer<_$NestDatabase, $TripTemplateItemsTable> {
+  $$TripTemplateItemsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get deleted => $composableBuilder(
+    column: $table.deleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedBy => $composableBuilder(
+    column: $table.updatedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$TripTemplateItemsTableAnnotationComposer
+    extends Composer<_$NestDatabase, $TripTemplateItemsTable> {
+  $$TripTemplateItemsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get homeId =>
+      $composableBuilder(column: $table.homeId, builder: (column) => column);
+
+  GeneratedColumn<bool> get deleted =>
+      $composableBuilder(column: $table.deleted, builder: (column) => column);
+
+  GeneratedColumn<int> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<String> get createdBy =>
+      $composableBuilder(column: $table.createdBy, builder: (column) => column);
+
+  GeneratedColumn<int> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get updatedBy =>
+      $composableBuilder(column: $table.updatedBy, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<int> get sortOrder =>
+      $composableBuilder(column: $table.sortOrder, builder: (column) => column);
+}
+
+class $$TripTemplateItemsTableTableManager
+    extends
+        RootTableManager<
+          _$NestDatabase,
+          $TripTemplateItemsTable,
+          TripTemplateItemRow,
+          $$TripTemplateItemsTableFilterComposer,
+          $$TripTemplateItemsTableOrderingComposer,
+          $$TripTemplateItemsTableAnnotationComposer,
+          $$TripTemplateItemsTableCreateCompanionBuilder,
+          $$TripTemplateItemsTableUpdateCompanionBuilder,
+          (
+            TripTemplateItemRow,
+            BaseReferences<
+              _$NestDatabase,
+              $TripTemplateItemsTable,
+              TripTemplateItemRow
+            >,
+          ),
+          TripTemplateItemRow,
+          PrefetchHooks Function()
+        > {
+  $$TripTemplateItemsTableTableManager(
+    _$NestDatabase db,
+    $TripTemplateItemsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TripTemplateItemsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TripTemplateItemsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TripTemplateItemsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> homeId = const Value.absent(),
+                Value<bool> deleted = const Value.absent(),
+                Value<int> createdAt = const Value.absent(),
+                Value<String> createdBy = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> updatedBy = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TripTemplateItemsCompanion(
+                id: id,
+                homeId: homeId,
+                deleted: deleted,
+                createdAt: createdAt,
+                createdBy: createdBy,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy,
+                title: title,
+                sortOrder: sortOrder,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String homeId,
+                Value<bool> deleted = const Value.absent(),
+                Value<int> createdAt = const Value.absent(),
+                Value<String> createdBy = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> updatedBy = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TripTemplateItemsCompanion.insert(
+                id: id,
+                homeId: homeId,
+                deleted: deleted,
+                createdAt: createdAt,
+                createdBy: createdBy,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy,
+                title: title,
+                sortOrder: sortOrder,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$TripTemplateItemsTable, TripTemplateItemRow>(
+                    table,
+                  ),
+                  BaseReferences<
+                    _$NestDatabase,
+                    $TripTemplateItemsTable,
+                    TripTemplateItemRow
+                  >(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$TripTemplateItemsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$NestDatabase,
+      $TripTemplateItemsTable,
+      TripTemplateItemRow,
+      $$TripTemplateItemsTableFilterComposer,
+      $$TripTemplateItemsTableOrderingComposer,
+      $$TripTemplateItemsTableAnnotationComposer,
+      $$TripTemplateItemsTableCreateCompanionBuilder,
+      $$TripTemplateItemsTableUpdateCompanionBuilder,
+      (
+        TripTemplateItemRow,
+        BaseReferences<
+          _$NestDatabase,
+          $TripTemplateItemsTable,
+          TripTemplateItemRow
+        >,
+      ),
+      TripTemplateItemRow,
+      PrefetchHooks Function()
+    >;
 typedef $$MemberOpsTableCreateCompanionBuilder = MemberOpsCompanion Function({
   required String opId,
   required String homeId,
@@ -28858,6 +31767,12 @@ class $NestDatabaseManager {
       $$RoutinesTableTableManager(_db, _db.routines);
   $$TodosTableTableManager get todos =>
       $$TodosTableTableManager(_db, _db.todos);
+  $$TripsTableTableManager get trips =>
+      $$TripsTableTableManager(_db, _db.trips);
+  $$TripItemsTableTableManager get tripItems =>
+      $$TripItemsTableTableManager(_db, _db.tripItems);
+  $$TripTemplateItemsTableTableManager get tripTemplateItems =>
+      $$TripTemplateItemsTableTableManager(_db, _db.tripTemplateItems);
   $$MemberOpsTableTableManager get memberOps =>
       $$MemberOpsTableTableManager(_db, _db.memberOps);
   $$MemberDevicesTableTableManager get memberDevices =>

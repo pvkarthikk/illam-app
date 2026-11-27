@@ -34,6 +34,9 @@ void main() {
             todosProvider.overrideWith(
               (ref) => Stream.value(const <TodoRow>[]),
             ),
+            tripsProvider.overrideWith(
+              (ref) => Stream.value(const <TripRow>[]),
+            ),
             taskPeopleProvider.overrideWithValue(const AsyncData(people)),
           ],
           child: MaterialApp(

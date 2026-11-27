@@ -6072,4 +6072,276 @@ class AppLocalizationsEn extends AppLocalizations {
   String smsImportAccountedSnack(Object merchant, Object amount) {
     return 'Accounted $merchant ($amount)';
   }
+
+  @override
+  String get tripsTab => 'Trips';
+
+  @override
+  String get tripsGenericTitle => 'Generic checklist';
+
+  @override
+  String tripsGenericSub(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count reusable items · auto-copies to new trips',
+      one: '1 reusable item · auto-copies to new trips',
+      zero: 'Add items you pack for every trip',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get tripsGenericLead =>
+      'Items here can be copied automatically into every new trip so you never forget essentials.';
+
+  @override
+  String get tripsGenericAddHint =>
+      'Add a generic item (e.g. Chargers, ID cards)…';
+
+  @override
+  String get tripsGenericEmptyTitle => 'No generic items yet';
+
+  @override
+  String get tripsGenericEmptyBody =>
+      'Add essentials you check before every trip, or load a starter list.';
+
+  @override
+  String get tripsLoadStarter => 'Load starter essentials';
+
+  @override
+  String tripsStarterLoaded(int count) {
+    return 'Added $count starter items';
+  }
+
+  @override
+  String get tripsStarterChargers => 'Phone chargers & cables';
+
+  @override
+  String get tripsStarterIds => 'ID cards / tickets';
+
+  @override
+  String get tripsStarterMedicines => 'Medicines & first aid';
+
+  @override
+  String get tripsStarterClothes => 'Clothes & toiletries';
+
+  @override
+  String get tripsStarterWater => 'Water bottles & snacks';
+
+  @override
+  String get tripsStarterKeys => 'House keys';
+
+  @override
+  String get tripsStarterGas => 'Turn off gas stove';
+
+  @override
+  String get tripsStarterLocks => 'Lock windows & doors';
+
+  @override
+  String get tripsNewTrip => 'New trip';
+
+  @override
+  String get tripsNewTripTitle => 'New trip';
+
+  @override
+  String get tripsEditTripTitle => 'Edit trip';
+
+  @override
+  String get tripsNameLabel => 'Trip name';
+
+  @override
+  String get tripsNameHint => 'e.g. Goa family trip';
+
+  @override
+  String get tripsNameRequired => 'Add a trip name.';
+
+  @override
+  String get tripsStartDate => 'Trip date';
+
+  @override
+  String get tripsEndDate => 'Return date (optional)';
+
+  @override
+  String get tripsAddEndDate => 'Add return date';
+
+  @override
+  String get tripsClearEndDate => 'Clear return date';
+
+  @override
+  String get tripsNoteLabel => 'Note (optional)';
+
+  @override
+  String get tripsNoteHint => 'e.g. Flight, train, or stay details';
+
+  @override
+  String tripsIncludeGeneric(int count) {
+    return 'Include generic checklist ($count)';
+  }
+
+  @override
+  String get tripsSaveTrip => 'Add trip';
+
+  @override
+  String get tripsSaveChanges => 'Save changes';
+
+  @override
+  String get tripsDeleteTrip => 'Delete trip';
+
+  @override
+  String get tripsAdded => 'Trip added';
+
+  @override
+  String get tripsUpdated => 'Trip updated';
+
+  @override
+  String get tripsDeleted => 'Trip deleted';
+
+  @override
+  String get tripsEmptyTitle => 'No trips planned';
+
+  @override
+  String get tripsEmptyBody =>
+      'Plan a trip with its date and check off items before you leave.';
+
+  @override
+  String tripsPastHeader(int count) {
+    return 'Past trips ($count)';
+  }
+
+  @override
+  String get tripsReady => 'Ready';
+
+  @override
+  String get tripsOngoing => 'On trip';
+
+  @override
+  String get tripsPast => 'Past';
+
+  @override
+  String get tripsStartsToday => 'Starts today';
+
+  @override
+  String get tripsStartsTomorrow => 'Tomorrow';
+
+  @override
+  String tripsInDays(int n) {
+    return 'In $n days';
+  }
+
+  @override
+  String tripsCheckedCount(int done, int total) {
+    return '$done of $total checked';
+  }
+
+  @override
+  String get tripsNoItemsYet => 'No checklist items yet';
+
+  @override
+  String get tripsAllReadyTitle => 'All set for your trip!';
+
+  @override
+  String tripsRemainingCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items left before you go',
+      one: '1 item left before you go',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get tripsAddItemHint => 'Add item to check before leaving…';
+
+  @override
+  String get tripsAddItem => 'Add item';
+
+  @override
+  String get tripsItemAdded => 'Item added';
+
+  @override
+  String tripsItemChecked(Object title) {
+    return 'Checked: $title';
+  }
+
+  @override
+  String tripsItemUnchecked(Object title) {
+    return 'Moved back: $title';
+  }
+
+  @override
+  String tripsCheckedSection(int count) {
+    return 'Checked ($count)';
+  }
+
+  @override
+  String get tripsImportGeneric => 'Import generic checklist';
+
+  @override
+  String tripsImportedCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Added $count generic items',
+      one: 'Added 1 generic item',
+      zero: 'All generic items are already in this trip',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get tripsResetChecks => 'Reset all checks';
+
+  @override
+  String get tripsChecksReset => 'Checklist reset';
+
+  @override
+  String tripsCopyGenericBtn(int count) {
+    return 'Copy generic checklist ($count)';
+  }
+
+  @override
+  String get tripsEditItemTitle => 'Edit item';
+
+  @override
+  String get tripsItemLabel => 'Item';
+
+  @override
+  String get tripsSaveToGeneric => 'Also add to generic checklist';
+
+  @override
+  String get tripsSavedToGeneric => 'Added to generic checklist';
+
+  @override
+  String get tripsDeleteItem => 'Delete item';
+
+  @override
+  String get tripsItemDeleted => 'Item deleted';
+
+  @override
+  String get tripsMoreActions => 'More trip actions';
+
+  @override
+  String get tripsEditTrip => 'Edit trip';
+
+  @override
+  String get tripsNotFound => 'Trip not found';
+
+  @override
+  String get tripsTodaySection => 'Upcoming trip';
+
+  @override
+  String tripsTodayMeta(Object when, int left) {
+    String _temp0 = intl.Intl.pluralLogic(
+      left,
+      locale: localeName,
+      other: '$left items left',
+      one: '1 item left',
+    );
+    return '$when · $_temp0';
+  }
+
+  @override
+  String get tripsOpenChecklist => 'Checklist';
 }

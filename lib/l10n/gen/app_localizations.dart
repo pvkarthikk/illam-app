@@ -9698,6 +9698,438 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Accounted {merchant} ({amount})'**
   String smsImportAccountedSnack(Object merchant, Object amount);
+
+  /// No description provided for @tripsTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Trips'**
+  String get tripsTab;
+
+  /// No description provided for @tripsGenericTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Generic checklist'**
+  String get tripsGenericTitle;
+
+  /// No description provided for @tripsGenericSub.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Add items you pack for every trip} =1{1 reusable item · auto-copies to new trips} other{{count} reusable items · auto-copies to new trips}}'**
+  String tripsGenericSub(int count);
+
+  /// No description provided for @tripsGenericLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Items here can be copied automatically into every new trip so you never forget essentials.'**
+  String get tripsGenericLead;
+
+  /// No description provided for @tripsGenericAddHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a generic item (e.g. Chargers, ID cards)…'**
+  String get tripsGenericAddHint;
+
+  /// No description provided for @tripsGenericEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No generic items yet'**
+  String get tripsGenericEmptyTitle;
+
+  /// No description provided for @tripsGenericEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Add essentials you check before every trip, or load a starter list.'**
+  String get tripsGenericEmptyBody;
+
+  /// No description provided for @tripsLoadStarter.
+  ///
+  /// In en, this message translates to:
+  /// **'Load starter essentials'**
+  String get tripsLoadStarter;
+
+  /// No description provided for @tripsStarterLoaded.
+  ///
+  /// In en, this message translates to:
+  /// **'Added {count} starter items'**
+  String tripsStarterLoaded(int count);
+
+  /// No description provided for @tripsStarterChargers.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone chargers & cables'**
+  String get tripsStarterChargers;
+
+  /// No description provided for @tripsStarterIds.
+  ///
+  /// In en, this message translates to:
+  /// **'ID cards / tickets'**
+  String get tripsStarterIds;
+
+  /// No description provided for @tripsStarterMedicines.
+  ///
+  /// In en, this message translates to:
+  /// **'Medicines & first aid'**
+  String get tripsStarterMedicines;
+
+  /// No description provided for @tripsStarterClothes.
+  ///
+  /// In en, this message translates to:
+  /// **'Clothes & toiletries'**
+  String get tripsStarterClothes;
+
+  /// No description provided for @tripsStarterWater.
+  ///
+  /// In en, this message translates to:
+  /// **'Water bottles & snacks'**
+  String get tripsStarterWater;
+
+  /// No description provided for @tripsStarterKeys.
+  ///
+  /// In en, this message translates to:
+  /// **'House keys'**
+  String get tripsStarterKeys;
+
+  /// No description provided for @tripsStarterGas.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn off gas stove'**
+  String get tripsStarterGas;
+
+  /// No description provided for @tripsStarterLocks.
+  ///
+  /// In en, this message translates to:
+  /// **'Lock windows & doors'**
+  String get tripsStarterLocks;
+
+  /// No description provided for @tripsNewTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'New trip'**
+  String get tripsNewTrip;
+
+  /// No description provided for @tripsNewTripTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New trip'**
+  String get tripsNewTripTitle;
+
+  /// No description provided for @tripsEditTripTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit trip'**
+  String get tripsEditTripTitle;
+
+  /// No description provided for @tripsNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip name'**
+  String get tripsNameLabel;
+
+  /// No description provided for @tripsNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Goa family trip'**
+  String get tripsNameHint;
+
+  /// No description provided for @tripsNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a trip name.'**
+  String get tripsNameRequired;
+
+  /// No description provided for @tripsStartDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip date'**
+  String get tripsStartDate;
+
+  /// No description provided for @tripsEndDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Return date (optional)'**
+  String get tripsEndDate;
+
+  /// No description provided for @tripsAddEndDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Add return date'**
+  String get tripsAddEndDate;
+
+  /// No description provided for @tripsClearEndDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear return date'**
+  String get tripsClearEndDate;
+
+  /// No description provided for @tripsNoteLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Note (optional)'**
+  String get tripsNoteLabel;
+
+  /// No description provided for @tripsNoteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Flight, train, or stay details'**
+  String get tripsNoteHint;
+
+  /// No description provided for @tripsIncludeGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Include generic checklist ({count})'**
+  String tripsIncludeGeneric(int count);
+
+  /// No description provided for @tripsSaveTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'Add trip'**
+  String get tripsSaveTrip;
+
+  /// No description provided for @tripsSaveChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Save changes'**
+  String get tripsSaveChanges;
+
+  /// No description provided for @tripsDeleteTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete trip'**
+  String get tripsDeleteTrip;
+
+  /// No description provided for @tripsAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip added'**
+  String get tripsAdded;
+
+  /// No description provided for @tripsUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip updated'**
+  String get tripsUpdated;
+
+  /// No description provided for @tripsDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip deleted'**
+  String get tripsDeleted;
+
+  /// No description provided for @tripsEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No trips planned'**
+  String get tripsEmptyTitle;
+
+  /// No description provided for @tripsEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan a trip with its date and check off items before you leave.'**
+  String get tripsEmptyBody;
+
+  /// No description provided for @tripsPastHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Past trips ({count})'**
+  String tripsPastHeader(int count);
+
+  /// No description provided for @tripsReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready'**
+  String get tripsReady;
+
+  /// No description provided for @tripsOngoing.
+  ///
+  /// In en, this message translates to:
+  /// **'On trip'**
+  String get tripsOngoing;
+
+  /// No description provided for @tripsPast.
+  ///
+  /// In en, this message translates to:
+  /// **'Past'**
+  String get tripsPast;
+
+  /// No description provided for @tripsStartsToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Starts today'**
+  String get tripsStartsToday;
+
+  /// No description provided for @tripsStartsTomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow'**
+  String get tripsStartsTomorrow;
+
+  /// No description provided for @tripsInDays.
+  ///
+  /// In en, this message translates to:
+  /// **'In {n} days'**
+  String tripsInDays(int n);
+
+  /// No description provided for @tripsCheckedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{done} of {total} checked'**
+  String tripsCheckedCount(int done, int total);
+
+  /// No description provided for @tripsNoItemsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No checklist items yet'**
+  String get tripsNoItemsYet;
+
+  /// No description provided for @tripsAllReadyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'All set for your trip!'**
+  String get tripsAllReadyTitle;
+
+  /// No description provided for @tripsRemainingCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 item left before you go} other{{count} items left before you go}}'**
+  String tripsRemainingCount(int count);
+
+  /// No description provided for @tripsAddItemHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add item to check before leaving…'**
+  String get tripsAddItemHint;
+
+  /// No description provided for @tripsAddItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Add item'**
+  String get tripsAddItem;
+
+  /// No description provided for @tripsItemAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Item added'**
+  String get tripsItemAdded;
+
+  /// No description provided for @tripsItemChecked.
+  ///
+  /// In en, this message translates to:
+  /// **'Checked: {title}'**
+  String tripsItemChecked(Object title);
+
+  /// No description provided for @tripsItemUnchecked.
+  ///
+  /// In en, this message translates to:
+  /// **'Moved back: {title}'**
+  String tripsItemUnchecked(Object title);
+
+  /// No description provided for @tripsCheckedSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Checked ({count})'**
+  String tripsCheckedSection(int count);
+
+  /// No description provided for @tripsImportGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Import generic checklist'**
+  String get tripsImportGeneric;
+
+  /// No description provided for @tripsImportedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{All generic items are already in this trip} =1{Added 1 generic item} other{Added {count} generic items}}'**
+  String tripsImportedCount(int count);
+
+  /// No description provided for @tripsResetChecks.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset all checks'**
+  String get tripsResetChecks;
+
+  /// No description provided for @tripsChecksReset.
+  ///
+  /// In en, this message translates to:
+  /// **'Checklist reset'**
+  String get tripsChecksReset;
+
+  /// No description provided for @tripsCopyGenericBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy generic checklist ({count})'**
+  String tripsCopyGenericBtn(int count);
+
+  /// No description provided for @tripsEditItemTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit item'**
+  String get tripsEditItemTitle;
+
+  /// No description provided for @tripsItemLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Item'**
+  String get tripsItemLabel;
+
+  /// No description provided for @tripsSaveToGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Also add to generic checklist'**
+  String get tripsSaveToGeneric;
+
+  /// No description provided for @tripsSavedToGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to generic checklist'**
+  String get tripsSavedToGeneric;
+
+  /// No description provided for @tripsDeleteItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete item'**
+  String get tripsDeleteItem;
+
+  /// No description provided for @tripsItemDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Item deleted'**
+  String get tripsItemDeleted;
+
+  /// No description provided for @tripsMoreActions.
+  ///
+  /// In en, this message translates to:
+  /// **'More trip actions'**
+  String get tripsMoreActions;
+
+  /// No description provided for @tripsEditTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit trip'**
+  String get tripsEditTrip;
+
+  /// No description provided for @tripsNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip not found'**
+  String get tripsNotFound;
+
+  /// No description provided for @tripsTodaySection.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming trip'**
+  String get tripsTodaySection;
+
+  /// No description provided for @tripsTodayMeta.
+  ///
+  /// In en, this message translates to:
+  /// **'{when} · {left, plural, =1{1 item left} other{{left} items left}}'**
+  String tripsTodayMeta(Object when, int left);
+
+  /// No description provided for @tripsOpenChecklist.
+  ///
+  /// In en, this message translates to:
+  /// **'Checklist'**
+  String get tripsOpenChecklist;
 }
 
 class _AppLocalizationsDelegate

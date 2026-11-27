@@ -14,6 +14,8 @@ abstract final class Routes {
   static String staff(String id) => '/staff/$id';
   static String staffSalary(String id) => '/staff/$id/salary';
   static const listsStore = '/lists/store';
+  static String trip(String id) => '/tasks/trip/$id';
+  static const tripTemplate = '/tasks/trip-template';
   static const moneyTransactions = '/money/transactions';
   static String recipe(String id) => '/meals/recipe/$id';
   static String recipeEdit(String id) => '/meals/recipe-edit/$id';

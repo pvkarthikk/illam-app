@@ -33,6 +33,8 @@ import 'package:nm_flat/features/staff/staff_screen.dart';
 import 'package:nm_flat/features/store/store_mode_screen.dart';
 import 'package:nm_flat/features/tasks/tasks_screen.dart';
 import 'package:nm_flat/features/today/today_screen.dart';
+import 'package:nm_flat/features/trips/trip_detail_screen.dart';
+import 'package:nm_flat/features/trips/trip_template_screen.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -187,6 +189,15 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: Routes.listsStore,
         builder: (_, _) => const StoreModeScreen(),
+      ),
+      GoRoute(
+        path: '/tasks/trip/:id',
+        builder: (_, state) =>
+            TripDetailScreen(tripId: state.pathParameters['id'] ?? ''),
+      ),
+      GoRoute(
+        path: Routes.tripTemplate,
+        builder: (_, _) => const TripTemplateScreen(),
       ),
       GoRoute(
         path: Routes.profile,

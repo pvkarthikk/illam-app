@@ -5,12 +5,14 @@ import 'package:nm_flat/core/data/db/database.dart';
 import 'package:nm_flat/core/data/repo/tasks_repo.dart';
 import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/domain/routine_state.dart';
+import 'package:nm_flat/core/domain/trip_state.dart';
 import 'package:nm_flat/core/nav/routes.dart';
 import 'package:nm_flat/core/providers.dart';
 import 'package:nm_flat/features/staff/staff_providers.dart';
 import 'package:nm_flat/features/tasks/routines_view.dart';
 import 'package:nm_flat/features/tasks/tasks_controller.dart';
 import 'package:nm_flat/features/tasks/todos_view.dart';
+import 'package:nm_flat/features/trips/trips_view.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
 class TasksScreen extends ConsumerWidget {
@@ -24,6 +26,7 @@ class TasksScreen extends ConsumerWidget {
 
     final routines = ref.watch(routinesProvider).value ?? const <RoutineRow>[];
     final todos = ref.watch(todosProvider).value ?? const <TodoRow>[];
+    final trips = ref.watch(tripsProvider).value ?? const <TripRow>[];
     final people = ref.watch(taskPeopleProvider).value ?? const <TaskPerson>[];
     final today = ref.watch(todayDateProvider);
 
@@ -37,6 +40,13 @@ class TasksScreen extends ConsumerWidget {
         )
         .length;
     final openTodosCount = todos.where((t) => !t.done).length;
+    final upcomingTripsCount = splitAndSortTrips(
+      trips,
+      startDateOf: (t) => t.startDate,
+      endDateOf: (t) => t.endDate,
+      titleOf: (t) => t.title,
+      today: today,
+    ).upcoming.length;
 
     final staffIdsWithRoutines = {
       for (final r in routines)
@@ -75,46 +85,52 @@ class TasksScreen extends ConsumerWidget {
                       segments: [
                         ('routines', '⟳ ${l10n.tasksCleaningTab}', dueRoutinesCount),
                         ('todos', '✓ ${l10n.tasksTodosTab}', openTodosCount),
+                        ('trips', '✈ ${l10n.tripsTab}', upcomingTripsCount),
                       ],
                       selected: ui.tab,
                       onChanged: ctrl.setTab,
                     ),
                   ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 6,
-                    ),
-                    child: Row(
-                      children: [
-                        NestChip(
-                          label: l10n.tasksEveryone,
-                          selected: effectivePerson == null,
-                          onTap: () => ctrl.setPerson(null),
-                        ),
-                        for (final p in visiblePeople) ...[
-                          const SizedBox(width: 8),
+                  if (ui.tab != 'trips') ...[
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 6,
+                      ),
+                      child: Row(
+                        children: [
                           NestChip(
-                            label: personName(l10n, p),
-                            leading: Avatar(
-                              name: p.firstName,
-                              color: p.color,
-                              size: AvatarSize.s24,
-                            ),
-                            selected: effectivePerson == p.id,
-                            onTap: () => ctrl.setPerson(p.id),
+                            label: l10n.tasksEveryone,
+                            selected: effectivePerson == null,
+                            onTap: () => ctrl.setPerson(null),
                           ),
+                          for (final p in visiblePeople) ...[
+                            const SizedBox(width: 8),
+                            NestChip(
+                              label: personName(l10n, p),
+                              leading: Avatar(
+                                name: p.firstName,
+                                color: p.color,
+                                size: AvatarSize.s24,
+                              ),
+                              selected: effectivePerson == p.id,
+                              onTap: () => ctrl.setPerson(p.id),
+                            ),
+                          ],
                         ],
-                      ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 8),
+                    const SizedBox(height: 8),
+                  ] else
+                    const SizedBox(height: 4),
                 ],
               ),
             ),
             if (ui.tab == 'routines')
               SliverToBoxAdapter(child: RoutinesView(person: effectivePerson))
+            else if (ui.tab == 'trips')
+              const SliverToBoxAdapter(child: TripsView())
             else
               TodosView(person: effectivePerson),
             const SliverToBoxAdapter(child: SizedBox(height: 96)),

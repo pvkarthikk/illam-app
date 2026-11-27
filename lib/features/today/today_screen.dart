@@ -14,6 +14,7 @@ import 'package:nm_flat/features/today/sections/hero_tags.dart';
 import 'package:nm_flat/features/today/sections/menu_section.dart';
 import 'package:nm_flat/features/today/sections/month_so_far_section.dart';
 import 'package:nm_flat/features/today/sections/ready_to_order_section.dart';
+import 'package:nm_flat/features/today/sections/upcoming_trip_section.dart';
 import 'package:nm_flat/l10n/gen/app_localizations.dart';
 
 class TodayScreen extends ConsumerStatefulWidget {
@@ -58,6 +59,7 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
             RestoreBanner(),
             _SetupBanner(),
             HeroSection(),
+            UpcomingTripSection(),
             DueTodaySection(),
             MenuSection(),
             ReadyToOrderSection(),
