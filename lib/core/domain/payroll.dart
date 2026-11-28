@@ -99,6 +99,7 @@ class PayrollInput {
     required this.rules,
     required this.visits,
     required this.leaveDates,
+    this.paidLeaveDates = const {},
     required this.adjustments,
   });
 
@@ -109,6 +110,7 @@ class PayrollInput {
   final List<PayRulesData> rules;
   final List<PayVisit> visits;
   final Set<String> leaveDates;
+  final Set<String> paidLeaveDates;
   final List<PayAdj> adjustments;
 }
 
@@ -125,6 +127,7 @@ class PayrollResult {
     this.presentDays = 0,
     this.absentDays = 0,
     this.leaveDays = 0,
+    this.paidLeaveDays = 0,
     this.unpaidDays = 0,
     this.visitCount = 0,
     this.actualMinutes = 0,
@@ -154,6 +157,7 @@ class PayrollResult {
       presentDays: (j['presentDays'] as num?)?.toInt() ?? 0,
       absentDays: (j['absentDays'] as num?)?.toInt() ?? 0,
       leaveDays: (j['leaveDays'] as num?)?.toInt() ?? 0,
+      paidLeaveDays: (j['paidLeaveDays'] as num?)?.toInt() ?? 0,
       unpaidDays: (j['unpaidDays'] as num?)?.toInt() ?? 0,
       visitCount: (j['visitCount'] as num?)?.toInt() ?? 0,
       actualMinutes: (j['actualMinutes'] as num?)?.toInt() ?? 0,
@@ -187,6 +191,7 @@ class PayrollResult {
   final int presentDays;
   final int absentDays;
   final int leaveDays;
+  final int paidLeaveDays;
   final int unpaidDays;
   final int visitCount;
   final int actualMinutes;
@@ -211,6 +216,7 @@ class PayrollResult {
     'presentDays': presentDays,
     'absentDays': absentDays,
     'leaveDays': leaveDays,
+    'paidLeaveDays': paidLeaveDays,
     'unpaidDays': unpaidDays,
     'visitCount': visitCount,
     'actualMinutes': actualMinutes,
@@ -326,12 +332,15 @@ PayrollResult computePayroll(PayrollInput input) {
 
   var presentDays = 0;
   var leaveDays = 0;
+  var paidLeaveDays = 0;
   var absentDays = 0;
   for (final (date, weekday) in eligibleDays) {
     if (date.compareTo(asOf) > 0) continue;
     final isWorkDay = workDaySet.contains(weekday);
     if (visitDates.contains(date)) {
       presentDays++;
+    } else if (isWorkDay && input.paidLeaveDates.contains(date)) {
+      paidLeaveDays++;
     } else if (isWorkDay && input.leaveDates.contains(date)) {
       leaveDays++;
     } else if (isWorkDay && date.compareTo(input.today) < 0) {
@@ -388,6 +397,7 @@ PayrollResult computePayroll(PayrollInput input) {
     presentDays: presentDays,
     absentDays: absentDays,
     leaveDays: leaveDays,
+    paidLeaveDays: paidLeaveDays,
     unpaidDays: unpaidDays,
     visitCount: merged.length,
     actualMinutes: actualMinutes,

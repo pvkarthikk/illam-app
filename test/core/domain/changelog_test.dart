@@ -56,5 +56,12 @@ void main() {
       hasCompletedOnboarding: true,
     );
     expect(patchUpgrade.map((e) => e.version), ['1.7.1']);
+
+    final paidLeaveUpgrade = unseenReleaseNotes(
+      currentVersion: '1.7.2',
+      lastSeenVersion: '1.7.1',
+      hasCompletedOnboarding: true,
+    );
+    expect(paidLeaveUpgrade.map((e) => e.version), ['1.7.2']);
   });
 }

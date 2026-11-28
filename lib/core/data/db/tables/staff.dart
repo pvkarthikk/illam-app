@@ -40,4 +40,5 @@ class Leaves extends Table with SyncedColumns {
   TextColumn get staffId => text().nullable()();
   TextColumn get date => text().nullable()();
   TextColumn get markedBy => text().nullable()();
+  BoolColumn get paid => boolean().withDefault(const Constant(false))();
 }

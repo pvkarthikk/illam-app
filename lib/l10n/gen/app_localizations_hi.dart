@@ -375,6 +375,9 @@ class AppLocalizationsHi extends AppLocalizations {
   String get staffOnLeaveToday => 'आज छुट्टी पर (सूचित)';
 
   @override
+  String get staffOnPaidLeaveToday => 'आज वेतन-सहित छुट्टी पर';
+
+  @override
   String get staffDayOff => 'छुट्टी का दिन';
 
   @override
@@ -524,6 +527,13 @@ class AppLocalizationsHi extends AppLocalizations {
       'कोई विज़िट दर्ज नहीं है। एक जोड़ें, या सूचित छुट्टी दर्ज करें ताकि इसे अनुपस्थित न गिना जाए।';
 
   @override
+  String get staffVisitLeadLeave => 'सूचित छुट्टी के रूप में चिह्नित है।';
+
+  @override
+  String get staffVisitLeadPaidLeave =>
+      'वेतन-सहित छुट्टी के रूप में चिह्नित है (वेतन नहीं कटेगा)।';
+
+  @override
   String get staffNow => 'अभी';
 
   @override
@@ -550,11 +560,19 @@ class AppLocalizationsHi extends AppLocalizations {
   String get staffInformedLeave => 'सूचित छुट्टी';
 
   @override
+  String get staffPaidLeave => 'वेतन-सहित छुट्टी';
+
+  @override
   String get staffUndoLeave => 'छुट्टी वापस लें';
 
   @override
   String staffLeaveMarked(Object day) {
     return '$day सूचित छुट्टी के रूप में दर्ज';
+  }
+
+  @override
+  String staffPaidLeaveMarked(String day) {
+    return '$day को वेतन-सहित छुट्टी चिह्नित किया गया';
   }
 
   @override
@@ -630,6 +648,11 @@ class AppLocalizationsHi extends AppLocalizations {
   }
 
   @override
+  String staffCellPaidLeave(int day) {
+    return '$day: वेतन-सहित छुट्टी';
+  }
+
+  @override
   String staffCellOff(Object day) {
     return '$day: छुट्टी का दिन';
   }
@@ -657,6 +680,9 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get staffLegendLeave => 'छुट्टी';
+
+  @override
+  String get staffLegendPaidLeave => 'वेतन छुट्टी';
 
   @override
   String get staffStatPresent => 'उपस्थित दिन';
@@ -6563,6 +6589,10 @@ class AppLocalizationsHi extends AppLocalizations {
   String whatsNewVersionHeader(Object version) {
     return 'वर्ज़न $version';
   }
+
+  @override
+  String get whatsNewV172PaidLeave =>
+      'हाज़िरी कैलेंडर में सहायक के लिए वेतन-सहित छुट्टी के दिन चिह्नित करें — बिना वेतन काटे और बिना मासिक छुट्टी कोटा कम किए।';
 
   @override
   String get whatsNewV171TodoDoneNotif =>

@@ -195,6 +195,7 @@
     }
   },
   "staffOnLeaveToday": "On leave today (informed)",
+  "staffOnPaidLeaveToday": "On paid leave today",
   "staffDayOff": "Day off",
   "staffMarkIn": "Mark in",
   "staffMarkOut": "Mark out",
@@ -270,6 +271,8 @@
   },
   "staffVisitLeadSome": "Tapped late or forgot? Fix the time — salary recalculates from this.",
   "staffVisitLeadNone": "No visit recorded. Add one, or mark an informed leave so it isn’t counted as absent.",
+  "staffVisitLeadLeave": "Marked as informed leave.",
+  "staffVisitLeadPaidLeave": "Marked as paid leave (no salary deduction).",
   "staffNow": "now",
   "staffAddVisit": "Add visit",
   "staffEditVisit": "Edit visit",
@@ -283,11 +286,20 @@
   "staffVisitUpdated": "Visit updated · salary recalculated",
   "staffVisitRemoved": "Visit removed",
   "staffInformedLeave": "Informed leave",
+  "staffPaidLeave": "Paid leave",
   "staffUndoLeave": "Undo leave",
   "staffLeaveMarked": "{day} marked as informed leave",
   "@staffLeaveMarked": {
     "placeholders": {
       "day": {}
+    }
+  },
+  "staffPaidLeaveMarked": "{day} marked as paid leave",
+  "@staffPaidLeaveMarked": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
     }
   },
   "staffLeaveRemoved": "Leave removed",
@@ -355,6 +367,14 @@
       "day": {}
     }
   },
+  "staffCellPaidLeave": "{day}: paid leave",
+  "@staffCellPaidLeave": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      }
+    }
+  },
   "staffCellOff": "{day}: day off",
   "@staffCellOff": {
     "placeholders": {
@@ -382,6 +402,7 @@
   "staffLegendWorked": "Worked (stronger = longer)",
   "staffLegendAbsent": "Absent",
   "staffLegendLeave": "Leave",
+  "staffLegendPaidLeave": "Paid leave",
   "staffStatPresent": "Days present",
   "staffStatAbsent": "Absent",
   "staffStatHours": "Hours",
@@ -4532,6 +4553,7 @@
       "version": {}
     }
   },
+  "whatsNewV172PaidLeave": "Mark helper paid leave days on the attendance calendar without deducting salary or using their monthly leave quota.",
   "whatsNewV171TodoDoneNotif": "Notifies the task owner when another family member checks off their to-do.",
   "whatsNewV171TodoWidgetMine": "The Due today home-screen widget now shows only your own tasks, while the in-app Today screen continues showing the whole home.",
   "whatsNewV170Changelog": "What's New sheet automatically shows release notes after an update — and stays accessible anytime under Profile → Version.",

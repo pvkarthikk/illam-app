@@ -26,7 +26,8 @@ sealed class StaffStatus {
 }
 
 class StatusLeave extends StaffStatus {
-  const StatusLeave();
+  const StatusLeave({this.paid = false});
+  final bool paid;
 }
 
 class StatusIn extends StaffStatus {
@@ -53,8 +54,9 @@ StaffStatus staffStatusToday({
   required List<int> workDays,
   required List<VisitLite> visitsToday,
   required bool leaveToday,
+  bool paidLeaveToday = false,
 }) {
-  if (leaveToday) return const StatusLeave();
+  if (leaveToday || paidLeaveToday) return StatusLeave(paid: paidLeaveToday);
 
   VisitLite? newestOpen;
   for (final v in visitsToday) {

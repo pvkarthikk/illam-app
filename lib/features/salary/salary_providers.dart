@@ -183,7 +183,11 @@ SalaryView buildSalaryView({
       ],
       leaveDates: {
         for (final l in leaves)
-          if (l.date != null) l.date!,
+          if (l.date != null && !l.paid) l.date!,
+      },
+      paidLeaveDates: {
+        for (final l in leaves)
+          if (l.date != null && l.paid) l.date!,
       },
       adjustments: monthAdjustments,
     ),

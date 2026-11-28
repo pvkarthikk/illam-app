@@ -14,6 +14,11 @@ class ReleaseNoteEntry {
 /// Ordered newest-first release notes shipped offline with the app.
 const kAppReleases = <ReleaseNoteEntry>[
   ReleaseNoteEntry(
+    version: '1.7.2',
+    date: '2026-11-28',
+    highlightKeys: ['v172PaidLeave'],
+  ),
+  ReleaseNoteEntry(
     version: '1.7.1',
     date: '2026-11-27',
     highlightKeys: ['v171TodoDoneNotif', 'v171TodoWidgetMine'],

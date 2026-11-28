@@ -80,11 +80,12 @@ class _VisitSheetState extends ConsumerState<_VisitSheet> {
     }
   }
 
-  Future<void> _toggleLeave(
+  Future<void> _setLeave(
     AppLocalizations l10n,
-    String today,
-    bool hasLeave,
-  ) async {
+    String today, {
+    required bool on,
+    bool paid = false,
+  }) async {
     if (_saving) return;
     _saving = true;
     final repo = ref.read(staffRepoProvider);
@@ -92,17 +93,19 @@ class _VisitSheetState extends ConsumerState<_VisitSheet> {
     final me = ref.read(myMemberIdProvider);
     final staffId = widget.staffId;
     final date = widget.date;
-    final msg = hasLeave
+    final dayLabel = Formatters.dayLabel(date, today, l10n);
+    final msg = !on
         ? l10n.staffLeaveRemoved
-        : l10n.staffLeaveMarked(
-            Formatters.dayLabel(date, today, l10n),
-          );
+        : (paid
+              ? l10n.staffPaidLeaveMarked(dayLabel)
+              : l10n.staffLeaveMarked(dayLabel));
     Navigator.of(context).pop();
     try {
       final res = await repo.setLeave(
         staffId: staffId,
         date: date,
-        on: !hasLeave,
+        on: on,
+        paid: paid,
         memberId: me,
       );
       if (res.undo != null) {
@@ -125,23 +128,34 @@ class _VisitSheetState extends ConsumerState<_VisitSheet> {
     ]..sort((a, b) => (a.inAt ?? 0).compareTo(b.inAt ?? 0));
     final leaves =
         ref.watch(staffLeavesProvider(dayKey)).value ?? const <Leave>[];
-    final hasLeave = leaves.isNotEmpty;
+    final leave = leaves.isEmpty ? null : leaves.first;
+    final hasLeave = leave != null;
+    final isPaidLeave = leave?.paid ?? false;
+    final isFuture = widget.date.compareTo(today) > 0;
 
     final month = Dates.month(widget.date);
     final settled = ref.watch(monthSettledProvider((widget.staffId, month)));
     final isAdmin = ref.watch(isAdminProvider);
-    final readOnly = !isAdmin && Dates.daysBetween(widget.date, today) >= 2;
+    final readOnly =
+        !isAdmin && (Dates.daysBetween(widget.date, today) >= 2 || isFuture);
     final tickNow = ref.watch(minuteTickProvider).value;
     final nowMs =
         tickNow?.millisecondsSinceEpoch ?? ref.read(clockProvider).nowMs;
 
     final name = staff?.name ?? '';
+    final leadText = visits.isNotEmpty
+        ? l10n.staffVisitLeadSome
+        : (hasLeave
+              ? (isPaidLeave
+                    ? l10n.staffVisitLeadPaidLeave
+                    : l10n.staffVisitLeadLeave)
+              : l10n.staffVisitLeadNone);
     final header = NestSheetHeader(
       title: l10n.staffVisitTitle(
         name,
         Formatters.dayLabel(widget.date, today, l10n),
       ),
-      lead: visits.isEmpty ? l10n.staffVisitLeadNone : l10n.staffVisitLeadSome,
+      lead: leadText,
     );
 
     if (_editing != null || _adding) {
@@ -241,24 +255,42 @@ class _VisitSheetState extends ConsumerState<_VisitSheet> {
             spacing: 8,
             runSpacing: 8,
             children: [
-              NestButton(
-                label: '+ ${l10n.staffAddVisit}',
-                kind: NestButtonKind.ghost,
-                size: NestButtonSize.sm,
-                onPressed: () => setState(() => _adding = true),
-              ),
+              if (!isFuture)
+                NestButton(
+                  label: '+ ${l10n.staffAddVisit}',
+                  kind: NestButtonKind.ghost,
+                  size: NestButtonSize.sm,
+                  onPressed: () => setState(() => _adding = true),
+                ),
               if (visits.isEmpty &&
                   canTouchLeave(
                     isAdmin: isAdmin,
                     date: widget.date,
                     today: today,
-                  ))
-                NestButton(
-                  label: hasLeave ? l10n.staffUndoLeave : l10n.staffInformedLeave,
-                  kind: NestButtonKind.ghost,
-                  size: NestButtonSize.sm,
-                  onPressed: () => _toggleLeave(l10n, today, hasLeave),
-                ),
+                  )) ...[
+                if (!hasLeave || isPaidLeave)
+                  NestButton(
+                    label: l10n.staffInformedLeave,
+                    kind: NestButtonKind.ghost,
+                    size: NestButtonSize.sm,
+                    onPressed: () => _setLeave(l10n, today, on: true),
+                  ),
+                if (!hasLeave || !isPaidLeave)
+                  NestButton(
+                    label: l10n.staffPaidLeave,
+                    kind: NestButtonKind.ghost,
+                    size: NestButtonSize.sm,
+                    onPressed: () =>
+                        _setLeave(l10n, today, on: true, paid: true),
+                  ),
+                if (hasLeave)
+                  NestButton(
+                    label: l10n.staffUndoLeave,
+                    kind: NestButtonKind.ghost,
+                    size: NestButtonSize.sm,
+                    onPressed: () => _setLeave(l10n, today, on: false),
+                  ),
+              ],
             ],
           ),
         ],

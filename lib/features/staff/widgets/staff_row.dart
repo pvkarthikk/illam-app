@@ -40,7 +40,13 @@ class StaffRow extends ConsumerWidget {
         .where((v) => v.staffId == staff.id)
         .toList();
     final leaves = ref.watch(leavesTodayProvider).value ?? const [];
-    final leaveToday = leaves.any((l) => l.staffId == staff.id);
+    Leave? todayLeave;
+    for (final l in leaves) {
+      if (l.staffId == staff.id) {
+        todayLeave = l;
+        break;
+      }
+    }
 
     final lites = [for (final v in visits) toLite(v)];
     final status = staffStatusToday(
@@ -49,7 +55,8 @@ class StaffRow extends ConsumerWidget {
           ref.watch(workDaysProvider((staff.id, Dates.month(today)))) ??
           parseWorkDays(staff.workDays),
       visitsToday: lites,
-      leaveToday: leaveToday,
+      leaveToday: todayLeave != null,
+      paidLeaveToday: todayLeave?.paid ?? false,
     );
     final times = timesText(
       parseTimes(staff.expectedTimes),
@@ -109,9 +116,9 @@ class StaffRow extends ConsumerWidget {
         ),
         style: NestText.meta13.copyWith(color: c.ink2),
       ),
-      StatusLeave() => Text(
-        l10n.staffOnLeaveToday,
-        style: NestText.meta13.copyWith(color: c.ink2),
+      StatusLeave(:final paid) => Text(
+        paid ? l10n.staffOnPaidLeaveToday : l10n.staffOnLeaveToday,
+        style: NestText.meta13.copyWith(color: paid ? c.ok : c.ink2),
       ),
       StatusOff() => Text(
         l10n.staffDayOff,

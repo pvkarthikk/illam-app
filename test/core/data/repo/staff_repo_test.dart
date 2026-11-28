@@ -172,4 +172,49 @@ void main() {
     expect(rules.length, 2);
     expect(rules.map((r) => r.staffId).toSet(), active.map((s) => s.id).toSet());
   });
+
+  test('setLeave records paid flag, toggles informed <-> paid with Undo, and markIn restores paid leave on undo', () async {
+    final e = await _env();
+    await e.repo.setLeave(
+      staffId: 's1',
+      date: '2026-11-20',
+      on: true,
+      paid: false,
+      memberId: 'mem-1',
+    );
+    var leave = await e.db.select(e.db.leaves).getSingle();
+    expect(leave.paid, isFalse);
+    expect(leave.deleted, isFalse);
+
+    final toPaid = await e.repo.setLeave(
+      staffId: 's1',
+      date: '2026-11-20',
+      on: true,
+      paid: true,
+      memberId: 'mem-1',
+    );
+    leave = await e.db.select(e.db.leaves).getSingle();
+    expect(leave.id, 's1_2026-11-20');
+    expect(leave.paid, isTrue);
+
+    await toPaid.undo!.run();
+    leave = await e.db.select(e.db.leaves).getSingle();
+    expect(leave.paid, isFalse);
+
+    await e.repo.setLeave(
+      staffId: 's1',
+      date: '2026-11-20',
+      on: true,
+      paid: true,
+      memberId: 'mem-1',
+    );
+    final markInRes = await e.repo.markIn('s1', 'mem-1');
+    leave = await e.db.select(e.db.leaves).getSingle();
+    expect(leave.deleted, isTrue);
+
+    await markInRes.undo!.run();
+    leave = await e.db.select(e.db.leaves).getSingle();
+    expect(leave.deleted, isFalse);
+    expect(leave.paid, isTrue);
+  });
 }

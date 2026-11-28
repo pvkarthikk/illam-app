@@ -203,6 +203,7 @@ class StaffRepo {
     required String date,
     required bool on,
     required String memberId,
+    bool paid = false,
   }) {
     final leaveId = '${staffId}_$date';
     return changes.write('Leave', (c) {
@@ -211,6 +212,7 @@ class StaffRepo {
           'staff_id': staffId,
           'date': date,
           'marked_by': memberId,
+          'paid': paid,
         }, id: leaveId);
       } else {
         c.delete('leaves', leaveId);

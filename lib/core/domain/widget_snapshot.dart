@@ -275,6 +275,7 @@ StaffWidgetSnapshot buildStaffWidgetSnapshot({
   required List<StaffWidgetInput> staff,
   required List<StaffVisitRecord> visitsToday,
   required Set<String> leavesToday,
+  Set<String> paidLeavesToday = const {},
 }) {
   if (!hasHome) return StaffWidgetSnapshot.noHome(date: today);
 
@@ -285,12 +286,14 @@ StaffWidgetSnapshot buildStaffWidgetSnapshot({
         if (r.staffId == s.id) r.visit,
     ];
     final leave = leavesToday.contains(s.id);
+    final paidLeave = paidLeavesToday.contains(s.id);
     final workDays = s.workDaysOverride ?? _parseWorkDays(s.workDaysCsv);
     final st = staffStatusToday(
       today: today,
       workDays: workDays,
       visitsToday: lites,
       leaveToday: leave,
+      paidLeaveToday: paidLeave,
     );
 
     VisitLite? newestOpen;
@@ -321,7 +324,12 @@ StaffWidgetSnapshot buildStaffWidgetSnapshot({
             'mark_in',
             '+ Visit',
           ),
-          StatusLeave() => ('leave', 'On leave today', 'mark_in', 'Mark in'),
+          StatusLeave(:final paid) => (
+            'leave',
+            paid ? 'Paid leave today' : 'On leave today',
+            'mark_in',
+            'Mark in',
+          ),
           StatusOff() => ('off', 'Day off', 'mark_in', 'Mark in'),
         };
 

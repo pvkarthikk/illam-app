@@ -5323,6 +5323,19 @@ class $LeavesTable extends Leaves with TableInfo<$LeavesTable, Leave> {
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _paidMeta = const VerificationMeta('paid');
+  @override
+  late final GeneratedColumn<bool> paid = GeneratedColumn<bool>(
+    'paid',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("paid" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -5335,6 +5348,7 @@ class $LeavesTable extends Leaves with TableInfo<$LeavesTable, Leave> {
     staffId,
     date,
     markedBy,
+    paid,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -5409,6 +5423,12 @@ class $LeavesTable extends Leaves with TableInfo<$LeavesTable, Leave> {
         markedBy.isAcceptableOrUnknown(data['marked_by']!, _markedByMeta),
       );
     }
+    if (data.containsKey('paid')) {
+      context.handle(
+        _paidMeta,
+        paid.isAcceptableOrUnknown(data['paid']!, _paidMeta),
+      );
+    }
     return context;
   }
 
@@ -5458,6 +5478,10 @@ class $LeavesTable extends Leaves with TableInfo<$LeavesTable, Leave> {
         DriftSqlType.string,
         data['${effectivePrefix}marked_by'],
       ),
+      paid: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}paid'],
+      )!,
     );
   }
 
@@ -5478,6 +5502,7 @@ class Leave extends DataClass implements Insertable<Leave> {
   final String? staffId;
   final String? date;
   final String? markedBy;
+  final bool paid;
   const Leave({
     required this.id,
     required this.homeId,
@@ -5489,6 +5514,7 @@ class Leave extends DataClass implements Insertable<Leave> {
     this.staffId,
     this.date,
     this.markedBy,
+    required this.paid,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -5509,6 +5535,7 @@ class Leave extends DataClass implements Insertable<Leave> {
     if (!nullToAbsent || markedBy != null) {
       map['marked_by'] = Variable<String>(markedBy);
     }
+    map['paid'] = Variable<bool>(paid);
     return map;
   }
 
@@ -5528,6 +5555,7 @@ class Leave extends DataClass implements Insertable<Leave> {
       markedBy: markedBy == null && nullToAbsent
           ? const Value.absent()
           : Value(markedBy),
+      paid: Value(paid),
     );
   }
 
@@ -5547,6 +5575,7 @@ class Leave extends DataClass implements Insertable<Leave> {
       staffId: serializer.fromJson<String?>(json['staffId']),
       date: serializer.fromJson<String?>(json['date']),
       markedBy: serializer.fromJson<String?>(json['markedBy']),
+      paid: serializer.fromJson<bool>(json['paid']),
     );
   }
   @override
@@ -5563,6 +5592,7 @@ class Leave extends DataClass implements Insertable<Leave> {
       'staffId': serializer.toJson<String?>(staffId),
       'date': serializer.toJson<String?>(date),
       'markedBy': serializer.toJson<String?>(markedBy),
+      'paid': serializer.toJson<bool>(paid),
     };
   }
 
@@ -5577,6 +5607,7 @@ class Leave extends DataClass implements Insertable<Leave> {
     Value<String?> staffId = const Value.absent(),
     Value<String?> date = const Value.absent(),
     Value<String?> markedBy = const Value.absent(),
+    bool? paid,
   }) => Leave(
     id: id ?? this.id,
     homeId: homeId ?? this.homeId,
@@ -5588,6 +5619,7 @@ class Leave extends DataClass implements Insertable<Leave> {
     staffId: staffId.present ? staffId.value : this.staffId,
     date: date.present ? date.value : this.date,
     markedBy: markedBy.present ? markedBy.value : this.markedBy,
+    paid: paid ?? this.paid,
   );
   Leave copyWithCompanion(LeavesCompanion data) {
     return Leave(
@@ -5601,6 +5633,7 @@ class Leave extends DataClass implements Insertable<Leave> {
       staffId: data.staffId.present ? data.staffId.value : this.staffId,
       date: data.date.present ? data.date.value : this.date,
       markedBy: data.markedBy.present ? data.markedBy.value : this.markedBy,
+      paid: data.paid.present ? data.paid.value : this.paid,
     );
   }
 
@@ -5616,7 +5649,8 @@ class Leave extends DataClass implements Insertable<Leave> {
           ..write('updatedBy: $updatedBy, ')
           ..write('staffId: $staffId, ')
           ..write('date: $date, ')
-          ..write('markedBy: $markedBy')
+          ..write('markedBy: $markedBy, ')
+          ..write('paid: $paid')
           ..write(')'))
         .toString();
   }
@@ -5633,6 +5667,7 @@ class Leave extends DataClass implements Insertable<Leave> {
     staffId,
     date,
     markedBy,
+    paid,
   );
   @override
   bool operator ==(Object other) =>
@@ -5647,7 +5682,8 @@ class Leave extends DataClass implements Insertable<Leave> {
           other.updatedBy == this.updatedBy &&
           other.staffId == this.staffId &&
           other.date == this.date &&
-          other.markedBy == this.markedBy);
+          other.markedBy == this.markedBy &&
+          other.paid == this.paid);
 }
 
 class LeavesCompanion extends UpdateCompanion<Leave> {
@@ -5661,6 +5697,7 @@ class LeavesCompanion extends UpdateCompanion<Leave> {
   final Value<String?> staffId;
   final Value<String?> date;
   final Value<String?> markedBy;
+  final Value<bool> paid;
   final Value<int> rowid;
   const LeavesCompanion({
     this.id = const Value.absent(),
@@ -5673,6 +5710,7 @@ class LeavesCompanion extends UpdateCompanion<Leave> {
     this.staffId = const Value.absent(),
     this.date = const Value.absent(),
     this.markedBy = const Value.absent(),
+    this.paid = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   LeavesCompanion.insert({
@@ -5686,6 +5724,7 @@ class LeavesCompanion extends UpdateCompanion<Leave> {
     this.staffId = const Value.absent(),
     this.date = const Value.absent(),
     this.markedBy = const Value.absent(),
+    this.paid = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        homeId = Value(homeId);
@@ -5700,6 +5739,7 @@ class LeavesCompanion extends UpdateCompanion<Leave> {
     Expression<String>? staffId,
     Expression<String>? date,
     Expression<String>? markedBy,
+    Expression<bool>? paid,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -5713,6 +5753,7 @@ class LeavesCompanion extends UpdateCompanion<Leave> {
       if (staffId != null) 'staff_id': staffId,
       if (date != null) 'date': date,
       if (markedBy != null) 'marked_by': markedBy,
+      if (paid != null) 'paid': paid,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -5728,6 +5769,7 @@ class LeavesCompanion extends UpdateCompanion<Leave> {
     Value<String?>? staffId,
     Value<String?>? date,
     Value<String?>? markedBy,
+    Value<bool>? paid,
     Value<int>? rowid,
   }) {
     return LeavesCompanion(
@@ -5741,6 +5783,7 @@ class LeavesCompanion extends UpdateCompanion<Leave> {
       staffId: staffId ?? this.staffId,
       date: date ?? this.date,
       markedBy: markedBy ?? this.markedBy,
+      paid: paid ?? this.paid,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -5778,6 +5821,9 @@ class LeavesCompanion extends UpdateCompanion<Leave> {
     if (markedBy.present) {
       map['marked_by'] = Variable<String>(markedBy.value);
     }
+    if (paid.present) {
+      map['paid'] = Variable<bool>(paid.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -5797,6 +5843,7 @@ class LeavesCompanion extends UpdateCompanion<Leave> {
           ..write('staffId: $staffId, ')
           ..write('date: $date, ')
           ..write('markedBy: $markedBy, ')
+          ..write('paid: $paid, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -23930,6 +23977,7 @@ typedef $$LeavesTableCreateCompanionBuilder = LeavesCompanion Function({
   Value<String?> staffId,
   Value<String?> date,
   Value<String?> markedBy,
+  Value<bool> paid,
   Value<int> rowid,
 });
 typedef $$LeavesTableUpdateCompanionBuilder = LeavesCompanion Function({
@@ -23943,6 +23991,7 @@ typedef $$LeavesTableUpdateCompanionBuilder = LeavesCompanion Function({
   Value<String?> staffId,
   Value<String?> date,
   Value<String?> markedBy,
+  Value<bool> paid,
   Value<int> rowid,
 });
 
@@ -24002,6 +24051,11 @@ class $$LeavesTableFilterComposer
 
   ColumnFilters<String> get markedBy => $composableBuilder(
     column: $table.markedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get paid => $composableBuilder(
+    column: $table.paid,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -24064,6 +24118,11 @@ class $$LeavesTableOrderingComposer
     column: $table.markedBy,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<bool> get paid => $composableBuilder(
+    column: $table.paid,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$LeavesTableAnnotationComposer
@@ -24104,6 +24163,9 @@ class $$LeavesTableAnnotationComposer
 
   GeneratedColumn<String> get markedBy =>
       $composableBuilder(column: $table.markedBy, builder: (column) => column);
+
+  GeneratedColumn<bool> get paid =>
+      $composableBuilder(column: $table.paid, builder: (column) => column);
 }
 
 class $$LeavesTableTableManager
@@ -24144,6 +24206,7 @@ class $$LeavesTableTableManager
                 Value<String?> staffId = const Value.absent(),
                 Value<String?> date = const Value.absent(),
                 Value<String?> markedBy = const Value.absent(),
+                Value<bool> paid = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => LeavesCompanion(
                 id: id,
@@ -24156,6 +24219,7 @@ class $$LeavesTableTableManager
                 staffId: staffId,
                 date: date,
                 markedBy: markedBy,
+                paid: paid,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -24170,6 +24234,7 @@ class $$LeavesTableTableManager
                 Value<String?> staffId = const Value.absent(),
                 Value<String?> date = const Value.absent(),
                 Value<String?> markedBy = const Value.absent(),
+                Value<bool> paid = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => LeavesCompanion.insert(
                 id: id,
@@ -24182,6 +24247,7 @@ class $$LeavesTableTableManager
                 staffId: staffId,
                 date: date,
                 markedBy: markedBy,
+                paid: paid,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0

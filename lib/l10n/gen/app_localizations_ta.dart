@@ -378,6 +378,9 @@ class AppLocalizationsTa extends AppLocalizations {
   String get staffOnLeaveToday => 'இன்று விடுப்பு (தெரிவிக்கப்பட்டது)';
 
   @override
+  String get staffOnPaidLeaveToday => 'இன்று சம்பளத்துடன் விடுப்பு';
+
+  @override
   String get staffDayOff => 'விடுமுறை நாள்';
 
   @override
@@ -529,6 +532,14 @@ class AppLocalizationsTa extends AppLocalizations {
       'வருகை எதுவும் பதிவாகவில்லை. ஒன்றைச் சேர்க்கவும், அல்லது வராததாகக் கணக்கிடாமல் இருக்கத் தெரிவித்த விடுப்பாகப் பதியவும்.';
 
   @override
+  String get staffVisitLeadLeave =>
+      'தெரிவித்த விடுப்பாகக் குறிக்கப்பட்டுள்ளது.';
+
+  @override
+  String get staffVisitLeadPaidLeave =>
+      'சம்பளத்துடன் விடுப்பாகக் குறிக்கப்பட்டுள்ளது (சம்பளப் பிடித்தம் இல்லை).';
+
+  @override
   String get staffNow => 'இப்போது';
 
   @override
@@ -556,11 +567,19 @@ class AppLocalizationsTa extends AppLocalizations {
   String get staffInformedLeave => 'தெரிவித்த விடுப்பு';
 
   @override
+  String get staffPaidLeave => 'சம்பளத்துடன் விடுப்பு';
+
+  @override
   String get staffUndoLeave => 'விடுப்பை நீக்கு';
 
   @override
   String staffLeaveMarked(Object day) {
     return '$day தெரிவித்த விடுப்பாகப் பதிவானது';
+  }
+
+  @override
+  String staffPaidLeaveMarked(String day) {
+    return '$day சம்பளத்துடன் விடுப்பாகக் குறிக்கப்பட்டது';
   }
 
   @override
@@ -636,6 +655,11 @@ class AppLocalizationsTa extends AppLocalizations {
   }
 
   @override
+  String staffCellPaidLeave(int day) {
+    return '$day: சம்பளத்துடன் விடுப்பு';
+  }
+
+  @override
   String staffCellOff(Object day) {
     return '$day: விடுமுறை நாள்';
   }
@@ -663,6 +687,9 @@ class AppLocalizationsTa extends AppLocalizations {
 
   @override
   String get staffLegendLeave => 'விடுப்பு';
+
+  @override
+  String get staffLegendPaidLeave => 'சம்பள விடுப்பு';
 
   @override
   String get staffStatPresent => 'வந்த நாட்கள்';
@@ -6615,6 +6642,10 @@ class AppLocalizationsTa extends AppLocalizations {
   String whatsNewVersionHeader(Object version) {
     return 'பதிப்பு $version';
   }
+
+  @override
+  String get whatsNewV172PaidLeave =>
+      'வருகை நாட்காட்டியில் உதவியாளருக்குச் சம்பளத்துடன் கூடிய விடுப்பு நாட்களைப் பதியலாம்; சம்பளப் பிடித்தமும் இல்லை, மாத விடுப்பு வரம்பும் குறையாது.';
 
   @override
   String get whatsNewV171TodoDoneNotif =>

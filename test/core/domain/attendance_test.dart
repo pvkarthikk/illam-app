@@ -11,15 +11,24 @@ void main() {
 
   group('staffStatusToday and mergedMinutes', () {
     test('leave overrides open/closed/expected', () {
-      expect(
-        staffStatusToday(
-          today: fri,
-          workDays: workDays,
-          visitsToday: const [],
-          leaveToday: true,
-        ),
-        isA<StatusLeave>(),
+      final informed = staffStatusToday(
+        today: fri,
+        workDays: workDays,
+        visitsToday: const [],
+        leaveToday: true,
       );
+      expect(informed, isA<StatusLeave>());
+      expect((informed as StatusLeave).paid, isFalse);
+
+      final paid = staffStatusToday(
+        today: fri,
+        workDays: workDays,
+        visitsToday: const [],
+        leaveToday: true,
+        paidLeaveToday: true,
+      );
+      expect(paid, isA<StatusLeave>());
+      expect((paid as StatusLeave).paid, isTrue);
     });
 
     test('open visit yields StatusIn with inAt', () {

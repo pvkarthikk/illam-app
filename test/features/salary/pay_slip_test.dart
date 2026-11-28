@@ -101,4 +101,47 @@ void main() {
       'Total: ₹6,708',
     );
   });
+
+  test('includes marked paid leave days in monthly pay slip total and paid count', () {
+    const rule = PayRulesData(
+      effectiveMonth: '2026-01',
+      workDays: [1, 2, 3, 4, 5, 6],
+      type: PayType.monthly,
+      amountPerMonthPaise: 700000,
+      paidLeavesPerMonth: 2,
+    );
+    final visits = <PayVisit>[
+      for (var d = 1; d <= 28; d++)
+        if (DateTime.utc(2026, 2, d).weekday != DateTime.sunday &&
+            !<int>{2, 3, 4, 5, 6}.contains(d))
+          PayVisit(
+            _iso(2026, 2, d),
+            _t(2026, 2, d, 9, 0),
+            _t(2026, 2, d, 11, 0),
+          ),
+    ];
+    final res = computePayroll(
+      PayrollInput(
+        month: '2026-02',
+        today: '2026-03-15',
+        startDate: '2026-01-01',
+        rules: const [rule],
+        visits: visits,
+        leaveDates: const {},
+        paidLeaveDates: const {'2026-02-02', '2026-02-03'},
+        adjustments: const [],
+      ),
+    );
+
+    expect(
+      buildPaySlip(
+        l10n,
+        PaySlipData(month: '2026-02', name: 'Selvi', r: res),
+      ),
+      'February pay — Selvi\n'
+      'Salary: ₹7,000\n'
+      'Leaves: 5 (4 paid)\n'
+      'Total: ₹6,708',
+    );
+  });
 }

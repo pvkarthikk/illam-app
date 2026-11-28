@@ -41,12 +41,11 @@ String buildPaySlip(AppLocalizations l10n, PaySlipData d) {
     );
   } else if (rules != null) {
     lines.add(l10n.salarySlipSalary(Money.format(rules.amountPerMonthPaise)));
-    lines.add(
-      l10n.salarySlipLeaves(
-        r.absentDays + r.leaveDays,
-        rules.paidLeavesPerMonth,
-      ),
-    );
+    final taken = r.absentDays + r.leaveDays + r.paidLeaveDays;
+    final paid = r.paidLeaveDays > 0
+        ? (taken - r.unpaidDays)
+        : rules.paidLeavesPerMonth;
+    lines.add(l10n.salarySlipLeaves(taken, paid));
   }
 
   for (final e in r.extras) {

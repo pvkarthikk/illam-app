@@ -51,8 +51,13 @@ class AttendanceCalendarCard extends ConsumerWidget {
     }
     final leaveDates = {
       for (final l in leaves)
-        if (l.date != null) l.date!,
+        if (l.date != null && !l.paid) l.date!,
     };
+    final paidLeaveDates = {
+      for (final l in leaves)
+        if (l.date != null && l.paid) l.date!,
+    };
+    final isAdmin = ref.watch(isAdminProvider);
 
     final workDays =
         ref.watch(workDaysProvider((staff.id, month))) ??
@@ -78,6 +83,9 @@ class AttendanceCalendarCard extends ConsumerWidget {
               visitsByDate['$month-${d.toString().padLeft(2, '0')}'] ??
               const [],
           leave: leaveDates.contains('$month-${d.toString().padLeft(2, '0')}'),
+          paidLeave: paidLeaveDates.contains(
+            '$month-${d.toString().padLeft(2, '0')}',
+          ),
           nowMs: nowMs,
         ),
     ];
@@ -142,7 +150,7 @@ class AttendanceCalendarCard extends ConsumerWidget {
                   day: i + 1,
                   cell: cells[i],
                   tappable:
-                      cells[i].date.compareTo(today) <= 0 &&
+                      (isAdmin || cells[i].date.compareTo(today) <= 0) &&
                       (start == null || cells[i].date.compareTo(start) >= 0) &&
                       (end == null || cells[i].date.compareTo(end) <= 0),
                   onTap: () => showVisitSheet(
@@ -162,6 +170,10 @@ class AttendanceCalendarCard extends ConsumerWidget {
                 _LegendItem(color: c.primary, label: l10n.staffLegendWorked),
                 _LegendItem(color: c.dangerSoft, label: l10n.staffLegendAbsent),
                 _LegendItem(color: c.infoSoft, label: l10n.staffLegendLeave),
+                _LegendItem(
+                  color: c.accentSoft,
+                  label: l10n.staffLegendPaidLeave,
+                ),
               ],
             ),
           ),
@@ -216,6 +228,7 @@ class _DayCellTile extends StatelessWidget {
       ),
       CellKind.absent => l10n.staffCellAbsent(day),
       CellKind.leave => l10n.staffCellLeave(day),
+      CellKind.paidLeave => l10n.staffCellPaidLeave(day),
       CellKind.off => l10n.staffCellOff(day),
       CellKind.upcoming => l10n.staffCellUpcoming(day),
       CellKind.notMarkedYet => l10n.staffCellNotMarked(day),
@@ -226,12 +239,14 @@ class _DayCellTile extends StatelessWidget {
       CellKind.worked => Color.lerp(c.paper2, c.primary, cell.intensity),
       CellKind.absent => c.dangerSoft,
       CellKind.leave => c.infoSoft,
+      CellKind.paidLeave => c.accentSoft,
       _ => null,
     };
     final Color fg = switch (cell.kind) {
       CellKind.worked => cell.intensity > 0.6 ? c.onPrimary : c.ink,
       CellKind.absent => c.danger,
       CellKind.leave => c.info,
+      CellKind.paidLeave => c.accentInk,
       CellKind.off || CellKind.beforeStart => c.ink3.withValues(alpha: 0.55),
       CellKind.upcoming || CellKind.notMarkedYet => c.ink3,
     };

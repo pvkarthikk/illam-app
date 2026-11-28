@@ -147,6 +147,69 @@ void main() {
       ).kind,
       CellKind.off,
     );
+    expect(
+      cellFor(
+        date: '2026-11-19',
+        today: today,
+        workDays: workDays,
+        startDate: '2026-11-01',
+        endDate: null,
+        visits: const [],
+        leave: false,
+        paidLeave: true,
+        nowMs: 0,
+      ).kind,
+      CellKind.paidLeave,
+    );
+    expect(
+      cellFor(
+        date: today,
+        today: today,
+        workDays: workDays,
+        startDate: '2026-11-01',
+        endDate: null,
+        visits: const [],
+        leave: true,
+        paidLeave: true,
+        nowMs: 0,
+      ).kind,
+      CellKind.paidLeave,
+    );
+    expect(
+      cellFor(
+        date: '2026-11-23',
+        today: today,
+        workDays: workDays,
+        startDate: '2026-11-01',
+        endDate: null,
+        visits: const [],
+        leave: false,
+        paidLeave: true,
+        nowMs: 0,
+      ).kind,
+      CellKind.paidLeave,
+    );
+    expect(
+      cellFor(
+        date: '2026-11-19',
+        today: today,
+        workDays: workDays,
+        startDate: '2026-11-01',
+        endDate: null,
+        visits: [
+          VisitLite(
+            id: 'v4',
+            date: '2026-11-19',
+            inAt: _ms('2026-11-19', 9, 0),
+            outAt: _ms('2026-11-19', 10, 0),
+          ),
+        ],
+        leave: false,
+        paidLeave: true,
+        nowMs: 0,
+      ).kind,
+      CellKind.worked,
+    );
   });
 
   test('statsFor counts present, absent and hours', () {
@@ -154,6 +217,7 @@ void main() {
       const DayCell('2026-11-18', CellKind.worked, 135, 0.8, false),
       const DayCell('2026-11-19', CellKind.worked, 142, 0.8, false),
       const DayCell('2026-11-16', CellKind.absent, 0, 0, false),
+      const DayCell('2026-11-17', CellKind.paidLeave, 0, 0, false),
     ];
     final stats = statsFor(cells, {
       '2026-11-18': [

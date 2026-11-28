@@ -289,6 +289,10 @@ Future<void> pushWidgetSnapshots(Reader read, {WidgetBridge? bridge}) async {
       for (final l in leavesToday)
         if (l.staffId != null) l.staffId!,
     },
+    paidLeavesToday: {
+      for (final l in leavesToday)
+        if (l.staffId != null && l.paid) l.staffId!,
+    },
   );
 
   final todoSnap = buildTodoWidgetSnapshot(

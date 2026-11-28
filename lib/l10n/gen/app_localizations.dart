@@ -736,6 +736,12 @@ abstract class AppLocalizations {
   /// **'On leave today (informed)'**
   String get staffOnLeaveToday;
 
+  /// No description provided for @staffOnPaidLeaveToday.
+  ///
+  /// In en, this message translates to:
+  /// **'On paid leave today'**
+  String get staffOnPaidLeaveToday;
+
   /// No description provided for @staffDayOff.
   ///
   /// In en, this message translates to:
@@ -994,6 +1000,18 @@ abstract class AppLocalizations {
   /// **'No visit recorded. Add one, or mark an informed leave so it isn’t counted as absent.'**
   String get staffVisitLeadNone;
 
+  /// No description provided for @staffVisitLeadLeave.
+  ///
+  /// In en, this message translates to:
+  /// **'Marked as informed leave.'**
+  String get staffVisitLeadLeave;
+
+  /// No description provided for @staffVisitLeadPaidLeave.
+  ///
+  /// In en, this message translates to:
+  /// **'Marked as paid leave (no salary deduction).'**
+  String get staffVisitLeadPaidLeave;
+
   /// No description provided for @staffNow.
   ///
   /// In en, this message translates to:
@@ -1042,6 +1060,12 @@ abstract class AppLocalizations {
   /// **'Informed leave'**
   String get staffInformedLeave;
 
+  /// No description provided for @staffPaidLeave.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid leave'**
+  String get staffPaidLeave;
+
   /// No description provided for @staffUndoLeave.
   ///
   /// In en, this message translates to:
@@ -1053,6 +1077,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{day} marked as informed leave'**
   String staffLeaveMarked(Object day);
+
+  /// No description provided for @staffPaidLeaveMarked.
+  ///
+  /// In en, this message translates to:
+  /// **'{day} marked as paid leave'**
+  String staffPaidLeaveMarked(String day);
 
   /// No description provided for @staffLeaveRemoved.
   ///
@@ -1162,6 +1192,12 @@ abstract class AppLocalizations {
   /// **'{day}: informed leave'**
   String staffCellLeave(Object day);
 
+  /// No description provided for @staffCellPaidLeave.
+  ///
+  /// In en, this message translates to:
+  /// **'{day}: paid leave'**
+  String staffCellPaidLeave(int day);
+
   /// No description provided for @staffCellOff.
   ///
   /// In en, this message translates to:
@@ -1203,6 +1239,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Leave'**
   String get staffLegendLeave;
+
+  /// No description provided for @staffLegendPaidLeave.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid leave'**
+  String get staffLegendPaidLeave;
 
   /// No description provided for @staffStatPresent.
   ///
@@ -10472,6 +10514,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Version {version}'**
   String whatsNewVersionHeader(Object version);
+
+  /// No description provided for @whatsNewV172PaidLeave.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark helper paid leave days on the attendance calendar without deducting salary or using their monthly leave quota.'**
+  String get whatsNewV172PaidLeave;
 
   /// No description provided for @whatsNewV171TodoDoneNotif.
   ///

@@ -94,7 +94,7 @@ class NestDatabase extends _$NestDatabase {
     : super(DatabaseConnection(e, closeStreamsSynchronously: true));
 
   @override
-  int get schemaVersion => 15; // raise by 1 for every table change
+  int get schemaVersion => 16; // raise by 1 for every table change
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -140,6 +140,9 @@ class NestDatabase extends _$NestDatabase {
           await m.createIndex(schema.tripsHomeStart);
           await m.createIndex(schema.tripItemsTripDone);
           await m.createIndex(schema.tripTemplateHomeSort);
+        },
+        from15To16: (m, schema) async {
+          await m.addColumn(schema.leaves, schema.leaves.paid);
         },
       )(m, from, to);
     },

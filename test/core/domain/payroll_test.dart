@@ -436,5 +436,72 @@ void main() {
       );
       expect(res.grossPaise, 0);
     });
+
+    test('marked paidLeaveDates are not deducted and preserve paidLeavesPerMonth allowance', () {
+      // Feb 2026 has 24 Mon-Sat work days. Skip days 2,3 (paidLeaveDates),
+      // 4,5 (informed leaves) with 2/mo allowance -> 0 unpaid days.
+      final visits = _workDayVisits(
+        year: 2026,
+        month: 2,
+        daysInMonth: 28,
+        skipDays: {2, 3, 4, 5},
+      );
+      final res = computePayroll(
+        PayrollInput(
+          month: '2026-02',
+          today: '2026-03-15',
+          startDate: '2026-01-01',
+          rules: [_monthlyRule(amountPerMonthPaise: 700000, paidLeavesPerMonth: 2)],
+          visits: visits,
+          leaveDates: const {'2026-02-04', '2026-02-05'},
+          paidLeaveDates: const {'2026-02-02', '2026-02-03'},
+          adjustments: const [],
+        ),
+      );
+      expect(res.presentDays, 20);
+      expect(res.paidLeaveDays, 2);
+      expect(res.leaveDays, 2);
+      expect(res.absentDays, 0);
+      expect(res.unpaidDays, 0);
+      expect(res.leaveDeductionPaise, 0);
+      expect(res.netRupees, 7000);
+
+      // Even with 0 monthly paid-leave quota, explicit paidLeaveDates remain paid.
+      final zeroQuota = computePayroll(
+        PayrollInput(
+          month: '2026-02',
+          today: '2026-03-15',
+          startDate: '2026-01-01',
+          rules: [_monthlyRule(amountPerMonthPaise: 700000, paidLeavesPerMonth: 0)],
+          visits: visits,
+          leaveDates: const {'2026-02-04', '2026-02-05'},
+          paidLeaveDates: const {'2026-02-02', '2026-02-03'},
+          adjustments: const [],
+        ),
+      );
+      expect(zeroQuota.paidLeaveDays, 2);
+      expect(zeroQuota.unpaidDays, 2);
+
+      // Present visit on same date takes priority over paidLeaveDates, and legacy JSON defaults paidLeaveDays to 0.
+      final workedOverride = computePayroll(
+        PayrollInput(
+          month: '2026-02',
+          today: '2026-03-15',
+          startDate: '2026-01-01',
+          rules: [_monthlyRule(amountPerMonthPaise: 700000, paidLeavesPerMonth: 0)],
+          visits: _workDayVisits(year: 2026, month: 2, daysInMonth: 28, skipDays: const {}),
+          leaveDates: const {},
+          paidLeaveDates: const {'2026-02-02'},
+          adjustments: const [],
+        ),
+      );
+      expect(workedOverride.presentDays, 24);
+      expect(workedOverride.paidLeaveDays, 0);
+
+      final jsonMap = res.toJson();
+      expect(PayrollResult.fromJson(jsonMap).paidLeaveDays, 2);
+      jsonMap.remove('paidLeaveDays');
+      expect(PayrollResult.fromJson(jsonMap).paidLeaveDays, 0);
+    });
   });
 }

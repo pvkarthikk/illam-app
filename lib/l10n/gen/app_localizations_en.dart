@@ -373,6 +373,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get staffOnLeaveToday => 'On leave today (informed)';
 
   @override
+  String get staffOnPaidLeaveToday => 'On paid leave today';
+
+  @override
   String get staffDayOff => 'Day off';
 
   @override
@@ -519,6 +522,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'No visit recorded. Add one, or mark an informed leave so it isn’t counted as absent.';
 
   @override
+  String get staffVisitLeadLeave => 'Marked as informed leave.';
+
+  @override
+  String get staffVisitLeadPaidLeave =>
+      'Marked as paid leave (no salary deduction).';
+
+  @override
   String get staffNow => 'now';
 
   @override
@@ -545,11 +555,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get staffInformedLeave => 'Informed leave';
 
   @override
+  String get staffPaidLeave => 'Paid leave';
+
+  @override
   String get staffUndoLeave => 'Undo leave';
 
   @override
   String staffLeaveMarked(Object day) {
     return '$day marked as informed leave';
+  }
+
+  @override
+  String staffPaidLeaveMarked(String day) {
+    return '$day marked as paid leave';
   }
 
   @override
@@ -625,6 +643,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String staffCellPaidLeave(int day) {
+    return '$day: paid leave';
+  }
+
+  @override
   String staffCellOff(Object day) {
     return '$day: day off';
   }
@@ -652,6 +675,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get staffLegendLeave => 'Leave';
+
+  @override
+  String get staffLegendPaidLeave => 'Paid leave';
 
   @override
   String get staffStatPresent => 'Days present';
@@ -6546,6 +6572,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String whatsNewVersionHeader(Object version) {
     return 'Version $version';
   }
+
+  @override
+  String get whatsNewV172PaidLeave =>
+      'Mark helper paid leave days on the attendance calendar without deducting salary or using their monthly leave quota.';
 
   @override
   String get whatsNewV171TodoDoneNotif =>

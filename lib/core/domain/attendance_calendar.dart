@@ -3,7 +3,16 @@ import 'dart:math';
 import 'package:nm_flat/core/domain/attendance.dart';
 import 'package:nm_flat/core/time/dates.dart';
 
-enum CellKind { worked, absent, leave, off, beforeStart, upcoming, notMarkedYet }
+enum CellKind {
+  worked,
+  absent,
+  leave,
+  paidLeave,
+  off,
+  beforeStart,
+  upcoming,
+  notMarkedYet,
+}
 
 class DayCell {
   const DayCell(
@@ -29,6 +38,7 @@ DayCell cellFor({
   required String? endDate,
   required List<VisitLite> visits,
   required bool leave,
+  bool paidLeave = false,
   required int nowMs,
 }) {
   final isToday = date == today;
@@ -38,6 +48,12 @@ DayCell cellFor({
   final workDay = workDays.contains(Dates.weekdayIso(date));
 
   if (date.compareTo(today) > 0) {
+    if (employed && paidLeave) {
+      return DayCell(date, CellKind.paidLeave, 0, 0, isToday);
+    }
+    if (employed && leave) {
+      return DayCell(date, CellKind.leave, 0, 0, isToday);
+    }
     return DayCell(
       date,
       employed && workDay ? CellKind.upcoming : CellKind.off,
@@ -53,6 +69,7 @@ DayCell cellFor({
     final intensity = min(1.0, 0.25 + minutes / 240);
     return DayCell(date, CellKind.worked, minutes, intensity, isToday);
   }
+  if (paidLeave) return DayCell(date, CellKind.paidLeave, 0, 0, isToday);
   if (leave) return DayCell(date, CellKind.leave, 0, 0, isToday);
   if (!afterStart) return DayCell(date, CellKind.beforeStart, 0, 0, isToday);
   if (!beforeEnd) return DayCell(date, CellKind.off, 0, 0, isToday);

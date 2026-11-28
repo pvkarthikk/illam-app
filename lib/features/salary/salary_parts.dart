@@ -66,7 +66,7 @@ class ReceiptCard extends ConsumerWidget {
                     l10n.salaryDaysLine(
                       r.presentDays,
                       r.absentDays,
-                      r.leaveDays,
+                      r.leaveDays + r.paidLeaveDays,
                     ),
                     style: NestText.meta13.copyWith(color: c.ink2),
                   ),
@@ -189,7 +189,7 @@ class ReceiptCard extends ConsumerWidget {
           amount: Money.format(r.grossPaise + r.leaveDeductionPaise),
         ),
       );
-      final taken = r.absentDays + r.leaveDays;
+      final taken = r.absentDays + r.leaveDays + r.paidLeaveDays;
       final paid = taken - r.unpaidDays;
       list.add(
         _LedgerRow(

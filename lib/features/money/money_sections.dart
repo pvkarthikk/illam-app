@@ -349,7 +349,9 @@ class _StaffPayRow extends ConsumerWidget {
                 Formatters.duration(payroll.billedMinutes),
                 Money.format(rules.ratePerHourPaise),
               )
-            : l10n.moneyMonthlyLeaves(payroll.leaveDays);
+            : l10n.moneyMonthlyLeaves(
+                payroll.leaveDays + payroll.paidLeaveDays,
+              );
       }
       trailingValue = settled.contains(month)
           ? NestTag(label: l10n.moneyPaid, kind: NestTagKind.ok)
