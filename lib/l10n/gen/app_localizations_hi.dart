@@ -6591,6 +6591,18 @@ class AppLocalizationsHi extends AppLocalizations {
   }
 
   @override
+  String get whatsNewV180MlKitOcr =>
+      'बिल स्कैनर को Google ML Kit ऑन-डिवाइस OCR और स्मार्ट लाइन अलाइनमेंट पर अपग्रेड किया गया — अब रसीदें ज़्यादा तेज़ और सटीक पढ़ी जाती हैं।';
+
+  @override
+  String get whatsNewV180MlKitQr =>
+      'फ़ैमिली पेयरिंग और रिमोट सिंक QR स्कैनिंग को कम रोशनी में भी तेज़ पहचान के लिए Google ML Kit पर अपग्रेड किया गया।';
+
+  @override
+  String get whatsNewV180SmallerApk =>
+      'पुराने OCR डेटा को हटाया गया और काफ़ी छोटे डाउनलोड के लिए डिवाइस-आधारित रिलीज़ बिल्ड जोड़े गए।';
+
+  @override
   String get whatsNewV172PaidLeave =>
       'हाज़िरी कैलेंडर में सहायक के लिए वेतन-सहित छुट्टी के दिन चिह्नित करें — बिना वेतन काटे और बिना मासिक छुट्टी कोटा कम किए।';
 

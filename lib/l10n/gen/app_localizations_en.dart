@@ -6574,6 +6574,18 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get whatsNewV180MlKitOcr =>
+      'Upgraded Bill Scanner to Google ML Kit on-device OCR with smart row alignment for much faster, more accurate receipt reading.';
+
+  @override
+  String get whatsNewV180MlKitQr =>
+      'Upgraded QR pairing and Remote Sync scanning to Google ML Kit for faster low-light recognition.';
+
+  @override
+  String get whatsNewV180SmallerApk =>
+      'Removed legacy OCR assets and added per-device release builds for significantly smaller downloads.';
+
+  @override
   String get whatsNewV172PaidLeave =>
       'Mark helper paid leave days on the attendance calendar without deducting salary or using their monthly leave quota.';
 

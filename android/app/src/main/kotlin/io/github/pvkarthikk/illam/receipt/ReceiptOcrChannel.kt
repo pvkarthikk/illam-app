@@ -13,7 +13,11 @@ import android.provider.MediaStore
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import com.googlecode.tesseract.android.TessBaseAPI
+import com.google.android.gms.tasks.Tasks
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.text.TextRecognition
+import com.google.mlkit.vision.text.TextRecognizer
+import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 import java.io.File
@@ -22,9 +26,11 @@ import java.lang.ref.WeakReference
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.RejectedExecutionException
+import java.util.concurrent.TimeUnit
+import kotlin.math.roundToInt
 
 /**
- * Native Android bridge for offline receipt capture and Tesseract OCR extraction.
+ * Native Android bridge for offline receipt capture and Google ML Kit OCR extraction.
  */
 object ReceiptOcrChannel {
     private const val CHANNEL = "io.github.pvkarthikk.illam/receipt_ocr"
@@ -33,17 +39,17 @@ object ReceiptOcrChannel {
     private const val REQ_PICK_IMAGE = 44203
 
     private const val SCAN_DIR = "receipt_scans"
-    private const val TESSDATA_DIR = "tessdata"
-    private const val TRAINEDDATA_NAME = "eng.traineddata"
+    private const val LEGACY_TESSDATA_DIR = "tessdata"
     private const val MAX_PICKED_BYTES = 25 * 1024 * 1024
+    private const val OCR_TIMEOUT_SECONDS = 15L
 
     private val mainHandler = Handler(Looper.getMainLooper())
-    private val tessLock = Any()
+    private val ocrLock = Any()
 
     private var executor: ExecutorService? = null
     private var channel: MethodChannel? = null
     private var activityRef: WeakReference<Activity>? = null
-    private var tessApi: TessBaseAPI? = null
+    private var recognizer: TextRecognizer? = null
 
     private var pendingPickResult: MethodChannel.Result? = null
     private var pendingCaptureFile: File? = null
@@ -53,6 +59,17 @@ object ReceiptOcrChannel {
         activityRef = WeakReference(activity)
         val appContext = activity.applicationContext
         val exec = executor ?: Executors.newSingleThreadExecutor().also { executor = it }
+        try {
+            exec.execute {
+                try {
+                    val legacy = File(appContext.filesDir, LEGACY_TESSDATA_DIR)
+                    if (legacy.exists()) legacy.deleteRecursively()
+                } catch (_: Throwable) {
+                }
+            }
+        } catch (_: RejectedExecutionException) {
+        }
+
         channel?.setMethodCallHandler(null)
         val mc = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL)
         mc.setMethodCallHandler { call, result ->
@@ -104,9 +121,12 @@ object ReceiptOcrChannel {
         waitingCameraPermission = false
         executor?.shutdownNow()
         executor = null
-        synchronized(tessLock) {
-            tessApi?.recycle()
-            tessApi = null
+        synchronized(ocrLock) {
+            try {
+                recognizer?.close()
+            } catch (_: Throwable) {
+            }
+            recognizer = null
         }
     }
 
@@ -303,80 +323,74 @@ object ReceiptOcrChannel {
         }
     }
 
+    private fun ensureRecognizer(): TextRecognizer {
+        recognizer?.let { return it }
+        return TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS).also {
+            recognizer = it
+        }
+    }
+
     private fun recognizeSafely(
         appContext: Context,
         path: String,
         rotationDegrees: Int,
     ): Map<String, Any> {
         if (!isAllowedTempPath(appContext, path)) {
-            return mapOf("text" to "", "confidence" to 0)
+            return mapOf("text" to "", "confidence" to 0, "lines" to emptyList<Map<String, Any>>())
         }
         val bmp = ReceiptPreprocessor.prepare(path, rotationDegrees)
-            ?: return mapOf("text" to "", "confidence" to 0)
+            ?: return mapOf("text" to "", "confidence" to 0, "lines" to emptyList<Map<String, Any>>())
         return try {
-            synchronized(tessLock) {
-                val tess = ensureTessApi(appContext)
-                if (tess == null) {
-                    return mapOf("text" to "", "confidence" to 0)
-                }
-                tess.setPageSegMode(TessBaseAPI.PageSegMode.PSM_SINGLE_BLOCK)
-                tess.setVariable("preserve_interword_spaces", "1")
-                tess.setImage(bmp)
-                val text = tess.utF8Text ?: ""
-                val confidence = tess.meanConfidence()
-                tess.clear()
-                mapOf("text" to text, "confidence" to confidence)
+            val visionText = synchronized(ocrLock) {
+                val client = ensureRecognizer()
+                Tasks.await(
+                    client.process(InputImage.fromBitmap(bmp, 0)),
+                    OCR_TIMEOUT_SECONDS,
+                    TimeUnit.SECONDS,
+                )
             }
+            val lineMaps = ArrayList<Map<String, Any>>()
+            var confSum = 0.0
+            var confCount = 0
+            for (block in visionText.textBlocks) {
+                for (line in block.lines) {
+                    val box = line.boundingBox
+                    val rawConf = line.confidence
+                    val lineConfPct = if (rawConf > 0f) {
+                        confSum += rawConf.toDouble()
+                        confCount++
+                        (rawConf * 100f).roundToInt().coerceIn(0, 100)
+                    } else {
+                        0
+                    }
+                    lineMaps.add(
+                        mapOf(
+                            "text" to line.text,
+                            "left" to (box?.left ?: 0),
+                            "top" to (box?.top ?: 0),
+                            "right" to (box?.right ?: 0),
+                            "bottom" to (box?.bottom ?: 0),
+                            "confidence" to lineConfPct,
+                        ),
+                    )
+                }
+            }
+            val confidence = if (confCount > 0) {
+                ((confSum / confCount) * 100.0).roundToInt().coerceIn(0, 100)
+            } else if (visionText.text.isNotBlank()) {
+                85
+            } else {
+                0
+            }
+            mapOf(
+                "text" to visionText.text,
+                "confidence" to confidence,
+                "lines" to lineMaps,
+            )
         } catch (_: Throwable) {
-            mapOf("text" to "", "confidence" to 0)
+            mapOf("text" to "", "confidence" to 0, "lines" to emptyList<Map<String, Any>>())
         } finally {
             bmp.recycle()
-        }
-    }
-
-    private fun ensureTessApi(appContext: Context): TessBaseAPI? {
-        tessApi?.let { return it }
-        if (!ensureTrainedData(appContext)) return null
-        val api = TessBaseAPI()
-        val ok = api.init(appContext.filesDir.absolutePath, "eng")
-        if (!ok) {
-            api.recycle()
-            return null
-        }
-        tessApi = api
-        return api
-    }
-
-    private fun ensureTrainedData(appContext: Context): Boolean {
-        val dir = File(appContext.filesDir, TESSDATA_DIR).apply { mkdirs() }
-        val dest = File(dir, TRAINEDDATA_NAME)
-        val assetPath = "$TESSDATA_DIR/$TRAINEDDATA_NAME"
-        val expectedSize = try {
-            appContext.assets.openFd(assetPath).use { it.length }
-        } catch (_: Throwable) {
-            -1L
-        }
-        if (dest.exists() && dest.length() > 0L &&
-            (expectedSize < 0L || dest.length() == expectedSize)
-        ) {
-            return true
-        }
-        val tmp = File(dir, "$TRAINEDDATA_NAME.tmp")
-        return try {
-            appContext.assets.open(assetPath).use { input ->
-                FileOutputStream(tmp).use { output ->
-                    input.copyTo(output)
-                }
-            }
-            if (tmp.length() <= 0L) {
-                tmp.delete()
-                return false
-            }
-            if (dest.exists()) dest.delete()
-            tmp.renameTo(dest)
-        } catch (_: Throwable) {
-            tmp.delete()
-            false
         }
     }
 

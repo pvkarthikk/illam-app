@@ -10515,6 +10515,24 @@ abstract class AppLocalizations {
   /// **'Version {version}'**
   String whatsNewVersionHeader(Object version);
 
+  /// No description provided for @whatsNewV180MlKitOcr.
+  ///
+  /// In en, this message translates to:
+  /// **'Upgraded Bill Scanner to Google ML Kit on-device OCR with smart row alignment for much faster, more accurate receipt reading.'**
+  String get whatsNewV180MlKitOcr;
+
+  /// No description provided for @whatsNewV180MlKitQr.
+  ///
+  /// In en, this message translates to:
+  /// **'Upgraded QR pairing and Remote Sync scanning to Google ML Kit for faster low-light recognition.'**
+  String get whatsNewV180MlKitQr;
+
+  /// No description provided for @whatsNewV180SmallerApk.
+  ///
+  /// In en, this message translates to:
+  /// **'Removed legacy OCR assets and added per-device release builds for significantly smaller downloads.'**
+  String get whatsNewV180SmallerApk;
+
   /// No description provided for @whatsNewV172PaidLeave.
   ///
   /// In en, this message translates to:

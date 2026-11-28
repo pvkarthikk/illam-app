@@ -5,8 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
 
 import 'package:nm_flat/core/design/components/components.dart';
 import 'package:nm_flat/core/domain/join_phrase.dart';
@@ -23,16 +23,17 @@ class ScanStep extends ConsumerStatefulWidget {
 
 class _ScanStepState extends ConsumerState<ScanStep>
     with SingleTickerProviderStateMixin {
-  final GlobalKey _qrKey = GlobalKey(debugLabel: 'join-qr');
-  QRViewController? _c;
-  StreamSubscription<Barcode>? _scanSub;
-  bool _permissionDenied = false;
+  late final MobileScannerController _controller;
   late final AnimationController _anim;
   bool _handled = false;
 
   @override
   void initState() {
     super.initState();
+    _controller = MobileScannerController(
+      formats: const [BarcodeFormat.qrCode],
+      detectionSpeed: DetectionSpeed.noDuplicates,
+    );
     _anim = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
@@ -52,7 +53,7 @@ class _ScanStepState extends ConsumerState<ScanStep>
   @override
   void dispose() {
     _anim.dispose();
-    unawaited(_scanSub?.cancel());
+    unawaited(_controller.dispose());
     super.dispose();
   }
 
@@ -65,20 +66,18 @@ class _ScanStepState extends ConsumerState<ScanStep>
     await intent.launch();
   }
 
-  void _onCreated(QRViewController controller) {
-    _c = controller;
-    _scanSub = controller.scannedDataStream.listen(_onDetect);
-  }
-
-  void _onDetect(Barcode barcode) {
+  void _onDetect(BarcodeCapture capture) {
     if (_handled || !mounted) return;
-    final raw = barcode.code;
-    if (raw == null) return;
-    final t = JoinTicket.parse(raw);
-    if (t != null) {
-      _handled = true;
-      ref.read(joinControllerProvider.notifier).useTicket(t);
-      context.go(Routes.onboardingStep('connect'));
+    for (final barcode in capture.barcodes) {
+      final raw = barcode.rawValue;
+      if (raw == null) continue;
+      final t = JoinTicket.parse(raw);
+      if (t != null) {
+        _handled = true;
+        ref.read(joinControllerProvider.notifier).useTicket(t);
+        context.go(Routes.onboardingStep('connect'));
+        return;
+      }
     }
   }
 
@@ -115,7 +114,7 @@ class _ScanStepState extends ConsumerState<ScanStep>
               IconButton(
                 tooltip: l.scanTorch,
                 icon: const Icon(Icons.flashlight_on_rounded),
-                onPressed: () => _c?.toggleFlash(),
+                onPressed: () => unawaited(_controller.toggleTorch()),
               ),
             ],
           ),
@@ -136,8 +135,10 @@ class _ScanStepState extends ConsumerState<ScanStep>
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
-                      if (_permissionDenied)
-                        Center(
+                      MobileScanner(
+                        controller: _controller,
+                        onDetect: _onDetect,
+                        errorBuilder: (context, error) => Center(
                           child: Padding(
                             padding: const EdgeInsets.all(24),
                             child: Column(
@@ -150,27 +151,20 @@ class _ScanStepState extends ConsumerState<ScanStep>
                                     color: NestPalette.immersiveText,
                                   ),
                                 ),
-                                const SizedBox(height: 16),
-                                NestButton(
-                                  label: l.scanOpenSettings,
-                                  kind: NestButtonKind.accent,
-                                  onPressed: _openAppSettings,
-                                ),
+                                if (error.errorCode ==
+                                    MobileScannerErrorCode.permissionDenied) ...[
+                                  const SizedBox(height: 16),
+                                  NestButton(
+                                    label: l.scanOpenSettings,
+                                    kind: NestButtonKind.accent,
+                                    onPressed: _openAppSettings,
+                                  ),
+                                ],
                               ],
                             ),
                           ),
-                        )
-                      else
-                        QRView(
-                          key: _qrKey,
-                          onQRViewCreated: _onCreated,
-                          formatsAllowed: const [BarcodeFormat.qrcode],
-                          onPermissionSet: (ctrl, granted) {
-                            if (!granted && mounted) {
-                              setState(() => _permissionDenied = true);
-                            }
-                          },
                         ),
+                      ),
                       IgnorePointer(
                         child: CustomPaint(
                           painter: _ScanOverlayPainter(

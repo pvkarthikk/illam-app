@@ -8,8 +8,7 @@ import kotlin.math.max
 import kotlin.math.roundToInt
 
 /**
- * Decodes, auto-orients, downscales, and contrast-enhances receipt photos
- * prior to on-device Tesseract OCR.
+ * Decodes, auto-orients, and downscales receipt photos prior to on-device ML Kit OCR.
  */
 object ReceiptPreprocessor {
     private const val MAX_DIMENSION = 2000
@@ -35,12 +34,7 @@ object ReceiptPreprocessor {
         if (scaled !== normalized) {
             normalized.recycle()
         }
-
-        val enhanced = stretchReceiptContrast(scaled)
-        if (enhanced !== scaled) {
-            scaled.recycle()
-        }
-        return enhanced
+        return scaled
     }
 
     private fun computeSampleSize(width: Int, height: Int, maxDim: Int): Int {
@@ -108,69 +102,5 @@ object ReceiptPreprocessor {
         val targetW = max(1, (w * scale).roundToInt())
         val targetH = max(1, (h * scale).roundToInt())
         return Bitmap.createScaledBitmap(source, targetW, targetH, true)
-    }
-
-    private fun stretchReceiptContrast(source: Bitmap): Bitmap {
-        val w = source.width
-        val h = source.height
-        val total = w * h
-        if (total <= 0) return source
-
-        val pixels = IntArray(total)
-        source.getPixels(pixels, 0, w, 0, 0, w, h)
-
-        val hist = IntArray(256)
-        for (i in 0 until total) {
-            val p = pixels[i]
-            val r = (p ushr 16) and 0xFF
-            val g = (p ushr 8) and 0xFF
-            val b = p and 0xFF
-            val lum = (77 * r + 150 * g + 29 * b) ushr 8
-            pixels[i] = lum
-            hist[lum]++
-        }
-
-        val lowTarget = (total * 0.01).toInt()
-        val highTarget = (total * 0.98).toInt()
-        var acc = 0
-        var lo = 0
-        var hi = 255
-        var foundLo = false
-        for (bin in 0..255) {
-            acc += hist[bin]
-            if (!foundLo && acc >= lowTarget) {
-                lo = bin
-                foundLo = true
-            }
-            if (acc >= highTarget) {
-                hi = bin
-                break
-            }
-        }
-
-        val span = hi - lo
-        if (span < 24) {
-            for (i in 0 until total) {
-                val lum = pixels[i]
-                pixels[i] = (0xFF shl 24) or (lum shl 16) or (lum shl 8) or lum
-            }
-        } else {
-            val lut = IntArray(256)
-            for (v in 0..255) {
-                val norm = ((v - lo).toFloat() / span.toFloat()).coerceIn(0f, 1f)
-                // Gentle contrast S-stretch around 0.5 while keeping grayscale detail
-                // so Tesseract's local Otsu binarizer handles uneven shadows.
-                val boosted = (0.5f + (norm - 0.5f) * 1.25f).coerceIn(0f, 1f)
-                val out = (boosted * 255f).roundToInt().coerceIn(0, 255)
-                lut[v] = (0xFF shl 24) or (out shl 16) or (out shl 8) or out
-            }
-            for (i in 0 until total) {
-                pixels[i] = lut[pixels[i]]
-            }
-        }
-
-        val out = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
-        out.setPixels(pixels, 0, w, 0, 0, w, h)
-        return out
     }
 }

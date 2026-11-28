@@ -6,9 +6,3 @@
 -dontwarn com.tom_roush.fontbox.**
 -dontwarn org.bouncycastle.**
 -dontwarn org.apache.commons.logging.**
-
-# Tesseract4Android / Leptonica JNI
--keep class com.googlecode.tesseract.android.** { *; }
--keep class com.googlecode.leptonica.android.** { *; }
--dontwarn com.googlecode.tesseract.android.**
--dontwarn com.googlecode.leptonica.android.**

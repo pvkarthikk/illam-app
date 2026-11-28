@@ -4553,6 +4553,9 @@
       "version": {}
     }
   },
+  "whatsNewV180MlKitOcr": "Upgraded Bill Scanner to Google ML Kit on-device OCR with smart row alignment for much faster, more accurate receipt reading.",
+  "whatsNewV180MlKitQr": "Upgraded QR pairing and Remote Sync scanning to Google ML Kit for faster low-light recognition.",
+  "whatsNewV180SmallerApk": "Removed legacy OCR assets and added per-device release builds for significantly smaller downloads.",
   "whatsNewV172PaidLeave": "Mark helper paid leave days on the attendance calendar without deducting salary or using their monthly leave quota.",
   "whatsNewV171TodoDoneNotif": "Notifies the task owner when another family member checks off their to-do.",
   "whatsNewV171TodoWidgetMine": "The Due today home-screen widget now shows only your own tasks, while the in-app Today screen continues showing the whole home.",

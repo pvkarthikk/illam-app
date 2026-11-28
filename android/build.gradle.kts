@@ -10,12 +10,6 @@ allprojects {
                 excludeGroup("io.flutter")
             }
         }
-        maven {
-            url = uri("https://jitpack.io")
-            content {
-                includeGroup("cz.adaptech.tesseract4android")
-            }
-        }
     }
 }
 

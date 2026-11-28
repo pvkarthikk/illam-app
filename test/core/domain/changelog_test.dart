@@ -63,5 +63,12 @@ void main() {
       hasCompletedOnboarding: true,
     );
     expect(paidLeaveUpgrade.map((e) => e.version), ['1.7.2']);
+
+    final mlKitUpgrade = unseenReleaseNotes(
+      currentVersion: '1.8.0',
+      lastSeenVersion: '1.7.2',
+      hasCompletedOnboarding: true,
+    );
+    expect(mlKitUpgrade.map((e) => e.version), ['1.8.0']);
   });
 }

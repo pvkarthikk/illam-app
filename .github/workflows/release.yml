@@ -71,18 +71,19 @@ jobs:
       - name: Run tests
         run: flutter test
 
-      - name: Build dev APK (release)
+      - name: Build dev split APKs & Play Store AAB (release)
         env:
           BUILD_NAME: ${{ steps.version.outputs.name }}
           BUILD_NUMBER: ${{ steps.version.outputs.code }}
         run: |
           for attempt in 1 2 3; do
-            if flutter build apk --release --flavor dev --build-name="$BUILD_NAME" --build-number="$BUILD_NUMBER"; then
+            if flutter build apk --release --flavor dev --split-per-abi --build-name="$BUILD_NAME" --build-number="$BUILD_NUMBER" && \
+               flutter build appbundle --release --flavor dev --build-name="$BUILD_NAME" --build-number="$BUILD_NUMBER"; then
               exit 0
             fi
             if [ "$attempt" -lt 3 ]; then
               delay=$((attempt * 15))
-              echo "::warning::Release APK build attempt $attempt failed; retrying in ${delay}s..."
+              echo "::warning::Release build attempt $attempt failed; retrying in ${delay}s..."
               sleep "$delay"
             fi
           done
@@ -92,6 +93,12 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          apk="illam-${GITHUB_REF_NAME}.apk"
-          mv build/app/outputs/flutter-apk/app-dev-release.apk "$apk"
-          gh release create "$GITHUB_REF_NAME" "$apk" --generate-notes
+          arm64="illam-${GITHUB_REF_NAME}-arm64-v8a.apk"
+          arm32="illam-${GITHUB_REF_NAME}-armeabi-v7a.apk"
+          x64="illam-${GITHUB_REF_NAME}-x86_64.apk"
+          aab="illam-${GITHUB_REF_NAME}.aab"
+          mv build/app/outputs/flutter-apk/app-arm64-v8a-dev-release.apk "$arm64"
+          mv build/app/outputs/flutter-apk/app-armeabi-v7a-dev-release.apk "$arm32"
+          mv build/app/outputs/flutter-apk/app-x86_64-dev-release.apk "$x64"
+          mv build/app/outputs/bundle/devRelease/app-dev-release.aab "$aab"
+          gh release create "$GITHUB_REF_NAME" "$arm64" "$arm32" "$x64" "$aab" --generate-notes

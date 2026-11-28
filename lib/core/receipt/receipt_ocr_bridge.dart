@@ -1,10 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
+import 'package:nm_flat/core/domain/receipt/receipt_layout.dart';
+
 /// Input source for scanning a paper or saved bill.
 enum ReceiptImageSource { camera, gallery }
 
-/// OCR text output from on-device Tesseract recognition.
+/// OCR text output from on-device Google ML Kit recognition.
 class ReceiptOcrResult {
   const ReceiptOcrResult({
     required this.text,
@@ -40,7 +42,7 @@ abstract class ReceiptOcrBridge {
   Future<void> deleteTempImage(String path);
 }
 
-/// MethodChannel-backed Android Tesseract OCR bridge with safe fallback on
+/// MethodChannel-backed Android ML Kit OCR bridge with safe fallback on
 /// unsupported platforms (web/tests).
 class MethodChannelReceiptOcrBridge implements ReceiptOcrBridge {
   const MethodChannelReceiptOcrBridge([MethodChannel? channel])
@@ -92,8 +94,31 @@ class MethodChannelReceiptOcrBridge implements ReceiptOcrBridge {
         {'path': path, 'rotationDegrees': rotationDegrees},
       );
       if (map == null) return const ReceiptOcrResult(text: '');
-      final text = (map['text'] as String?) ?? '';
+      final rawText = (map['text'] as String?) ?? '';
       final conf = (map['confidence'] as num?)?.toInt() ?? 0;
+      var text = rawText;
+      final rawLines = map['lines'];
+      if (rawLines is List && rawLines.isNotEmpty) {
+        final boxes = <OcrTextBox>[];
+        for (final entry in rawLines) {
+          if (entry is! Map) continue;
+          final lineText = entry['text'] as String?;
+          if (lineText == null || lineText.trim().isEmpty) continue;
+          boxes.add(
+            OcrTextBox(
+              text: lineText,
+              left: (entry['left'] as num?)?.toDouble() ?? 0,
+              top: (entry['top'] as num?)?.toDouble() ?? 0,
+              right: (entry['right'] as num?)?.toDouble() ?? 0,
+              bottom: (entry['bottom'] as num?)?.toDouble() ?? 0,
+            ),
+          );
+        }
+        final reconstructed = reconstructReceiptLines(boxes);
+        if (reconstructed.isNotEmpty) {
+          text = reconstructed;
+        }
+      }
       return ReceiptOcrResult(text: text, confidence: conf);
     } on MissingPluginException {
       throw const ReceiptOcrException(ReceiptOcrErrorKind.unsupported);
